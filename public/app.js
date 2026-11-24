@@ -364,6 +364,22 @@ function renderCases(d) {
   showCase(d)
 }
 
+// Reference amounts for the sponsor card, from this run's own cost data (list price).
+function renderSponsor(d) {
+  const cost = (rs) => rs.reduce((a, r) => a + (r.costUsd ?? 0) + (r.repairCostUsd ?? 0), 0)
+  const total = cost(d.runs)
+  const reps = new Set(d.runs.map((r) => r.rep)).size
+  const langs = Object.keys(d.summary.langs)
+  const perLang = cost(d.runs.filter((r) => langs.includes(r.lang))) / langs.length
+  $('sponsor-intro').textContent = `Every run on this page was paid for out of pocket: ${d.runs.length} agent runs, ${fmt.usd(total)} of model usage at list price. Sponsorship buys more of it:`
+  const chips = [
+    ['+1 repetition of everything', total / reps],
+    ['one more language', perLang],
+    ['the whole matrix on another model', total],
+  ]
+  $('sponsor-chips').innerHTML = chips.map(([what, usd]) => `<span>${esc(what)} ≈ ${fmt.usd(usd)}</span>`).join('')
+}
+
 function renderMeta(d) {
   const tc = d.meta.toolchains ?? {}
   $('toolchains').textContent = `Toolchains: ${Object.values(tc).join(' · ')}. Model ${d.meta.model}, effort ${d.meta.effort}.`
@@ -386,3 +402,4 @@ renderFrontend(data)
 renderCombos(data)
 renderRepair(data)
 renderCases(data)
+renderSponsor(data)

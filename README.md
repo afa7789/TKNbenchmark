@@ -86,8 +86,19 @@ paper/                paper.tex, build.mjs (→ data.tex), arxiv.mjs (→ arxiv.
 public/               the page (GitHub Pages) and paper.pdf
 ```
 
+## Sponsor the next round
+
+Every run here was paid for out of pocket. Sponsorship buys more repetitions, other models and agents,
+bigger multi-hour tasks, clean machines (a Linux runner and a Mac with Xcode, which removes the Swift and
+C# toolchain confound) and more languages and stacks. Email **abeilice@ufmg.br** with what you would like
+measured and your budget; sponsors are acknowledged on the results page.
+
 ## Contributing
 
 Suggestions, corrections and changes to the method are welcome: new tasks, new languages, a better
-harness, or a re-run on another model or machine. Open an issue or a pull request, or email
-**abeilice@ufmg.br**.
+harness, or a re-run on another model or machine. See [CONTRIBUTING.md](CONTRIBUTING.md), open an issue
+or a pull request, or email **abeilice@ufmg.br**.
+
+## License
+
+[MIT](LICENSE), except the Faktum typeface in `public/fonts/`, which belongs to its foundry.

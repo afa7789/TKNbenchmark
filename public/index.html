@@ -21,6 +21,7 @@
       <a href="#repair">Repair</a>
       <a href="#cases">Cases</a>
       <a href="#method">Method</a>
+      <a href="#sponsor">Sponsor</a>
       <a href="paper.pdf">Paper (PDF)</a>
       <a href="https://github.com/afa7789/TKNbenchmark">GitHub</a>
     </nav>
@@ -29,6 +30,7 @@
   <section class="hero">
     <h1>How much does a programming language cost a coding agent?</h1>
     <h2 id="hero-sub">Same tasks, same prompt, one isolated Claude Opus 5.5 agent per case. We count tokens, dollars, time, compiler errors, hidden tests, build disk and final binary performance.</h2>
+    <p class="hero-cta">Want more models, languages or repetitions? <a href="#sponsor">Sponsor the next round →</a></p>
   </section>
 
   <main>
@@ -154,6 +156,29 @@ npm run count               # code tokens (Opus 5.5 + cl100k)
 npm run aggregate           # public/data/results.json
 npm run paper               # paper/data.tex + public/paper.pdf (needs tectonic)</pre>
       <p class="hint" id="toolchains"></p>
+    </fieldset>
+
+    <fieldset id="sponsor">
+      <legend>Sponsor the next round</legend>
+      <div class="sponsor">
+        <div class="prose">
+          <p id="sponsor-intro">Every run on this page was paid for out of pocket. Sponsorship buys more of it:</p>
+          <ul>
+            <li><strong>More repetitions</strong> per case, so the min–max ranges shrink and small differences stop being noise.</li>
+            <li><strong>Other models and agents</strong>, to see whether the ranking is about the languages or about one model.</li>
+            <li><strong>Bigger tasks</strong>: multi-hour projects where reading existing code dominates the bill.</li>
+            <li><strong>Clean machines</strong>: a Linux runner and a Mac with Xcode, which removes the Swift and C# toolchain confound.</li>
+            <li><strong>More languages and stacks</strong>, and the full-stack combinations people actually ship.</li>
+          </ul>
+        </div>
+        <div class="sponsor-card">
+          <h3>Back the next round</h3>
+          <p>Email what you would like measured (a model, a language, a task, a stack) and your budget. Sponsors are acknowledged on this page.</p>
+          <div class="chips" id="sponsor-chips"></div>
+          <a class="button" href="mailto:abeilice@ufmg.br?subject=TKNbenchmark%20sponsorship">Email to sponsor</a>
+          <p class="hint">Model usage at list price only, from this benchmark's own data.</p>
+        </div>
+      </div>
     </fieldset>
 
     <fieldset id="contribute" class="prose">
