@@ -135,6 +135,13 @@ blockquote { font-style: italic; }
 .chips span { border: 1px solid var(--ink); padding: 6px 12px; font-size: 0.875rem; font-weight: 600; font-variant-numeric: tabular-nums; }
 a.button { display: block; text-align: center; border: 0; background: var(--ink); color: var(--paper); font-weight: 700; padding: 12px 20px; margin-bottom: 8px; }
 a.button:hover { background: var(--ink-hover); color: var(--paper); }
+.donate-title { font-size: 0.9375rem; font-weight: 700; margin: 18px 0 8px; }
+.donate { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.donate li { display: grid; grid-template-columns: 3.2em minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.donate .coin { font-weight: 700; font-size: 0.8125rem; }
+.donate a { font-family: var(--mono); font-size: 0.75rem; word-break: break-all; border: 0; }
+.donate a:hover { text-decoration: underline; }
+button.small { padding: 4px 10px; font-size: 0.75rem; }
 
 footer { grid-column: 1 / 7; border-top: 1px solid var(--ink); padding-top: 18px; font-size: 0.875rem; color: var(--muted); }
 

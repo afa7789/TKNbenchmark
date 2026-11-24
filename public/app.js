@@ -19,6 +19,17 @@ const fmt = {
 }
 
 // ---------- tooltip ----------
+// Copy buttons next to the donation addresses.
+function initCopy() {
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-copy]')
+    if (!btn) return
+    await navigator.clipboard.writeText(btn.dataset.copy).catch(() => {})
+    btn.textContent = 'Copied'
+    setTimeout(() => (btn.textContent = 'Copy'), 1500)
+  })
+}
+
 function initTooltip() {
   const tip = $('tip')
   const place = (e) => {
@@ -391,6 +402,7 @@ function renderMeta(d) {
 
 const data = await (await fetch('data/results.json')).json()
 initTooltip()
+initCopy()
 renderMeta(data)
 renderKpis(data)
 renderLeaderboard(data)

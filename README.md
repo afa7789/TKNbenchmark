@@ -93,6 +93,12 @@ bigger multi-hour tasks, clean machines (a Linux runner and a Mac with Xcode, wh
 C# toolchain confound) and more languages and stacks. Email **abeilice@ufmg.br** with what you would like
 measured and your budget; sponsors are acknowledged on the results page.
 
+Or donate directly:
+
+- BTC: `bc1qqjykl9nym5qn9u2dpqt0vfz8cgl4pt3n8mkngq`
+- ETH: `0xa2FB6CA627659644EFeBe3A83361e22e8B34921C`
+- XMR: `42Nv3KCbqexE78fZMeMrjRHMDME62s5Jya71Pz12e79HUP6Wwbr37uG9ukRWrtvTg2WkikNk1NCz4RcU3dDcafUhLtdTdfY`
+
 ## Contributing
 
 Suggestions, corrections and changes to the method are welcome: new tasks, new languages, a better
