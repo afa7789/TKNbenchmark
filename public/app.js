@@ -1,6 +1,8 @@
 // Renders the benchmark page from data/results.json. No dependencies.
 const $ = (id) => document.getElementById(id)
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
+// Data changes with every aggregate and Pages caches 10 min: always revalidate (a 304 when unchanged).
+const getJson = async (path) => (await fetch(path, { cache: 'no-cache' })).json()
 
 // ---------- formatting ----------
 const nf = (d) => new Intl.NumberFormat('en-US', { maximumFractionDigits: d, minimumFractionDigits: d })
@@ -386,7 +388,7 @@ async function showCase(d) {
   }
   $('case-metrics').innerHTML = caseMetrics(r)
   $('case-failures').innerHTML = r.failures.map((f) => `<li><strong>${esc(f.name)}</strong>: <code>${esc(f.why ?? '')}</code></li>`).join('')
-  const sol = await (await fetch(`data/solutions/${id}.json`)).json()
+  const sol = await getJson(`data/solutions/${id}.json`)
   const show = (i) => {
     $('case-code').textContent = sol.files[i]?.text ?? ''
     $('case-files').querySelectorAll('button').forEach((b, j) => b.setAttribute('aria-pressed', String(i === j)))
@@ -440,7 +442,7 @@ function renderMeta(d) {
   $('hero-sub').textContent = `${names.join(', ')}; plus React, Vue and Svelte, and four specialised tracks (${trackNames.join(', ')}). ${n} agent runs: 4 tasks × ${names.length} languages × 3 repetitions, plus the front ends and the tracks. Same prompt, one isolated Claude Opus 5.5 agent per case, hidden tests. We measure tokens, dollars, time, compiler errors, build disk and final binary performance.`
 }
 
-const data = await (await fetch('data/results.json')).json()
+const data = await getJson('data/results.json')
 initTooltip()
 initCopy()
 renderMeta(data)

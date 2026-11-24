@@ -27,6 +27,12 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      # Pages serves every file with max-age=600 and no way to change it: version the page's assets
+      # by commit so a new index.html never runs with a cached style.css / a11y.js / app.js.
+      - name: Version assets
+        run: |
+          sed -i -E "s/(href|src)=\"(style\.css|a11y\.js|app\.js)\"/\1=\"\2?v=${GITHUB_SHA::8}\"/" public/index.html
+          test "$(grep -c "?v=${GITHUB_SHA::8}" public/index.html)" -eq 3
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
