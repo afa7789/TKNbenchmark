@@ -1,0 +1,21 @@
+{
+  "id": "noir-range-r2",
+  "files": [
+    {
+      "path": "Nargo.toml",
+      "text": "[package]\nname = \"range\"\ntype = \"bin\"\nauthors = [\"\"]\ncompiler_version = \">=1.0.0\"\n\n[dependencies]\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Compiles the circuit. Requires nargo (>= 1.0.0) on PATH.\nset -euo pipefail\ncd \"$(dirname \"${BASH_SOURCE[0]}\")\"\nnargo compile\n"
+    },
+    {
+      "path": "prove.sh",
+      "text": "#!/usr/bin/env bash\n# Usage: bash prove.sh input.json\n# Generates a witness for {\"age\": \"...\", \"threshold\": \"...\"}; exits non-zero\n# if the inputs do not satisfy the circuit. All rules are enforced in-circuit;\n# this script only translates JSON into a Prover TOML file.\nset -euo pipefail\n\nif [[ $# -ne 1 ]]; then\n  echo \"usage: $0 input.json\" >&2\n  exit 2\nfi\n\ninput=\"$(cd \"$(dirname \"$1\")\" && pwd)/$(basename \"$1\")\"\ncd \"$(dirname \"${BASH_SOURCE[0]}\")\"\n\nprover_name=\"Prover_$$\"\ntrap 'rm -f \"${prover_name}.toml\"' EXIT\n\n# JSON string literals are valid TOML basic strings, so values are quoted safely.\nnode -e '\nconst fs = require(\"fs\");\nconst input = JSON.parse(fs.readFileSync(process.argv[1], \"utf8\"));\nconst lines = [\"age\", \"threshold\"].map((k) => {\n  if (!(k in input)) throw new Error(`missing input: ${k}`);\n  return `${k} = ${JSON.stringify(String(input[k]))}`;\n});\nfs.writeFileSync(process.argv[2], lines.join(\"\\n\") + \"\\n\");\n' \"$input\" \"${prover_name}.toml\"\n\nnargo execute --prover-name \"$prover_name\" \"witness_$$\" >/dev/null\nrm -f \"target/witness_$$.gz\"\n"
+    },
+    {
+      "path": "src/main.nr",
+      "text": "/// Proves that a private `age` is a byte-sized integer that is at least the\n/// public byte-sized `threshold`.\n///\n/// Inputs are taken as `Field`s and range-checked in-circuit, so that the\n/// constraints themselves (not ABI decoding) reject out-of-range values such as\n/// 256 or arbitrary large field elements.\nfn main(age: Field, threshold: pub Field) {\n    let age = to_u8(age);\n    let threshold = to_u8(threshold);\n    assert(age >= threshold, \"age is below threshold\");\n}\n\n/// Constrains `x` to fit in 8 bits and returns it as a `u8`.\nfn to_u8(x: Field) -> u8 {\n    x.assert_max_bit_size::<8>();\n    x as u8\n}\n\n#[test]\nfn accepts_above_threshold() {\n    main(25, 18);\n}\n\n#[test]\nfn accepts_equal_to_threshold() {\n    main(18, 18);\n}\n\n#[test]\nfn accepts_bounds() {\n    main(0, 0);\n    main(255, 0);\n    main(255, 255);\n}\n\n#[test(should_fail_with = \"age is below threshold\")]\nfn rejects_below_threshold() {\n    main(17, 18);\n}\n\n#[test(should_fail)]\nfn rejects_age_out_of_range() {\n    main(256, 18);\n}\n\n#[test(should_fail)]\nfn rejects_threshold_out_of_range() {\n    main(255, 256);\n}\n\n#[test(should_fail)]\nfn rejects_huge_field_element() {\n    // p - 1, i.e. \"-1\" in the field.\n    main(-1, 0);\n}\n\n#[test(should_fail)]\nfn rejects_wrapped_age() {\n    // 256 + 20 would truncate to 20 >= 18 without the range check.\n    main(276, 18);\n}\n"
+    }
+  ]
+}

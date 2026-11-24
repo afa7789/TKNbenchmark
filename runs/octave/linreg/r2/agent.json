@@ -1,0 +1,46 @@
+{
+  "id": "octave-linreg-r2",
+  "lang": "octave",
+  "task": "linreg",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 163497,
+  "files": [
+    "app",
+    "build.sh",
+    "src/linreg.m"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.3276260000000001,
+  "durationMs": 162893,
+  "apiMs": 85598,
+  "turns": 15,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe program is in `src/linreg.m`. `build.sh` writes `./app`, a small launcher that runs it with Octave, and `node check.mjs` passes all 3 example cases. On the largest allowed input (1,000,000 rows × 20 features, about 156 MB) it finishes in about 3.8 seconds, whether the input comes through a pipe or a file. The hidden tests' time limit isn't stated; the example cases allow 10 seconds.\n\n- **How it fits:** it subtracts the column means before solving the least-squares problem, which keeps ",
+  "usage": {
+    "input": 30,
+    "output": 6677,
+    "thinking": 1935,
+    "cacheRead": 237590,
+    "cacheWrite": 18306
+  },
+  "tools": {
+    "Bash": 14
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 3,
+    "total": 3
+  }
+}

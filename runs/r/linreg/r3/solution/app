@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec Rscript --vanilla "$(dirname "$0")/src/linreg.R" "$@"

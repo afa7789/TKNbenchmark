@@ -16,5 +16,15 @@
   "ts": "Node.js v26.13.1, which runs .ts files natively",
   "python": "Python 3.15.2",
   "asm": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+  "octave": "GNU Octave (aarch64-apple-darwin24.6.0) version 11.3.0",
+  "julia": "julia version 1.13.4",
+  "r": "R version 4.6.2 (2026-10-29) -- \"Diversified Portfolio\"",
+  "lean": "Lean (version 4.36.0, arm64-apple-darwin24.6.0, commit 611c117bfaf7b7ae1cfcf246ce6fba31e8f509e9, Release)",
+  "rocq": "The Rocq Prover, version 9.3.0",
+  "dafny": "Dafny 4.11.0",
+  "solidity": "forge Version: 1.7.1",
+  "vyper": "Vyper 0.4.3+commit.bff19ea2",
+  "circom": "circom compiler 2.2.3",
+  "noir": "nargo version = 1.0.0",
   "claude": "2.1.331 (Claude Code)"
 }

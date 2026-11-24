@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export JULIA_DEPOT_PATH="$ROOT/.depot:"
+exec julia --project="$ROOT" --startup-file=no --history-file=no -O3 \
+    -e 'using Linreg; exit(Linreg.main())'

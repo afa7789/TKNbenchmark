@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-24T13:59:43.798Z",
+    "generatedAt": "2026-11-24T14:58:22.977Z",
     "model": "claude-opus-5-5",
     "effort": "high",
     "toolchains": {
@@ -21,6 +21,16 @@
       "ts": "Node.js v26.13.1, which runs .ts files natively",
       "python": "Python 3.15.2",
       "asm": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+      "octave": "GNU Octave (aarch64-apple-darwin24.6.0) version 11.3.0",
+      "julia": "julia version 1.13.4",
+      "r": "R version 4.6.2 (2026-10-29) -- \"Diversified Portfolio\"",
+      "lean": "Lean (version 4.36.0, arm64-apple-darwin24.6.0, commit 611c117bfaf7b7ae1cfcf246ce6fba31e8f509e9, Release)",
+      "rocq": "The Rocq Prover, version 9.3.0",
+      "dafny": "Dafny 4.11.0",
+      "solidity": "forge Version: 1.7.1",
+      "vyper": "Vyper 0.4.3+commit.bff19ea2",
+      "circom": "circom compiler 2.2.3",
+      "noir": "nargo version = 1.0.0",
       "claude": "2.1.331 (Claude Code)"
     },
     "langs": {
@@ -170,6 +180,106 @@
           "--version"
         ],
         "note": "Write all program logic in AArch64 assembly (.s files) assembled with clang. You may call libc / libSystem functions (malloc, read, write, socket, pthread…), but no C, C++ or other high-level source files."
+      },
+      "octave": {
+        "label": "Octave",
+        "name": "GNU Octave (the MATLAB language)",
+        "version": [
+          "sh",
+          "-c",
+          "octave --version | head -1"
+        ],
+        "note": "./app may be a small launcher script that runs octave.",
+        "track": "numeric"
+      },
+      "julia": {
+        "label": "Julia",
+        "name": "Julia",
+        "version": [
+          "julia",
+          "--version"
+        ],
+        "note": "./app may be a small launcher script that runs julia.",
+        "track": "numeric"
+      },
+      "r": {
+        "label": "R",
+        "name": "R",
+        "version": [
+          "sh",
+          "-c",
+          "R --version | head -1"
+        ],
+        "note": "./app may be a small launcher script that runs Rscript.",
+        "track": "numeric"
+      },
+      "lean": {
+        "label": "Lean 4",
+        "name": "Lean 4",
+        "version": [
+          "lean",
+          "--version"
+        ],
+        "track": "proofs"
+      },
+      "rocq": {
+        "label": "Rocq",
+        "name": "Rocq (Coq)",
+        "version": [
+          "sh",
+          "-c",
+          "coqc --version | head -1"
+        ],
+        "track": "proofs"
+      },
+      "dafny": {
+        "label": "Dafny",
+        "name": "Dafny",
+        "version": [
+          "sh",
+          "-c",
+          "echo \"Dafny $(dafny --version)\""
+        ],
+        "track": "proofs"
+      },
+      "solidity": {
+        "label": "Solidity",
+        "name": "Solidity (Foundry is installed)",
+        "version": [
+          "sh",
+          "-c",
+          "forge --version | head -1"
+        ],
+        "track": "evm"
+      },
+      "vyper": {
+        "label": "Vyper",
+        "name": "Vyper",
+        "version": [
+          "sh",
+          "-c",
+          "echo \"Vyper $(vyper --version)\""
+        ],
+        "track": "evm"
+      },
+      "circom": {
+        "label": "Circom",
+        "name": "Circom 2",
+        "version": [
+          "circom",
+          "--version"
+        ],
+        "track": "zk"
+      },
+      "noir": {
+        "label": "Noir",
+        "name": "Noir (nargo)",
+        "version": [
+          "sh",
+          "-c",
+          "nargo --version | head -1"
+        ],
+        "track": "zk"
       }
     },
     "frontends": {
@@ -218,6 +328,54 @@
         "title": "Shopping mini-app",
         "topic": "parent/child events, global store, derived state, forms, effects, context, slots",
         "frontend": true
+      },
+      "linreg": {
+        "kind": "stdio",
+        "title": "Least-squares regression",
+        "topic": "numerics, matrices",
+        "track": "numeric"
+      },
+      "linalg": {
+        "kind": "stdio",
+        "title": "Linear algebra",
+        "topic": "log-determinant, solve, eigenvalues",
+        "track": "numeric"
+      },
+      "lists": {
+        "kind": "proof",
+        "title": "List lemmas",
+        "topic": "induction, rewriting",
+        "track": "proofs"
+      },
+      "isort": {
+        "kind": "proof",
+        "title": "Insertion sort is correct",
+        "topic": "sortedness, permutation",
+        "track": "proofs"
+      },
+      "token": {
+        "kind": "evm",
+        "title": "Token with allowances",
+        "topic": "storage, events, reverts",
+        "track": "evm"
+      },
+      "vesting": {
+        "kind": "evm",
+        "title": "Linear vesting",
+        "topic": "time, ether transfers",
+        "track": "evm"
+      },
+      "range": {
+        "kind": "zk",
+        "title": "Private range check",
+        "topic": "bit decomposition, comparisons",
+        "track": "zk"
+      },
+      "sudoku": {
+        "kind": "zk",
+        "title": "4x4 Sudoku",
+        "topic": "permutation constraints",
+        "track": "zk"
       }
     },
     "external": {
@@ -249,12 +407,12 @@
         "costPerSolvedUsd": 0.3462416666666667,
         "output": 33266,
         "turns": 25,
-        "durationS": 365.552,
+        "durationS": 365.55199999999996,
         "compileErrors": 0,
         "stdlibReads": 0,
         "codeTokens": 22502,
         "codeTokensCl100k": 14739,
-        "buildSecs": 0.36,
+        "buildSecs": 0.36000000000000004,
         "footprintBytes": 147456
       },
       "cpp": {
@@ -268,7 +426,7 @@
         "costPerSolvedUsd": 0.2425318666666667,
         "output": 21789,
         "turns": 20,
-        "durationS": 352.09299999999996,
+        "durationS": 352.093,
         "compileErrors": 0,
         "stdlibReads": 0,
         "codeTokens": 13469,
@@ -283,7 +441,7 @@
         "passRate": 1,
         "repairCostUsd": 0,
         "firstTryRate": 1,
-        "costUsd": 0.8252075999999999,
+        "costUsd": 0.8252076,
         "costPerSolvedUsd": 0.21470068333333334,
         "output": 17277,
         "turns": 18,
@@ -330,7 +488,7 @@
         "stdlibReads": 2,
         "codeTokens": 7378,
         "codeTokensCl100k": 4878,
-        "buildSecs": 2.9699999999999998,
+        "buildSecs": 2.97,
         "footprintBytes": 4468736
       },
       "zig": {
@@ -378,7 +536,7 @@
         "passRate": 1,
         "repairCostUsd": 0,
         "firstTryRate": 0.8333333333333334,
-        "costUsd": 0.8804396,
+        "costUsd": 0.8804396000000001,
         "costPerSolvedUsd": 0.22276393333333333,
         "output": 18242,
         "turns": 22,
@@ -397,11 +555,11 @@
         "passRate": 1,
         "repairCostUsd": 0,
         "firstTryRate": 1,
-        "costUsd": 0.7547334000000001,
+        "costUsd": 0.7547333999999999,
         "costPerSolvedUsd": 0.18898766666666666,
         "output": 14080,
         "turns": 20,
-        "durationS": 336.18100000000004,
+        "durationS": 336.181,
         "compileErrors": 0,
         "stdlibReads": 0,
         "codeTokens": 6795,
@@ -425,7 +583,7 @@
         "stdlibReads": 1,
         "codeTokens": 12075,
         "codeTokensCl100k": 6801,
-        "buildSecs": 57.220000000000006,
+        "buildSecs": 57.22,
         "footprintBytes": 1089368064
       },
       "odin": {
@@ -444,7 +602,7 @@
         "stdlibReads": 0,
         "codeTokens": 11040,
         "codeTokensCl100k": 6850,
-        "buildSecs": 4.14,
+        "buildSecs": 4.140000000000001,
         "footprintBytes": 745472
       },
       "ocaml": {
@@ -454,7 +612,7 @@
         "passRate": 1,
         "repairCostUsd": 0,
         "firstTryRate": 0.9166666666666666,
-        "costUsd": 0.906158,
+        "costUsd": 0.9061580000000001,
         "costPerSolvedUsd": 0.24328116666666666,
         "output": 19637,
         "turns": 25,
@@ -463,7 +621,7 @@
         "stdlibReads": 1,
         "codeTokens": 10227,
         "codeTokensCl100k": 6636,
-        "buildSecs": 0.8600000000000001,
+        "buildSecs": 0.86,
         "footprintBytes": 8384512
       },
       "haskell": {
@@ -477,7 +635,7 @@
         "costPerSolvedUsd": 0.27135529999999997,
         "output": 23785,
         "turns": 33,
-        "durationS": 429.26599999999996,
+        "durationS": 429.266,
         "compileErrors": 1,
         "stdlibReads": 2,
         "codeTokens": 9758,
@@ -511,7 +669,7 @@
         "passRate": 1,
         "repairCostUsd": 0,
         "firstTryRate": 1,
-        "costUsd": 0.7236411999999999,
+        "costUsd": 0.7236412,
         "costPerSolvedUsd": 0.18374031666666665,
         "output": 14127,
         "turns": 16,
@@ -549,7 +707,7 @@
         "passRate": 1,
         "repairCostUsd": 0,
         "firstTryRate": 0.5833333333333334,
-        "costUsd": 3.2753908,
+        "costUsd": 3.2753907999999994,
         "costPerSolvedUsd": 0.79861445,
         "output": 99286,
         "turns": 37,
@@ -560,6 +718,234 @@
         "codeTokensCl100k": 27920,
         "buildSecs": 0.26,
         "footprintBytes": 163840
+      }
+    },
+    "tracks": {
+      "numeric": {
+        "title": "Scientific computing",
+        "tasks": [
+          "linreg",
+          "linalg"
+        ],
+        "langs": {
+          "octave": {
+            "n": 6,
+            "solved": 6,
+            "works": 6,
+            "passRate": 1,
+            "repairCostUsd": 0,
+            "firstTryRate": 1,
+            "costUsd": 0.4752898000000001,
+            "costPerSolvedUsd": 0.23903220000000003,
+            "output": 8596,
+            "turns": 20,
+            "durationS": 190.299,
+            "compileErrors": 0,
+            "stdlibReads": 0,
+            "codeTokens": 1923,
+            "codeTokensCl100k": 1046,
+            "buildSecs": 0.02,
+            "footprintBytes": 0
+          },
+          "julia": {
+            "n": 6,
+            "solved": 6,
+            "works": 6,
+            "passRate": 1,
+            "repairCostUsd": 0,
+            "firstTryRate": 0.8333333333333334,
+            "costUsd": 0.46274600000000005,
+            "costPerSolvedUsd": 0.24935556666666667,
+            "output": 9867,
+            "turns": 10,
+            "durationS": 158.78300000000002,
+            "compileErrors": 0,
+            "stdlibReads": 0,
+            "codeTokens": 5386,
+            "codeTokensCl100k": 3281,
+            "buildSecs": 3.45,
+            "footprintBytes": 1753088
+          },
+          "r": {
+            "n": 6,
+            "solved": 6,
+            "works": 6,
+            "passRate": 1,
+            "repairCostUsd": 0,
+            "firstTryRate": 1,
+            "costUsd": 0.305817,
+            "costPerSolvedUsd": 0.15954046666666669,
+            "output": 4329,
+            "turns": 10,
+            "durationS": 70.731,
+            "compileErrors": 0,
+            "stdlibReads": 0,
+            "codeTokens": 2135,
+            "codeTokensCl100k": 1117,
+            "buildSecs": 0.31,
+            "footprintBytes": 0
+          }
+        }
+      },
+      "proofs": {
+        "title": "Theorem proving",
+        "tasks": [
+          "lists",
+          "isort"
+        ],
+        "langs": {
+          "lean": {
+            "n": 6,
+            "solved": 6,
+            "works": 6,
+            "passRate": 1,
+            "repairCostUsd": 0,
+            "firstTryRate": 0.8333333333333334,
+            "costUsd": 0.2754592,
+            "costPerSolvedUsd": 0.14423676666666668,
+            "output": 2777,
+            "turns": 9,
+            "durationS": 40.449,
+            "compileErrors": 0,
+            "stdlibReads": 0,
+            "codeTokens": 1892,
+            "codeTokensCl100k": 1020,
+            "buildSecs": 1.05,
+            "footprintBytes": 0
+          },
+          "rocq": {
+            "n": 6,
+            "solved": 6,
+            "works": 6,
+            "passRate": 1,
+            "repairCostUsd": 0,
+            "firstTryRate": 1,
+            "costUsd": 0.2811056,
+            "costPerSolvedUsd": 0.1402078,
+            "output": 2944,
+            "turns": 8,
+            "durationS": 40.081,
+            "compileErrors": 0,
+            "stdlibReads": 0,
+            "codeTokens": 2043,
+            "codeTokensCl100k": 1026,
+            "buildSecs": 0.28,
+            "footprintBytes": 45056
+          },
+          "dafny": {
+            "n": 6,
+            "solved": 6,
+            "works": 6,
+            "passRate": 1,
+            "repairCostUsd": 0,
+            "firstTryRate": 1,
+            "costUsd": 0.2528614,
+            "costPerSolvedUsd": 0.12911303333333335,
+            "output": 2285,
+            "turns": 7,
+            "durationS": 35.833,
+            "compileErrors": 0,
+            "stdlibReads": 0,
+            "codeTokens": 2260,
+            "codeTokensCl100k": 1083,
+            "buildSecs": 2.31,
+            "footprintBytes": 0
+          }
+        }
+      },
+      "evm": {
+        "title": "Smart contracts",
+        "tasks": [
+          "token",
+          "vesting"
+        ],
+        "langs": {
+          "solidity": {
+            "n": 6,
+            "solved": 6,
+            "works": 6,
+            "passRate": 1,
+            "repairCostUsd": 0,
+            "firstTryRate": 1,
+            "costUsd": 0.41779640000000007,
+            "costPerSolvedUsd": 0.2006043666666667,
+            "output": 5947,
+            "turns": 8,
+            "durationS": 74.626,
+            "compileErrors": 0,
+            "stdlibReads": 0,
+            "codeTokens": 3432,
+            "codeTokensCl100k": 1615,
+            "buildSecs": 13.6,
+            "footprintBytes": 176844800
+          },
+          "vyper": {
+            "n": 6,
+            "solved": 6,
+            "works": 6,
+            "passRate": 1,
+            "repairCostUsd": 0,
+            "firstTryRate": 1,
+            "costUsd": 0.40715100000000004,
+            "costPerSolvedUsd": 0.20388910000000002,
+            "output": 5757,
+            "turns": 9,
+            "durationS": 65.214,
+            "compileErrors": 0,
+            "stdlibReads": 0,
+            "codeTokens": 3973,
+            "codeTokensCl100k": 1628,
+            "buildSecs": 0.98,
+            "footprintBytes": 12288
+          }
+        }
+      },
+      "zk": {
+        "title": "Zero-knowledge circuits",
+        "tasks": [
+          "range",
+          "sudoku"
+        ],
+        "langs": {
+          "circom": {
+            "n": 6,
+            "solved": 6,
+            "works": 6,
+            "passRate": 1,
+            "repairCostUsd": 0,
+            "firstTryRate": 0.8333333333333334,
+            "costUsd": 0.4575436,
+            "costPerSolvedUsd": 0.23166673333333332,
+            "output": 8613,
+            "turns": 13,
+            "durationS": 110.106,
+            "compileErrors": 0,
+            "stdlibReads": 0,
+            "codeTokens": 3032,
+            "codeTokensCl100k": 1765,
+            "buildSecs": 0.5900000000000001,
+            "footprintBytes": 5230592
+          },
+          "noir": {
+            "n": 6,
+            "solved": 6,
+            "works": 6,
+            "passRate": 1,
+            "repairCostUsd": 0,
+            "firstTryRate": 0.3333333333333333,
+            "costUsd": 0.4654642,
+            "costPerSolvedUsd": 0.23308716666666665,
+            "output": 7330,
+            "turns": 12,
+            "durationS": 91.132,
+            "compileErrors": 0,
+            "stdlibReads": 0,
+            "codeTokens": 3169,
+            "codeTokensCl100k": 1833,
+            "buildSecs": 0.44,
+            "footprintBytes": 32768
+          }
+        }
       }
     },
     "cells": {
@@ -1467,6 +1853,213 @@
           "n": 3
         }
       },
+      "circom/range": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 2,
+        "costToGreenUsd": {
+          "median": 0.2301208,
+          "min": 0.2114484,
+          "max": 0.2381684,
+          "n": 3
+        },
+        "deps": {
+          "circomlib": 3
+        },
+        "costUsd": {
+          "median": 0.2301208,
+          "min": 0.2114484,
+          "max": 0.2381684,
+          "n": 3
+        },
+        "output": {
+          "median": 3390,
+          "min": 3341,
+          "max": 3857,
+          "n": 3
+        },
+        "turns": {
+          "median": 7,
+          "min": 5,
+          "max": 8,
+          "n": 3
+        },
+        "durationS": {
+          "median": 48.271,
+          "min": 42.133,
+          "max": 50.266,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 1,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1170,
+          "min": 1142,
+          "max": 1367,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 654,
+          "min": 632,
+          "max": 781,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.56,
+          "min": 0.52,
+          "max": 0.64,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 5128192,
+          "min": 5128192,
+          "max": 5132288,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 3641344,
+          "min": 3641344,
+          "max": 3645440,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 1486848,
+          "min": 1486848,
+          "max": 1486848,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 16052224,
+          "min": 16052224,
+          "max": 16068608,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "circom/sudoku": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.2274228,
+          "min": 0.18368900000000002,
+          "max": 0.299151,
+          "n": 3
+        },
+        "deps": {
+          "snarkjs": 1,
+          "": 2
+        },
+        "costUsd": {
+          "median": 0.2274228,
+          "min": 0.18368900000000002,
+          "max": 0.299151,
+          "n": 3
+        },
+        "output": {
+          "median": 5223,
+          "min": 3920,
+          "max": 5752,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 4,
+          "max": 7,
+          "n": 3
+        },
+        "durationS": {
+          "median": 61.835,
+          "min": 42.96,
+          "max": 66.506,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1862,
+          "min": 1665,
+          "max": 1918,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 1111,
+          "min": 1025,
+          "max": 1184,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.03,
+          "min": 0.03,
+          "max": 2.08,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 102400,
+          "min": 94208,
+          "max": 90984448,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 102400,
+          "min": 94208,
+          "max": 66396160,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 24588288,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 409600,
+          "min": 376832,
+          "max": 290172928,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
       "cpp/calc": {
         "n": 3,
         "solved": 3,
@@ -2370,6 +2963,212 @@
           "max": 22315008,
           "n": 3
         }
+      },
+      "dafny/isort": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.12518620000000003,
+          "min": 0.12470160000000001,
+          "max": 0.1314418,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.12518620000000003,
+          "min": 0.12470160000000001,
+          "max": 0.1314418,
+          "n": 3
+        },
+        "output": {
+          "median": 1150,
+          "min": 1132,
+          "max": 1173,
+          "n": 3
+        },
+        "turns": {
+          "median": 3,
+          "min": 3,
+          "max": 3,
+          "n": 3
+        },
+        "durationS": {
+          "median": 16.865,
+          "min": 16.04,
+          "max": 16.927,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1115,
+          "min": 1084,
+          "max": 1170,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 557,
+          "min": 547,
+          "max": 596,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 1.11,
+          "min": 1.09,
+          "max": 1.21,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "dafny/lists": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.1276752,
+          "min": 0.12547640000000002,
+          "max": 0.140197,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.1276752,
+          "min": 0.12547640000000002,
+          "max": 0.140197,
+          "n": 3
+        },
+        "output": {
+          "median": 1135,
+          "min": 1046,
+          "max": 1431,
+          "n": 3
+        },
+        "turns": {
+          "median": 4,
+          "min": 4,
+          "max": 4,
+          "n": 3
+        },
+        "durationS": {
+          "median": 18.968,
+          "min": 17.105,
+          "max": 20.872,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1145,
+          "min": 1139,
+          "max": 1179,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 526,
+          "min": 523,
+          "max": 546,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 1.2,
+          "min": 1.19,
+          "max": 1.24,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
       },
       "go/calc": {
         "n": 3,
@@ -4179,6 +4978,212 @@
           "n": 3
         }
       },
+      "julia/linalg": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.1794676,
+          "min": 0.17385720000000002,
+          "max": 0.1942596,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.1794676,
+          "min": 0.17385720000000002,
+          "max": 0.1942596,
+          "n": 3
+        },
+        "output": {
+          "median": 2776,
+          "min": 2559,
+          "max": 3114,
+          "n": 3
+        },
+        "turns": {
+          "median": 5,
+          "min": 5,
+          "max": 6,
+          "n": 3
+        },
+        "durationS": {
+          "median": 41.684,
+          "min": 38.833,
+          "max": 52.402,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1649,
+          "min": 1315,
+          "max": 1754,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 920,
+          "min": 737,
+          "max": 1000,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 2.22,
+          "min": 0.71,
+          "max": 2.78,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 294912,
+          "min": 0,
+          "max": 294912,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 294912,
+          "min": 0,
+          "max": 294912,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 294912,
+          "min": 0,
+          "max": 294912,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 147,
+          "min": 143,
+          "max": 149,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "julia/linreg": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 2,
+        "costToGreenUsd": {
+          "median": 0.28327840000000004,
+          "min": 0.2405332,
+          "max": 0.4247374,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.28327840000000004,
+          "min": 0.2405332,
+          "max": 0.4247374,
+          "n": 3
+        },
+        "output": {
+          "median": 7091,
+          "min": 5217,
+          "max": 9910,
+          "n": 3
+        },
+        "turns": {
+          "median": 5,
+          "min": 4,
+          "max": 12,
+          "n": 3
+        },
+        "durationS": {
+          "median": 117.099,
+          "min": 67.34,
+          "max": 162.627,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 2,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 3737,
+          "min": 2954,
+          "max": 4315,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 2361,
+          "min": 1804,
+          "max": 2764,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 1.23,
+          "min": 0.74,
+          "max": 63.2,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 1458176,
+          "min": 0,
+          "max": 84971520,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 1458176,
+          "min": 0,
+          "max": 84971520,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 5832704,
+          "min": 0,
+          "max": 339886080,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 227,
+          "min": 165,
+          "max": 242,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
       "kotlin/calc": {
         "n": 3,
         "solved": 3,
@@ -4630,6 +5635,212 @@
           "max": 205488128,
           "n": 3
         }
+      },
+      "lean/isort": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 2,
+        "costToGreenUsd": {
+          "median": 0.14777079999999998,
+          "min": 0.1477158,
+          "max": 0.186201,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.14777079999999998,
+          "min": 0.1477158,
+          "max": 0.186201,
+          "n": 3
+        },
+        "output": {
+          "median": 1745,
+          "min": 1636,
+          "max": 2339,
+          "n": 3
+        },
+        "turns": {
+          "median": 5,
+          "min": 4,
+          "max": 7,
+          "n": 3
+        },
+        "durationS": {
+          "median": 23.897,
+          "min": 21.12,
+          "max": 35.054,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 1,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1175,
+          "min": 1130,
+          "max": 1178,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 651,
+          "min": 647,
+          "max": 680,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.53,
+          "min": 0.52,
+          "max": 0.55,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "lean/lists": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.1276884,
+          "min": 0.1265158,
+          "max": 0.1295288,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.1276884,
+          "min": 0.1265158,
+          "max": 0.1295288,
+          "n": 3
+        },
+        "output": {
+          "median": 1032,
+          "min": 994,
+          "max": 1040,
+          "n": 3
+        },
+        "turns": {
+          "median": 4,
+          "min": 4,
+          "max": 4,
+          "n": 3
+        },
+        "durationS": {
+          "median": 16.552,
+          "min": 15.672,
+          "max": 16.841,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 717,
+          "min": 712,
+          "max": 719,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 369,
+          "min": 366,
+          "max": 369,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.52,
+          "min": 0.51,
+          "max": 0.52,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
       },
       "nim/calc": {
         "n": 3,
@@ -5083,6 +6294,212 @@
           "n": 3
         }
       },
+      "noir/range": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 0,
+        "costToGreenUsd": {
+          "median": 0.20563,
+          "min": 0.19701699999999997,
+          "max": 0.22763900000000004,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.20563,
+          "min": 0.19701699999999997,
+          "max": 0.22763900000000004,
+          "n": 3
+        },
+        "output": {
+          "median": 2878,
+          "min": 2475,
+          "max": 3070,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 5,
+          "max": 6,
+          "n": 3
+        },
+        "durationS": {
+          "median": 39.863,
+          "min": 36.782,
+          "max": 44.55,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1214,
+          "min": 1116,
+          "max": 1443,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 644,
+          "min": 588,
+          "max": 781,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.22,
+          "min": 0.21,
+          "max": 0.22,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 12288,
+          "min": 8192,
+          "max": 53248,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 12288,
+          "min": 8192,
+          "max": 53248,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 49152,
+          "min": 32768,
+          "max": 212992,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "noir/sudoku": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 2,
+        "costToGreenUsd": {
+          "median": 0.2598342,
+          "min": 0.2330644,
+          "max": 0.2753384,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.2598342,
+          "min": 0.2330644,
+          "max": 0.2753384,
+          "n": 3
+        },
+        "output": {
+          "median": 4452,
+          "min": 3806,
+          "max": 5112,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 5,
+          "max": 6,
+          "n": 3
+        },
+        "durationS": {
+          "median": 51.269,
+          "min": 44.527,
+          "max": 58.257,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1955,
+          "min": 1929,
+          "max": 2512,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 1189,
+          "min": 1165,
+          "max": 1665,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.22,
+          "min": 0.21,
+          "max": 0.22,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 20480,
+          "min": 16384,
+          "max": 20480,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 20480,
+          "min": 16384,
+          "max": 20480,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 81920,
+          "min": 65536,
+          "max": 81920,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
       "ocaml/calc": {
         "n": 3,
         "solved": 3,
@@ -5534,6 +6951,212 @@
           "max": 5570560,
           "n": 3
         }
+      },
+      "octave/linalg": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.1476638,
+          "min": 0.1353342,
+          "max": 0.1494898,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.1476638,
+          "min": 0.1353342,
+          "max": 0.1494898,
+          "n": 3
+        },
+        "output": {
+          "median": 1919,
+          "min": 1600,
+          "max": 1949,
+          "n": 3
+        },
+        "turns": {
+          "median": 5,
+          "min": 4,
+          "max": 5,
+          "n": 3
+        },
+        "durationS": {
+          "median": 27.406,
+          "min": 22.128,
+          "max": 27.672,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 990,
+          "min": 910,
+          "max": 1025,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 538,
+          "min": 482,
+          "max": 573,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.01,
+          "min": 0.01,
+          "max": 0.01,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 246,
+          "min": 120,
+          "max": 283,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "octave/linreg": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.3276260000000001,
+          "min": 0.2335122,
+          "max": 0.44056720000000005,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.3276260000000001,
+          "min": 0.2335122,
+          "max": 0.44056720000000005,
+          "n": 3
+        },
+        "output": {
+          "median": 6677,
+          "min": 3967,
+          "max": 9817,
+          "n": 3
+        },
+        "turns": {
+          "median": 15,
+          "min": 12,
+          "max": 19,
+          "n": 3
+        },
+        "durationS": {
+          "median": 162.893,
+          "min": 105.981,
+          "max": 264.354,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 933,
+          "min": 805,
+          "max": 1091,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 508,
+          "min": 429,
+          "max": 618,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.01,
+          "min": 0.01,
+          "max": 0.01,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 165,
+          "min": 164,
+          "max": 237,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
       },
       "odin/calc": {
         "n": 3,
@@ -6439,6 +8062,212 @@
           "n": 3
         }
       },
+      "r/linalg": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.14031100000000002,
+          "min": 0.13356400000000002,
+          "max": 0.16240060000000003,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.14031100000000002,
+          "min": 0.13356400000000002,
+          "max": 0.16240060000000003,
+          "n": 3
+        },
+        "output": {
+          "median": 1681,
+          "min": 1543,
+          "max": 2441,
+          "n": 3
+        },
+        "turns": {
+          "median": 5,
+          "min": 4,
+          "max": 5,
+          "n": 3
+        },
+        "durationS": {
+          "median": 24.019,
+          "min": 20.631,
+          "max": 32.013,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1023,
+          "min": 959,
+          "max": 1338,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 525,
+          "min": 487,
+          "max": 702,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.16,
+          "min": 0.01,
+          "max": 0.17,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 24576,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 24576,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 98304,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 79,
+          "min": 75,
+          "max": 179,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "r/linreg": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.16550600000000001,
+          "min": 0.1596448,
+          "max": 0.1958164,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.16550600000000001,
+          "min": 0.1596448,
+          "max": 0.1958164,
+          "n": 3
+        },
+        "output": {
+          "median": 2648,
+          "min": 2391,
+          "max": 3449,
+          "n": 3
+        },
+        "turns": {
+          "median": 5,
+          "min": 5,
+          "max": 7,
+          "n": 3
+        },
+        "durationS": {
+          "median": 46.712,
+          "min": 35.04,
+          "max": 55.388,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1112,
+          "min": 1105,
+          "max": 1211,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 592,
+          "min": 588,
+          "max": 647,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.15,
+          "min": 0.14,
+          "max": 0.16,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 142,
+          "min": 79,
+          "max": 145,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
       "react/shop": {
         "n": 3,
         "solved": 3,
@@ -6591,6 +8420,212 @@
         "worktrees4Bytes": null,
         "devloopTargetBytes": null,
         "binaryBytes": null,
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "rocq/isort": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.1521256,
+          "min": 0.1472994,
+          "max": 0.15863460000000001,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.1521256,
+          "min": 0.1472994,
+          "max": 0.15863460000000001,
+          "n": 3
+        },
+        "output": {
+          "median": 1867,
+          "min": 1760,
+          "max": 1927,
+          "n": 3
+        },
+        "turns": {
+          "median": 4,
+          "min": 4,
+          "max": 5,
+          "n": 3
+        },
+        "durationS": {
+          "median": 24.17,
+          "min": 22.182,
+          "max": 25.636,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1179,
+          "min": 1153,
+          "max": 1191,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 617,
+          "min": 593,
+          "max": 623,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.21,
+          "min": 0.21,
+          "max": 0.22,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 28672,
+          "min": 24576,
+          "max": 28672,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 28672,
+          "min": 24576,
+          "max": 28672,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 114688,
+          "min": 98304,
+          "max": 114688,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "rocq/lists": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.12898,
+          "min": 0.12493800000000001,
+          "max": 0.1292692,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.12898,
+          "min": 0.12493800000000001,
+          "max": 0.1292692,
+          "n": 3
+        },
+        "output": {
+          "median": 1077,
+          "min": 1040,
+          "max": 1182,
+          "n": 3
+        },
+        "turns": {
+          "median": 4,
+          "min": 4,
+          "max": 4,
+          "n": 3
+        },
+        "durationS": {
+          "median": 15.911,
+          "min": 15.891,
+          "max": 16.939,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 864,
+          "min": 843,
+          "max": 873,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 409,
+          "min": 396,
+          "max": 417,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.07,
+          "min": 0.07,
+          "max": 0.07,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 16384,
+          "min": 16384,
+          "max": 16384,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 16384,
+          "min": 16384,
+          "max": 16384,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 65536,
+          "min": 65536,
+          "max": 65536,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
         "perfMs": null,
         "perfRps": null,
         "perfRssBytes": null
@@ -7053,6 +9088,212 @@
           "max": 69009408,
           "n": 3
         }
+      },
+      "solidity/token": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.2257074,
+          "min": 0.17554959999999997,
+          "max": 0.2379552,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.2257074,
+          "min": 0.17554959999999997,
+          "max": 0.2379552,
+          "n": 3
+        },
+        "output": {
+          "median": 3328,
+          "min": 1872,
+          "max": 3632,
+          "n": 3
+        },
+        "turns": {
+          "median": 4,
+          "min": 4,
+          "max": 6,
+          "n": 3
+        },
+        "durationS": {
+          "median": 44.163,
+          "min": 29.598,
+          "max": 51.981,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 1,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1882,
+          "min": 1111,
+          "max": 2479,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 896,
+          "min": 423,
+          "max": 1255,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 8.18,
+          "min": 7.63,
+          "max": 9.44,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 96268288,
+          "min": 54312960,
+          "max": 96804864,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 16236544,
+          "min": 15699968,
+          "max": 17051648,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 80568320,
+          "min": 37261312,
+          "max": 80568320,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 143368192,
+          "min": 105467904,
+          "max": 145514496,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "solidity/vesting": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.19208900000000004,
+          "min": 0.17278000000000002,
+          "max": 0.19954500000000003,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.19208900000000004,
+          "min": 0.17278000000000002,
+          "max": 0.19954500000000003,
+          "n": 3
+        },
+        "output": {
+          "median": 2619,
+          "min": 2118,
+          "max": 2881,
+          "n": 3
+        },
+        "turns": {
+          "median": 4,
+          "min": 3,
+          "max": 4,
+          "n": 3
+        },
+        "durationS": {
+          "median": 30.463,
+          "min": 23.668,
+          "max": 31.391,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1550,
+          "min": 1457,
+          "max": 1633,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 719,
+          "min": 633,
+          "max": 768,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 5.42,
+          "min": 5.18,
+          "max": 5.48,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 80576512,
+          "min": 80576512,
+          "max": 80576512,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 8192,
+          "min": 8192,
+          "max": 8192,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 80568320,
+          "min": 80568320,
+          "max": 80568320,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 80601088,
+          "min": 80601088,
+          "max": 80601088,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
       },
       "svelte/shop": {
         "n": 3,
@@ -8266,6 +10507,212 @@
         "worktrees4Bytes": null,
         "devloopTargetBytes": null,
         "binaryBytes": null,
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "vyper/token": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.2079568,
+          "min": 0.20405420000000002,
+          "max": 0.215278,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.2079568,
+          "min": 0.20405420000000002,
+          "max": 0.215278,
+          "n": 3
+        },
+        "output": {
+          "median": 3028,
+          "min": 2888,
+          "max": 3258,
+          "n": 3
+        },
+        "turns": {
+          "median": 4,
+          "min": 4,
+          "max": 4,
+          "n": 3
+        },
+        "durationS": {
+          "median": 32.307,
+          "min": 31.374,
+          "max": 33.495,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 2511,
+          "min": 1937,
+          "max": 2580,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 931,
+          "min": 898,
+          "max": 976,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.59,
+          "min": 0.41,
+          "max": 0.61,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 8192,
+          "min": 8192,
+          "max": 8192,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 8192,
+          "min": 8192,
+          "max": 8192,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 32768,
+          "min": 32768,
+          "max": 32768,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "vyper/vesting": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.19919420000000002,
+          "min": 0.18850820000000004,
+          "max": 0.20834319999999998,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.19919420000000002,
+          "min": 0.18850820000000004,
+          "max": 0.20834319999999998,
+          "n": 3
+        },
+        "output": {
+          "median": 2729,
+          "min": 2466,
+          "max": 3173,
+          "n": 3
+        },
+        "turns": {
+          "median": 5,
+          "min": 4,
+          "max": 5,
+          "n": 3
+        },
+        "durationS": {
+          "median": 32.907,
+          "min": 28.382,
+          "max": 37.758,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1462,
+          "min": 1422,
+          "max": 2336,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 697,
+          "min": 689,
+          "max": 857,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.39,
+          "min": 0.23,
+          "max": 0.63,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 4096,
+          "min": 4096,
+          "max": 4096,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 4096,
+          "min": 4096,
+          "max": 4096,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 16384,
+          "min": 16384,
+          "max": 16384,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
         "perfMs": null,
         "perfRps": null,
         "perfRssBytes": null
@@ -11228,6 +13675,425 @@
       "deps": []
     },
     {
+      "id": "circom-range-r1",
+      "lang": "circom",
+      "task": "range",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2301208,
+      "turns": 8,
+      "usage": {
+        "input": 16,
+        "output": 3341,
+        "thinking": 700,
+        "cacheRead": 122424,
+        "cacheWrite": 17344
+      },
+      "tools": {
+        "Bash": 7
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 48.271,
+      "apiS": 42.487,
+      "solved": true,
+      "pass": 12,
+      "total": 12,
+      "buildOk": true,
+      "buildSecs": 0.64,
+      "footprintBytes": 5132288,
+      "projectBytes": 3645440,
+      "cacheBytes": 1486848,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1142,
+      "codeTokensCl100k": 632,
+      "codeChars": 2030,
+      "codeLines": 79,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "circuits/range.circom"
+        },
+        {
+          "path": "package.json"
+        },
+        {
+          "path": "prove.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2301208,
+      "worktrees4Bytes": 16068608,
+      "devloopTargetBytes": null,
+      "deps": [
+        "circomlib"
+      ]
+    },
+    {
+      "id": "circom-range-r2",
+      "lang": "circom",
+      "task": "range",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2381684,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 3857,
+        "thinking": 737,
+        "cacheRead": 103622,
+        "cacheWrite": 17531
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 3,
+      "compileErrors": 1,
+      "stdlibReads": 0,
+      "checkRuns": 3,
+      "firstCheckPass": false,
+      "durationS": 50.266,
+      "apiS": 45.929,
+      "solved": true,
+      "pass": 12,
+      "total": 12,
+      "buildOk": true,
+      "buildSecs": 0.56,
+      "footprintBytes": 5128192,
+      "projectBytes": 3641344,
+      "cacheBytes": 1486848,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1170,
+      "codeTokensCl100k": 654,
+      "codeChars": 2094,
+      "codeLines": 74,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "circuits/range.circom"
+        },
+        {
+          "path": "package.json"
+        },
+        {
+          "path": "prove.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2381684,
+      "worktrees4Bytes": 16052224,
+      "devloopTargetBytes": null,
+      "deps": [
+        "circomlib"
+      ]
+    },
+    {
+      "id": "circom-range-r3",
+      "lang": "circom",
+      "task": "range",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2114484,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 3390,
+        "thinking": 869,
+        "cacheRead": 63362,
+        "cacheWrite": 16367
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 42.133,
+      "apiS": 38.192,
+      "solved": true,
+      "pass": 12,
+      "total": 12,
+      "buildOk": true,
+      "buildSecs": 0.52,
+      "footprintBytes": 5128192,
+      "projectBytes": 3641344,
+      "cacheBytes": 1486848,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1367,
+      "codeTokensCl100k": 781,
+      "codeChars": 2627,
+      "codeLines": 86,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "package.json"
+        },
+        {
+          "path": "prove.sh"
+        },
+        {
+          "path": "range.circom"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2114484,
+      "worktrees4Bytes": 16052224,
+      "devloopTargetBytes": null,
+      "deps": [
+        "circomlib"
+      ]
+    },
+    {
+      "id": "circom-sudoku-r1",
+      "lang": "circom",
+      "task": "sudoku",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2274228,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 5223,
+        "thinking": 1324,
+        "cacheRead": 67054,
+        "cacheWrite": 13688
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 66.506,
+      "apiS": 54.527,
+      "solved": true,
+      "pass": 10,
+      "total": 10,
+      "buildOk": true,
+      "buildSecs": 2.08,
+      "footprintBytes": 90984448,
+      "projectBytes": 66396160,
+      "cacheBytes": 24588288,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1918,
+      "codeTokensCl100k": 1184,
+      "codeChars": 3743,
+      "codeLines": 121,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "circuits/sudoku.circom"
+        },
+        {
+          "path": "package.json"
+        },
+        {
+          "path": "prove.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2274228,
+      "worktrees4Bytes": 290172928,
+      "devloopTargetBytes": null,
+      "deps": [
+        "snarkjs"
+      ]
+    },
+    {
+      "id": "circom-sudoku-r2",
+      "lang": "circom",
+      "task": "sudoku",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.299151,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 5752,
+        "thinking": 1640,
+        "cacheRead": 112475,
+        "cacheWrite": 20195
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 61.835,
+      "apiS": 59.149,
+      "solved": true,
+      "pass": 10,
+      "total": 10,
+      "buildOk": true,
+      "buildSecs": 0.03,
+      "footprintBytes": 102400,
+      "projectBytes": 102400,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1862,
+      "codeTokensCl100k": 1111,
+      "codeChars": 3610,
+      "codeLines": 119,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "circuits/sudoku.circom"
+        },
+        {
+          "path": "prove.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.299151,
+      "worktrees4Bytes": 409600,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "circom-sudoku-r3",
+      "lang": "circom",
+      "task": "sudoku",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.18368900000000002,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 3920,
+        "thinking": 1562,
+        "cacheRead": 37085,
+        "cacheWrite": 12230
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 42.96,
+      "apiS": 41.542,
+      "solved": true,
+      "pass": 10,
+      "total": 10,
+      "buildOk": true,
+      "buildSecs": 0.03,
+      "footprintBytes": 94208,
+      "projectBytes": 94208,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1665,
+      "codeTokensCl100k": 1025,
+      "codeChars": 3247,
+      "codeLines": 104,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "circuits/main.circom"
+        },
+        {
+          "path": "circuits/sudoku.circom"
+        },
+        {
+          "path": "prove.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.18368900000000002,
+      "worktrees4Bytes": 376832,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
       "id": "cpp-calc-r1",
       "lang": "cpp",
       "task": "calc",
@@ -12901,6 +15767,384 @@
       "works": true,
       "costToGreenUsd": 0.29657600000000006,
       "worktrees4Bytes": 535191552,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "dafny-isort-r1",
+      "lang": "dafny",
+      "task": "isort",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1314418,
+      "turns": 3,
+      "usage": {
+        "input": 6,
+        "output": 1173,
+        "thinking": 63,
+        "cacheRead": 25509,
+        "cacheWrite": 12857
+      },
+      "tools": {
+        "Bash": 2
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 16.04,
+      "apiS": 13.257,
+      "solved": true,
+      "pass": 9,
+      "total": 9,
+      "buildOk": true,
+      "buildSecs": 1.09,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1170,
+      "codeTokensCl100k": 596,
+      "codeChars": 1929,
+      "codeLines": 91,
+      "fileTokens": [
+        {
+          "path": "ISort.dfy"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1314418,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "dafny-isort-r2",
+      "lang": "dafny",
+      "task": "isort",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.12470160000000001,
+      "turns": 3,
+      "usage": {
+        "input": 6,
+        "output": 1132,
+        "thinking": 104,
+        "cacheRead": 24828,
+        "cacheWrite": 12134
+      },
+      "tools": {
+        "Bash": 2
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 16.865,
+      "apiS": 14.079,
+      "solved": true,
+      "pass": 9,
+      "total": 9,
+      "buildOk": true,
+      "buildSecs": 1.11,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1084,
+      "codeTokensCl100k": 547,
+      "codeChars": 1775,
+      "codeLines": 85,
+      "fileTokens": [
+        {
+          "path": "ISort.dfy"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.12470160000000001,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "dafny-isort-r3",
+      "lang": "dafny",
+      "task": "isort",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.12518620000000003,
+      "turns": 3,
+      "usage": {
+        "input": 6,
+        "output": 1150,
+        "thinking": 64,
+        "cacheRead": 24851,
+        "cacheWrite": 12149
+      },
+      "tools": {
+        "Bash": 2
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 16.927,
+      "apiS": 14.178,
+      "solved": true,
+      "pass": 9,
+      "total": 9,
+      "buildOk": true,
+      "buildSecs": 1.21,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1115,
+      "codeTokensCl100k": 557,
+      "codeChars": 1817,
+      "codeLines": 86,
+      "fileTokens": [
+        {
+          "path": "ISort.dfy"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.12518620000000003,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "dafny-lists-r1",
+      "lang": "dafny",
+      "task": "lists",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.140197,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1431,
+        "thinking": 35,
+        "cacheRead": 40045,
+        "cacheWrite": 12942
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 20.872,
+      "apiS": 17.836,
+      "solved": true,
+      "pass": 9,
+      "total": 9,
+      "buildOk": true,
+      "buildSecs": 1.2,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1179,
+      "codeTokensCl100k": 546,
+      "codeChars": 1764,
+      "codeLines": 76,
+      "fileTokens": [
+        {
+          "path": "Lists.dfy"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.140197,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "dafny-lists-r2",
+      "lang": "dafny",
+      "task": "lists",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.12547640000000002,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1046,
+        "thinking": 0,
+        "cacheRead": 39142,
+        "cacheWrite": 12087
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 17.105,
+      "apiS": 14.189,
+      "solved": true,
+      "pass": 9,
+      "total": 9,
+      "buildOk": true,
+      "buildSecs": 1.24,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1139,
+      "codeTokensCl100k": 523,
+      "codeChars": 1674,
+      "codeLines": 75,
+      "fileTokens": [
+        {
+          "path": "Lists.dfy"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.12547640000000002,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "dafny-lists-r3",
+      "lang": "dafny",
+      "task": "lists",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1276752,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1135,
+        "thinking": 38,
+        "cacheRead": 39196,
+        "cacheWrite": 12138
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 18.968,
+      "apiS": 15.407,
+      "solved": true,
+      "pass": 9,
+      "total": 9,
+      "buildOk": true,
+      "buildSecs": 1.19,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1145,
+      "codeTokensCl100k": 526,
+      "codeChars": 1685,
+      "codeLines": 75,
+      "fileTokens": [
+        {
+          "path": "Lists.dfy"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1276752,
+      "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
       "deps": []
     },
@@ -16134,6 +19378,402 @@
       "deps": []
     },
     {
+      "id": "julia-linalg-r1",
+      "lang": "julia",
+      "task": "linalg",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1942596,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 3114,
+        "thinking": 607,
+        "cacheRead": 75098,
+        "cacheWrite": 14614
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 52.402,
+      "apiS": 36.096,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 2.78,
+      "footprintBytes": 294912,
+      "projectBytes": 0,
+      "cacheBytes": 294912,
+      "binaryBytes": 143,
+      "failures": [],
+      "codeTokens": 1754,
+      "codeTokensCl100k": 1000,
+      "codeChars": 3366,
+      "codeLines": 122,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "main.jl"
+        },
+        {
+          "path": "src/LinalgApp.jl"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1942596,
+      "worktrees4Bytes": 294912,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "julia-linalg-r2",
+      "lang": "julia",
+      "task": "linalg",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1794676,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 2559,
+        "thinking": 589,
+        "cacheRead": 57198,
+        "cacheWrite": 14601
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 41.684,
+      "apiS": 30.729,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 2.22,
+      "footprintBytes": 294912,
+      "projectBytes": 0,
+      "cacheBytes": 294912,
+      "binaryBytes": 149,
+      "failures": [],
+      "codeTokens": 1315,
+      "codeTokensCl100k": 737,
+      "codeChars": 2356,
+      "codeLines": 93,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/linalg.jl"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1794676,
+      "worktrees4Bytes": 294912,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "julia-linalg-r3",
+      "lang": "julia",
+      "task": "linalg",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.17385720000000002,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 2776,
+        "thinking": 587,
+        "cacheRead": 56326,
+        "cacheWrite": 13379
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 38.833,
+      "apiS": 32.308,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.71,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 147,
+      "failures": [],
+      "codeTokens": 1649,
+      "codeTokensCl100k": 920,
+      "codeChars": 3236,
+      "codeLines": 126,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/LinAlgApp.jl"
+        },
+        {
+          "path": "src/main.jl"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.17385720000000002,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "julia-linreg-r1",
+      "lang": "julia",
+      "task": "linreg",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.4247374,
+      "turns": 12,
+      "usage": {
+        "input": 24,
+        "output": 9910,
+        "thinking": 3433,
+        "cacheRead": 226407,
+        "cacheWrite": 22645
+      },
+      "tools": {
+        "Bash": 11
+      },
+      "builds": 4,
+      "compileErrors": 2,
+      "stdlibReads": 0,
+      "checkRuns": 4,
+      "firstCheckPass": false,
+      "durationS": 162.627,
+      "apiS": 107.922,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 1.23,
+      "footprintBytes": 1458176,
+      "projectBytes": 1458176,
+      "cacheBytes": 0,
+      "binaryBytes": 227,
+      "failures": [],
+      "codeTokens": 3737,
+      "codeTokensCl100k": 2361,
+      "codeChars": 8029,
+      "codeLines": 268,
+      "fileTokens": [
+        {
+          "path": "Project.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/Linreg.jl"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.4247374,
+      "worktrees4Bytes": 5832704,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "julia-linreg-r2",
+      "lang": "julia",
+      "task": "linreg",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.28327840000000004,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 7091,
+        "thinking": 2490,
+        "cacheRead": 42772,
+        "cacheWrite": 16609
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 117.099,
+      "apiS": 69.076,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 63.2,
+      "footprintBytes": 84971520,
+      "projectBytes": 84971520,
+      "cacheBytes": 0,
+      "binaryBytes": 242,
+      "failures": [],
+      "codeTokens": 4315,
+      "codeTokensCl100k": 2764,
+      "codeChars": 8590,
+      "codeLines": 297,
+      "fileTokens": [
+        {
+          "path": "LinReg/Manifest.toml"
+        },
+        {
+          "path": "LinReg/Project.toml"
+        },
+        {
+          "path": "LinReg/src/LinReg.jl"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.28327840000000004,
+      "worktrees4Bytes": 339886080,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "julia-linreg-r3",
+      "lang": "julia",
+      "task": "linreg",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2405332,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 5217,
+        "thinking": 1369,
+        "cacheRead": 59926,
+        "cacheWrite": 15521
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 67.34,
+      "apiS": 53.632,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.74,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 165,
+      "failures": [],
+      "codeTokens": 2954,
+      "codeTokensCl100k": 1804,
+      "codeChars": 6189,
+      "codeLines": 238,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/LinReg.jl"
+        },
+        {
+          "path": "src/main.jl"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2405332,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
       "id": "kotlin-calc-r1",
       "lang": "kotlin",
       "task": "calc",
@@ -16886,6 +20526,384 @@
       "works": true,
       "costToGreenUsd": 0.1802954,
       "worktrees4Bytes": 23019520,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "lean-isort-r1",
+      "lang": "lean",
+      "task": "isort",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.186201,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 2339,
+        "thinking": 477,
+        "cacheRead": 93545,
+        "cacheWrite": 15082
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 3,
+      "compileErrors": 1,
+      "stdlibReads": 0,
+      "checkRuns": 3,
+      "firstCheckPass": false,
+      "durationS": 35.054,
+      "apiS": 30.466,
+      "solved": true,
+      "pass": 10,
+      "total": 10,
+      "buildOk": true,
+      "buildSecs": 0.55,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1175,
+      "codeTokensCl100k": 680,
+      "codeChars": 2046,
+      "codeLines": 69,
+      "fileTokens": [
+        {
+          "path": "ISort.lean"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.186201,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "lean-isort-r2",
+      "lang": "lean",
+      "task": "isort",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1477158,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1636,
+        "thinking": 413,
+        "cacheRead": 40299,
+        "cacheWrite": 13363
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 21.12,
+      "apiS": 19.541,
+      "solved": true,
+      "pass": 10,
+      "total": 10,
+      "buildOk": true,
+      "buildSecs": 0.53,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1178,
+      "codeTokensCl100k": 651,
+      "codeChars": 2029,
+      "codeLines": 70,
+      "fileTokens": [
+        {
+          "path": "ISort.lean"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1477158,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "lean-isort-r3",
+      "lang": "lean",
+      "task": "isort",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.14777079999999998,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 1745,
+        "thinking": 414,
+        "cacheRead": 55234,
+        "cacheWrite": 12723
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 23.897,
+      "apiS": 21.724,
+      "solved": true,
+      "pass": 10,
+      "total": 10,
+      "buildOk": true,
+      "buildSecs": 0.52,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1130,
+      "codeTokensCl100k": 647,
+      "codeChars": 1963,
+      "codeLines": 68,
+      "fileTokens": [
+        {
+          "path": "ISort.lean"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.14777079999999998,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "lean-lists-r1",
+      "lang": "lean",
+      "task": "lists",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1265158,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1040,
+        "thinking": 52,
+        "cacheRead": 39419,
+        "cacheWrite": 12225
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 16.841,
+      "apiS": 15.134,
+      "solved": true,
+      "pass": 10,
+      "total": 10,
+      "buildOk": true,
+      "buildSecs": 0.51,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 719,
+      "codeTokensCl100k": 369,
+      "codeChars": 1152,
+      "codeLines": 41,
+      "fileTokens": [
+        {
+          "path": "Lists.lean"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1265158,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "lean-lists-r2",
+      "lang": "lean",
+      "task": "lists",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1276884,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 994,
+        "thinking": 23,
+        "cacheRead": 40282,
+        "cacheWrite": 12465
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 15.672,
+      "apiS": 14.035,
+      "solved": true,
+      "pass": 10,
+      "total": 10,
+      "buildOk": true,
+      "buildSecs": 0.52,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 712,
+      "codeTokensCl100k": 366,
+      "codeChars": 1146,
+      "codeLines": 41,
+      "fileTokens": [
+        {
+          "path": "Lists.lean"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1276884,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "lean-lists-r3",
+      "lang": "lean",
+      "task": "lists",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1295288,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1032,
+        "thinking": 42,
+        "cacheRead": 39804,
+        "cacheWrite": 12612
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 16.552,
+      "apiS": 15.078,
+      "solved": true,
+      "pass": 10,
+      "total": 10,
+      "buildOk": true,
+      "buildSecs": 0.52,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 717,
+      "codeTokensCl100k": 369,
+      "codeChars": 1157,
+      "codeLines": 41,
+      "fileTokens": [
+        {
+          "path": "Lists.lean"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1295288,
+      "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
       "deps": []
     },
@@ -17658,6 +21676,420 @@
       "works": true,
       "costToGreenUsd": 0.112619,
       "worktrees4Bytes": 2342912,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "noir-range-r1",
+      "lang": "noir",
+      "task": "range",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.22763900000000004,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 3070,
+        "thinking": 671,
+        "cacheRead": 88195,
+        "cacheWrite": 18569
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": false,
+      "durationS": 44.55,
+      "apiS": 36.345,
+      "solved": true,
+      "pass": 12,
+      "total": 12,
+      "buildOk": true,
+      "buildSecs": 0.22,
+      "footprintBytes": 8192,
+      "projectBytes": 8192,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1214,
+      "codeTokensCl100k": 644,
+      "codeChars": 2289,
+      "codeLines": 86,
+      "fileTokens": [
+        {
+          "path": "Nargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "prove.sh"
+        },
+        {
+          "path": "src/main.nr"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.22763900000000004,
+      "worktrees4Bytes": 32768,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "noir-range-r2",
+      "lang": "noir",
+      "task": "range",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.20563,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 2878,
+        "thinking": 665,
+        "cacheRead": 65550,
+        "cacheWrite": 16865
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": false,
+      "durationS": 39.863,
+      "apiS": 33.855,
+      "solved": true,
+      "pass": 12,
+      "total": 12,
+      "buildOk": true,
+      "buildSecs": 0.22,
+      "footprintBytes": 53248,
+      "projectBytes": 53248,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1443,
+      "codeTokensCl100k": 781,
+      "codeChars": 2652,
+      "codeLines": 108,
+      "fileTokens": [
+        {
+          "path": "Nargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "prove.sh"
+        },
+        {
+          "path": "src/main.nr"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.20563,
+      "worktrees4Bytes": 212992,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "noir-range-r3",
+      "lang": "noir",
+      "task": "range",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.19701699999999997,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 2475,
+        "thinking": 606,
+        "cacheRead": 83985,
+        "cacheWrite": 16334
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": false,
+      "durationS": 36.782,
+      "apiS": 31.308,
+      "solved": true,
+      "pass": 12,
+      "total": 12,
+      "buildOk": true,
+      "buildSecs": 0.21,
+      "footprintBytes": 12288,
+      "projectBytes": 12288,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1116,
+      "codeTokensCl100k": 588,
+      "codeChars": 2047,
+      "codeLines": 82,
+      "fileTokens": [
+        {
+          "path": "Nargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "prove.sh"
+        },
+        {
+          "path": "src/main.nr"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.19701699999999997,
+      "worktrees4Bytes": 49152,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "noir-sudoku-r1",
+      "lang": "noir",
+      "task": "sudoku",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2598342,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 4452,
+        "thinking": 1232,
+        "cacheRead": 89971,
+        "cacheWrite": 19094
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 51.269,
+      "apiS": 47.83,
+      "solved": true,
+      "pass": 10,
+      "total": 10,
+      "buildOk": true,
+      "buildSecs": 0.22,
+      "footprintBytes": 16384,
+      "projectBytes": 16384,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1955,
+      "codeTokensCl100k": 1165,
+      "codeChars": 3533,
+      "codeLines": 129,
+      "fileTokens": [
+        {
+          "path": "Nargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "prove.sh"
+        },
+        {
+          "path": "src/main.nr"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2598342,
+      "worktrees4Bytes": 65536,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "noir-sudoku-r2",
+      "lang": "noir",
+      "task": "sudoku",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2753384,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 5112,
+        "thinking": 1268,
+        "cacheRead": 91692,
+        "cacheWrite": 19339
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": false,
+      "durationS": 58.257,
+      "apiS": 53.549,
+      "solved": true,
+      "pass": 10,
+      "total": 10,
+      "buildOk": true,
+      "buildSecs": 0.22,
+      "footprintBytes": 20480,
+      "projectBytes": 20480,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 2512,
+      "codeTokensCl100k": 1665,
+      "codeChars": 4457,
+      "codeLines": 158,
+      "fileTokens": [
+        {
+          "path": "Nargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "prove.sh"
+        },
+        {
+          "path": "src/main.nr"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2753384,
+      "worktrees4Bytes": 81920,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "noir-sudoku-r3",
+      "lang": "noir",
+      "task": "sudoku",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2330644,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 3806,
+        "thinking": 1289,
+        "cacheRead": 67042,
+        "cacheWrite": 17937
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 44.527,
+      "apiS": 41.709,
+      "solved": true,
+      "pass": 10,
+      "total": 10,
+      "buildOk": true,
+      "buildSecs": 0.21,
+      "footprintBytes": 20480,
+      "projectBytes": 20480,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1929,
+      "codeTokensCl100k": 1189,
+      "codeChars": 3698,
+      "codeLines": 133,
+      "fileTokens": [
+        {
+          "path": "Nargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "prove.sh"
+        },
+        {
+          "path": "src/main.nr"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2330644,
+      "worktrees4Bytes": 81920,
       "devloopTargetBytes": null,
       "deps": []
     },
@@ -18504,6 +22936,384 @@
       "works": true,
       "costToGreenUsd": 0.14213240000000002,
       "worktrees4Bytes": 10420224,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "octave-linalg-r1",
+      "lang": "octave",
+      "task": "linalg",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1476638,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 1919,
+        "thinking": 354,
+        "cacheRead": 54739,
+        "cacheWrite": 12287
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 27.672,
+      "apiS": 24.504,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 246,
+      "failures": [],
+      "codeTokens": 910,
+      "codeTokensCl100k": 482,
+      "codeChars": 1394,
+      "codeLines": 53,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "linalg.m"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1476638,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "octave-linalg-r2",
+      "lang": "octave",
+      "task": "linalg",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1353342,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1600,
+        "thinking": 278,
+        "cacheRead": 38911,
+        "cacheWrite": 11940
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 22.128,
+      "apiS": 19.894,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 120,
+      "failures": [],
+      "codeTokens": 990,
+      "codeTokensCl100k": 538,
+      "codeChars": 1612,
+      "codeLines": 62,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "linalg.m"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1353342,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "octave-linalg-r3",
+      "lang": "octave",
+      "task": "linalg",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1494898,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 1949,
+        "thinking": 280,
+        "cacheRead": 54669,
+        "cacheWrite": 12442
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 27.406,
+      "apiS": 25.084,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 283,
+      "failures": [],
+      "codeTokens": 1025,
+      "codeTokensCl100k": 573,
+      "codeChars": 1657,
+      "codeLines": 56,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "linalg.m"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1494898,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "octave-linreg-r1",
+      "lang": "octave",
+      "task": "linreg",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2335122,
+      "turns": 12,
+      "usage": {
+        "input": 24,
+        "output": 3967,
+        "thinking": 793,
+        "cacheRead": 170941,
+        "cacheWrite": 14986
+      },
+      "tools": {
+        "Bash": 11
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 105.981,
+      "apiS": 55.472,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 164,
+      "failures": [],
+      "codeTokens": 933,
+      "codeTokensCl100k": 508,
+      "codeChars": 1523,
+      "codeLines": 60,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/linreg.m"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2335122,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "octave-linreg-r2",
+      "lang": "octave",
+      "task": "linreg",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.3276260000000001,
+      "turns": 15,
+      "usage": {
+        "input": 30,
+        "output": 6677,
+        "thinking": 1935,
+        "cacheRead": 237590,
+        "cacheWrite": 18306
+      },
+      "tools": {
+        "Bash": 14
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 162.893,
+      "apiS": 85.598,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 165,
+      "failures": [],
+      "codeTokens": 1091,
+      "codeTokensCl100k": 618,
+      "codeChars": 1921,
+      "codeLines": 69,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/linreg.m"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.3276260000000001,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "octave-linreg-r3",
+      "lang": "octave",
+      "task": "linreg",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.44056720000000005,
+      "turns": 19,
+      "usage": {
+        "input": 38,
+        "output": 9817,
+        "thinking": 4206,
+        "cacheRead": 320296,
+        "cacheWrite": 22502
+      },
+      "tools": {
+        "Bash": 18
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 264.354,
+      "apiS": 123.415,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 237,
+      "failures": [],
+      "codeTokens": 805,
+      "codeTokensCl100k": 429,
+      "codeChars": 1250,
+      "codeLines": 50,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "linreg.m"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.44056720000000005,
+      "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
       "deps": []
     },
@@ -20101,6 +24911,384 @@
       "deps": []
     },
     {
+      "id": "r-linalg-r1",
+      "lang": "r",
+      "task": "linalg",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.13356400000000002,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1543,
+        "thinking": 180,
+        "cacheRead": 38880,
+        "cacheWrite": 11862
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 20.631,
+      "apiS": 19.267,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.16,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 79,
+      "failures": [],
+      "codeTokens": 1023,
+      "codeTokensCl100k": 525,
+      "codeChars": 1670,
+      "codeLines": 50,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/linalg.R"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.13356400000000002,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "r-linalg-r2",
+      "lang": "r",
+      "task": "linalg",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.14031100000000002,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 1681,
+        "thinking": 185,
+        "cacheRead": 53855,
+        "cacheWrite": 11985
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 24.019,
+      "apiS": 21.855,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 75,
+      "failures": [],
+      "codeTokens": 959,
+      "codeTokensCl100k": 487,
+      "codeChars": 1496,
+      "codeLines": 46,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "linalg.R"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.14031100000000002,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "r-linalg-r3",
+      "lang": "r",
+      "task": "linalg",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.16240060000000003,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 2441,
+        "thinking": 362,
+        "cacheRead": 55463,
+        "cacheWrite": 12806
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 32.013,
+      "apiS": 28.764,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.17,
+      "footprintBytes": 24576,
+      "projectBytes": 24576,
+      "cacheBytes": 0,
+      "binaryBytes": 179,
+      "failures": [],
+      "codeTokens": 1338,
+      "codeTokensCl100k": 702,
+      "codeChars": 2273,
+      "codeLines": 73,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/linalg.R"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.16240060000000003,
+      "worktrees4Bytes": 98304,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "r-linreg-r1",
+      "lang": "r",
+      "task": "linreg",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.16550600000000001,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 2648,
+        "thinking": 683,
+        "cacheRead": 54650,
+        "cacheWrite": 12697
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 46.712,
+      "apiS": 31.312,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.14,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 145,
+      "failures": [],
+      "codeTokens": 1112,
+      "codeTokensCl100k": 588,
+      "codeChars": 1866,
+      "codeLines": 56,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/linreg.R"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.16550600000000001,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "r-linreg-r2",
+      "lang": "r",
+      "task": "linreg",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1596448,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 2391,
+        "thinking": 558,
+        "cacheRead": 53604,
+        "cacheWrite": 12633
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 35.04,
+      "apiS": 28.168,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.15,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 142,
+      "failures": [],
+      "codeTokens": 1211,
+      "codeTokensCl100k": 647,
+      "codeChars": 2068,
+      "codeLines": 71,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "linreg.R"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1596448,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "r-linreg-r3",
+      "lang": "r",
+      "task": "linreg",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1958164,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 3449,
+        "thinking": 976,
+        "cacheRead": 87022,
+        "cacheWrite": 13672
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 55.388,
+      "apiS": 42.129,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.16,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 79,
+      "failures": [],
+      "codeTokens": 1105,
+      "codeTokensCl100k": 592,
+      "codeChars": 1832,
+      "codeLines": 57,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/linreg.R"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1958164,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
       "id": "react-shop-r1",
       "lang": "react",
       "task": "shop",
@@ -20778,6 +25966,384 @@
       "works": true,
       "costToGreenUsd": 0.1159534,
       "worktrees4Bytes": null,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "rocq-isort-r1",
+      "lang": "rocq",
+      "task": "isort",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.15863460000000001,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 1927,
+        "thinking": 513,
+        "cacheRead": 58873,
+        "cacheWrite": 13535
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 25.636,
+      "apiS": 24.325,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.21,
+      "footprintBytes": 28672,
+      "projectBytes": 28672,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1179,
+      "codeTokensCl100k": 617,
+      "codeChars": 2031,
+      "codeLines": 69,
+      "fileTokens": [
+        {
+          "path": "ISort.v"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.15863460000000001,
+      "worktrees4Bytes": 114688,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "rocq-isort-r2",
+      "lang": "rocq",
+      "task": "isort",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1521256,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1867,
+        "thinking": 421,
+        "cacheRead": 40008,
+        "cacheWrite": 13344
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 24.17,
+      "apiS": 23.149,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.22,
+      "footprintBytes": 28672,
+      "projectBytes": 28672,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1153,
+      "codeTokensCl100k": 593,
+      "codeChars": 1960,
+      "codeLines": 71,
+      "fileTokens": [
+        {
+          "path": "ISort.v"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1521256,
+      "worktrees4Bytes": 114688,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "rocq-isort-r3",
+      "lang": "rocq",
+      "task": "isort",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1472994,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1760,
+        "thinking": 416,
+        "cacheRead": 41217,
+        "cacheWrite": 12978
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 22.182,
+      "apiS": 21.132,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.21,
+      "footprintBytes": 24576,
+      "projectBytes": 24576,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1191,
+      "codeTokensCl100k": 623,
+      "codeChars": 2075,
+      "codeLines": 72,
+      "fileTokens": [
+        {
+          "path": "ISort.v"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1472994,
+      "worktrees4Bytes": 98304,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "rocq-lists-r1",
+      "lang": "rocq",
+      "task": "lists",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.12493800000000001,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1040,
+        "thinking": 94,
+        "cacheRead": 39370,
+        "cacheWrite": 12029
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 15.911,
+      "apiS": 15.321,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.07,
+      "footprintBytes": 16384,
+      "projectBytes": 16384,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 843,
+      "codeTokensCl100k": 396,
+      "codeChars": 1297,
+      "codeLines": 52,
+      "fileTokens": [
+        {
+          "path": "Lists.v"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.12493800000000001,
+      "worktrees4Bytes": 65536,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "rocq-lists-r2",
+      "lang": "rocq",
+      "task": "lists",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.1292692,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1182,
+        "thinking": 304,
+        "cacheRead": 39266,
+        "cacheWrite": 12218
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 16.939,
+      "apiS": 16.224,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.07,
+      "footprintBytes": 16384,
+      "projectBytes": 16384,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 873,
+      "codeTokensCl100k": 417,
+      "codeChars": 1383,
+      "codeLines": 53,
+      "fileTokens": [
+        {
+          "path": "Lists.v"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.1292692,
+      "worktrees4Bytes": 65536,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "rocq-lists-r3",
+      "lang": "rocq",
+      "task": "lists",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.12898,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1077,
+        "thinking": 100,
+        "cacheRead": 39760,
+        "cacheWrite": 12432
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 15.891,
+      "apiS": 15.177,
+      "solved": true,
+      "pass": 8,
+      "total": 8,
+      "buildOk": true,
+      "buildSecs": 0.07,
+      "footprintBytes": 16384,
+      "projectBytes": 16384,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 864,
+      "codeTokensCl100k": 409,
+      "codeChars": 1359,
+      "codeLines": 53,
+      "fileTokens": [
+        {
+          "path": "Lists.v"
+        },
+        {
+          "path": "build.sh"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.12898,
+      "worktrees4Bytes": 65536,
       "devloopTargetBytes": null,
       "deps": []
     },
@@ -21607,6 +27173,408 @@
       "works": true,
       "costToGreenUsd": 0.1446942,
       "worktrees4Bytes": 4907008,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "solidity-token-r1",
+      "lang": "solidity",
+      "task": "token",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2379552,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 3328,
+        "thinking": 326,
+        "cacheRead": 90136,
+        "cacheWrite": 19165
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 4,
+      "compileErrors": 1,
+      "stdlibReads": 0,
+      "checkRuns": 4,
+      "firstCheckPass": true,
+      "durationS": 51.981,
+      "apiS": 35.887,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 9.44,
+      "footprintBytes": 96804864,
+      "projectBytes": 16236544,
+      "cacheBytes": 80568320,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1882,
+      "codeTokensCl100k": 896,
+      "codeChars": 3378,
+      "codeLines": 107,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "foundry.toml"
+        },
+        {
+          "path": "src/Token.sol"
+        },
+        {
+          "path": "test/Token.t.sol"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2379552,
+      "worktrees4Bytes": 145514496,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "solidity-token-r2",
+      "lang": "solidity",
+      "task": "token",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2257074,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 3632,
+        "thinking": 557,
+        "cacheRead": 46777,
+        "cacheWrite": 17960
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 44.163,
+      "apiS": 35.09,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 8.18,
+      "footprintBytes": 54312960,
+      "projectBytes": 17051648,
+      "cacheBytes": 37261312,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 2479,
+      "codeTokensCl100k": 1255,
+      "codeChars": 4817,
+      "codeLines": 153,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "foundry.toml"
+        },
+        {
+          "path": "src/Token.sol"
+        },
+        {
+          "path": "test/Token.t.sol"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2257074,
+      "worktrees4Bytes": 105467904,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "solidity-token-r3",
+      "lang": "solidity",
+      "task": "token",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.17554959999999997,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 1872,
+        "thinking": 503,
+        "cacheRead": 46868,
+        "cacheWrite": 16088
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 29.598,
+      "apiS": 23.466,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 7.63,
+      "footprintBytes": 96268288,
+      "projectBytes": 15699968,
+      "cacheBytes": 80568320,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1111,
+      "codeTokensCl100k": 423,
+      "codeChars": 1459,
+      "codeLines": 48,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "foundry.toml"
+        },
+        {
+          "path": "src/Token.sol"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.17554959999999997,
+      "worktrees4Bytes": 143368192,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "solidity-vesting-r1",
+      "lang": "solidity",
+      "task": "vesting",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.19208900000000004,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 2619,
+        "thinking": 554,
+        "cacheRead": 46385,
+        "cacheWrite": 16300
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 30.463,
+      "apiS": 28.405,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 5.42,
+      "footprintBytes": 80576512,
+      "projectBytes": 8192,
+      "cacheBytes": 80568320,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1457,
+      "codeTokensCl100k": 633,
+      "codeChars": 2730,
+      "codeLines": 86,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "foundry.toml"
+        },
+        {
+          "path": "src/Vesting.sol"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.19208900000000004,
+      "worktrees4Bytes": 80601088,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "solidity-vesting-r2",
+      "lang": "solidity",
+      "task": "vesting",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.17278000000000002,
+      "turns": 3,
+      "usage": {
+        "input": 6,
+        "output": 2118,
+        "thinking": 465,
+        "cacheRead": 27420,
+        "cacheWrite": 15614
+      },
+      "tools": {
+        "Bash": 2
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "durationS": 23.668,
+      "apiS": 22.546,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 5.48,
+      "footprintBytes": 80576512,
+      "projectBytes": 8192,
+      "cacheBytes": 80568320,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1633,
+      "codeTokensCl100k": 768,
+      "codeChars": 3242,
+      "codeLines": 103,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "foundry.toml"
+        },
+        {
+          "path": "src/Vesting.sol"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.17278000000000002,
+      "worktrees4Bytes": 80601088,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "solidity-vesting-r3",
+      "lang": "solidity",
+      "task": "vesting",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.19954500000000003,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 2881,
+        "thinking": 659,
+        "cacheRead": 46665,
+        "cacheWrite": 16570
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 31.391,
+      "apiS": 29.498,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 5.18,
+      "footprintBytes": 80576512,
+      "projectBytes": 8192,
+      "cacheBytes": 80568320,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1550,
+      "codeTokensCl100k": 719,
+      "codeChars": 3043,
+      "codeLines": 98,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "foundry.toml"
+        },
+        {
+          "path": "src/Vesting.sol"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.19954500000000003,
+      "worktrees4Bytes": 80601088,
       "devloopTargetBytes": null,
       "deps": []
     },
@@ -24606,6 +30574,384 @@
       "works": true,
       "costToGreenUsd": 0.1110984,
       "worktrees4Bytes": null,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "vyper-token-r1",
+      "lang": "vyper",
+      "task": "token",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2079568,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 3028,
+        "thinking": 376,
+        "cacheRead": 47824,
+        "cacheWrite": 17225
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 32.307,
+      "apiS": 29.58,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 0.61,
+      "footprintBytes": 8192,
+      "projectBytes": 8192,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 2580,
+      "codeTokensCl100k": 931,
+      "codeChars": 3394,
+      "codeLines": 125,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "contracts/Token.vy"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2079568,
+      "worktrees4Bytes": 32768,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "vyper-token-r2",
+      "lang": "vyper",
+      "task": "token",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.20405420000000002,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 2888,
+        "thinking": 261,
+        "cacheRead": 47791,
+        "cacheWrite": 17088
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 31.374,
+      "apiS": 29.174,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 0.59,
+      "footprintBytes": 8192,
+      "projectBytes": 8192,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 2511,
+      "codeTokensCl100k": 898,
+      "codeChars": 3283,
+      "codeLines": 121,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "contracts/Token.vy"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.20405420000000002,
+      "worktrees4Bytes": 32768,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "vyper-token-r3",
+      "lang": "vyper",
+      "task": "token",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.215278,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 3258,
+        "thinking": 585,
+        "cacheRead": 48070,
+        "cacheWrite": 17559
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 33.495,
+      "apiS": 31.407,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 0.41,
+      "footprintBytes": 8192,
+      "projectBytes": 8192,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1937,
+      "codeTokensCl100k": 976,
+      "codeChars": 3639,
+      "codeLines": 133,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "contracts/Token.vy"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.215278,
+      "worktrees4Bytes": 32768,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "vyper-vesting-r1",
+      "lang": "vyper",
+      "task": "vesting",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.18850820000000004,
+      "turns": 4,
+      "usage": {
+        "input": 8,
+        "output": 2466,
+        "thinking": 337,
+        "cacheRead": 46421,
+        "cacheWrite": 16234
+      },
+      "tools": {
+        "Bash": 3
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 28.382,
+      "apiS": 26.025,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 0.23,
+      "footprintBytes": 4096,
+      "projectBytes": 4096,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1422,
+      "codeTokensCl100k": 689,
+      "codeChars": 2455,
+      "codeLines": 107,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "contracts/Vesting.vy"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.18850820000000004,
+      "worktrees4Bytes": 16384,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "vyper-vesting-r2",
+      "lang": "vyper",
+      "task": "vesting",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.20834319999999998,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 3173,
+        "thinking": 434,
+        "cacheRead": 64336,
+        "cacheWrite": 16497
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 37.758,
+      "apiS": 35.248,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 0.63,
+      "footprintBytes": 4096,
+      "projectBytes": 4096,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 2336,
+      "codeTokensCl100k": 857,
+      "codeChars": 3049,
+      "codeLines": 121,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "contracts/Vesting.vy"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.20834319999999998,
+      "worktrees4Bytes": 16384,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "vyper-vesting-r3",
+      "lang": "vyper",
+      "task": "vesting",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.19919420000000002,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 2729,
+        "thinking": 329,
+        "cacheRead": 64391,
+        "cacheWrite": 16462
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "durationS": 32.907,
+      "apiS": 30.412,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 0.39,
+      "footprintBytes": 4096,
+      "projectBytes": 4096,
+      "cacheBytes": 0,
+      "binaryBytes": 0,
+      "failures": [],
+      "codeTokens": 1462,
+      "codeTokensCl100k": 697,
+      "codeChars": 2564,
+      "codeLines": 108,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "contracts/Vesting.vy"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.19919420000000002,
+      "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
       "deps": []
     },

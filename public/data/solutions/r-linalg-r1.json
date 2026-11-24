@@ -1,0 +1,13 @@
+{
+  "id": "r-linalg-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Produce ./app: a launcher that runs the R implementation with Rscript.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncommand -v Rscript >/dev/null || { echo \"Rscript not found\" >&2; exit 1; }\nRscript -e 'invisible(parse(\"src/linalg.R\"))'\ncat > app <<'LAUNCH'\n#!/usr/bin/env bash\nexec Rscript --vanilla \"$(dirname \"$0\")/src/linalg.R\" \"$@\"\nLAUNCH\nchmod +x app\n"
+    },
+    {
+      "path": "src/linalg.R",
+      "text": "#!/usr/bin/env Rscript\n# linalg: dense linear algebra on a symmetric positive-definite matrix.\n# Reads n, the n x n matrix A, and a vector b from stdin; prints\n# ln(det A), the solution of A x = b, ascending eigenvalues, and ||A||_F.\n\nread_input <- function(con) {\n  tokens <- scan(con, what = double(), quiet = TRUE)\n  if (length(tokens) < 1L) stop(\"empty input\", call. = FALSE)\n  n <- as.integer(tokens[1L])\n  if (is.na(n) || n < 1L) stop(\"invalid dimension\", call. = FALSE)\n  needed <- 1L + n * n + n\n  if (length(tokens) < needed) stop(\"input too short\", call. = FALSE)\n  a <- matrix(tokens[2L:(1L + n * n)], nrow = n, ncol = n, byrow = TRUE)\n  b <- tokens[(2L + n * n):needed]\n  list(a = a, b = b)\n}\n\nfmt <- function(x) paste(sprintf(\"%.15g\", x), collapse = \" \")\n\nmain <- function() {\n  con <- file(\"stdin\")\n  on.exit(close(con))\n  input <- read_input(con)\n  a <- input$a\n  # Symmetrize to remove any rounding asymmetry in the printed input.\n  a <- (a + t(a)) / 2\n\n  r <- chol(a)                       # A = R'R, R upper triangular\n  log_det <- 2 * sum(log(diag(r)))\n  x <- backsolve(r, forwardsolve(t(r), input$b))\n  eig <- sort(eigen(a, symmetric = TRUE, only.values = TRUE)$values)\n  frob <- norm(input$a, type = \"F\")\n\n  writeLines(c(fmt(log_det), fmt(x), fmt(eig), fmt(frob)))\n}\n\nmain()\n"
+    }
+  ]
+}

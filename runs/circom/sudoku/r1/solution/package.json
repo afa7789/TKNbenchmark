@@ -1,0 +1,8 @@
+{
+  "name": "circom-sudoku",
+  "private": true,
+  "description": "Circom circuit proving knowledge of a 4x4 Sudoku solution",
+  "dependencies": {
+    "snarkjs": "0.7.6"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "buildOk": true,
+  "buildSecs": 0.01,
+  "buildLog": "",
+  "binaryBytes": 120,
+  "projectBytes": 0,
+  "cacheBytes": 0,
+  "footprintBytes": 0,
+  "pass": 8,
+  "total": 8,
+  "solved": true,
+  "cases": [
+    {
+      "name": "spec-example",
+      "ok": true,
+      "ms": 359
+    },
+    {
+      "name": "three-by-three",
+      "ok": true,
+      "ms": 352
+    },
+    {
+      "name": "medium-20",
+      "ok": true,
+      "ms": 355
+    },
+    {
+      "name": "one-by-one",
+      "ok": true,
+      "ms": 350
+    },
+    {
+      "name": "diagonal",
+      "ok": true,
+      "ms": 351
+    },
+    {
+      "name": "repeated-eigenvalue",
+      "ok": true,
+      "ms": 351
+    },
+    {
+      "name": "medium-60",
+      "ok": true,
+      "ms": 361
+    },
+    {
+      "name": "large-300",
+      "ok": true,
+      "ms": 426
+    }
+  ]
+}

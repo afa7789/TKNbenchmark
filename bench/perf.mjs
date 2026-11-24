@@ -119,6 +119,7 @@ for (const run of runs) {
   const bin = join(builtDir(meta.id), 'app')
   const fixed = existsSync(join(run, 'repair.json')) && readJson(join(run, 'repair.json')).fixed
   if (!(readJson(join(run, 'verify.json')).solved || fixed) || !existsSync(bin)) continue
+  if (meta.task !== 'kvhttp' && !INPUTS[meta.task]) continue
   const perf = meta.task === 'kvhttp' ? await perfHttp(bin) : perfStdio(bin, meta.task)
   writeJson(join(run, 'perf.json'), perf)
   console.log(`${meta.id}: ${JSON.stringify(perf)}`)

@@ -5,3 +5,6 @@ runs/**/transcript.jsonl
 paper/*.pdf
 paper/arxiv/
 paper/arxiv.tar.gz
+bench/tasks/*/reference/*/.forge-out/
+bench/tasks/*/reference/*/cache/
+bench/tasks/*/reference/*/out/

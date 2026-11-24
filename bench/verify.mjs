@@ -30,6 +30,9 @@ function sandboxEnv(home) {
     DOTNET_CLI_HOME: home,
     OPAMROOT: join(home, '.opam'),
     CABAL_DIR: join(home, '.cabal'),
+    ELAN_HOME: process.env.ELAN_HOME ?? join(homedir(), '.elan'),
+    JULIA_DEPOT_PATH: join(home, '.julia'),
+    R_LIBS_USER: join(home, 'R'),
   }
 }
 
@@ -68,12 +71,12 @@ function warmUp(dir, task) {
 
 function testBuild(dir, task, buildOk, total) {
   if (!buildOk) return { pass: 0, total, results: [] }
-  warmUp(dir, task)
+  if (['stdio', 'http'].includes(TASKS[task].kind)) warmUp(dir, task)
   return hiddenTests(dir)
 }
 
 // Builds and tests one solution. Keeps the built tree at builtDir(id) for the perf round.
-export async function verifySolution(solDir, task, id) {
+export async function verifySolution(solDir, task, id, lang) {
   const dir = join(WORK, 'verify', id)
   const home = `${dir}.home`
   rmSync(dir, { recursive: true, force: true })
@@ -81,14 +84,15 @@ export async function verifySolution(solDir, task, id) {
   copyFiles(solDir, dir, solutionFiles(solDir))
   copyFileSync(join(ROOT, 'bench', 'harness', 'check.mjs'), join(dir, 'check.mjs'))
   const { hidden } = await import(join(ROOT, 'bench', 'tasks', task, 'cases.mjs'))
-  writeFileSync(join(dir, 'cases.json'), JSON.stringify(hidden()))
+  writeFileSync(join(dir, 'cases.json'), JSON.stringify(hidden(lang)))
   const sourceBytes = duBytes(dir)
 
   const t0 = performance.now()
   const b = spawnSync('bash', ['build.sh'], { cwd: dir, env: sandboxEnv(home), encoding: 'utf8', maxBuffer: 256 * 1024 * 1024, timeout: 20 * 60 * 1000 })
   const buildSecs = (performance.now() - t0) / 1000
-  const buildOk = b.status === 0 && existsSync(join(dir, 'app'))
-  const tests = testBuild(dir, task, buildOk, hidden().cases.length)
+  const needsApp = ['stdio', 'http'].includes(TASKS[task].kind)
+  const buildOk = b.status === 0 && (!needsApp || existsSync(join(dir, 'app')))
+  const tests = testBuild(dir, task, buildOk, hidden(lang).cases.length)
   const projectBytes = Math.max(0, duBytes(dir) - sourceBytes)
   const cacheBytes = duBytes(home)
   killStragglers(dir)
@@ -115,11 +119,11 @@ export async function verifySolution(solDir, task, id) {
   return out
 }
 
-function runsToVerify(force) {
+function runsToVerify(force, tasks) {
   const found = []
   for (const lang of readdirSync(RUNS, { withFileTypes: true }).filter((e) => e.isDirectory())) {
     for (const task of readdirSync(join(RUNS, lang.name))) {
-      if (TASKS[task]?.kind === 'static') continue
+      if (TASKS[task]?.kind === 'static' || (tasks && !tasks.includes(task))) continue
       for (const rep of readdirSync(join(RUNS, lang.name, task))) found.push(join(RUNS, lang.name, task, rep))
     }
   }
@@ -128,8 +132,8 @@ function runsToVerify(force) {
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const args = parseArgs(process.argv.slice(2), {})
-  for (const run of runsToVerify(args.force)) {
+  for (const run of runsToVerify(args.force, args.tasks && String(args.tasks).split(','))) {
     const meta = readJson(join(run, 'agent.json'))
-    writeJson(join(run, 'verify.json'), await verifySolution(join(run, 'solution'), meta.task, meta.id))
+    writeJson(join(run, 'verify.json'), await verifySolution(join(run, 'solution'), meta.task, meta.id, meta.lang))
   }
 }

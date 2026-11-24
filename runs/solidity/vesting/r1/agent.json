@@ -1,0 +1,49 @@
+{
+  "id": "solidity-vesting-r1",
+  "lang": "solidity",
+  "task": "vesting",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 31307,
+  "files": [
+    "build.sh",
+    "forge-cache/solidity-files-cache.json",
+    "forge-out/Vesting.sol/Vesting.json",
+    "forge-out/build-info/4bee00b7141d0563.json",
+    "foundry.toml",
+    "src/Vesting.sol"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.19208900000000004,
+  "durationMs": 30463,
+  "apiMs": 28405,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 8,
+    "output": 2619,
+    "thinking": 554,
+    "cacheRead": 46385,
+    "cacheWrite": 16300
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 3,
+    "total": 3
+  }
+}

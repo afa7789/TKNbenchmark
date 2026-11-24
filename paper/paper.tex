@@ -13,7 +13,7 @@
 \input{data}
 
 \title{\textbf{How Much Does a Programming Language Cost a Coding Agent?}\\[4pt]
-\large Tokens, Time and Correctness with Claude Opus 5.5\\across \NLangs{} Languages and Three Front-End Frameworks}
+\large Tokens, Time and Correctness with Claude Opus 5.5\\across \NLangs{} Languages, Three Front-End Frameworks\\and Four Specialised Tracks}
 \author{Arthur De Freitas Abeilice\\
 \small Universidade Federal de Minas Gerais (UFMG)\\
 \small\texttt{abeilice@ufmg.br} \quad \url{https://github.com/afa7789/TKNbenchmark}}
@@ -37,7 +37,9 @@ code is larger, because the agent had to read the standard library's source to l
 API. TypeScript's code was \TsJsCodeClk$\times$ JavaScript's in \texttt{cl100k} tokens, close to the
 1.31$\times$ reported for snippets, yet the agent spent the same on both. Rust's build artifacts live per
 project, so parallel agent worktrees multiply them. For front ends we reproduce the published ordering
-(Svelte $<$ Vue $<$ React) with a different tokenizer.
+(Svelte $<$ Vue $<$ React) with a different tokenizer. Four specialised tracks (scientific computing,
+theorem proving, smart contracts and zero-knowledge circuits; \NTrackLangs{} more languages) passed every
+hidden check, and within each track the languages cost about the same.
 \end{abstract}
 
 \section{Motivation and hypotheses}
@@ -104,6 +106,20 @@ where third-party packages are allowed). The first three are standard-library on
 app with parent/child components, a global store of the agent's choice, derived state, a form, an effect
 with cleanup, context and slots). Three repetitions per case.
 
+\paragraph{Specialised tracks.} Languages that cannot run the main tasks get two tasks from their own
+domain, a verifier validated against reference solutions in every language of the track, and the same
+rounds. \emph{Scientific computing} (GNU Octave, Julia, R): least-squares regression and dense linear
+algebra (log-determinant, solve, eigenvalues), compared to a relative tolerance of $10^{-6}$.
+\emph{Theorem proving} (Lean~4, Rocq, Dafny): four list lemmas over our own \texttt{append}/\texttt{rev},
+and the correctness of insertion sort (sorted and count-preserving); the file must check with the
+language's own checker, with no \texttt{sorry}/\texttt{Admitted}/\texttt{assume}/axioms and every
+definition and statement unchanged. \emph{Smart contracts} (Solidity, Vyper): a token with allowances
+and a linear-vesting contract; the build emits ABI and bytecode, which the harness deploys on a fresh
+\texttt{anvil} chain and exercises with exact timestamps, expected reverts and exact events.
+\emph{Zero-knowledge circuits} (Circom, Noir): a private range check and a 4$\times$4 Sudoku; valid inputs
+must be provable and invalid ones (out of range, wrong clue, repeated row, column or box, huge field
+elements) must not.
+
 \paragraph{Rounds.} (1--2) Write. (3) Verify once, live: for back ends, a cold build of a clean copy with
 isolated caches and a hidden suite larger than the examples; for front ends, a Vite build and checks in
 Chromium with mocked network, testing only what the specification states literally plus the absence of
@@ -155,6 +171,14 @@ created), build time and throughput.}
 Java and Kotlin).}
 \label{tab:perf}
 \PerfTable
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Specialised tracks. US\$ is the sum of the per-task medians over the track's two tasks, so it is
+comparable within a track, not with Table~\ref{tab:main}.}
+\label{tab:tracks}
+\TrackTable
 \end{table}
 
 \begin{table}[h]
@@ -215,6 +239,17 @@ ends (US\$\,\CostRust). React was the most expensive front end. The full feature
 Svelte and \ComboZigVue{} in Zig + Vue. In performance, all native languages were within the same order
 of magnitude under this load (Table~\ref{tab:kv}).
 
+\paragraph{Specialised tracks.} All \NTrackRuns{} runs passed their hidden checks on the first
+verification (Table~\ref{tab:tracks}). Within a track the languages cost about the same: Dafny,
+Lean~4 and Rocq between US\$\,\TrkProofsDafny{} and \TrkProofsRocq{}; Vyper and Solidity
+US\$\,\TrkEvmVyper{} and \TrkEvmSolidity{}; Circom and Noir US\$\,\TrkZkCircom{} and \TrkZkNoir{}. The
+widest gap was in scientific computing, where R (US\$\,\TrkNumericR) was cheaper than Julia and Octave
+(US\$\,\TrkNumericJulia{} and \TrkNumericOctave). Noir passed its examples on the first try in only a third
+of the runs, but recovered at little cost. Theorem proving was the cheapest work in the whole study: the
+agent wrote short inductive proofs and the checkers answered in about a second. Solidity's cold build
+took 80--100\,MB per task, mostly a \texttt{solc} download into the empty home directory (and, in one
+run, OpenZeppelin); this partly reflects installation, since Vyper's compiler was already installed.
+
 \section{Limitations}
 
 Round 3 itself found two harness bugs, both fixed before the repair round, with the affected cases
@@ -226,6 +261,10 @@ failure attributed to an agent comes from these two cases.
 
 Swift and C\# are confounded by the test machine: SwiftPM crashes (a mismatched \texttt{llbuild} in
 the Command Line Tools) and Native AOT needs Xcode, so their costs include finding a workaround.
+
+The specialised tracks have two small tasks each. The zero-knowledge checks are behavioural: they show
+that valid inputs are provable and that the listed invalid inputs are not, but a circuit could still be
+under-constrained for inputs the suite does not try.
 
 Three repetitions per case: small differences are noise. One model, one harness, one machine (macOS
 arm64). Tasks take minutes, not days; in large projects reading existing code weighs more, which should

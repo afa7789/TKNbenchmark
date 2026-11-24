@@ -1,0 +1,13 @@
+{
+  "id": "octave-linalg-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Produce ./app: a launcher that runs linalg.m with GNU Octave.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncommand -v octave-cli >/dev/null 2>&1 || command -v octave >/dev/null 2>&1 || {\n  echo \"build.sh: GNU Octave not found\" >&2; exit 1; }\ncat > app <<'LAUNCH'\n#!/usr/bin/env bash\ndir=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\noct=\"$(command -v octave-cli || command -v octave)\"\nexec \"$oct\" --no-gui --no-init-file --no-site-file --no-history --quiet \\\n  --eval \"addpath('$dir'); try, linalg(); catch err, fprintf(2, '%s\\n', err.message); exit(1); end\"\nLAUNCH\nchmod +x app\n"
+    },
+    {
+      "path": "linalg.m",
+      "text": "function linalg ()\n  % LINALG  Read an SPD system from stdin; print ln(det A), A\\b, eig(A), ||A||_F.\n  txt = fread (stdin, Inf, \"char=>char\")';\n  vals = sscanf (txt, \"%f\");\n  if (isempty (vals))\n    error (\"linalg: empty input\");\n  endif\n  n = round (vals(1));\n  if (n < 1 || numel (vals) < 1 + n*n + n)\n    error (\"linalg: expected %d matrix entries and %d vector entries\", n*n, n);\n  endif\n\n  A = reshape (vals(2:1+n*n), n, n)';   % rows were given in row-major order\n  b = vals(2+n*n:1+n*n+n);\n  A = (A + A') / 2;                     % enforce exact symmetry\n\n  [R, p] = chol (A);\n  if (p == 0)\n    logdet = 2 * sum (log (diag (R)));\n    x = R \\ (R' \\ b);\n  else\n    % Not numerically positive definite: fall back to LU.\n    [L, U, P] = lu (A);\n    logdet = sum (log (abs (diag (U))));\n    x = U \\ (L \\ (P * b));\n  endif\n\n  ev = sort (eig (A));\n  fro = norm (A, \"fro\");\n\n  printf (\"%.15g\\n\", logdet);\n  print_row (x);\n  print_row (ev);\n  printf (\"%.15g\\n\", fro);\nendfunction\n\nfunction print_row (v)\n  s = sprintf (\"%.15g \", v);\n  printf (\"%s\\n\", s(1:end-1));\nendfunction\n"
+    }
+  ]
+}

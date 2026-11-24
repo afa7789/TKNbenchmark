@@ -1,0 +1,69 @@
+{
+  "buildOk": true,
+  "buildSecs": 0.23,
+  "buildLog": "",
+  "binaryBytes": 0,
+  "projectBytes": 4096,
+  "cacheBytes": 0,
+  "footprintBytes": 4096,
+  "pass": 11,
+  "total": 11,
+  "solved": true,
+  "cases": [
+    {
+      "name": "getters",
+      "ok": true,
+      "ms": 186
+    },
+    {
+      "name": "vesting-schedule",
+      "ok": true,
+      "ms": 196
+    },
+    {
+      "name": "release-midway",
+      "ok": true,
+      "ms": 182
+    },
+    {
+      "name": "release-before-start-reverts",
+      "ok": true,
+      "ms": 155
+    },
+    {
+      "name": "nothing-left-reverts",
+      "ok": true,
+      "ms": 194
+    },
+    {
+      "name": "two-releases",
+      "ok": true,
+      "ms": 225
+    },
+    {
+      "name": "receive-adds-to-total",
+      "ok": true,
+      "ms": 161
+    },
+    {
+      "name": "rounds-down",
+      "ok": true,
+      "ms": 147
+    },
+    {
+      "name": "odd-total-rounds-down",
+      "ok": true,
+      "ms": 165
+    },
+    {
+      "name": "zero-beneficiary-reverts",
+      "ok": true,
+      "ms": 116
+    },
+    {
+      "name": "zero-duration-reverts",
+      "ok": true,
+      "ms": 117
+    }
+  ]
+}

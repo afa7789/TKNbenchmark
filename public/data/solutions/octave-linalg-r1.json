@@ -1,0 +1,13 @@
+{
+  "id": "octave-linalg-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Octave is interpreted; \"building\" means installing the launcher at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\ndir=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"\nexec octave-cli --no-gui --norc --no-history --quiet --no-window-system \\\n  --eval \"addpath('$dir'); try, linalg(); catch err, fprintf(2, '%s\\n', err.message); exit(1); end\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "linalg.m",
+      "text": "function linalg ()\n  ## Read an SPD system from stdin and print ln(det A), x, eig(A), ||A||_F.\n  text = fread (stdin, Inf, \"char=>char\")';\n  vals = sscanf (text, \"%f\");\n  if (isempty (vals))\n    error (\"linalg: empty input\");\n  endif\n\n  n = vals(1);\n  if (n != fix (n) || n < 1 || numel (vals) < 1 + n*n + n)\n    error (\"linalg: malformed input\");\n  endif\n\n  A = reshape (vals(2:1+n*n), n, n).';\n  b = vals(2+n*n:1+n*n+n);\n  A = (A + A.') / 2;   # enforce exact symmetry\n\n  [R, p] = chol (A);\n  if (p == 0)\n    logdet = 2 * sum (log (diag (R)));\n    x = R \\ (R.' \\ b);\n  else\n    ## Fall back for numerically indefinite input.\n    [~, U] = lu (A);\n    logdet = sum (log (abs (diag (U))));\n    x = A \\ b;\n  endif\n\n  ev = sort (eig (A));\n  fro = norm (A, \"fro\");\n\n  printf (\"%s\\n\", fmt (logdet));\n  printf (\"%s\\n\", fmt (x));\n  printf (\"%s\\n\", fmt (ev));\n  printf (\"%s\\n\", fmt (fro));\nendfunction\n\nfunction s = fmt (v)\n  s = strtrim (sprintf (\"%.15g \", v));\nendfunction\n"
+    }
+  ]
+}

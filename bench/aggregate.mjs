@@ -3,7 +3,7 @@
 // node bench/aggregate.mjs --check  validate the committed data (CI smoke)
 import { existsSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { ROOT, RUNS, LANGS, FRONTENDS, TASKS, MODEL, EFFORT } from './config.mjs'
+import { ROOT, RUNS, LANGS, FRONTENDS, TASKS, TRACKS, MODEL, EFFORT, MAIN_LANGS } from './config.mjs'
 import { isCounted, readJson, solutionFiles, writeJson } from './lib.mjs'
 import { detectDeps } from './deps.mjs'
 
@@ -200,7 +200,7 @@ function comboRow(lang, fw, back, front) {
 
 // Full-stack KV feature in one tokenizer: kvhttp backend code + the KvBrowser component.
 function combos(cells, frontends) {
-  return Object.keys(LANGS)
+  return MAIN_LANGS
     .flatMap((lang) => Object.keys(FRONTENDS).map((fw) => comboRow(lang, fw, cells[`${lang}/kvhttp`], kvBrowserTokens(frontends[fw]))))
     .filter(Boolean)
     .sort((a, b) => a.totalTokens - b.totalTokens)
@@ -218,6 +218,17 @@ function exportSolution(r) {
   writeJson(join(OUT, 'solutions', `${r.agent.id}.json`), { id: r.agent.id, files })
 }
 
+// Per-language totals over the given runs' tasks (main track, or one specialised track).
+function groupSummary(runs, cells) {
+  const byLang = Object.groupBy(runs, (r) => r.lang)
+  const tasks = [...new Set(runs.map((r) => r.task))]
+  return Object.fromEntries(
+    Object.keys(LANGS)
+      .filter((l) => byLang[l])
+      .map((l) => [l, langSummary(tasks.map((t) => cells[`${l}/${t}`]).filter(Boolean), byLang[l])]),
+  )
+}
+
 function build() {
   const raw = collect()
   const runs = raw.map((r) => {
@@ -228,10 +239,9 @@ function build() {
   const by = (f) => Object.groupBy(runs, f)
   const cellRuns = by((r) => `${r.lang}/${r.task}`)
   const cells = Object.fromEntries(Object.entries(cellRuns).map(([k, rs]) => [k, cellSummary(rs)]))
-  const backend = runs.filter((r) => !TASKS[r.task].frontend)
-  const byLang = Object.groupBy(backend, (r) => r.lang)
-  const langs = Object.fromEntries(
-    Object.keys(LANGS).filter((l) => byLang[l]).map((l) => [l, langSummary(Object.keys(TASKS).map((t) => cells[`${l}/${t}`]).filter(Boolean), byLang[l])]),
+  const langs = groupSummary(runs.filter((r) => !TASKS[r.task].frontend && !TASKS[r.task].track), cells)
+  const tracks = Object.fromEntries(
+    Object.entries(TRACKS).map(([id, t]) => [id, { ...t, langs: groupSummary(runs.filter((r) => TASKS[r.task].track === id), cells) }]),
   )
   const frontRuns = Object.groupBy(runs.filter((r) => r.task === 'ui'), (r) => r.lang)
   const frontends = Object.fromEntries(Object.entries(frontRuns).map(([k, rs]) => [k, frontendSummary(rs)]))
@@ -241,7 +251,7 @@ function build() {
   raw.forEach(exportSolution)
   const toolchains = opt(join(RUNS, 'toolchains.json'))
   const meta = { generatedAt: new Date().toISOString(), model: MODEL, effort: EFFORT, toolchains, langs: LANGS, frontends: FRONTENDS, tasks: TASKS, external: EXTERNAL }
-  writeJson(join(OUT, 'results.json'), { meta, summary: { langs, cells, frontends, shop, combos: combos(cells, frontends) }, runs })
+  writeJson(join(OUT, 'results.json'), { meta, summary: { langs, tracks, cells, frontends, shop, combos: combos(cells, frontends) }, runs })
   console.log(`${runs.length} runs → public/data/results.json`)
 }
 

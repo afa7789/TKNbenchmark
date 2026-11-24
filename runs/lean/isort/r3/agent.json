@@ -1,0 +1,45 @@
+{
+  "id": "lean-isort-r3",
+  "lang": "lean",
+  "task": "isort",
+  "rep": 3,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 24541,
+  "files": [
+    "ISort.lean",
+    "build.sh"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.14777079999999998,
+  "durationMs": 23897,
+  "apiMs": 21724,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 10,
+    "output": 1745,
+    "thinking": 414,
+    "cacheRead": 55234,
+    "cacheWrite": 12723
+  },
+  "tools": {
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 10,
+    "total": 10
+  }
+}

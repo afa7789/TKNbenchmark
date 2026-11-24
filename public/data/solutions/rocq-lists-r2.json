@@ -1,0 +1,13 @@
+{
+  "id": "rocq-lists-r2",
+  "files": [
+    {
+      "path": "Lists.v",
+      "text": "(* Complete every proof. Do not change any definition or theorem statement. *)\nFixpoint append {A : Type} (xs ys : list A) : list A :=\n  match xs with\n  | nil => ys\n  | cons x xs' => cons x (append xs' ys)\n  end.\n\nFixpoint rev {A : Type} (xs : list A) : list A :=\n  match xs with\n  | nil => nil\n  | cons x xs' => append (rev xs') (cons x nil)\n  end.\n\nTheorem append_nil : forall (A : Type) (xs : list A), append xs nil = xs.\nProof.\n  intros A xs.\n  induction xs as [| x xs' IH]; simpl.\n  - reflexivity.\n  - rewrite IH. reflexivity.\nQed.\n\nTheorem append_assoc : forall (A : Type) (xs ys zs : list A),\n  append (append xs ys) zs = append xs (append ys zs).\nProof.\n  intros A xs ys zs.\n  induction xs as [| x xs' IH]; simpl.\n  - reflexivity.\n  - rewrite IH. reflexivity.\nQed.\n\nTheorem rev_append : forall (A : Type) (xs ys : list A),\n  rev (append xs ys) = append (rev ys) (rev xs).\nProof.\n  intros A xs ys.\n  induction xs as [| x xs' IH]; simpl.\n  - symmetry. apply append_nil.\n  - rewrite IH. apply append_assoc.\nQed.\n\nTheorem rev_rev : forall (A : Type) (xs : list A), rev (rev xs) = xs.\nProof.\n  intros A xs.\n  induction xs as [| x xs' IH]; simpl.\n  - reflexivity.\n  - rewrite rev_append. simpl. rewrite IH. reflexivity.\nQed.\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Check every proof in this directory; exits non-zero if any proof is rejected.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncoqc -q Lists.v\n"
+    }
+  ]
+}

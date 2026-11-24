@@ -1,0 +1,50 @@
+{
+  "buildOk": true,
+  "buildSecs": 1.19,
+  "buildLog": "",
+  "binaryBytes": 0,
+  "projectBytes": 0,
+  "cacheBytes": 0,
+  "footprintBytes": 0,
+  "pass": 9,
+  "total": 9,
+  "solved": true,
+  "cases": [
+    {
+      "name": "proofs-check",
+      "ok": true
+    },
+    {
+      "name": "no-escape-hatches",
+      "ok": true
+    },
+    {
+      "name": "unchanged-1",
+      "ok": true
+    },
+    {
+      "name": "unchanged-2",
+      "ok": true
+    },
+    {
+      "name": "unchanged-3",
+      "ok": true
+    },
+    {
+      "name": "unchanged-4",
+      "ok": true
+    },
+    {
+      "name": "unchanged-5",
+      "ok": true
+    },
+    {
+      "name": "unchanged-6",
+      "ok": true
+    },
+    {
+      "name": "unchanged-7",
+      "ok": true
+    }
+  ]
+}

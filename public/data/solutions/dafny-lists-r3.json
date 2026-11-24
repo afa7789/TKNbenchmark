@@ -1,0 +1,13 @@
+{
+  "id": "dafny-lists-r3",
+  "files": [
+    {
+      "path": "Lists.dfy",
+      "text": "// Complete every proof. Do not change any definition or lemma statement.\ndatatype List<T> = Nil | Cons(head: T, tail: List<T>)\n\nfunction Append<T>(xs: List<T>, ys: List<T>): List<T>\n{\n  match xs\n  case Nil => ys\n  case Cons(x, rest) => Cons(x, Append(rest, ys))\n}\n\nfunction Rev<T>(xs: List<T>): List<T>\n{\n  match xs\n  case Nil => Nil\n  case Cons(x, rest) => Append(Rev(rest), Cons(x, Nil))\n}\n\nlemma AppendNil<T>(xs: List<T>)\n  ensures Append(xs, Nil) == xs\n{\n  match xs\n  case Nil =>\n  case Cons(_, rest) => AppendNil(rest);\n}\n\nlemma AppendAssoc<T>(xs: List<T>, ys: List<T>, zs: List<T>)\n  ensures Append(Append(xs, ys), zs) == Append(xs, Append(ys, zs))\n{\n  match xs\n  case Nil =>\n  case Cons(_, rest) => AppendAssoc(rest, ys, zs);\n}\n\nlemma RevAppend<T>(xs: List<T>, ys: List<T>)\n  ensures Rev(Append(xs, ys)) == Append(Rev(ys), Rev(xs))\n{\n  match xs\n  case Nil =>\n    AppendNil(Rev(ys));\n  case Cons(x, rest) =>\n    calc {\n      Rev(Append(xs, ys));\n    ==\n      Append(Rev(Append(rest, ys)), Cons(x, Nil));\n    == { RevAppend(rest, ys); }\n      Append(Append(Rev(ys), Rev(rest)), Cons(x, Nil));\n    == { AppendAssoc(Rev(ys), Rev(rest), Cons(x, Nil)); }\n      Append(Rev(ys), Append(Rev(rest), Cons(x, Nil)));\n    ==\n      Append(Rev(ys), Rev(xs));\n    }\n}\n\nlemma RevRev<T>(xs: List<T>)\n  ensures Rev(Rev(xs)) == xs\n{\n  match xs\n  case Nil =>\n  case Cons(x, rest) =>\n    calc {\n      Rev(Rev(xs));\n    ==\n      Rev(Append(Rev(rest), Cons(x, Nil)));\n    == { RevAppend(Rev(rest), Cons(x, Nil)); }\n      Append(Rev(Cons(x, Nil)), Rev(Rev(rest)));\n    == { RevRev(rest); }\n      Cons(x, rest);\n    }\n}\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ndafny verify Lists.dfy\n"
+    }
+  ]
+}

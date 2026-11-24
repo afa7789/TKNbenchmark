@@ -2,7 +2,7 @@
 // node bench/run.mjs [--langs rust,zig] [--tasks lru] [--reps 3] [--jobs 4]
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { LANGS, FRONTENDS, TASKS, MODEL, EFFORT, RUNS, WORK, prompt, runDir, runId } from './config.mjs'
+import { LANGS, FRONTENDS, TASKS, MODEL, EFFORT, RUNS, WORK, MAIN_LANGS, prompt, runDir, runId, trackLangs } from './config.mjs'
 import { prepareWorkdir, runAgent } from './agent.mjs'
 import { copyFiles, firstLine, list, parseArgs, pool, readJson, solutionFiles, writeJson } from './lib.mjs'
 import { parseTranscript } from './transcript.mjs'
@@ -17,7 +17,7 @@ async function runCell({ lang, task, rep }) {
   if (existsSync(join(out, 'agent.json')) && !args.force) return
   const id = runId(lang, task, rep)
   const dir = join(WORK, 'agent', id)
-  await prepareWorkdir(task, dir)
+  await prepareWorkdir(task, dir, lang)
   rmSync(out, { recursive: true, force: true })
   mkdirSync(out, { recursive: true })
   const transcript = join(out, 'transcript.jsonl')
@@ -54,6 +54,12 @@ if (args.reparse) {
   process.exit(0)
 }
 
+// Front ends, a specialised track's languages, or the main languages.
+function languagesFor(task) {
+  if (TASKS[task].frontend) return Object.keys(FRONTENDS)
+  return TASKS[task].track ? trackLangs(TASKS[task].track) : MAIN_LANGS
+}
+
 // Diagonal order: runs in flight at the same time differ in both language and task.
 const reps = Number(args.reps)
 const tasks = list(args.tasks, TASKS)
@@ -61,9 +67,9 @@ const cells = []
 for (let rep = 1; rep <= reps; rep++) {
   const batch = []
   tasks.forEach((task, ti) => {
-    const langs = TASKS[task].frontend ? FRONTENDS : LANGS
-    list(args.langs, langs)
-      .filter((l) => l in langs)
+    const langs = languagesFor(task)
+    list(args.langs, Object.fromEntries(langs.map((l) => [l, true])))
+      .filter((l) => langs.includes(l))
       .forEach((lang, li) => batch.push({ lang, task, rep, key: [(ti - li + tasks.length * 9) % tasks.length, li] }))
   })
   batch.sort((a, b) => a.key[0] - b.key[0] || a.key[1] - b.key[1])

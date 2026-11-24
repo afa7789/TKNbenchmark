@@ -8,7 +8,7 @@ const SKIP_DIRS = new Set(['target', 'zig-out', '.zig-cache', 'zig-cache', 'nimc
 // (binaries are dropped by isBinary). It never counts as code.
 const HARNESS = new Set(['check.mjs', 'cases.json', 'SPEC.md', '.DS_Store'])
 const LOCKFILES = new Set(['Cargo.lock', 'go.sum', 'nimble.lock', 'package-lock.json', 'build.zig.zon.lock'])
-const COUNTED_EXT = new Set(['.c', '.cc', '.cpp', '.cxx', '.h', '.hh', '.hpp', '.rs', '.go', '.nim', '.nims', '.nimble', '.zig', '.zon', '.toml', '.mod', '.sh', '.txt', '.cfg', '.jsx', '.js', '.vue', '.svelte', '.java', '.kt', '.kts', '.gradle', '.xml', '.swift', '.s', '.S', '.asm', '.cs', '.csproj', '.sln', '.odin', '.ml', '.mli', '.opam', '.hs', '.cabal', '.yaml', '.ts', '.mts', '.cts', '.mjs', '.cjs', '.py'])
+const COUNTED_EXT = new Set(['.c', '.cc', '.cpp', '.cxx', '.h', '.hh', '.hpp', '.rs', '.go', '.nim', '.nims', '.nimble', '.zig', '.zon', '.toml', '.mod', '.sh', '.txt', '.cfg', '.jsx', '.js', '.vue', '.svelte', '.java', '.kt', '.kts', '.gradle', '.xml', '.swift', '.s', '.S', '.asm', '.cs', '.csproj', '.sln', '.odin', '.ml', '.mli', '.opam', '.hs', '.cabal', '.yaml', '.ts', '.mts', '.cts', '.mjs', '.cjs', '.py', '.m', '.jl', '.r', '.R', '.lean', '.v', '.dfy', '.sol', '.vy', '.vyi', '.circom', '.nr'])
 const COUNTED_NAMES = new Set(['Makefile', 'dune', 'dune-project', 'package.json', 'tsconfig.json'])
 const MAX_SOURCE_BYTES = 200 * 1024
 
@@ -33,6 +33,8 @@ const isOutputDir = (name, dotnet) => SKIP_DIRS.has(name) || /^(\.|cmake-build)/
 export function solutionFiles(dir, prefix = '') {
   const out = []
   const entries = readdirSync(dir, { withFileTypes: true })
+  // A nested git checkout (forge install, git submodules) is a fetched dependency, not solution code.
+  if (prefix && entries.some((e) => e.name === '.git')) return out
   const dotnet = entries.some((e) => e.isFile() && /\.(cs|fs|vb)proj$/.test(e.name))
   for (const e of entries) {
     const rel = prefix ? `${prefix}/${e.name}` : e.name

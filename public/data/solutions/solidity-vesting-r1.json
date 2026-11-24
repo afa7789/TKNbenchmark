@@ -1,0 +1,17 @@
+{
+  "id": "solidity-vesting-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Compiles Vesting and writes out/Vesting.json with {\"abi\": [...], \"bytecode\": \"0x...\"}.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nforge build --quiet\n\nmkdir -p out\nnode -e '\nconst fs = require(\"fs\");\nconst art = JSON.parse(fs.readFileSync(\"forge-out/Vesting.sol/Vesting.json\", \"utf8\"));\nfs.writeFileSync(\"out/Vesting.json\", JSON.stringify({ abi: art.abi, bytecode: art.bytecode.object }, null, 2) + \"\\n\");\n'\n"
+    },
+    {
+      "path": "foundry.toml",
+      "text": "[profile.default]\nsrc = \"src\"\nout = \"forge-out\"\ncache_path = \"forge-cache\"\nsolc_version = \"0.8.28\"\nevm_version = \"cancun\"\noptimizer = true\noptimizer_runs = 200\n"
+    },
+    {
+      "path": "src/Vesting.sol",
+      "text": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.28;\n\n/// @title Vesting\n/// @notice Holds ether and releases it linearly to a fixed beneficiary between\n///         `start` and `start + duration`.\ncontract Vesting {\n    /// @notice Emitted when ether is released to the beneficiary.\n    event Released(uint256 amount);\n\n    error ZeroBeneficiary();\n    error ZeroDuration();\n    error NothingToRelease();\n    error TransferFailed();\n\n    address public immutable beneficiary;\n    uint64 public immutable start;\n    uint64 public immutable duration;\n\n    /// @notice Total ether released so far.\n    uint256 public released;\n\n    constructor(address beneficiary_, uint64 start_, uint64 duration_) payable {\n        if (beneficiary_ == address(0)) revert ZeroBeneficiary();\n        if (duration_ == 0) revert ZeroDuration();\n        beneficiary = beneficiary_;\n        start = start_;\n        duration = duration_;\n    }\n\n    receive() external payable {}\n\n    /// @notice Amount of ether vested at `timestamp`, out of the total ever received.\n    function vestedAmount(uint64 timestamp) public view returns (uint256) {\n        return _vestingSchedule(address(this).balance + released, timestamp);\n    }\n\n    /// @notice Amount of ether currently vested but not yet released.\n    function releasable() public view returns (uint256) {\n        return vestedAmount(uint64(block.timestamp)) - released;\n    }\n\n    /// @notice Sends all releasable ether to the beneficiary. Callable by anyone.\n    function release() external {\n        uint256 amount = releasable();\n        if (amount == 0) revert NothingToRelease();\n\n        released += amount;\n        emit Released(amount);\n\n        (bool ok,) = beneficiary.call{value: amount}(\"\");\n        if (!ok) revert TransferFailed();\n    }\n\n    function _vestingSchedule(uint256 total, uint64 timestamp) private view returns (uint256) {\n        if (timestamp < start) return 0;\n        // Widen to uint256 so `start + duration` cannot overflow.\n        uint256 elapsed = uint256(timestamp) - start;\n        if (elapsed >= duration) return total;\n        return (total * elapsed) / duration;\n    }\n}\n"
+    }
+  ]
+}

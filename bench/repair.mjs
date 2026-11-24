@@ -19,13 +19,13 @@ function report(v) {
   return `${v.pass}/${v.total} acceptance checks passed. Failing:\n${lines.join('\n')}${failed.length > 8 ? `\n- …and ${failed.length - 8} more` : ''}`
 }
 
-const verifyAny = (sol, meta, id) => (TASKS[meta.task].frontend ? verifyFront(sol, meta.lang, meta.task, id) : verifySolution(sol, meta.task, id))
+const verifyAny = (sol, meta, id) => (TASKS[meta.task].frontend ? verifyFront(sol, meta.lang, meta.task, id) : verifySolution(sol, meta.task, id, meta.lang))
 
 async function attempt(run, meta, n, sol, last) {
   const id = `${meta.id}-fix${n}`
   const dir = join(WORK, 'repair', id)
   const out = join(run, 'repair', `a${n}`)
-  await prepareWorkdir(meta.task, dir)
+  await prepareWorkdir(meta.task, dir, meta.lang)
   copyFiles(sol, dir, solutionFiles(sol))
   rmSync(out, { recursive: true, force: true })
   mkdirSync(out, { recursive: true })
@@ -63,6 +63,7 @@ async function repair(run) {
 const failed = []
 for (const lang of readdirSync(RUNS, { withFileTypes: true }).filter((e) => e.isDirectory())) {
   for (const task of readdirSync(join(RUNS, lang.name))) {
+    if (args.tasks && !String(args.tasks).split(',').includes(task)) continue
     for (const rep of readdirSync(join(RUNS, lang.name, task))) {
       const run = join(RUNS, lang.name, task, rep)
       const v = existsSync(join(run, 'verify.json')) && readJson(join(run, 'verify.json'))

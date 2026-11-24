@@ -1,0 +1,21 @@
+{
+  "id": "solidity-token-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds the Token contract and writes out/Token.json ({abi, bytecode}).\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\n# fetch_dep <dir> <git-url> <tag>: shallow-clone a pinned dependency if missing.\nfetch_dep() {\n  local dir=\"lib/$1\" url=\"$2\" tag=\"$3\"\n  if [ ! -d \"$dir/.git\" ]; then\n    rm -rf \"$dir\"\n    mkdir -p lib\n    git -c advice.detachedHead=false clone --quiet --depth 1 --branch \"$tag\" \"$url\" \"$dir\"\n  fi\n}\n\nfetch_dep openzeppelin-contracts https://github.com/OpenZeppelin/openzeppelin-contracts.git v5.1.0\n# Test-only dependency; pass WITH_TESTS=1 to fetch it and run `forge test` afterwards.\nif [ \"${WITH_TESTS:-0}\" = \"1\" ]; then\n  fetch_dep forge-std https://github.com/foundry-rs/forge-std.git v1.9.4\nfi\n\nforge build --quiet --skip test\n\nmkdir -p out\nnode -e '\nconst fs = require(\"fs\");\nconst art = JSON.parse(fs.readFileSync(\"forge-out/Token.sol/Token.json\", \"utf8\"));\nfs.writeFileSync(\"out/Token.json\", JSON.stringify({ abi: art.abi, bytecode: art.bytecode.object }, null, 2) + \"\\n\");\n'\n"
+    },
+    {
+      "path": "foundry.toml",
+      "text": "[profile.default]\nsrc = \"src\"\nout = \"forge-out\"\nlibs = [\"lib\"]\nsolc_version = \"0.8.28\"\noptimizer = true\noptimizer_runs = 200\nremappings = [\"forge-std/=lib/forge-std/src/\", \"@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/\"]\n"
+    },
+    {
+      "path": "src/Token.sol",
+      "text": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\nimport {ERC20} from \"@openzeppelin/contracts/token/ERC20/ERC20.sol\";\n\n/// @title Bench Token\n/// @notice Fixed-supply ERC-20 token; the entire supply is minted to the deployer.\n/// @dev Relies on OpenZeppelin's ERC20, which reverts on insufficient balance or\n///      allowance, rejects the zero address as recipient/spender, treats an\n///      allowance of `type(uint256).max` as infinite, and emits `Transfer` on\n///      every transfer (including zero-value ones).\ncontract Token is ERC20 {\n    constructor(uint256 initialSupply) ERC20(\"Bench Token\", \"BTK\") {\n        _mint(msg.sender, initialSupply);\n    }\n}\n"
+    },
+    {
+      "path": "test/Token.t.sol",
+      "text": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\nimport {Test} from \"forge-std/Test.sol\";\nimport {Token} from \"../src/Token.sol\";\n\ncontract TokenTest is Test {\n    event Transfer(address indexed from, address indexed to, uint256 value);\n\n    Token internal token;\n    address internal alice = makeAddr(\"alice\");\n    address internal bob = makeAddr(\"bob\");\n\n    function setUp() public {\n        token = new Token(1000);\n    }\n\n    function test_ZeroValueTransferEmits() public {\n        vm.expectEmit(address(token));\n        emit Transfer(address(this), alice, 0);\n        assertTrue(token.transfer(alice, 0));\n    }\n\n    function test_RevertWhen_InsufficientBalance() public {\n        vm.expectRevert();\n        token.transfer(alice, 1001);\n    }\n\n    function test_RevertWhen_ZeroAddress() public {\n        vm.expectRevert();\n        token.transfer(address(0), 1);\n        vm.expectRevert();\n        token.approve(address(0), 1);\n    }\n\n    function test_InfiniteAllowance() public {\n        token.approve(alice, type(uint256).max);\n        vm.prank(alice);\n        token.transferFrom(address(this), bob, 10);\n        assertEq(token.allowance(address(this), alice), type(uint256).max);\n        assertEq(token.balanceOf(bob), 10);\n    }\n\n    function test_RevertWhen_AboveAllowance() public {\n        token.approve(alice, 5);\n        vm.prank(alice);\n        vm.expectRevert();\n        token.transferFrom(address(this), bob, 6);\n    }\n}\n"
+    }
+  ]
+}

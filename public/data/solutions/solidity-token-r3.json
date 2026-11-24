@@ -1,0 +1,17 @@
+{
+  "id": "solidity-token-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds the Token contract and writes out/Token.json ({abi, bytecode}).\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nOZ_VERSION=\"v5.1.0\"\nOZ_DIR=\"lib/openzeppelin-contracts\"\n\nif [ ! -f \"$OZ_DIR/contracts/token/ERC20/ERC20.sol\" ]; then\n  rm -rf \"$OZ_DIR\"\n  mkdir -p lib\n  git clone --quiet --depth 1 --branch \"$OZ_VERSION\" \\\n    https://github.com/OpenZeppelin/openzeppelin-contracts.git \"$OZ_DIR\" 2>/dev/null\nfi\n\nforge build --quiet\n\nmkdir -p out\nnode -e '\nconst fs = require(\"fs\");\nconst art = JSON.parse(fs.readFileSync(\"forge-out/Token.sol/Token.json\", \"utf8\"));\nfs.writeFileSync(\"out/Token.json\", JSON.stringify({ abi: art.abi, bytecode: art.bytecode.object }, null, 2));\n'\n"
+    },
+    {
+      "path": "foundry.toml",
+      "text": "[profile.default]\nsrc = \"src\"\nout = \"forge-out\"\nlibs = [\"lib\"]\nsolc_version = \"0.8.28\"\noptimizer = true\noptimizer_runs = 200\nremappings = [\"@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/\"]\n"
+    },
+    {
+      "path": "src/Token.sol",
+      "text": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\nimport {ERC20} from \"@openzeppelin/contracts/token/ERC20/ERC20.sol\";\n\n/// @title Bench Token\n/// @notice Fixed-supply ERC-20 token; the entire supply is minted to the deployer.\n/// @dev An allowance of `type(uint256).max` is treated as infinite by OpenZeppelin's ERC20.\ncontract Token is ERC20 {\n    /// @param initialSupply Amount of tokens (in base units) minted to the deployer.\n    constructor(uint256 initialSupply) ERC20(\"Bench Token\", \"BTK\") {\n        _mint(msg.sender, initialSupply);\n    }\n}\n"
+    }
+  ]
+}

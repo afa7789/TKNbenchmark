@@ -1,0 +1,54 @@
+{
+  "buildOk": true,
+  "buildSecs": 1.23,
+  "buildLog": "",
+  "binaryBytes": 227,
+  "projectBytes": 1458176,
+  "cacheBytes": 0,
+  "footprintBytes": 1458176,
+  "pass": 8,
+  "total": 8,
+  "solved": true,
+  "cases": [
+    {
+      "name": "spec-example",
+      "ok": true,
+      "ms": 178
+    },
+    {
+      "name": "two-features",
+      "ok": true,
+      "ms": 175
+    },
+    {
+      "name": "medium-1k",
+      "ok": true,
+      "ms": 179
+    },
+    {
+      "name": "exactly-determined",
+      "ok": true,
+      "ms": 177
+    },
+    {
+      "name": "negative-and-decimals",
+      "ok": true,
+      "ms": 178
+    },
+    {
+      "name": "no-noise",
+      "ok": true,
+      "ms": 180
+    },
+    {
+      "name": "many-features",
+      "ok": true,
+      "ms": 187
+    },
+    {
+      "name": "large-200k",
+      "ok": true,
+      "ms": 986
+    }
+  ]
+}

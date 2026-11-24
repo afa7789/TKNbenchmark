@@ -1,0 +1,13 @@
+{
+  "id": "dafny-isort-r3",
+  "files": [
+    {
+      "path": "ISort.dfy",
+      "text": "// Complete every proof. Do not change any definition or lemma statement.\ndatatype List = Nil | Cons(head: nat, tail: List)\n\nfunction Insert(x: nat, xs: List): List\n{\n  match xs\n  case Nil => Cons(x, Nil)\n  case Cons(y, rest) => if x <= y then Cons(x, xs) else Cons(y, Insert(x, rest))\n}\n\nfunction ISort(xs: List): List\n{\n  match xs\n  case Nil => Nil\n  case Cons(x, rest) => Insert(x, ISort(rest))\n}\n\npredicate Sorted(xs: List)\n{\n  match xs\n  case Nil => true\n  case Cons(x, rest) =>\n    match rest\n    case Nil => true\n    case Cons(y, _) => x <= y && Sorted(rest)\n}\n\nfunction Count(n: nat, xs: List): nat\n{\n  match xs\n  case Nil => 0\n  case Cons(x, rest) => (if x == n then 1 else 0) + Count(n, rest)\n}\n\n// Inserting into a sorted list yields a sorted list.\nlemma InsertSorted(x: nat, xs: List)\n  requires Sorted(xs)\n  ensures Sorted(Insert(x, xs))\n  ensures Insert(x, xs).Cons?\n  ensures Insert(x, xs).head == x || (xs.Cons? && Insert(x, xs).head == xs.head)\n{\n  match xs\n  case Nil =>\n  case Cons(y, rest) =>\n    if x > y {\n      InsertSorted(x, rest);\n    }\n}\n\n// Insert adds exactly one occurrence of x and leaves other counts unchanged.\nlemma InsertCount(n: nat, x: nat, xs: List)\n  ensures Count(n, Insert(x, xs)) == (if x == n then 1 else 0) + Count(n, xs)\n{\n  match xs\n  case Nil =>\n  case Cons(y, rest) =>\n    if x > y {\n      InsertCount(n, x, rest);\n    }\n}\n\nlemma ISortSorted(xs: List)\n  ensures Sorted(ISort(xs))\n{\n  match xs\n  case Nil =>\n  case Cons(x, rest) =>\n    ISortSorted(rest);\n    InsertSorted(x, ISort(rest));\n}\n\nlemma ISortCount(n: nat, xs: List)\n  ensures Count(n, ISort(xs)) == Count(n, xs)\n{\n  match xs\n  case Nil =>\n  case Cons(x, rest) =>\n    ISortCount(n, rest);\n    InsertCount(n, x, ISort(rest));\n}\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ndafny verify ISort.dfy\n"
+    }
+  ]
+}

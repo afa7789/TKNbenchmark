@@ -1,0 +1,13 @@
+{
+  "id": "r-linalg-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds ./app: a launcher that runs linalg.R with Rscript.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncommand -v Rscript >/dev/null || { echo \"Rscript not found\" >&2; exit 1; }\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec Rscript --vanilla \"$(dirname \"$0\")/linalg.R\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "linalg.R",
+      "text": "#!/usr/bin/env Rscript\n# linalg: log-determinant, linear solve, eigenvalues and Frobenius norm of an\n# SPD matrix read from standard input. See SPEC.md.\n\nread_input <- function(con = file(\"stdin\")) {\n  tokens <- scan(con, what = double(), quiet = TRUE)\n  if (length(tokens) < 1L) stop(\"empty input\", call. = FALSE)\n  n <- as.integer(tokens[1L])\n  if (is.na(n) || n < 1L) stop(\"invalid matrix size\", call. = FALSE)\n  needed <- 1L + n * n + n\n  if (length(tokens) < needed) stop(\"not enough numbers in input\", call. = FALSE)\n  a <- matrix(tokens[2L:(1L + n * n)], nrow = n, ncol = n, byrow = TRUE)\n  b <- tokens[(2L + n * n):needed]\n  list(a = a, b = b)\n}\n\nfmt <- function(x) {\n  x[x == 0] <- 0  # normalise negative zero\n  paste(trimws(formatC(x, digits = 15L, format = \"g\")), collapse = \" \")\n}\n\nmain <- function() {\n  input <- read_input()\n  a <- input$a\n  a <- (a + t(a)) / 2  # enforce exact symmetry\n  r <- chol(a)\n  log_det <- 2 * sum(log(diag(r)))\n  x <- backsolve(r, forwardsolve(t(r), input$b))\n  eig <- sort(eigen(a, symmetric = TRUE, only.values = TRUE)$values)\n  frob <- norm(a, type = \"F\")\n  writeLines(c(fmt(log_det), fmt(x), fmt(eig), fmt(frob)))\n}\n\ninvisible(main())\n"
+    }
+  ]
+}

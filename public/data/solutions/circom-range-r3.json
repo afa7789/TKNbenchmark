@@ -1,0 +1,21 @@
+{
+  "id": "circom-range-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Fetches dependencies and compiles the circuit to R1CS + WASM witness generator.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nif [[ -f package-lock.json ]]; then\n    npm ci --no-audit --no-fund --silent\nelse\n    npm install --no-audit --no-fund --silent\nfi\n\nmkdir -p build\ncircom range.circom --r1cs --wasm --sym -l node_modules -o build\n"
+    },
+    {
+      "path": "package.json",
+      "text": "{\n  \"name\": \"range-circuit\",\n  \"private\": true,\n  \"description\": \"Prove a private age is in [0,255] and at least a public threshold\",\n  \"dependencies\": {\n    \"circomlib\": \"2.0.5\"\n  }\n}\n"
+    },
+    {
+      "path": "prove.sh",
+      "text": "#!/usr/bin/env bash\n# Usage: bash prove.sh input.json\n# Exits 0 iff a witness satisfying all circuit constraints can be generated.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nif [[ $# -ne 1 ]]; then\n    echo \"usage: $0 input.json\" >&2\n    exit 2\nfi\ninput=$(cd \"$OLDPWD\" && realpath \"$1\")\n\nwasm_dir=build/range_js\nif [[ ! -f \"$wasm_dir/range.wasm\" ]]; then\n    echo \"circuit not built; run build.sh first\" >&2\n    exit 2\nfi\n\n# The witness calculator silently reduces inputs modulo the field prime, so\n# reject anything that is not a canonical field element encoding up front;\n# otherwise e.g. p + 25 would be indistinguishable from 25.\nnode - \"$input\" <<'JS'\nconst fs = require('fs')\nconst P = 21888242871839275222246405745257275088548364400416034343698204186575808495617n\nconst input = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'))\nfor (const key of ['age', 'threshold']) {\n  const v = input[key]\n  if (typeof v !== 'string' && typeof v !== 'number') throw new Error(`${key}: missing or not a scalar`)\n  const s = String(v).trim()\n  if (!/^[0-9]+$/.test(s) || BigInt(s) >= P) throw new Error(`${key}: not a canonical field element: ${s}`)\n}\nJS\n\nwitness=$(mktemp -t range-witness.XXXXXX)\ntrap 'rm -f \"$witness\"' EXIT\nnode \"$wasm_dir/generate_witness.js\" \"$wasm_dir/range.wasm\" \"$input\" \"$witness\"\n"
+    },
+    {
+      "path": "range.circom",
+      "text": "pragma circom 2.1.6;\n\ninclude \"circomlib/circuits/bitify.circom\";\ninclude \"circomlib/circuits/comparators.circom\";\n\n// Proves that a private `age` lies in [0, 255] and is at least the public\n// `threshold`, which itself must lie in [0, 255].\ntemplate AgeAtLeast(BITS) {\n    signal input age;\n    signal input threshold;\n\n    // Range-check both operands to BITS bits. This is required for soundness:\n    // circomlib comparators assume their inputs already fit in BITS bits.\n    component ageBits = Num2Bits(BITS);\n    ageBits.in <== age;\n    component thresholdBits = Num2Bits(BITS);\n    thresholdBits.in <== threshold;\n\n    component ge = GreaterEqThan(BITS);\n    ge.in[0] <== age;\n    ge.in[1] <== threshold;\n    ge.out === 1;\n}\n\ncomponent main {public [threshold]} = AgeAtLeast(8);\n"
+    }
+  ]
+}

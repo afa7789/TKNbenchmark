@@ -1,0 +1,48 @@
+{
+  "id": "julia-linreg-r2",
+  "lang": "julia",
+  "task": "linreg",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 117845,
+  "files": [
+    "LinReg/Manifest.toml",
+    "LinReg/Project.toml",
+    "LinReg/src/LinReg.jl",
+    "app",
+    "build.sh"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.28327840000000004,
+  "durationMs": 117099,
+  "apiMs": 69076,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "I've implemented the regression program in Julia and it passes all 3 example cases in `node check.mjs`.\n\nI also ran two inputs of my own outside that check:\n- **Large input:** 1,000,000 rows with 20 features finished in about 0.7 seconds.\n- **Badly scaled input:** features around 1,000,000.1 gave a slope of 19.9999999977, which matches the true value of 20 to within the tolerance.\n\nThe method subtracts each column's mean, then solves the fit by QR factorisation in chunks of 4,096 rows, which is ",
+  "usage": {
+    "input": 8,
+    "output": 7091,
+    "thinking": 2490,
+    "cacheRead": 42772,
+    "cacheWrite": 16609
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 3,
+    "total": 3
+  }
+}

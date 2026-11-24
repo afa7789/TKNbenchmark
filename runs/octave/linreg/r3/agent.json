@@ -1,0 +1,46 @@
+{
+  "id": "octave-linreg-r3",
+  "lang": "octave",
+  "task": "linreg",
+  "rep": 3,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 265032,
+  "files": [
+    "app",
+    "build.sh",
+    "linreg.m"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.44056720000000005,
+  "durationMs": 264354,
+  "apiMs": 123415,
+  "turns": 19,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 38,
+    "output": 9817,
+    "thinking": 4206,
+    "cacheRead": 320296,
+    "cacheWrite": 22502
+  },
+  "tools": {
+    "Bash": 18
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 3,
+    "total": 3
+  }
+}

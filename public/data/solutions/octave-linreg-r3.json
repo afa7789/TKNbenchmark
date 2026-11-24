@@ -1,0 +1,13 @@
+{
+  "id": "octave-linreg-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Octave is interpreted; \"building\" just validates the toolchain and makes the launcher executable.\nset -euo pipefail\ncd \"$(dirname \"${BASH_SOURCE[0]}\")\"\ncommand -v octave-cli >/dev/null || { echo \"octave-cli not found\" >&2; exit 1; }\nchmod +x app\n"
+    },
+    {
+      "path": "linreg.m",
+      "text": "function linreg ()\n  % LINREG  Ordinary least-squares regression reading from stdin.\n  %   Input:  \"n k\" header, then n rows of k features followed by y.\n  %   Output: b0..bk, then R^2, one per line.\n\n  raw = fileread (\"/dev/stdin\");\n  vals = sscanf (raw, \"%f\");\n  clear raw;\n\n  if (numel (vals) < 2)\n    error (\"linreg: missing header\");\n  endif\n  n = vals(1);\n  k = vals(2);\n  ncol = k + 1;\n  if (numel (vals) < 2 + n * ncol)\n    error (\"linreg: expected %d values, got %d\", n * ncol, numel (vals) - 2);\n  endif\n\n  data = reshape (vals(3:2 + n * ncol), ncol, n)';\n  clear vals;\n  X = data(:, 1:k);\n  y = data(:, ncol);\n  clear data;\n\n  % Center to improve conditioning; the intercept is recovered afterwards.\n  mx = mean (X, 1);\n  my = mean (y);\n  Xc = X - mx;\n  yc = y - my;\n  clear X y;\n\n  beta = Xc \\ yc;\n  b0 = my - mx * beta;\n\n  res = yc - Xc * beta;\n  ss_res = res' * res;\n  ss_tot = yc' * yc;\n  r2 = 1 - ss_res / ss_tot;\n\n  printf (\"%.15g\\n\", [b0; beta; r2]);\nendfunction\n"
+    }
+  ]
+}

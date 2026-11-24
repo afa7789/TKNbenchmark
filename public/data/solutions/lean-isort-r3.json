@@ -1,0 +1,13 @@
+{
+  "id": "lean-isort-r3",
+  "files": [
+    {
+      "path": "ISort.lean",
+      "text": "-- Complete every proof. Do not change any definition or theorem statement.\nnamespace TKN\n\ndef insert (x : Nat) : List Nat → List Nat\n  | [] => [x]\n  | y :: ys => if x ≤ y then x :: y :: ys else y :: insert x ys\n\ndef isort : List Nat → List Nat\n  | [] => []\n  | x :: xs => insert x (isort xs)\n\ninductive Sorted : List Nat → Prop\n  | nil : Sorted []\n  | single (x : Nat) : Sorted [x]\n  | cons (x y : Nat) (ys : List Nat) : x ≤ y → Sorted (y :: ys) → Sorted (x :: y :: ys)\n\ndef count (n : Nat) : List Nat → Nat\n  | [] => 0\n  | x :: xs => (if x = n then 1 else 0) + count n xs\n\n/-- Inserting into a sorted list keeps it sorted. -/\ntheorem insert_sorted (x : Nat) {l : List Nat} (h : Sorted l) : Sorted (insert x l) := by\n  induction h with\n  | nil => exact .single x\n  | single y =>\n    unfold insert\n    split\n    · exact .cons x y [] ‹_› (.single y)\n    · exact .cons y x [] (by omega) (.single x)\n  | cons y z zs hyz hs ih =>\n    unfold insert\n    split\n    · exact .cons x y (z :: zs) ‹_› (.cons y z zs hyz hs)\n    · rename_i hxy\n      unfold insert at ih ⊢\n      split\n      · exact .cons y x (z :: zs) (by omega) (by simpa [*] using ih)\n      · exact .cons y z (insert x zs) hyz (by simpa [*] using ih)\n\ntheorem isort_sorted (xs : List Nat) : Sorted (isort xs) := by\n  induction xs with\n  | nil => exact .nil\n  | cons x xs ih => exact insert_sorted x ih\n\n/-- Inserting `x` adds one occurrence of `x` and leaves other counts unchanged. -/\ntheorem count_insert (n x : Nat) (l : List Nat) :\n    count n (insert x l) = (if x = n then 1 else 0) + count n l := by\n  induction l with\n  | nil => rfl\n  | cons y ys ih =>\n    unfold insert\n    split\n    · rfl\n    · simp only [count, ih]\n      omega\n\ntheorem isort_count (n : Nat) (xs : List Nat) : count n (isort xs) = count n xs := by\n  induction xs with\n  | nil => rfl\n  | cons x xs ih => simp only [isort, count, count_insert, ih]\n\nend TKN\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nlean ISort.lean\n"
+    }
+  ]
+}

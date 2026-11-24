@@ -15,7 +15,8 @@
     "selftest:front": "node bench/selftest-front.mjs",
     "verify:front": "node bench/verify-front.mjs",
     "repair": "node bench/repair.mjs",
-    "paper": "node paper/build.mjs && tectonic -o public paper/paper.tex && node paper/arxiv.mjs"
+    "paper": "node paper/build.mjs && tectonic -o public paper/paper.tex && node paper/arxiv.mjs",
+    "selftest:tracks": "node bench/selftest-tracks.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

@@ -1,0 +1,13 @@
+{
+  "id": "octave-linreg-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Generates ./app, a launcher that runs src/linreg.m under octave-cli.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\ncommand -v octave-cli >/dev/null || { echo \"octave-cli not found\" >&2; exit 1; }\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nhere=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\nexec octave-cli --no-init-file --no-site-file --no-history --quiet \\\n  --path \"$here/src\" --eval \"linreg\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "src/linreg.m",
+      "text": "function linreg ()\n  ## LINREG  Ordinary least-squares regression filter (stdin -> stdout).\n  ##\n  ## Input:  \"n k\" header, then n rows of k features followed by the response.\n  ## Output: intercept, k slope coefficients, and R^2, one per line.\n\n  raw = fread (stdin, Inf, \"*char\")';\n  vals = sscanf (raw, \"%f\");\n  clear raw;\n\n  if (numel (vals) < 2)\n    error (\"linreg: missing header\");\n  endif\n  n = vals(1);\n  k = vals(2);\n  need = n * (k + 1);\n  if (numel (vals) - 2 < need)\n    error (\"linreg: expected %d data values, got %d\", need, numel (vals) - 2);\n  endif\n\n  data = reshape (vals(3:2 + need), k + 1, n)';\n  clear vals;\n  X = data(:, 1:k);\n  y = data(:, k + 1);\n  clear data;\n\n  ## Centre features and response for numerical stability; the intercept is\n  ## recovered from the means.  Backslash uses a QR-based least-squares solve.\n  mx = mean (X, 1);\n  my = mean (y);\n  Xc = X - mx;\n  yc = y - my;\n  clear X y;\n\n  b = Xc \\ yc;\n  b0 = my - mx * b;\n\n  res = yc - Xc * b;\n  ss_res = res' * res;\n  ss_tot = yc' * yc;\n  r2 = 1 - ss_res / ss_tot;\n\n  printf (\"%.15g\\n\", [b0; b; r2]);\nendfunction\n"
+    }
+  ]
+}

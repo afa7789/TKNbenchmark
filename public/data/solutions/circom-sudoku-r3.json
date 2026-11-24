@@ -1,0 +1,21 @@
+{
+  "id": "circom-sudoku-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Compiles the Sudoku circuit to R1CS and a WebAssembly witness generator in ./build.\nset -euo pipefail\ncd \"$(dirname \"${BASH_SOURCE[0]}\")\"\n\ncommand -v circom >/dev/null || { echo \"error: circom 2 not found in PATH\" >&2; exit 1; }\n\nrm -rf build\nmkdir -p build\ncircom circuits/main.circom --r1cs --wasm --sym -o build\n"
+    },
+    {
+      "path": "circuits/main.circom",
+      "text": "pragma circom 2.1.0;\n\ninclude \"sudoku.circom\";\n\n// 4×4 Sudoku: box size 2. The puzzle is public; the solution stays private.\ncomponent main {public [puzzle]} = Sudoku(2);\n"
+    },
+    {
+      "path": "circuits/sudoku.circom",
+      "text": "pragma circom 2.1.0;\n\n// Decomposes `in` into a one-hot vector over the digits 1..n.\n// Satisfiable only if `in` is one of 1, 2, ..., n; then out[d] == 1 iff in == d + 1.\ntemplate OneHotDigit(n) {\n    signal input in;\n    signal output out[n];\n\n    var count = 0;\n    var value = 0;\n    for (var d = 0; d < n; d++) {\n        out[d] <-- in == d + 1 ? 1 : 0;\n        out[d] * (out[d] - 1) === 0;\n        count += out[d];\n        value += (d + 1) * out[d];\n    }\n    count === 1;\n    value === in;\n}\n\n// Proves knowledge of a solution to a Sudoku of box size b (grid side n = b*b).\n//   puzzle   : n*n cells, row-major, 0 = empty, otherwise the clue digit.\n//   solution : n*n cells, row-major, each a digit in 1..n.\n// Constraints:\n//   1. every solution cell is a digit in 1..n;\n//   2. the solution matches every non-zero puzzle cell;\n//   3. each row, column and b×b box contains every digit exactly once.\ntemplate Sudoku(b) {\n    var n = b * b;\n\n    signal input puzzle[n * n];\n    signal input solution[n * n];\n\n    // (1) Range check via one-hot decomposition: digit[i][d] == 1 iff solution[i] == d + 1.\n    component digit[n * n];\n    for (var i = 0; i < n * n; i++) {\n        digit[i] = OneHotDigit(n);\n        digit[i].in <== solution[i];\n    }\n\n    // (2) Clue agreement: puzzle[i] == 0 or puzzle[i] == solution[i].\n    for (var i = 0; i < n * n; i++) {\n        puzzle[i] * (puzzle[i] - solution[i]) === 0;\n    }\n\n    // (3) Each group has n cells; every digit appearing exactly once is\n    // equivalent to each digit's indicator summing to 1 over the group.\n    for (var g = 0; g < n; g++) {\n        var boxRow = (g \\ b) * b;\n        var boxCol = (g % b) * b;\n        for (var d = 0; d < n; d++) {\n            var inRow = 0;\n            var inCol = 0;\n            var inBox = 0;\n            for (var k = 0; k < n; k++) {\n                inRow += digit[g * n + k].out[d];\n                inCol += digit[k * n + g].out[d];\n                inBox += digit[(boxRow + k \\ b) * n + boxCol + k % b].out[d];\n            }\n            inRow === 1;\n            inCol === 1;\n            inBox === 1;\n        }\n    }\n}\n"
+    },
+    {
+      "path": "prove.sh",
+      "text": "#!/usr/bin/env bash\n# Usage: bash prove.sh input.json\n# Exits 0 iff a witness satisfying every circuit constraint can be generated for the input.\nset -euo pipefail\n\nif [[ $# -ne 1 ]]; then\n    echo \"usage: $0 input.json\" >&2\n    exit 2\nfi\n\nroot=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"\njs=\"$root/build/main_js\"\n[[ -f \"$js/main.wasm\" ]] || { echo \"error: circuit not built; run build.sh first\" >&2; exit 2; }\n\ntmp=\"$(mktemp -d)\"\ntrap 'rm -rf \"$tmp\"' EXIT\n\n# The witness calculator evaluates every `===` constraint and fails on any violation.\nnode \"$js/generate_witness.js\" \"$js/main.wasm\" \"$1\" \"$tmp/witness.wtns\"\n"
+    }
+  ]
+}

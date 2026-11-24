@@ -1,0 +1,56 @@
+{
+  "id": "solidity-token-r3",
+  "lang": "solidity",
+  "task": "token",
+  "rep": 3,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 30288,
+  "files": [
+    "build.sh",
+    "cache/solidity-files-cache.json",
+    "forge-out/Context.sol/Context.json",
+    "forge-out/ERC20.sol/ERC20.json",
+    "forge-out/IERC20.sol/IERC20.json",
+    "forge-out/IERC20Metadata.sol/IERC20Metadata.json",
+    "forge-out/Token.sol/Token.json",
+    "forge-out/build-info/6e0ddbef65c59c94.json",
+    "forge-out/draft-IERC6093.sol/IERC1155Errors.json",
+    "forge-out/draft-IERC6093.sol/IERC20Errors.json",
+    "forge-out/draft-IERC6093.sol/IERC721Errors.json",
+    "foundry.toml",
+    "src/Token.sol"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.17554959999999997,
+  "durationMs": 29598,
+  "apiMs": 23466,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 8,
+    "output": 1872,
+    "thinking": 503,
+    "cacheRead": 46868,
+    "cacheWrite": 16088
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 3,
+    "total": 3
+  }
+}

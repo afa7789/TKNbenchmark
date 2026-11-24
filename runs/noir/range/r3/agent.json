@@ -1,0 +1,47 @@
+{
+  "id": "noir-range-r3",
+  "lang": "noir",
+  "task": "range",
+  "rep": 3,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 37556,
+  "files": [
+    "Nargo.toml",
+    "build.sh",
+    "prove.sh",
+    "src/main.nr"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.19701699999999997,
+  "durationMs": 36782,
+  "apiMs": 31308,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 12,
+    "output": 2475,
+    "thinking": 606,
+    "cacheRead": 83985,
+    "cacheWrite": 16334
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 3,
+    "total": 3
+  }
+}

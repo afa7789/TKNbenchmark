@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Launcher: runs the linreg Octave function on stdin.
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec octave-cli --no-gui --norc --no-history --quiet --no-window-system \
+  --path "$here" --eval "linreg ()"

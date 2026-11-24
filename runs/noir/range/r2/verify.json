@@ -1,0 +1,74 @@
+{
+  "buildOk": true,
+  "buildSecs": 0.22,
+  "buildLog": "",
+  "binaryBytes": 0,
+  "projectBytes": 53248,
+  "cacheBytes": 0,
+  "footprintBytes": 53248,
+  "pass": 12,
+  "total": 12,
+  "solved": true,
+  "cases": [
+    {
+      "name": "above-threshold",
+      "ok": true,
+      "ms": 283
+    },
+    {
+      "name": "equal-to-threshold",
+      "ok": true,
+      "ms": 286
+    },
+    {
+      "name": "below-threshold",
+      "ok": true,
+      "ms": 306
+    },
+    {
+      "name": "max-age-zero-threshold",
+      "ok": true,
+      "ms": 300
+    },
+    {
+      "name": "both-zero",
+      "ok": true,
+      "ms": 278
+    },
+    {
+      "name": "both-max",
+      "ok": true,
+      "ms": 281
+    },
+    {
+      "name": "age-256",
+      "ok": true,
+      "ms": 274
+    },
+    {
+      "name": "age-300",
+      "ok": true,
+      "ms": 285
+    },
+    {
+      "name": "just-below-max",
+      "ok": true,
+      "ms": 302
+    },
+    {
+      "name": "threshold-256",
+      "ok": true,
+      "ms": 295
+    },
+    {
+      "name": "huge-field-element",
+      "ok": true,
+      "ms": 281
+    },
+    {
+      "name": "zero-below-one",
+      "ok": true,
+      "ms": 283
+    }
+  ]
+}

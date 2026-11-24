@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Octave is interpreted; "building" means installing the launcher at ./app.
+set -euo pipefail
+cd "$(dirname "$0")"
+cat > app <<'LAUNCHER'
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec octave-cli --no-gui --norc --no-history --quiet --no-window-system \
+  --eval "addpath('$dir'); try, linalg(); catch err, fprintf(2, '%s\n', err.message); exit(1); end"
+LAUNCHER
+chmod +x app

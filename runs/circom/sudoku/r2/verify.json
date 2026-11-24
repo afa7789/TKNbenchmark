@@ -1,0 +1,64 @@
+{
+  "buildOk": true,
+  "buildSecs": 0.03,
+  "buildLog": "",
+  "binaryBytes": 0,
+  "projectBytes": 102400,
+  "cacheBytes": 0,
+  "footprintBytes": 102400,
+  "pass": 10,
+  "total": 10,
+  "solved": true,
+  "cases": [
+    {
+      "name": "valid-solution",
+      "ok": true,
+      "ms": 82
+    },
+    {
+      "name": "disagrees-with-clue",
+      "ok": true,
+      "ms": 82
+    },
+    {
+      "name": "row-duplicate",
+      "ok": true,
+      "ms": 84
+    },
+    {
+      "name": "empty-puzzle",
+      "ok": true,
+      "ms": 81
+    },
+    {
+      "name": "full-puzzle",
+      "ok": true,
+      "ms": 82
+    },
+    {
+      "name": "box-violation-only",
+      "ok": true,
+      "ms": 83
+    },
+    {
+      "name": "column-violation-only",
+      "ok": true,
+      "ms": 80
+    },
+    {
+      "name": "value-five",
+      "ok": true,
+      "ms": 84
+    },
+    {
+      "name": "value-zero",
+      "ok": true,
+      "ms": 91
+    },
+    {
+      "name": "huge-field-element",
+      "ok": true,
+      "ms": 88
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "vyper-token-r3",
+  "lang": "vyper",
+  "task": "token",
+  "rep": 3,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 34249,
+  "files": [
+    "build.sh",
+    "contracts/Token.vy"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.215278,
+  "durationMs": 33495,
+  "apiMs": 31407,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 8,
+    "output": 3258,
+    "thinking": 585,
+    "cacheRead": 48070,
+    "cacheWrite": 17559
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 1,
+    "total": 1
+  }
+}

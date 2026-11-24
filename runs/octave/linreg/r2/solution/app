@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+here="$(cd "$(dirname "$0")" && pwd)"
+exec octave --no-gui --no-window-system --quiet --norc --no-history \
+  --path "$here/src" --eval "linreg"

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TKNbenchmark: what a programming language costs a coding agent</title>
-  <meta name="description" content="One isolated Claude Opus 5.5 agent per case: tokens, dollars, time and correctness for the same tasks in C, C++, C#, Rust, Go, Zig, Odin, Nim, Swift, Java, Kotlin, OCaml, Haskell, JavaScript, TypeScript, Python and Assembly, plus React, Vue and Svelte.">
+  <meta name="description" content="One isolated Claude Opus 5.5 agent per case: tokens, dollars, time and correctness for the same tasks in C, C++, C#, Rust, Go, Zig, Odin, Nim, Swift, Java, Kotlin, OCaml, Haskell, JavaScript, TypeScript, Python and Assembly, plus React, Vue and Svelte, and specialised tracks for Octave, Julia, R, Lean, Rocq, Dafny, Solidity, Vyper, Circom and Noir.">
   <link rel="stylesheet" href="style.css">
   <script type="module" src="app.js"></script>
 </head>
@@ -16,6 +16,7 @@
       <a href="#tasks">By task</a>
       <a href="#build">Build &amp; disk</a>
       <a href="#performance">Performance</a>
+      <a href="#tracks">Tracks</a>
       <a href="#frontend">Front end</a>
       <a href="#combos">Stacks</a>
       <a href="#repair">Repair</a>
@@ -75,6 +76,18 @@
       <legend>Final code performance</legend>
       <p>Only runs that passed every hidden test. Command-line tasks: median of 5 runs on a large input (wordfreq 50 MB, lru 1 million commands, calc 200 thousand expressions), with peak memory. kvhttp: requests per second with 64 concurrent clients, one connection per request.</p>
       <div class="multiples" id="perf-charts"></div>
+    </fieldset>
+
+    <fieldset id="tracks">
+      <legend>Specialised tracks</legend>
+      <p>Languages that cannot run the main tasks get tasks from their own domain, with the same rounds (write, verify live, repair) and a verifier first validated against reference solutions. Each track is ranked on its own; sums are over the track's two tasks, so they are not comparable with the main ranking.</p>
+      <ul>
+        <li><strong>Scientific computing</strong> (Octave, Julia, R): least-squares regression and dense linear algebra, checked to 1e-6.</li>
+        <li><strong>Theorem proving</strong> (Lean 4, Rocq, Dafny): list lemmas and insertion-sort correctness; the file must check, with no <code>sorry</code>/<code>Admitted</code>/<code>assume</code> and every statement unchanged.</li>
+        <li><strong>Smart contracts</strong> (Solidity, Vyper): a token with allowances and a linear-vesting contract, deployed on a fresh <code>anvil</code> and exercised with exact timestamps, reverts and events.</li>
+        <li><strong>Zero-knowledge circuits</strong> (Circom, Noir): a private range check and a 4×4 Sudoku; valid inputs must be provable and invalid ones must not.</li>
+      </ul>
+      <div id="track-tables"></div>
     </fieldset>
 
     <fieldset id="frontend">

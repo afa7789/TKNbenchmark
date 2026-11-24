@@ -1,0 +1,21 @@
+{
+  "id": "noir-sudoku-r1",
+  "files": [
+    {
+      "path": "Nargo.toml",
+      "text": "[package]\nname = \"sudoku\"\ntype = \"bin\"\nauthors = [\"\"]\ncompiler_version = \">=1.0.0\"\n\n[dependencies]\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Compiles the circuit to target/sudoku.json.\nset -euo pipefail\ncd \"$(dirname \"${BASH_SOURCE[0]}\")\"\nnargo compile\n"
+    },
+    {
+      "path": "prove.sh",
+      "text": "#!/usr/bin/env bash\n# Usage: bash prove.sh input.json\n# Exits 0 iff the inputs satisfy the circuit (a witness can be generated).\nset -euo pipefail\n\nif [[ $# -ne 1 ]]; then\n  echo \"usage: $0 input.json\" >&2\n  exit 2\nfi\ninput=$(cd \"$(dirname \"$1\")\" && pwd)/$(basename \"$1\")\ncd \"$(dirname \"${BASH_SOURCE[0]}\")\"\n\ntmp=$(mktemp -d)\ntrap 'rm -rf \"$tmp\"' EXIT\n\n# Convert the JSON input into a nargo prover file. Values are passed through\n# verbatim; nargo itself rejects anything that does not fit the ABI types.\njq -er '\n  \"puzzle = \\(.puzzle | tojson)\",\n  \"solution = \\(.solution | tojson)\"\n' \"$input\" > \"$tmp/Prover.toml\"\n\nnargo execute --prover-name \"$tmp/Prover\" \"$tmp/witness\" >/dev/null\n"
+    },
+    {
+      "path": "src/main.nr",
+      "text": "//! Proves knowledge of a solution to a public 4x4 Sudoku puzzle.\n\nglobal N: u32 = 4;\nglobal CELLS: u32 = N * N;\nglobal BOX: u32 = 2;\n\n/// `puzzle` holds the clues in row-major order (0 = empty cell),\n/// `solution` is the private, fully filled grid in row-major order.\nfn main(puzzle: pub [u8; CELLS], solution: [u8; CELLS]) {\n    for i in 0..CELLS {\n        let v = solution[i];\n        assert((1 <= v) & (v <= N as u8), \"solution cell out of range\");\n        let clue = puzzle[i];\n        assert((clue == 0) | (clue == v), \"solution disagrees with puzzle\");\n    }\n\n    for r in 0..N {\n        assert_group(solution, |k| r * N + k);\n    }\n    for c in 0..N {\n        assert_group(solution, |k| k * N + c);\n    }\n    for b in 0..N {\n        let top = (b / BOX) * BOX;\n        let left = (b % BOX) * BOX;\n        assert_group(solution, |k| (top + k / BOX) * N + left + k % BOX);\n    }\n}\n\n/// Asserts that the N cells selected by `index` are pairwise distinct.\n/// Combined with the 1..=N range check, this means they hold each digit exactly once.\nfn assert_group<Env>(grid: [u8; CELLS], index: fn[Env](u32) -> u32) {\n    for i in 0..N {\n        for j in (i + 1)..N {\n            assert(grid[index(i)] != grid[index(j)], \"duplicate digit in row, column or box\");\n        }\n    }\n}\n\nfn is_valid(puzzle: [u8; CELLS], solution: [u8; CELLS]) {\n    main(puzzle, solution);\n}\n\nglobal PUZZLE: [u8; CELLS] = [1, 0, 0, 4, 0, 4, 1, 0, 2, 0, 0, 3, 0, 3, 2, 0];\nglobal SOLUTION: [u8; CELLS] = [1, 2, 3, 4, 3, 4, 1, 2, 2, 1, 4, 3, 4, 3, 2, 1];\n\n#[test]\nfn test_valid_solution() {\n    is_valid(PUZZLE, SOLUTION);\n}\n\n#[test]\nfn test_empty_puzzle() {\n    is_valid([0; CELLS], SOLUTION);\n}\n\n#[test(should_fail_with = \"solution disagrees with puzzle\")]\nfn test_disagrees_with_clue() {\n    let mut puzzle = PUZZLE;\n    puzzle[1] = 3;\n    is_valid(puzzle, SOLUTION);\n}\n\n#[test(should_fail_with = \"solution cell out of range\")]\nfn test_zero_cell() {\n    let mut solution = SOLUTION;\n    solution[1] = 0;\n    is_valid([0; CELLS], solution);\n}\n\n#[test(should_fail_with = \"solution cell out of range\")]\nfn test_cell_too_large() {\n    let mut solution = SOLUTION;\n    solution[1] = 5;\n    is_valid([0; CELLS], solution);\n}\n\n#[test(should_fail_with = \"duplicate digit\")]\nfn test_row_duplicate() {\n    let mut solution = SOLUTION;\n    solution[0] = 3;\n    is_valid([0; CELLS], solution);\n}\n\n#[test(should_fail_with = \"duplicate digit\")]\nfn test_box_duplicate() {\n    // Every row and column is a permutation, but the boxes are not.\n    let solution = [1, 2, 3, 4, 2, 3, 4, 1, 3, 4, 1, 2, 4, 1, 2, 3];\n    is_valid([0; CELLS], solution);\n}\n"
+    }
+  ]
+}

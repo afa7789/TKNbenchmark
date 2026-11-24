@@ -6,7 +6,7 @@ import { ROOT, WORK, TASKS } from './config.mjs'
 
 let failed = 0
 for (const [task, t] of Object.entries(TASKS)) {
-  if (t.kind === 'static') continue
+  if (!['stdio', 'http'].includes(t.kind)) continue
   const taskDir = join(ROOT, 'bench', 'tasks', task)
   const dir = join(WORK, 'selftest', task)
   rmSync(dir, { recursive: true, force: true })

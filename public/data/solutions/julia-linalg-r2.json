@@ -1,0 +1,13 @@
+{
+  "id": "julia-linalg-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds ./app: a launcher that runs src/linalg.jl with an optimizing Julia configuration.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\ncommand -v julia >/dev/null || { echo \"julia not found on PATH\" >&2; exit 1; }\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nDIR=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"\nexec julia --startup-file=no --history-file=no -O3 \"$DIR/src/linalg.jl\" \"$@\"\nLAUNCHER\nchmod +x app\n\n# Smoke test so build failures surface here rather than at run time.\nprintf '1\\n4\\n2\\n' | ./app >/dev/null\n"
+    },
+    {
+      "path": "src/linalg.jl",
+      "text": "# linalg: log-determinant, linear solve, eigenvalues and Frobenius norm of an SPD matrix.\nmodule LinalgApp\n\nusing LinearAlgebra\nusing Printf\n\n\"\"\"\n    read_input(io) -> (A, b)\n\nParse `n`, the `n×n` matrix `A` (row-major) and the vector `b` from whitespace-separated tokens.\n\"\"\"\nfunction read_input(io::IO)\n    tokens = split(read(io, String))\n    isempty(tokens) && error(\"empty input\")\n    n = parse(Int, tokens[1])\n    n >= 1 || error(\"n must be positive, got $n\")\n    length(tokens) >= 1 + n * n + n || error(\"expected $(n * n + n) numbers after n\")\n    A = Matrix{Float64}(undef, n, n)\n    k = 1\n    for i in 1:n, j in 1:n\n        k += 1\n        A[i, j] = parse(Float64, tokens[k])\n    end\n    b = Vector{Float64}(undef, n)\n    for i in 1:n\n        k += 1\n        b[i] = parse(Float64, tokens[k])\n    end\n    return A, b\nend\n\n\"\"\"\n    analyze(A, b) -> (logdet, x, eigenvalues, frobenius)\n\nUses a Cholesky factorization when `A` is numerically positive definite, falling back to LU otherwise.\n\"\"\"\nfunction analyze(A::Matrix{Float64}, b::Vector{Float64})\n    S = Symmetric(A, :U)\n    F = cholesky(S; check = false)\n    if issuccess(F)\n        ld = logdet(F)\n        x = F \\ b\n    else\n        L = lu(A)\n        ld = first(logabsdet(L))\n        x = L \\ b\n    end\n    λ = eigvals(S)\n    sort!(λ)\n    return ld, x, λ, norm(A)\nend\n\nfmt(v::Real) = @sprintf(\"%.15g\", v)\n\nfunction write_output(io::IO, ld, x, λ, fro)\n    println(io, fmt(ld))\n    join(io, (fmt(v) for v in x), ' ')\n    println(io)\n    join(io, (fmt(v) for v in λ), ' ')\n    println(io)\n    println(io, fmt(fro))\n    return nothing\nend\n\nfunction main(input::IO = stdin, output::IO = stdout)\n    A, b = read_input(input)\n    write_output(output, analyze(A, b)...)\n    return 0\nend\n\nend # module\n\nif abspath(PROGRAM_FILE) == @__FILE__\n    exit(LinalgApp.main())\nend\n"
+    }
+  ]
+}

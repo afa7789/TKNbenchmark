@@ -1,0 +1,21 @@
+{
+  "id": "circom-range-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Compiles circuits/range.circom to R1CS + WASM witness generator in build/.\nset -euo pipefail\ncd \"$(dirname \"${BASH_SOURCE[0]}\")\"\n\ncommand -v circom >/dev/null || { echo \"error: circom not found in PATH\" >&2; exit 1; }\ncommand -v npm    >/dev/null || { echo \"error: npm not found in PATH\" >&2; exit 1; }\n\n# Fetch circomlib (pinned in package.json / package-lock.json).\nif [[ -f package-lock.json ]]; then\n    npm ci --silent --no-audit --no-fund\nelse\n    npm install --silent --no-audit --no-fund\nfi\n\nmkdir -p build\ncircom circuits/range.circom --r1cs --wasm --sym -l node_modules -o build\n"
+    },
+    {
+      "path": "circuits/range.circom",
+      "text": "pragma circom 2.1.6;\n\ninclude \"circomlib/circuits/bitify.circom\";\ninclude \"circomlib/circuits/comparators.circom\";\n\n// Proves that a private `age` and a public `threshold` are both 8-bit\n// unsigned integers (0..255) and that age >= threshold.\ntemplate AgeAtLeast(n) {\n    signal input age;        // private\n    signal input threshold;  // public\n\n    // Range-check both inputs to [0, 2^n). This is required for soundness:\n    // GreaterEqThan(n) assumes its operands already fit in n bits.\n    _ = Num2Bits(n)(age);\n    _ = Num2Bits(n)(threshold);\n\n    signal ok <== GreaterEqThan(n)([age, threshold]);\n    ok === 1;\n}\n\ncomponent main { public [threshold] } = AgeAtLeast(8);\n"
+    },
+    {
+      "path": "package.json",
+      "text": "{\n  \"name\": \"range-circuit\",\n  \"private\": true,\n  \"description\": \"Circom circuit: private age in [0,255] and age >= public threshold in [0,255]\",\n  \"dependencies\": {\n    \"circomlib\": \"2.0.5\"\n  }\n}\n"
+    },
+    {
+      "path": "prove.sh",
+      "text": "#!/usr/bin/env bash\n# Usage: bash prove.sh input.json\n# Exits 0 iff a witness satisfying the circuit's constraints can be generated.\nset -euo pipefail\ncd \"$(dirname \"${BASH_SOURCE[0]}\")\"\n\nif [[ $# -ne 1 ]]; then\n    echo \"usage: $0 input.json\" >&2\n    exit 2\nfi\n\ninput=\"$1\"\n[[ \"$input\" = /* ]] || input=\"$OLDPWD/$input\"\n\nwasm_dir=build/range_js\nif [[ ! -f \"$wasm_dir/range.wasm\" ]]; then\n    echo \"error: circuit not built; run build.sh first\" >&2\n    exit 2\nfi\n\nwtns=\"$(mktemp -t range-wtns.XXXXXX)\"\ntrap 'rm -f \"$wtns\"' EXIT\n\nnode \"$wasm_dir/generate_witness.js\" \"$wasm_dir/range.wasm\" \"$input\" \"$wtns\"\n"
+    }
+  ]
+}

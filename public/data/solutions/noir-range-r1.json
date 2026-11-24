@@ -1,0 +1,21 @@
+{
+  "id": "noir-range-r1",
+  "files": [
+    {
+      "path": "Nargo.toml",
+      "text": "[package]\nname = \"range\"\ntype = \"bin\"\nauthors = [\"\"]\ncompiler_version = \">=1.0.0\"\n\n[dependencies]\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Compiles the circuit (fetching any dependencies declared in Nargo.toml).\nset -euo pipefail\ncd \"$(dirname \"${BASH_SOURCE[0]}\")\"\nnargo compile\n"
+    },
+    {
+      "path": "prove.sh",
+      "text": "#!/usr/bin/env bash\n# Usage: bash prove.sh input.json\n# Exits 0 iff a witness for the circuit can be generated from the given inputs.\nset -euo pipefail\n\nif [[ $# -ne 1 ]]; then\n    echo \"usage: $0 input.json\" >&2\n    exit 2\nfi\n\ninput=\"$(cd \"$(dirname \"$1\")\" && pwd)/$(basename \"$1\")\"\ncd \"$(dirname \"${BASH_SOURCE[0]}\")\"\n\n# nargo resolves the prover file by name relative to the package root.\nprover_name=\"Prover_$$\"\nprover_file=\"${prover_name}.toml\"\ntrap 'rm -f \"$prover_file\"' EXIT\n\n# Translate the JSON object into a Prover.toml, passing each value through\n# verbatim as a TOML string so the circuit (not this script) decides validity.\nnode -e '\nconst fs = require(\"fs\");\nconst input = JSON.parse(fs.readFileSync(process.argv[1], \"utf8\"));\nif (input === null || typeof input !== \"object\" || Array.isArray(input)) {\n    throw new Error(\"input must be a JSON object\");\n}\nconst lines = [\"age\", \"threshold\"].map((key) => {\n    if (!(key in input)) throw new Error(`missing input: ${key}`);\n    return `${key} = ${JSON.stringify(String(input[key]))}`;\n});\nfs.writeFileSync(process.argv[2], lines.join(\"\\n\") + \"\\n\");\n' \"$input\" \"$prover_file\"\n\nnargo execute --prover-name \"$prover_name\" \"witness_$$\" >/dev/null\nrm -f \"target/witness_$$.gz\"\n"
+    },
+    {
+      "path": "src/main.nr",
+      "text": "/// Proves that a private `age` is at least the public `threshold`.\n///\n/// Both inputs are typed `u8`, so the compiler emits 8-bit range constraints\n/// on them: any value outside `0..=255` (including large field elements)\n/// makes the circuit unsatisfiable.\nfn main(age: u8, threshold: pub u8) {\n    assert(age >= threshold, \"age is below threshold\");\n}\n\n#[test]\nfn accepts_above_threshold() {\n    main(25, 18);\n}\n\n#[test]\nfn accepts_equal_to_threshold() {\n    main(18, 18);\n}\n\n#[test]\nfn accepts_bounds() {\n    main(0, 0);\n    main(255, 0);\n    main(255, 255);\n}\n\n#[test(should_fail_with = \"age is below threshold\")]\nfn rejects_below_threshold() {\n    main(17, 18);\n}\n\n#[test(should_fail_with = \"age is below threshold\")]\nfn rejects_zero_age_with_max_threshold() {\n    main(0, 255);\n}\n"
+    }
+  ]
+}

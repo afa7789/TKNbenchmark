@@ -3,7 +3,9 @@
 How much does a coding agent spend, in tokens and dollars, to solve the **same tasks** in
 **C, C++, C#, Rust, Go, Zig, Odin, Nim, Swift, Java, Kotlin, OCaml, Haskell, JavaScript, TypeScript, Python
 and Assembly (AArch64)**?
-And on the front end, **React, Vue or Svelte**?
+And on the front end, **React, Vue or Svelte**? Plus four specialised tracks: scientific computing
+(**Octave, Julia, R**), theorem proving (**Lean 4, Rocq, Dafny**), smart contracts (**Solidity, Vyper**) and
+zero-knowledge circuits (**Circom, Noir**).
 
 Results: **https://afa7789.github.io/TKNbenchmark/** · Paper: [`paper.pdf`](https://afa7789.github.io/TKNbenchmark/paper.pdf) ([LaTeX source](paper/paper.tex))
 
@@ -37,11 +39,16 @@ Inspired by [DeepSWE](https://deepswe.datacurve.ai/) (one agent per task, hidden
 | [`calc`](bench/tasks/calc/SPEC.md) | recursive-descent parser, int64 overflow |
 | [`kvhttp`](bench/tasks/kvhttp/SPEC.md) | concurrent HTTP server; dependencies allowed |
 | [`ui`](bench/tasks/ui/SPEC.md) | 6 components in React, Vue and Svelte |
+| [`linreg`](bench/tasks/linreg/SPEC.md), [`linalg`](bench/tasks/linalg/SPEC.md) | track: scientific computing, numeric tolerance 1e-6 |
+| [`lists`](bench/tasks/lists/SPEC.md), [`isort`](bench/tasks/isort/SPEC.md) | track: theorem proving, no escape hatches, statements unchanged |
+| [`token`](bench/tasks/token/SPEC.md), [`vesting`](bench/tasks/vesting/SPEC.md) | track: smart contracts on a fresh anvil (reverts, events, exact time) |
+| [`range`](bench/tasks/range/SPEC.md), [`sudoku`](bench/tasks/sudoku/SPEC.md) | track: zero-knowledge circuits, valid inputs provable and invalid ones not |
 | [`shop`](bench/tasks/shop/SPEC.md) | mini app: parent/child, global store (agent's choice), derived state, form, effect with cleanup, context, slots |
 
 Each back-end task has a JS reference implementation; `npm run selftest` proves the checker accepts it on
 both the visible and the hidden suite. For front ends, `npm run selftest:front` does the same with the
-reference components in `bench/front-ref/`.
+reference components in `bench/front-ref/`, and `npm run selftest:tracks` checks every track's reference
+solutions (and that the untouched proof templates fail).
 
 ## Reproduce
 

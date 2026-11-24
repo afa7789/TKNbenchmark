@@ -1,20 +1,23 @@
 // One headless Claude Code agent in a workdir: the unit every round runs.
 import { spawn } from 'node:child_process'
-import { createWriteStream, mkdirSync, rmSync, copyFileSync, writeFileSync } from 'node:fs'
+import { createWriteStream, existsSync, mkdirSync, rmSync, copyFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { TASKS, MODEL, EFFORT, TOOLS, RUN_TIMEOUT_MS, ROOT } from './config.mjs'
-import { claudeEnv, killStragglers } from './lib.mjs'
+import { claudeEnv, copyFiles, killStragglers, solutionFiles } from './lib.mjs'
 
-// Fresh workdir with what the agent may see: SPEC.md, plus check.mjs and the visible cases for backend tasks.
-export async function prepareWorkdir(task, dir) {
+// Fresh workdir with what the agent may see: SPEC.md, per-language templates (proof statements),
+// plus check.mjs and the visible cases for non-front-end tasks.
+export async function prepareWorkdir(task, dir, lang) {
   rmSync(dir, { recursive: true, force: true })
   mkdirSync(dir, { recursive: true })
   const taskDir = join(ROOT, 'bench', 'tasks', task)
   copyFileSync(join(taskDir, 'SPEC.md'), join(dir, 'SPEC.md'))
+  const templates = join(taskDir, 'templates', lang ?? '')
+  if (lang && existsSync(templates)) copyFiles(templates, dir, solutionFiles(templates))
   if (TASKS[task].frontend) return
   copyFileSync(join(ROOT, 'bench', 'harness', 'check.mjs'), join(dir, 'check.mjs'))
   const { visible } = await import(join(taskDir, 'cases.mjs'))
-  writeFileSync(join(dir, 'cases.json'), JSON.stringify(visible(), null, 1))
+  writeFileSync(join(dir, 'cases.json'), JSON.stringify(visible(lang), null, 1))
 }
 
 export function runAgent(dir, text, transcript) {

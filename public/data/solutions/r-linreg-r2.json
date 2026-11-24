@@ -1,0 +1,13 @@
+{
+  "id": "r-linreg-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds ./app: a launcher that runs linreg.R with Rscript.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\ncommand -v Rscript >/dev/null || { echo \"Rscript not found\" >&2; exit 1; }\nRscript -e 'invisible(parse(\"linreg.R\"))'\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nhere=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"\nexec Rscript --vanilla --default-packages=base \"$here/linreg.R\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "linreg.R",
+      "text": "#!/usr/bin/env Rscript\n# linreg: ordinary least-squares regression with intercept, reporting R^2.\n#\n# Input (stdin): header \"n k\", then n rows of k features followed by y.\n# Output (stdout): b0, b1, ..., bk, R^2 -- one per line.\n\nread_input <- function(con) {\n  header <- scan(con, what = integer(), n = 2L, quiet = TRUE)\n  if (length(header) != 2L) stop(\"missing header line 'n k'\")\n  n <- header[[1L]]\n  k <- header[[2L]]\n  p <- k + 1L\n\n  values <- scan(con, what = double(), n = n * p, quiet = TRUE)\n  if (length(values) != n * p) {\n    stop(sprintf(\"expected %d values, got %d\", n * p, length(values)))\n  }\n  data <- matrix(values, nrow = p, ncol = n)  # column i holds row i of the input\n  rm(values)\n\n  list(x = t(data[seq_len(k), , drop = FALSE]), y = data[p, ])\n}\n\n# Fit y ~ b0 + X b on centred data for numerical stability; the intercept is\n# recovered from the column means.\nfit_ols <- function(x, y) {\n  x_mean <- colMeans(x)\n  y_mean <- mean(y)\n  xc <- sweep(x, 2L, x_mean, check.margin = FALSE)\n  yc <- y - y_mean\n\n  decomposition <- qr(xc, LAPACK = FALSE)\n  if (decomposition$rank < ncol(xc)) stop(\"design matrix is rank deficient\")\n  slopes <- qr.coef(decomposition, yc)\n  residuals <- qr.resid(decomposition, yc)\n\n  ss_res <- sum(residuals^2)\n  ss_tot <- sum(yc^2)\n\n  list(\n    coefficients = c(y_mean - sum(x_mean * slopes), slopes),\n    r_squared = 1 - ss_res / ss_tot\n  )\n}\n\nmain <- function() {\n  con <- file(\"stdin\", open = \"r\")\n  on.exit(close(con))\n  input <- read_input(con)\n  fit <- fit_ols(input$x, input$y)\n  out <- c(fit$coefficients, fit$r_squared)\n  writeLines(formatC(out, digits = 15, format = \"g\"))\n}\n\nmain()\n"
+    }
+  ]
+}

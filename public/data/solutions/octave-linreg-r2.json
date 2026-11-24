@@ -1,0 +1,13 @@
+{
+  "id": "octave-linreg-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds ./app: a launcher that runs the Octave implementation in src/.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncommand -v octave >/dev/null || { echo \"octave not found in PATH\" >&2; exit 1; }\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nhere=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\nexec octave --no-gui --no-window-system --quiet --norc --no-history \\\n  --path \"$here/src\" --eval \"linreg\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "src/linreg.m",
+      "text": "function linreg ()\n  % LINREG  Ordinary least-squares regression reading from stdin.\n  %   Input:  \"n k\" header, then n rows of k features followed by the response.\n  %   Output: intercept, k slopes, and R^2, one per line.\n\n  vals = sscanf (read_stdin (), \"%f\");\n\n  if (numel (vals) < 2)\n    error (\"linreg: missing header\");\n  endif\n  n = vals(1);\n  k = vals(2);\n  cols = k + 1;\n  if (numel (vals) < 2 + n * cols)\n    error (\"linreg: expected %d data values, got %d\", n * cols, numel (vals) - 2);\n  endif\n\n  data = reshape (vals(3:2 + n * cols), cols, n)';\n  clear vals;\n  X = data(:, 1:k);\n  y = data(:, cols);\n  clear data;\n\n  % Centre the features and response: this solves for the slopes on a\n  % better-conditioned problem and yields the intercept from the means.\n  mx = mean (X, 1);\n  my = mean (y);\n  Xc = X - mx;\n  yc = y - my;\n  clear X;\n\n  b = Xc \\ yc;                % QR-based least squares\n  b0 = my - mx * b;\n\n  resid = yc - Xc * b;\n  ss_res = resid' * resid;\n  ss_tot = yc' * yc;\n  r2 = 1 - ss_res / ss_tot;\n\n  printf (\"%.15g\\n\", [b0; b; r2]);\nendfunction\n\nfunction text = read_stdin ()\n  % Read all of standard input as one row of chars.  Opening /dev/stdin\n  % directly is far faster than fread on Octave's stdin stream.\n  [fid, msg] = fopen (\"/dev/stdin\", \"r\");\n  if (fid < 0)\n    warning (\"linreg: cannot open /dev/stdin (%s); using stdin stream\", msg);\n    fid = stdin;\n  endif\n  text = fread (fid, [1, Inf], \"*char\");\n  if (fid != stdin)\n    fclose (fid);\n  endif\nendfunction\n"
+    }
+  ]
+}

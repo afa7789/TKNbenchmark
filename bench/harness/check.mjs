@@ -3,7 +3,7 @@
 // Usage: node check.mjs [--no-build] [--cases file.json] [--json]
 // Standalone on purpose: it is copied into every agent workdir.
 import { spawn, spawnSync } from 'node:child_process'
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { isDeepStrictEqual } from 'node:util'
 import { fileURLToPath } from 'node:url'
@@ -93,7 +93,31 @@ export function genBytes({ seed, n }) {
   return b
 }
 
-const GENERATORS = { words: genWords, lru: genLru, calc: genCalc, bytes: genBytes }
+const fix = (x, d) => Number(x.toFixed(d))
+
+// Regression data: y = b0 + sum(bj * xj) + noise, printed with 4 decimals.
+function genLinreg({ seed, n, k, noise = 0.5 }) {
+  const r = rng(seed)
+  const beta = Array.from({ length: k + 1 }, () => fix(r() * 10 - 5, 2))
+  const lines = [`${n} ${k}`]
+  for (let i = 0; i < n; i++) {
+    const x = Array.from({ length: k }, () => fix(r() * 20 - 10, 4))
+    const y = beta[0] + x.reduce((s, v, j) => s + beta[j + 1] * v, 0) + (r() * 2 - 1) * noise
+    lines.push([...x, fix(y, 4)].join(' '))
+  }
+  return Buffer.from(lines.join('\n') + '\n')
+}
+
+// Symmetric positive-definite A = M'M + n*I and a vector b, printed with 6 decimals.
+function genSpd({ seed, n }) {
+  const r = rng(seed)
+  const m = Array.from({ length: n }, () => Array.from({ length: n }, () => fix(r() * 2 - 1, 3)))
+  const a = m.map((_, i) => m.map((__, j) => m.reduce((s, row) => s + row[i] * row[j], 0) + (i === j ? n : 0)))
+  const b = Array.from({ length: n }, () => fix(r() * 20 - 10, 3))
+  return Buffer.from([String(n), ...a.map((row) => row.map((v) => v.toFixed(6)).join(' ')), b.join(' ')].join('\n') + '\n')
+}
+
+const GENERATORS = { words: genWords, lru: genLru, calc: genCalc, bytes: genBytes, linreg: genLinreg, spd: genSpd }
 
 export function genInput(gen) {
   return GENERATORS[gen.type](gen)
@@ -130,7 +154,17 @@ function runProcess(args, stdin, timeoutMs) {
 const trimEnd = (s) => s.replace(/\n+$/, '')
 const clip = (s) => (s.length > 300 ? s.slice(0, 300) + '…' : s)
 
+// Numeric outputs: same number of tokens, each within tolerance (relative, or absolute below 1).
+function compareNumbers(c, stdout) {
+  const got = stdout.toString().trim().split(/\s+/).filter(Boolean)
+  const want = c.stdout.trim().split(/\s+/).filter(Boolean)
+  if (got.length !== want.length) return `expected ${want.length} numbers, got ${got.length}:\n${clip(stdout.toString())}`
+  const bad = want.findIndex((w, i) => !(Math.abs(Number(got[i]) - Number(w)) <= c.tolerance * Math.max(1, Math.abs(Number(w)))))
+  return bad < 0 ? null : `number ${bad + 1}: expected ${want[bad]}, got ${got[bad]} (tolerance ${c.tolerance})`
+}
+
 function compareStdout(c, stdout) {
+  if (c.tolerance) return compareNumbers(c, stdout)
   if (c.stdoutSha256) {
     const got = sha256(Buffer.from(trimEnd(stdout.toString('latin1')), 'latin1'))
     return got === c.stdoutSha256 ? null : 'stdout hash mismatch (large output differs)'
@@ -248,6 +282,151 @@ async function runHttpCase(c) {
   }
 }
 
+// ---------- proof cases ----------
+
+// Source files with the given extension, comments removed (build and dot directories skipped).
+function sources(ext, comments, dir = '.') {
+  let text = ''
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const path = `${dir}/${e.name}`
+    if (e.isDirectory() && !/^(\.|_build|build|node_modules)/.test(e.name)) text += sources(ext, comments, path)
+    else if (e.isFile() && e.name.endsWith(ext)) text += '\n' + readFileSync(path, 'utf8')
+  }
+  for (const c of comments) text = text.replace(new RegExp(c, 'g'), ' ')
+  return text
+}
+
+const squash = (s) => s.replace(/\s+/g, ' ').trim()
+
+function runProofCase(c) {
+  if (c.run) {
+    const r = spawnSync(c.run[0], c.run.slice(1), { encoding: 'utf8', timeout: c.timeoutMs ?? 300000 })
+    return r.status === 0 ? { ok: true } : { ok: false, why: clip(`${r.stdout ?? ''}${r.stderr ?? ''}`.trim() || `exit ${r.status}`) }
+  }
+  const text = sources(c.scan.ext, c.scan.comments)
+  if (c.forbid) {
+    const m = text.match(new RegExp(c.forbid))
+    return m ? { ok: false, why: `forbidden: ${m[0]}` } : { ok: true }
+  }
+  return squash(text).includes(c.contains) ? { ok: true } : { ok: false, why: `changed or missing: ${clip(c.contains)}` }
+}
+
+// ---------- evm cases ----------
+
+// anvil's well-known development accounts (public test keys, never real funds).
+const ACCOUNTS = [
+  ['0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'],
+  ['0x70997970C51812dc3A010C7d01b50e0d17dc79C8', '0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d'],
+  ['0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC', '0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a'],
+]
+const ZERO = '0x0000000000000000000000000000000000000000'
+
+function cast(args) {
+  const r = spawnSync('cast', args, { encoding: 'utf8', timeout: 30000 })
+  return { ok: r.status === 0, out: (r.stdout ?? '').trim(), err: (r.stderr ?? '').trim() }
+}
+
+const resolve = (ctx, a) => String(a).replace(/@contract/g, ctx.address).replace(/@zero/g, ZERO).replace(/@(\d)/g, (_, i) => ACCOUNTS[i][0])
+const clean = (s) => s.replace(/\s*\[[^\]]*\]$/, '').replace(/^"|"$/g, '').toLowerCase()
+
+function rpc(ctx, method, ...params) {
+  return cast(['rpc', '--rpc-url', ctx.url, method, ...params.map(String)])
+}
+
+function sendTx(ctx, step, target, extra) {
+  if (step.at) rpc(ctx, 'evm_setNextBlockTimestamp', step.at)
+  const value = step.value ? ['--value', String(step.value)] : []
+  const r = cast(['send', '--rpc-url', ctx.url, '--private-key', ACCOUNTS[step.from ?? 0][1], '--json', ...value, ...target, ...extra])
+  if (!r.ok) return { reverted: true, err: r.err }
+  const receipt = JSON.parse(r.out)
+  return { reverted: receipt.status !== '0x1', receipt }
+}
+
+// Does the receipt carry this event with exactly these topics and data?
+function eventMismatch(ctx, ev, receipt) {
+  const enc = cast(['abi-encode-event', ev.sig, ...ev.args.map((a) => resolve(ctx, a))]).out
+  const want = [...enc.matchAll(/\[(topic\d|data)\]: (0x[0-9a-f]*)/g)]
+  const topics = want.filter(([, k]) => k.startsWith('topic')).map(([, , v]) => v)
+  const data = want.find(([, k]) => k === 'data')?.[2] ?? '0x'
+  const hit = receipt.logs.some((l) => l.topics.join() === topics.join() && (l.data === data || (data === '0x' && l.data === '0x')))
+  return hit ? null : `event ${ev.sig}(${ev.args.join(', ')}) not emitted as expected`
+}
+
+function stepSend(ctx, step) {
+  const target = step.send ? [ctx.address, step.send, ...(step.args ?? []).map((a) => resolve(ctx, a))] : [resolve(ctx, step.to)]
+  const r = sendTx(ctx, step, target, [])
+  if (step.revert) return r.reverted ? null : `${step.send ?? 'transfer'} should revert`
+  if (r.reverted) return `${step.send ?? 'transfer'} reverted: ${clip(r.err ?? 'status 0')}`
+  return step.event ? eventMismatch(ctx, step.event, r.receipt) : null
+}
+
+function stepCall(ctx, step) {
+  const r = cast(['call', '--rpc-url', ctx.url, ctx.address, step.call, ...(step.args ?? []).map((a) => resolve(ctx, a))])
+  if (!r.ok) return `${step.call} failed: ${clip(r.err)}`
+  return clean(r.out) === clean(resolve(ctx, step.expect)) ? null : `${step.call}(${(step.args ?? []).join(', ')}) = ${r.out}, want ${step.expect}`
+}
+
+function stepBalance(ctx, step) {
+  const r = cast(['balance', '--rpc-url', ctx.url, resolve(ctx, step.balance)])
+  return r.out === String(step.expect) ? null : `balance of ${step.balance} = ${r.out}, want ${step.expect}`
+}
+
+function evmStep(ctx, step) {
+  if (step.call) return stepCall(ctx, step)
+  if (step.balance) return stepBalance(ctx, step)
+  if (step.mineAt) return rpc(ctx, 'evm_setNextBlockTimestamp', step.mineAt).ok && rpc(ctx, 'evm_mine').ok ? null : 'could not set time'
+  return stepSend(ctx, step)
+}
+
+function deployContract(ctx, d) {
+  const art = JSON.parse(readFileSync(`out/${d.contract}.json`, 'utf8'))
+  const args = d.ctor ? cast(['abi-encode', d.ctor, ...d.args.map((a) => resolve(ctx, a))]).out.slice(2) : ''
+  const r = sendTx(ctx, d, ['--create', `${art.bytecode}${args}`], [])
+  if (d.revert) return r.reverted ? null : 'deployment should revert'
+  if (r.reverted) return `deployment reverted: ${clip(r.err ?? 'status 0')}`
+  ctx.address = r.receipt.contractAddress
+  return d.event ? eventMismatch(ctx, d.event, r.receipt) : null
+}
+
+async function startAnvil(c) {
+  const port = await freePort()
+  const child = spawn('anvil', ['-p', String(port), '-q', '--timestamp', String(c.genesis ?? 1700000000), '--gas-price', '0', '--block-base-fee-per-gas', '0'], { stdio: 'ignore' })
+  const ctx = { url: `http://127.0.0.1:${port}`, child }
+  for (let i = 0; i < 100 && !cast(['block-number', '--rpc-url', ctx.url]).ok; i++) await new Promise((r) => setTimeout(r, 50))
+  return ctx
+}
+
+async function runEvmCase(c) {
+  const t0 = performance.now()
+  const ctx = await startAnvil(c)
+  try {
+    let why = deployContract(ctx, c.deploy)
+    for (const step of c.steps ?? []) {
+      if (why) break
+      why = evmStep(ctx, step)
+    }
+    return { ok: !why, ms: Math.round(performance.now() - t0), why }
+  } catch (e) {
+    return { ok: false, ms: Math.round(performance.now() - t0), why: clip(String(e.message)) }
+  } finally {
+    ctx.child.kill('SIGKILL')
+  }
+}
+
+// ---------- zk cases ----------
+
+// prove.sh must accept satisfiable inputs (exit 0) and reject the rest (non-zero).
+function runZkCase(c) {
+  writeFileSync('case-input.json', JSON.stringify(c.input))
+  const t0 = performance.now()
+  const r = spawnSync('bash', ['prove.sh', 'case-input.json'], { encoding: 'utf8', timeout: c.timeoutMs ?? 120000 })
+  const ms = Math.round(performance.now() - t0)
+  const accepted = r.status === 0
+  if (accepted === (c.expect === 'accept')) return { ok: true, ms }
+  const detail = accepted ? 'accepted an input that must be rejected' : `rejected a valid input: ${clip(`${r.stdout ?? ''}${r.stderr ?? ''}`.trim())}`
+  return { ok: false, ms, why: detail }
+}
+
 // ---------- main ----------
 
 function build() {
@@ -272,7 +451,7 @@ async function main() {
     console.log(`RESULT pass=0 total=${total} build=fail`)
     process.exit(1)
   }
-  const run = suite.kind === 'http' ? runHttpCase : runStdioCase
+  const run = { http: runHttpCase, proof: runProofCase, evm: runEvmCase, zk: runZkCase }[suite.kind] ?? runStdioCase
   const results = []
   for (const c of suite.cases) {
     const r = await run(c)

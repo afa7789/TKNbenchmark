@@ -1,0 +1,6 @@
+name = "LinReg"
+uuid = "5f1c2a3e-7b8d-4c9e-9a10-2b3c4d5e6f70"
+version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"

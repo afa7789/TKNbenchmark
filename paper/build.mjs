@@ -2,7 +2,7 @@
 // so every number in the paper comes from the benchmark data. Then: tectonic paper/paper.tex
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { ROOT } from '../bench/config.mjs'
+import { ROOT, TASKS } from '../bench/config.mjs'
 
 const d = JSON.parse(readFileSync(join(ROOT, 'public', 'data', 'results.json'), 'utf8'))
 const L = d.summary.langs
@@ -107,6 +107,37 @@ ${rows.join('\n')}
 \\end{tabular}}`
 }
 
+// One table for the specialised tracks, grouped by track, cheapest language first.
+function trackRows(t) {
+  return Object.entries(t.langs)
+    .sort((a, b) => a[1].costUsd - b[1].costUsd)
+    .map(([k, s], i) => `${i ? '' : tex(t.title)} & ${tex(label(k))} & ${s.solved}/${s.n} & ${s.works}/${s.n} & ${nf(0)(s.firstTryRate * 100)}\\% & ${usd(s.costUsd)} & ${int(s.output)} & ${int(s.codeTokens)} & ${int(s.turns)} \\\\`)
+}
+
+function trackTable() {
+  const groups = Object.values(d.summary.tracks ?? {}).filter((t) => Object.keys(t.langs).length)
+  return `\\newcommand{\\TrackTable}{%
+\\begin{tabular}{@{}llrrrrrrr@{}}
+\\toprule
+Track & Language & Solved & Repaired & 1st try & US\\$ & Output & Code & Turns \\\\
+\\midrule
+${groups.map((t) => trackRows(t).join('\n')).join('\n\\midrule\n')}
+\\bottomrule
+\\end{tabular}}`
+}
+
+function trackMacros(set) {
+  const T = d.summary.tracks ?? {}
+  const runs = d.runs.filter((r) => TASKS[r.task]?.track)
+  set('NTrackRuns', runs.length)
+  set('NTrackLangs', Object.values(T).reduce((a, t) => a + Object.keys(t.langs).length, 0))
+  set('NTrackFailed', runs.filter((r) => r.solved === false).length)
+  set('NTrackFixed', runs.filter((r) => r.fixed).length)
+  for (const [id, t] of Object.entries(T)) {
+    for (const [k, s] of Object.entries(t.langs)) set(`Trk${macroName(id)}${macroName(k)}`, usd(s.costUsd))
+  }
+}
+
 const STDLIB_TASKS = ['wordfreq', 'lru', 'calc']
 const medianOf = (xs) => {
   const v = xs.filter((x) => typeof x === 'number').sort((a, b) => a - b)
@@ -171,6 +202,7 @@ function macros() {
   set('CorrCodeCostSpearman', nf(2)(spearman(keys.map((k) => L[k].codeTokens), keys.map((k) => L[k].costUsd))))
   set('CorrCodeCostNoAsm', nf(2)(pearson(noAsm.map((k) => L[k].codeTokens), noAsm.map((k) => L[k].costUsd))))
   tsJsMacros(set)
+  trackMacros(set)
   set('CorrStdCost', nf(2)(pearson(keys.map((k) => L[k].stdlibReads), keys.map((k) => L[k].costUsd))))
   const dl = C['rust/kvhttp']?.devloopTargetBytes?.median
   set('DevloopRust', mb(dl))
@@ -194,6 +226,7 @@ const out = [
   kvTable(),
   perfTable(),
   frontTable(),
+  trackTable(),
 ].join('\n\n')
 writeFileSync(join(ROOT, 'paper', 'data.tex'), out + '\n')
 console.log('paper/data.tex written')

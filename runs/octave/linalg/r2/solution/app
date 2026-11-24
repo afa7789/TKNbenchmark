@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "/opt/homebrew/bin/octave-cli" --no-gui --norc --quiet --no-history "$(dirname "$0")/linalg.m"

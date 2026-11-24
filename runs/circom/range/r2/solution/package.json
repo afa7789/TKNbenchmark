@@ -1,0 +1,8 @@
+{
+  "name": "range-circuit",
+  "private": true,
+  "description": "Circom circuit: private age in [0,255] and age >= public threshold in [0,255]",
+  "dependencies": {
+    "circomlib": "2.0.5"
+  }
+}

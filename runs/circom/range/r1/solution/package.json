@@ -1,0 +1,9 @@
+{
+  "name": "circom-range",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Circom circuit proving a private age is in [0, 255] and >= a public threshold",
+  "dependencies": {
+    "circomlib": "2.0.5"
+  }
+}

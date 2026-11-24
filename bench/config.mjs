@@ -41,6 +41,29 @@ export const LANGS = {
   },
 }
 
+// Specialised tracks: own languages and tasks, ranked separately from the main track.
+export const TRACKS = {
+  numeric: { title: 'Scientific computing', tasks: ['linreg', 'linalg'] },
+  proofs: { title: 'Theorem proving', tasks: ['lists', 'isort'] },
+  evm: { title: 'Smart contracts', tasks: ['token', 'vesting'] },
+  zk: { title: 'Zero-knowledge circuits', tasks: ['range', 'sudoku'] },
+}
+
+Object.assign(LANGS, {
+  octave: { label: 'Octave', name: 'GNU Octave (the MATLAB language)', version: ['sh', '-c', 'octave --version | head -1'], note: launcher('octave'), track: 'numeric' },
+  julia: { label: 'Julia', name: 'Julia', version: ['julia', '--version'], note: launcher('julia'), track: 'numeric' },
+  r: { label: 'R', name: 'R', version: ['sh', '-c', 'R --version | head -1'], note: launcher('Rscript'), track: 'numeric' },
+  lean: { label: 'Lean 4', name: 'Lean 4', version: ['lean', '--version'], track: 'proofs' },
+  rocq: { label: 'Rocq', name: 'Rocq (Coq)', version: ['sh', '-c', 'coqc --version | head -1'], track: 'proofs' },
+  dafny: { label: 'Dafny', name: 'Dafny', version: ['sh', '-c', 'echo "Dafny $(dafny --version)"'], track: 'proofs' },
+  solidity: { label: 'Solidity', name: 'Solidity (Foundry is installed)', version: ['sh', '-c', 'forge --version | head -1'], track: 'evm' },
+  vyper: { label: 'Vyper', name: 'Vyper', version: ['sh', '-c', 'echo "Vyper $(vyper --version)"'], track: 'evm' },
+  circom: { label: 'Circom', name: 'Circom 2', version: ['circom', '--version'], track: 'zk' },
+  noir: { label: 'Noir', name: 'Noir (nargo)', version: ['sh', '-c', 'nargo --version | head -1'], track: 'zk' },
+})
+export const MAIN_LANGS = Object.keys(LANGS).filter((k) => !LANGS[k].track)
+export const trackLangs = (track) => Object.keys(LANGS).filter((k) => LANGS[k].track === track)
+
 // Quiet first-run banners that would cost every .NET run the same extra tokens.
 process.env.DOTNET_CLI_TELEMETRY_OPTOUT = '1'
 process.env.DOTNET_NOLOGO = '1'
@@ -69,6 +92,52 @@ export const TASKS = {
   kvhttp: { kind: 'http', title: 'HTTP key-value server', topic: 'networking, concurrency, deps' },
   ui: { kind: 'static', title: 'Six UI components', topic: 'front end (React, Vue, Svelte)', frontend: true },
   shop: { kind: 'static', title: 'Shopping mini-app', topic: 'parent/child events, global store, derived state, forms, effects, context, slots', frontend: true },
+  linreg: { kind: 'stdio', title: 'Least-squares regression', topic: 'numerics, matrices', track: 'numeric' },
+  linalg: { kind: 'stdio', title: 'Linear algebra', topic: 'log-determinant, solve, eigenvalues', track: 'numeric' },
+  lists: { kind: 'proof', title: 'List lemmas', topic: 'induction, rewriting', track: 'proofs' },
+  isort: { kind: 'proof', title: 'Insertion sort is correct', topic: 'sortedness, permutation', track: 'proofs' },
+  token: { kind: 'evm', title: 'Token with allowances', topic: 'storage, events, reverts', track: 'evm' },
+  vesting: { kind: 'evm', title: 'Linear vesting', topic: 'time, ether transfers', track: 'evm' },
+  range: { kind: 'zk', title: 'Private range check', topic: 'bit decomposition, comparisons', track: 'zk' },
+  sudoku: { kind: 'zk', title: '4x4 Sudoku', topic: 'permutation constraints', track: 'zk' },
+}
+
+const TRACK_CONTRACT = {
+  proofs: [
+    '- Complete every proof in the file(s) provided with SPEC.md. Do not change any definition or theorem statement, and do not add axioms or escape hatches (sorry, admit, Admitted, assume, {:axiom}).',
+    '- Use only the standard library of the language (no Mathlib or other packages).',
+    '- Create build.sh: a bash script that, run from a clean copy of this directory, checks all proofs and exits 0 only if every proof is accepted.',
+  ],
+  evm: [
+    '- Third-party libraries are allowed if an experienced engineer would use them in production. Do not vendor them into this directory: build.sh must fetch them on a clean machine.',
+    '- Create build.sh: a bash script that, run from a clean copy of this directory, compiles the contract and writes out/<ContractName>.json containing {"abi": [...], "bytecode": "0x..."} (creation bytecode), using the contract name given in SPEC.md.',
+  ],
+  zk: [
+    '- Third-party libraries are allowed if an experienced engineer would use them in production. Do not vendor them into this directory: build.sh must fetch them on a clean machine.',
+    '- Create build.sh: a bash script that, run from a clean copy of this directory, compiles the circuit.',
+    '- Create prove.sh: `bash prove.sh input.json` must exit 0 if the inputs satisfy the circuit (a witness can be generated, or the program executes without a failed assertion) and non-zero otherwise.',
+  ],
+}
+
+const TRACK_GOAL = {
+  proofs: 'Complete the proofs specified in SPEC.md',
+  evm: 'Implement the smart contract specified in SPEC.md',
+  zk: 'Implement the circuit specified in SPEC.md',
+}
+
+function trackPrompt(lang, versionText) {
+  const { name, label, track } = LANGS[lang]
+  return `${TRACK_GOAL[track]}, in ${name}.
+
+Environment: macOS arm64, toolchain: ${versionText}. Work only inside the current directory.
+
+Requirements:
+- Write idiomatic, production-quality ${label}: what an experienced ${label} engineer would write and maintain.
+${TRACK_CONTRACT[track].join('\n')}
+- Test with \`node check.mjs\` (runs build.sh, then the example cases in cases.json). Hidden tests check every rule in SPEC.md.
+- Do not modify SPEC.md, check.mjs or cases.json.
+
+When finished, reply with the single word DONE.`
 }
 
 const STDLIB_ONLY = 'Use only the standard library.'
@@ -76,6 +145,7 @@ const DEPS_OK =
   'Third-party packages are allowed if an experienced engineer would use them in production. Do not vendor them into this directory: build.sh must fetch them on a clean machine.'
 
 export function prompt(task, lang, versionText) {
+  if (TRACK_CONTRACT[TASKS[task].track]) return trackPrompt(lang, versionText)
   if (TASKS[task].frontend) {
     const what = task === 'ui' ? 'the six components' : 'the app'
     return `Write ${what} specified in SPEC.md using ${FRONTENDS[lang].name}. Work only inside the current directory.\n\nWhen finished, reply with the single word DONE.`
