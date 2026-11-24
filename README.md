@@ -85,3 +85,9 @@ runs/<lang>/<task>/r<n>/   solution/, agent.json, verify.json, perf.json, tokens
 paper/                paper.tex, build.mjs (→ data.tex), arxiv.mjs (→ arxiv.tar.gz)
 public/               the page (GitHub Pages) and paper.pdf
 ```
+
+## Contributing
+
+Suggestions, corrections and changes to the method are welcome: new tasks, new languages, a better
+harness, or a re-run on another model or machine. Open an issue or a pull request, or email
+**abeilice@ufmg.br**.
