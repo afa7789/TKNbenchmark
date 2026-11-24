@@ -6,6 +6,7 @@
   <title>TKNbenchmark: what a programming language costs a coding agent</title>
   <meta name="description" content="One isolated Claude Opus 5.5 agent per case: tokens, dollars, time and correctness for the same tasks in C, C++, C#, Rust, Go, Zig, Odin, Nim, Swift, Java, Kotlin, OCaml, Haskell, JavaScript, TypeScript, Python and Assembly, plus React, Vue and Svelte, and specialised tracks for Octave, Julia, R, Lean, Rocq, Dafny, Solidity, Vyper, Circom and Noir.">
   <link rel="stylesheet" href="style.css">
+  <script src="a11y.js"></script>
   <script type="module" src="app.js"></script>
 </head>
 <body>
@@ -26,7 +27,34 @@
       <a href="paper.pdf">Paper (PDF)</a>
       <a href="https://github.com/afa7789/TKNbenchmark">GitHub</a>
     </nav>
+    <button class="theme-flip" data-a11y="flip" aria-label="Toggle dark/light theme" title="Dark / light">●</button>
   </header>
+
+  <div id="a11y" class="a11y">
+    <div id="a11y-panel" class="a11y-panel" role="region" aria-label="Accessibility options" hidden>
+      <span class="a11y-label" id="a11y-theme-label">Theme</span>
+      <div class="a11y-row" role="group" aria-labelledby="a11y-theme-label">
+        <button class="secondary" data-a11y="theme:light" aria-label="Light theme" title="Light"><span aria-hidden="true">☀️</span></button>
+        <button class="secondary" data-a11y="theme:dark" aria-label="Dark theme" title="Dark"><span aria-hidden="true">🌙</span></button>
+        <button class="secondary" data-a11y="theme:system" aria-label="System theme" title="System"><span aria-hidden="true">💻</span></button>
+      </div>
+      <span class="a11y-label" id="a11y-font-label">Font size</span>
+      <div class="a11y-row" role="group" aria-labelledby="a11y-font-label">
+        <button class="secondary" data-a11y="font:-1" aria-label="Smaller text">A-</button>
+        <button class="secondary" data-a11y="font:0" aria-label="Reset text size" id="a11y-font">+0</button>
+        <button class="secondary" data-a11y="font:1" aria-label="Larger text">A+</button>
+      </div>
+    </div>
+    <button id="a11y-toggle" class="a11y-toggle" data-a11y="panel" aria-expanded="false" aria-controls="a11y-panel" aria-label="Accessibility" title="Accessibility">
+      <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true">
+        <circle cx="12" cy="12" r="12" fill="currentColor" />
+        <g class="figure" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="6.2" r="0.9" />
+          <path d="M6.5 9.5l5.5 1.2 5.5-1.2M12 10.7v3.8l-2.6 4.8M12 14.5l2.6 4.8" />
+        </g>
+      </svg>
+    </button>
+  </div>
 
   <section class="hero">
     <h1>How much does a programming language cost a coding agent?</h1>
