@@ -1,0 +1,5 @@
+Third-party assets not covered by the MIT License in LICENSE:
+
+- public/fonts/ (the Faktum typeface) belongs to its foundry and is not
+  licensed under MIT. Replace it with a font you are licensed to use when
+  reusing this site.

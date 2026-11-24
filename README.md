@@ -101,4 +101,4 @@ or a pull request, or email **abeilice@ufmg.br**.
 
 ## License
 
-[MIT](LICENSE), except the Faktum typeface in `public/fonts/`, which belongs to its foundry.
+[MIT](LICENSE), except the Faktum typeface in `public/fonts/`, which belongs to its foundry (see [NOTICE](NOTICE)).
