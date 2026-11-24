@@ -239,6 +239,14 @@ ends (US\$\,\CostRust). React was the most expensive front end. The full feature
 Svelte and \ComboZigVue{} in Zig + Vue. In performance, all native languages were within the same order
 of magnitude under this load (Table~\ref{tab:kv}).
 
+\paragraph{Cheap to write is not fast to run.} We combine the four performance measurements into a
+speed index: for each benchmark, how many times slower a language is than the fastest (throughput
+inverted), then the geometric mean, so 1.00 means fastest everywhere. The three cheapest languages for
+the agent produced the slowest code: JavaScript \SpeedJs, TypeScript \SpeedTs{} and Python
+\SpeedPython. Assembly (\SpeedAsm), Zig (\SpeedZig) and C (\SpeedC) were the fastest, and among the most
+expensive to write. Go (\SpeedGo) and Rust (\SpeedRust) were the best compromise: both in the cheaper half to write and the
+faster half to run.
+
 \paragraph{Specialised tracks.} All \NTrackRuns{} runs passed their hidden checks on the first
 verification (Table~\ref{tab:tracks}). Within a track the languages cost about the same: Dafny,
 Lean~4 and Rocq between US\$\,\TrkProofsDafny{} and \TrkProofsRocq{}; Vyper and Solidity

@@ -176,6 +176,7 @@ function langMacros(set, k) {
   set(`KvProj${m}`, mb(C[`${k}/kvhttp`]?.projectBytes?.median))
   set(`KvWt${m}`, mb(C[`${k}/kvhttp`]?.worktrees4Bytes?.median))
   set(`StdDisk${m}`, mb(stdlibMedian(k, 'footprintBytes')))
+  set(`Speed${m}`, nf(2)(L[k].perfScore))
 }
 
 // The series' headline comparison: TypeScript vs JavaScript.

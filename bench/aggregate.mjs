@@ -229,6 +229,22 @@ function groupSummary(runs, cells) {
   )
 }
 
+// Speed index: per benchmark, how many times slower than the fastest language (throughput inverted),
+// then the geometric mean over the four. 1.00 = fastest everywhere.
+const PERF = [['wordfreq', 'perfMs', false], ['lru', 'perfMs', false], ['calc', 'perfMs', false], ['kvhttp', 'perfRps', true]]
+
+function addSpeedIndex(langs, cells) {
+  const value = (l, [t, k]) => cells[`${l}/${t}`]?.[k]?.median
+  const best = PERF.map((p) => {
+    const vals = nums(Object.keys(langs).map((l) => value(l, p)))
+    return p[2] ? Math.max(...vals) : Math.min(...vals)
+  })
+  for (const l of Object.keys(langs)) {
+    const ratios = nums(PERF.map((p, i) => (p[2] ? best[i] / value(l, p) : value(l, p) / best[i])))
+    langs[l].perfScore = ratios.length === PERF.length ? Math.exp(sum(ratios.map(Math.log)) / ratios.length) : null
+  }
+}
+
 function build() {
   const raw = collect()
   const runs = raw.map((r) => {
@@ -240,6 +256,7 @@ function build() {
   const cellRuns = by((r) => `${r.lang}/${r.task}`)
   const cells = Object.fromEntries(Object.entries(cellRuns).map(([k, rs]) => [k, cellSummary(rs)]))
   const langs = groupSummary(runs.filter((r) => !TASKS[r.task].frontend && !TASKS[r.task].track), cells)
+  addSpeedIndex(langs, cells)
   const tracks = Object.fromEntries(
     Object.entries(TRACKS).map(([id, t]) => [id, { ...t, langs: groupSummary(runs.filter((r) => TASKS[r.task].track === id), cells) }]),
   )

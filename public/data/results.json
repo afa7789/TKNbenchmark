@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-24T14:58:22.977Z",
+    "generatedAt": "2026-11-24T15:07:08.738Z",
     "model": "claude-opus-5-5",
     "effort": "high",
     "toolchains": {
@@ -413,7 +413,8 @@
         "codeTokens": 22502,
         "codeTokensCl100k": 14739,
         "buildSecs": 0.36000000000000004,
-        "footprintBytes": 147456
+        "footprintBytes": 147456,
+        "perfScore": 1.3156849296836797
       },
       "cpp": {
         "n": 12,
@@ -432,7 +433,8 @@
         "codeTokens": 13469,
         "codeTokensCl100k": 8549,
         "buildSecs": 2.21,
-        "footprintBytes": 921600
+        "footprintBytes": 921600,
+        "perfScore": 4.306031917014066
       },
       "rust": {
         "n": 12,
@@ -451,7 +453,8 @@
         "codeTokens": 11721,
         "codeTokensCl100k": 7107,
         "buildSecs": 16.79,
-        "footprintBytes": 111222784
+        "footprintBytes": 111222784,
+        "perfScore": 2.4400997498569685
       },
       "go": {
         "n": 12,
@@ -470,7 +473,8 @@
         "codeTokens": 12141,
         "codeTokensCl100k": 7753,
         "buildSecs": 7.68,
-        "footprintBytes": 246476800
+        "footprintBytes": 246476800,
+        "perfScore": 1.5989860562995641
       },
       "nim": {
         "n": 12,
@@ -489,7 +493,8 @@
         "codeTokens": 7378,
         "codeTokensCl100k": 4878,
         "buildSecs": 2.97,
-        "footprintBytes": 4468736
+        "footprintBytes": 4468736,
+        "perfScore": 2.792488538760682
       },
       "zig": {
         "n": 12,
@@ -508,7 +513,8 @@
         "codeTokens": 16568,
         "codeTokensCl100k": 10438,
         "buildSecs": 25.6,
-        "footprintBytes": 212520960
+        "footprintBytes": 212520960,
+        "perfScore": 1.2499345509295332
       },
       "swift": {
         "n": 12,
@@ -527,7 +533,8 @@
         "codeTokens": 15070,
         "codeTokensCl100k": 9258,
         "buildSecs": 51.66,
-        "footprintBytes": 327680
+        "footprintBytes": 327680,
+        "perfScore": 4.108239871883941
       },
       "java": {
         "n": 12,
@@ -546,7 +553,8 @@
         "codeTokens": 10378,
         "codeTokensCl100k": 6174,
         "buildSecs": 1.44,
-        "footprintBytes": 118784
+        "footprintBytes": 118784,
+        "perfScore": 3.542813166202979
       },
       "kotlin": {
         "n": 12,
@@ -565,7 +573,8 @@
         "codeTokens": 6795,
         "codeTokensCl100k": 4190,
         "buildSecs": 12.29,
-        "footprintBytes": 23015424
+        "footprintBytes": 23015424,
+        "perfScore": 3.9944923164113475
       },
       "csharp": {
         "n": 12,
@@ -584,7 +593,8 @@
         "codeTokens": 12075,
         "codeTokensCl100k": 6801,
         "buildSecs": 57.22,
-        "footprintBytes": 1089368064
+        "footprintBytes": 1089368064,
+        "perfScore": 3.723758466191911
       },
       "odin": {
         "n": 12,
@@ -603,7 +613,8 @@
         "codeTokens": 11040,
         "codeTokensCl100k": 6850,
         "buildSecs": 4.140000000000001,
-        "footprintBytes": 745472
+        "footprintBytes": 745472,
+        "perfScore": 1.3934524092870104
       },
       "ocaml": {
         "n": 12,
@@ -622,7 +633,8 @@
         "codeTokens": 10227,
         "codeTokensCl100k": 6636,
         "buildSecs": 0.86,
-        "footprintBytes": 8384512
+        "footprintBytes": 8384512,
+        "perfScore": 3.061969712862078
       },
       "haskell": {
         "n": 12,
@@ -641,7 +653,8 @@
         "codeTokens": 9758,
         "codeTokensCl100k": 6050,
         "buildSecs": 146.91,
-        "footprintBytes": 1528315904
+        "footprintBytes": 1528315904,
+        "perfScore": 4.505858099311354
       },
       "js": {
         "n": 12,
@@ -660,7 +673,8 @@
         "codeTokens": 6522,
         "codeTokensCl100k": 4193,
         "buildSecs": 0.07,
-        "footprintBytes": 0
+        "footprintBytes": 0,
+        "perfScore": 5.652108229836493
       },
       "ts": {
         "n": 12,
@@ -679,7 +693,8 @@
         "codeTokens": 8437,
         "codeTokensCl100k": 5284,
         "buildSecs": 0.04,
-        "footprintBytes": 0
+        "footprintBytes": 0,
+        "perfScore": 6.142021810306228
       },
       "python": {
         "n": 12,
@@ -698,7 +713,8 @@
         "codeTokens": 6632,
         "codeTokensCl100k": 3955,
         "buildSecs": 0.12,
-        "footprintBytes": 45056
+        "footprintBytes": 45056,
+        "perfScore": 6.524407628313188
       },
       "asm": {
         "n": 12,
@@ -717,7 +733,8 @@
         "codeTokens": 36769,
         "codeTokensCl100k": 27920,
         "buildSecs": 0.26,
-        "footprintBytes": 163840
+        "footprintBytes": 163840,
+        "perfScore": 1.0594009390595553
       }
     },
     "tracks": {
