@@ -1,0 +1,57 @@
+{
+  "id": "ocaml-kvhttp-r1",
+  "lang": "ocaml",
+  "task": "kvhttp",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 140321,
+  "files": [
+    ".gitignore",
+    "bin/dune",
+    "bin/main.ml",
+    "build.sh",
+    "dune-project",
+    "src/dune",
+    "src/http.ml",
+    "src/http.mli",
+    "src/router.ml",
+    "src/router.mli",
+    "src/server.ml",
+    "src/server.mli",
+    "src/store.ml",
+    "src/store.mli"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.5291543999999999,
+  "durationMs": 139645,
+  "apiMs": 134807,
+  "turns": 10,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 20,
+    "output": 14604,
+    "thinking": 4945,
+    "cacheRead": 174732,
+    "cacheWrite": 25256
+  },
+  "tools": {
+    "Bash": 9
+  },
+  "toolErrors": 0,
+  "stdlibReads": 1,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

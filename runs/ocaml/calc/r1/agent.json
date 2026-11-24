@@ -1,0 +1,45 @@
+{
+  "id": "ocaml-calc-r1",
+  "lang": "ocaml",
+  "task": "calc",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 44891,
+  "files": [
+    "build.sh",
+    "src/calc.ml"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.1952826,
+  "durationMs": 44169,
+  "apiMs": 41655,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe evaluator is in `src/calc.ml`, and `build.sh` compiles it with `ocamlopt` into `./app`. All 6 cases pass with `node check.mjs`. Beyond those, I checked the 64-bit edge cases (`min_int % -1` gives 0, `min_int / -1` and too-large literals give `error`), 200,000 levels of nested brackets, and 200,000 lines in about 0.1s.",
+  "usage": {
+    "input": 12,
+    "output": 3817,
+    "thinking": 833,
+    "cacheRead": 67953,
+    "cacheWrite": 13163
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

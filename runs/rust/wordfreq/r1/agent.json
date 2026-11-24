@@ -1,0 +1,47 @@
+{
+  "id": "rust-wordfreq-r1",
+  "lang": "rust",
+  "task": "wordfreq",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 43276,
+  "files": [
+    "Cargo.lock",
+    "Cargo.toml",
+    "build.sh",
+    "src/main.rs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.1848852,
+  "durationMs": 42726,
+  "apiMs": 35965,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe program is written in Rust using only the standard library. `build.sh` builds the optimized release binary and copies it to `./app`. `node check.mjs` passes all 6 example cases, and 4 unit tests also pass. These cover words split across read chunks, bytes ≥ 0x80 acting as separators, and input with no words.\n\nOn two 50 MB inputs, one of generated words and one of random bytes, it finished in about 0.35 s and 0.27 s. It reads standard input in chunks instead of loading the whole file in",
+  "usage": {
+    "input": 8,
+    "output": 3758,
+    "thinking": 372,
+    "cacheRead": 38426,
+    "cacheWrite": 12751
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  },
+  "stdlibReads": 0
+}

@@ -1,0 +1,13 @@
+{
+  "id": "haskell-wordfreq-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build an optimized release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nmkdir -p build\nghc -O2 -rtsopts \"-with-rtsopts=-A64m\" -outputdir build -o app src/Main.hs\n"
+    },
+    {
+      "path": "src/Main.hs",
+      "text": "{-# LANGUAGE BangPatterns #-}\n-- | wordfreq: print the 10 most frequent ASCII words read from stdin.\nmodule Main (main) where\n\nimport qualified Data.ByteString as BS\nimport qualified Data.ByteString.Builder as B\nimport Data.List (foldl', sortBy)\nimport qualified Data.Map.Strict as M\nimport Data.Ord (Down (..), comparing)\nimport Data.Word (Word8)\nimport System.IO (stdout)\n\n-- | Number of entries to report.\ntopN :: Int\ntopN = 10\n\nisAsciiLetter :: Word8 -> Bool\nisAsciiLetter w = (w - 0x41) < 26 || (w - 0x61) < 26\n{-# INLINE isAsciiLetter #-}\n\ntoLowerAscii :: Word8 -> Word8\ntoLowerAscii w\n  | (w - 0x41) < 26 = w + 0x20\n  | otherwise = w\n{-# INLINE toLowerAscii #-}\n\n-- | Split input into lowercase words. Folding case once over the whole\n-- input keeps each token a zero-copy slice of the same buffer.\ntokenize :: BS.ByteString -> [BS.ByteString]\ntokenize = go . BS.map toLowerAscii\n  where\n    go s\n      | BS.null rest = []\n      | otherwise = let (w, s') = BS.span isAsciiLetter rest in w : go s'\n      where\n        rest = BS.dropWhile (not . isAsciiLetter) s\n\n-- | Count occurrences of each word.\ncountWords :: [BS.ByteString] -> M.Map BS.ByteString Int\ncountWords = foldl' step M.empty\n  where\n    step !m w = M.alter bump w m\n      where\n        bump Nothing = Just 1\n        bump (Just !n) = Just (n + 1)\n\n-- | Highest count first, ties by word ascending.\nrank :: M.Map BS.ByteString Int -> [(BS.ByteString, Int)]\nrank = take topN . sortBy (comparing (\\(w, n) -> (Down n, w))) . M.toList\n\nrender :: [(BS.ByteString, Int)] -> B.Builder\nrender = foldMap line\n  where\n    line (w, n) = B.intDec n <> B.char7 ' ' <> B.byteString w <> B.char7 '\\n'\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  B.hPutBuilder stdout . render . rank . countWords . tokenize $ input\n"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "haskell-wordfreq-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build an optimized release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nmkdir -p build\nghc -O2 -Wall -rtsopts \"-with-rtsopts=-A64m\" -outputdir build -o app src/Main.hs\n"
+    },
+    {
+      "path": "src/Main.hs",
+      "text": "{-# LANGUAGE BangPatterns #-}\n-- | wordfreq: print the ten most frequent ASCII words read from stdin.\nmodule Main (main) where\n\nimport qualified Data.ByteString as B\nimport qualified Data.ByteString.Builder as BB\nimport Data.List (sortBy)\nimport qualified Data.Map.Strict as M\nimport Data.Ord (Down (..), comparing)\nimport Data.Word (Word8)\nimport System.IO (stdout)\n\n-- | How many entries to report.\ntopN :: Int\ntopN = 10\n\nisAsciiLetter :: Word8 -> Bool\nisAsciiLetter w = (w >= 0x61 && w <= 0x7a) || (w >= 0x41 && w <= 0x5a)\n\ntoLowerAscii :: Word8 -> Word8\ntoLowerAscii w\n  | w >= 0x41 && w <= 0x5a = w + 0x20\n  | otherwise = w\n\n-- | Split input into maximal runs of ASCII letters, lowercased.\nwords' :: B.ByteString -> [B.ByteString]\nwords' = go\n  where\n    go s\n      | B.null rest = []\n      | otherwise = let (w, s') = B.span isAsciiLetter rest in B.map toLowerAscii w : go s'\n      where\n        rest = B.dropWhile (not . isAsciiLetter) s\n\ncountWords :: [B.ByteString] -> M.Map B.ByteString Int\ncountWords = foldl' bump M.empty\n  where\n    bump !m w = M.insertWith (+) w 1 m\n\n-- | Highest counts first; ties broken by ascending byte order of the word.\ntopWords :: Int -> M.Map B.ByteString Int -> [(B.ByteString, Int)]\ntopWords n = take n . sortBy (comparing (\\(w, c) -> (Down c, w))) . M.toList\n\nrender :: [(B.ByteString, Int)] -> BB.Builder\nrender = foldMap line\n  where\n    line (w, c) = BB.intDec c <> BB.char7 ' ' <> BB.byteString w <> BB.char7 '\\n'\n\nmain :: IO ()\nmain = do\n  input <- B.getContents\n  BB.hPutBuilder stdout . render . topWords topN . countWords $ words' input\n"
+    }
+  ]
+}

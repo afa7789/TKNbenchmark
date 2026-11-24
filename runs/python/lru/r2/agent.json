@@ -1,0 +1,46 @@
+{
+  "id": "python-lru-r2",
+  "lang": "python",
+  "task": "lru",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 31304,
+  "files": [
+    "app",
+    "build.sh",
+    "lru.py"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.14878300000000003,
+  "durationMs": 30536,
+  "apiMs": 27859,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 12,
+    "output": 2166,
+    "thinking": 434,
+    "cacheRead": 65995,
+    "cacheWrite": 11527
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

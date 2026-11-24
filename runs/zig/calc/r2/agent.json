@@ -1,0 +1,47 @@
+{
+  "id": "zig-calc-r2",
+  "lang": "zig",
+  "task": "calc",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 141068,
+  "files": [
+    "build.sh",
+    "build.zig",
+    "src/Evaluator.zig",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.507363,
+  "durationMs": 140368,
+  "apiMs": 109993,
+  "turns": 13,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 26,
+    "output": 10606,
+    "thinking": 4201,
+    "cacheRead": 286775,
+    "cacheWrite": 29723
+  },
+  "tools": {
+    "Bash": 12
+  },
+  "toolErrors": 1,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  },
+  "stdlibReads": 7
+}

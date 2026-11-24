@@ -1,0 +1,45 @@
+{
+  "id": "haskell-calc-r2",
+  "lang": "haskell",
+  "task": "calc",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 41553,
+  "files": [
+    "build.sh",
+    "src/Main.hs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.1792602,
+  "durationMs": 40925,
+  "apiMs": 38469,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 10,
+    "output": 3346,
+    "thinking": 663,
+    "cacheRead": 54461,
+    "cacheWrite": 12676
+  },
+  "tools": {
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net11.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>KvHttp</AssemblyName>
+    <RootNamespace>KvHttp</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <TieredPGO>true</TieredPGO>
+    <ServerGarbageCollection>false</ServerGarbageCollection>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+</Project>

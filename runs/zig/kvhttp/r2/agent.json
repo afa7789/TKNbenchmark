@@ -1,0 +1,50 @@
+{
+  "id": "zig-kvhttp-r2",
+  "lang": "zig",
+  "task": "kvhttp",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 238999,
+  "files": [
+    ".gitignore",
+    "build.sh",
+    "build.zig",
+    "build.zig.zon",
+    "src/Store.zig",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 1.0292137999999997,
+  "durationMs": 238327,
+  "apiMs": 204596,
+  "turns": 22,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe server is written in Zig 0.16 using only the standard library, so build.sh has nothing to fetch. It passes all 4 example cases with `node check.mjs`, including a run from a clean copy.\n\nI also ran a throwaway stress script, now deleted. It covered:\n- a 1 MiB binary value stored and read back byte for byte;\n- 200 parallel PUTs and GETs;\n- a health check answered while 70 idle connections were held open;\n- the 400, 404 and 405 rules, including methods Zig's HTTP library doesn't recognise",
+  "usage": {
+    "input": 44,
+    "output": 20343,
+    "thinking": 6255,
+    "cacheRead": 815209,
+    "cacheWrite": 57392
+  },
+  "tools": {
+    "Bash": 19,
+    "Write": 2
+  },
+  "toolErrors": 1,
+  "builds": 5,
+  "compileErrors": 2,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  },
+  "stdlibReads": 11
+}

@@ -1,0 +1,69 @@
+{
+  "buildOk": true,
+  "buildSecs": 9.53,
+  "buildLog": "",
+  "binaryBytes": 72184,
+  "projectBytes": 219934720,
+  "cacheBytes": 57450496,
+  "footprintBytes": 277385216,
+  "pass": 11,
+  "total": 11,
+  "solved": true,
+  "cases": [
+    {
+      "name": "health",
+      "ok": true,
+      "ms": 1792
+    },
+    {
+      "name": "crud",
+      "ok": true,
+      "ms": 124
+    },
+    {
+      "name": "list-sorted",
+      "ok": true,
+      "ms": 127
+    },
+    {
+      "name": "errors",
+      "ok": true,
+      "ms": 123
+    },
+    {
+      "name": "empty-list",
+      "ok": true,
+      "ms": 123
+    },
+    {
+      "name": "empty-value",
+      "ok": true,
+      "ms": 123
+    },
+    {
+      "name": "binary-1mib",
+      "ok": true,
+      "ms": 132
+    },
+    {
+      "name": "key-rules",
+      "ok": true,
+      "ms": 127
+    },
+    {
+      "name": "methods",
+      "ok": true,
+      "ms": 122
+    },
+    {
+      "name": "value-bytes-preserved",
+      "ok": true,
+      "ms": 122
+    },
+    {
+      "name": "concurrent-64",
+      "ok": true,
+      "ms": 142
+    }
+  ]
+}

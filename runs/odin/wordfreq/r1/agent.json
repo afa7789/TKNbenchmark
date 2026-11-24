@@ -1,0 +1,45 @@
+{
+  "id": "odin-wordfreq-r1",
+  "lang": "odin",
+  "task": "wordfreq",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 63448,
+  "files": [
+    "build.sh",
+    "main.odin"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.19918499999999997,
+  "durationMs": 62859,
+  "apiMs": 55939,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe program is in `main.odin`, and `build.sh` builds an optimized binary at `./app`. All 6 example cases in `node check.mjs` pass. I also tried two 50 MB inputs, one of words and one of random bytes. The output matched a separate Python reference implementation exactly on both, and each run took under 0.4 seconds.",
+  "usage": {
+    "input": 16,
+    "output": 3026,
+    "thinking": 406,
+    "cacheRead": 100685,
+    "cacheWrite": 14808
+  },
+  "tools": {
+    "Bash": 7
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

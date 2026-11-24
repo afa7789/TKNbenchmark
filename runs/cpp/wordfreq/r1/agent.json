@@ -1,0 +1,45 @@
+{
+  "id": "cpp-wordfreq-r1",
+  "lang": "cpp",
+  "task": "wordfreq",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 21794,
+  "files": [
+    "build.sh",
+    "src/main.cpp"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.1211056,
+  "durationMs": 21202,
+  "apiMs": 18209,
+  "turns": 3,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 6,
+    "output": 1639,
+    "thinking": 121,
+    "cacheRead": 22548,
+    "cacheWrite": 10474
+  },
+  "tools": {
+    "Bash": 2
+  },
+  "toolErrors": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  },
+  "stdlibReads": 0
+}

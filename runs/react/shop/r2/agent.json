@@ -1,0 +1,50 @@
+{
+  "id": "react-shop-r2",
+  "lang": "react",
+  "task": "shop",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 61137,
+  "files": [
+    "src/App.jsx",
+    "src/Cart.jsx",
+    "src/CartContext.jsx",
+    "src/CheckoutForm.jsx",
+    "src/CurrencyContext.jsx",
+    "src/Header.jsx",
+    "src/Modal.jsx",
+    "src/ProductItem.jsx",
+    "src/ProductList.jsx",
+    "src/SearchBox.jsx"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.1894944,
+  "durationMs": 60078,
+  "apiMs": 48444,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 10,
+    "output": 5283,
+    "thinking": 1017,
+    "cacheRead": 42372,
+    "cacheWrite": 9415
+  },
+  "tools": {
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 0,
+  "compileErrors": 0,
+  "checkRuns": 0,
+  "checkFails": 0,
+  "firstCheckPass": false,
+  "lastCheck": null
+}

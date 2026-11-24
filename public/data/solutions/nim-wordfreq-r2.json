@@ -1,0 +1,13 @@
+{
+  "id": "nim-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nnim c -d:release --opt:speed --hints:off --nimcache:./.nimcache -o:./app src/wordfreq.nim\n"
+    },
+    {
+      "path": "src/wordfreq.nim",
+      "text": "## wordfreq: print the 10 most frequent ASCII words read from standard input.\n\nimport std/[algorithm, tables]\n\nconst\n  TopN = 10\n  ChunkSize = 1 shl 16\n\ntype WordCount = tuple[word: string, count: int]\n\nfunc toLowerAscii(c: char): char {.inline.} =\n  if c in {'A'..'Z'}: char(ord(c) + 32) else: c\n\nproc countWords(f: File): CountTable[string] =\n  ## Streams `f` in chunks, counting lowercase runs of ASCII letters.\n  ## A word split across chunk boundaries is carried over in `word`.\n  result = initCountTable[string]()\n  var\n    buf = newString(ChunkSize)\n    word = newStringOfCap(64)\n  while true:\n    let n = f.readBuffer(buf[0].addr, ChunkSize)\n    if n <= 0: break\n    for i in 0 ..< n:\n      let c = buf[i]\n      if c in {'A'..'Z', 'a'..'z'}:\n        word.add c.toLowerAscii\n      elif word.len > 0:\n        result.inc word\n        word.setLen 0\n  if word.len > 0:\n    result.inc word\n\nfunc byRank(a, b: WordCount): int =\n  result = cmp(b.count, a.count)\n  if result == 0:\n    result = cmp(a.word, b.word)\n\nproc topWords(counts: CountTable[string], n: int): seq[WordCount] =\n  result = newSeqOfCap[WordCount](counts.len)\n  for word, count in counts.pairs:\n    result.add (word, count)\n  result.sort(byRank)\n  if result.len > n:\n    result.setLen n\n\nproc main() =\n  var output = \"\"\n  for (word, count) in topWords(countWords(stdin), TopN):\n    output.add $count\n    output.add ' '\n    output.add word\n    output.add '\\n'\n  stdout.write output\n  stdout.flushFile\n\nwhen isMainModule:\n  main()\n"
+    }
+  ]
+}

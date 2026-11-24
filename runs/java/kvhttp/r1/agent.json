@@ -1,0 +1,47 @@
+{
+  "id": "java-kvhttp-r1",
+  "lang": "java",
+  "task": "kvhttp",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 188460,
+  "files": [
+    "build.sh",
+    "src/main/java/kvhttp/KvHandler.java",
+    "src/main/java/kvhttp/KvStore.java",
+    "src/main/java/kvhttp/Main.java"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2985076,
+  "durationMs": 187465,
+  "apiMs": 61921,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 14,
+    "output": 6641,
+    "thinking": 939,
+    "cacheRead": 101878,
+    "cacheWrite": 18157
+  },
+  "tools": {
+    "Bash": 6
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 1,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

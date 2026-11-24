@@ -1,0 +1,10 @@
+{
+  "name": "kvhttp",
+  "version": "1.0.0",
+  "description": "In-memory HTTP/1.1 key-value server",
+  "type": "module",
+  "main": "src/server.js",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "scripts": { "start": "node src/server.js", "test": "node check.mjs" }
+}

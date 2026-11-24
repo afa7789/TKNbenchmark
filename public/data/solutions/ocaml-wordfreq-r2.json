@@ -1,0 +1,13 @@
+{
+  "id": "ocaml-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build an optimized native binary at ./app using only the OCaml compiler.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nbuilddir=$(mktemp -d)\ntrap 'rm -rf \"$builddir\"' EXIT\ncp main.ml \"$builddir/\"\nocamlopt -config | grep -q '^flambda: true' && opt=(-O3) || opt=()\nocamlopt \"${opt[@]+\"${opt[@]}\"}\" -unsafe -inline 200 -o \"$builddir/app\" \"$builddir/main.ml\"\ncp \"$builddir/app\" ./app\n"
+    },
+    {
+      "path": "main.ml",
+      "text": "(* wordfreq: print the 10 most frequent ASCII words read from stdin. *)\n\nlet top_n = 10\nlet chunk_size = 65536\n\n(* Count occurrences of every lowercase-folded word on [ic].\n   Words may straddle chunk boundaries, so the current word is accumulated\n   in a buffer that persists across reads. *)\nlet count_words ic =\n  let counts : (string, int ref) Hashtbl.t = Hashtbl.create 4096 in\n  let word = Buffer.create 64 in\n  let flush_word () =\n    if Buffer.length word > 0 then begin\n      let w = Buffer.contents word in\n      Buffer.clear word;\n      match Hashtbl.find_opt counts w with\n      | Some n -> incr n\n      | None -> Hashtbl.add counts w (ref 1)\n    end\n  in\n  let chunk = Bytes.create chunk_size in\n  let rec loop () =\n    let len = input ic chunk 0 chunk_size in\n    if len > 0 then begin\n      for i = 0 to len - 1 do\n        match Bytes.unsafe_get chunk i with\n        | 'a' .. 'z' as c -> Buffer.add_char word c\n        | 'A' .. 'Z' as c -> Buffer.add_char word (Char.lowercase_ascii c)\n        | _ -> flush_word ()\n      done;\n      loop ()\n    end\n  in\n  loop ();\n  flush_word ();\n  counts\n\n(* Count descending, then word ascending (byte order). *)\nlet compare_entry (w1, c1) (w2, c2) =\n  match Int.compare c2 c1 with 0 -> String.compare w1 w2 | c -> c\n\nlet top counts =\n  Hashtbl.fold (fun w n acc -> (w, !n) :: acc) counts []\n  |> List.sort compare_entry\n  |> List.to_seq |> Seq.take top_n |> List.of_seq\n\nlet () =\n  set_binary_mode_in stdin true;\n  let entries = top (count_words stdin) in\n  List.iter (fun (w, c) -> Printf.printf \"%d %s\\n\" c w) entries\n"
+    }
+  ]
+}

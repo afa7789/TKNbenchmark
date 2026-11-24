@@ -1,0 +1,43 @@
+{
+  "buildOk": true,
+  "buildSecs": 0.24,
+  "buildLog": "",
+  "deps": [],
+  "pass": 8,
+  "total": 8,
+  "solved": true,
+  "cases": [
+    {
+      "name": "vite-build",
+      "ok": true
+    },
+    {
+      "name": "hello",
+      "ok": true
+    },
+    {
+      "name": "counter",
+      "ok": true
+    },
+    {
+      "name": "todo",
+      "ok": true
+    },
+    {
+      "name": "fetch-users",
+      "ok": true
+    },
+    {
+      "name": "filter-table",
+      "ok": true
+    },
+    {
+      "name": "kv-browser",
+      "ok": true
+    },
+    {
+      "name": "no-runtime-errors",
+      "ok": true
+    }
+  ]
+}

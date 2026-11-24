@@ -1,0 +1,46 @@
+{
+  "id": "zig-lru-r1",
+  "lang": "zig",
+  "task": "lru",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 143403,
+  "files": [
+    "build.sh",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.5345840000000001,
+  "durationMs": 142721,
+  "apiMs": 113624,
+  "turns": 13,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 26,
+    "output": 11122,
+    "thinking": 3037,
+    "cacheRead": 289280,
+    "cacheWrite": 31773
+  },
+  "tools": {
+    "Bash": 11,
+    "Read": 1
+  },
+  "toolErrors": 0,
+  "builds": 4,
+  "compileErrors": 1,
+  "checkRuns": 3,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  },
+  "stdlibReads": 4
+}

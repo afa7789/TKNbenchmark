@@ -1,0 +1,48 @@
+{
+  "id": "go-lru-r1",
+  "lang": "go",
+  "task": "lru",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 40821,
+  "files": [
+    "build.sh",
+    "go.mod",
+    "lru.go",
+    "lru_test.go",
+    "main.go"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.20025260000000003,
+  "durationMs": 40212,
+  "apiMs": 37241,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 10,
+    "output": 4098,
+    "thinking": 278,
+    "cacheRead": 54583,
+    "cacheWrite": 13417
+  },
+  "tools": {
+    "Bash": 4
+  },
+  "toolErrors": 1,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  },
+  "stdlibReads": 0
+}

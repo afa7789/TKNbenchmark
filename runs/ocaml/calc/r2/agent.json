@@ -1,0 +1,45 @@
+{
+  "id": "ocaml-calc-r2",
+  "lang": "ocaml",
+  "task": "calc",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 53666,
+  "files": [
+    "build.sh",
+    "calc.ml"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2060538,
+  "durationMs": 52964,
+  "apiMs": 51252,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 12,
+    "output": 4339,
+    "thinking": 814,
+    "cacheRead": 68409,
+    "cacheWrite": 13193
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 2,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

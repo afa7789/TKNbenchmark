@@ -1,0 +1,46 @@
+{
+  "id": "js-wordfreq-r2",
+  "lang": "js",
+  "task": "wordfreq",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 45340,
+  "files": [
+    "app",
+    "build.sh",
+    "src/wordfreq.js"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.182609,
+  "durationMs": 44644,
+  "apiMs": 41508,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 10,
+    "output": 3518,
+    "thinking": 565,
+    "cacheRead": 54125,
+    "cacheWrite": 12673
+  },
+  "tools": {
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

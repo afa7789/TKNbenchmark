@@ -1,0 +1,41 @@
+{
+  "id": "vue-shop-r3",
+  "files": [
+    {
+      "path": "App.vue",
+      "text": "<script setup>\nimport { ref, provide } from 'vue'\nimport Header from './components/Header.vue'\nimport ProductList from './components/ProductList.vue'\nimport Cart from './components/Cart.vue'\nimport Modal from './components/Modal.vue'\nimport CheckoutForm from './components/CheckoutForm.vue'\n\ndefineProps({\n  products: { type: Array, required: true }\n})\n\nprovide('currency', 'USD')\n\nconst checkoutOpen = ref(false)\n</script>\n\n<template>\n  <Header @checkout=\"checkoutOpen = true\" />\n  <ProductList :products=\"products\" />\n  <Cart />\n  <Modal v-if=\"checkoutOpen\" @close=\"checkoutOpen = false\">\n    <CheckoutForm @submitted=\"checkoutOpen = false\" />\n  </Modal>\n</template>\n"
+    },
+    {
+      "path": "components/Cart.vue",
+      "text": "<script setup>\nimport { inject, computed } from 'vue'\nimport { useCartStore } from '../stores/cart'\n\nconst TAX_RATE = 0.1\n\nconst cart = useCartStore()\nconst currency = inject('currency')\n\nconst formatter = computed(() => new Intl.NumberFormat(undefined, { style: 'currency', currency }))\n\nconst subtotal = computed(() => cart.items.reduce((sum, item) => sum + item.price * item.quantity, 0))\nconst tax = computed(() => subtotal.value * TAX_RATE)\nconst total = computed(() => subtotal.value + tax.value)\n\nfunction format(amount) {\n  return formatter.value.format(amount)\n}\n</script>\n\n<template>\n  <section>\n    <h2>Cart</h2>\n    <ul>\n      <li v-for=\"item in cart.items\" :key=\"item.id\">\n        <span>{{ item.name }}</span>\n        <input v-model.number=\"item.quantity\" type=\"number\" min=\"1\" />\n        <button type=\"button\" @click=\"cart.remove(item.id)\">Remove</button>\n      </li>\n    </ul>\n    <p>Subtotal: {{ format(subtotal) }}</p>\n    <p>Tax: {{ format(tax) }}</p>\n    <p>Total: {{ format(total) }}</p>\n  </section>\n</template>\n"
+    },
+    {
+      "path": "components/CheckoutForm.vue",
+      "text": "<script setup>\nimport { ref, computed } from 'vue'\nimport { useCartStore } from '../stores/cart'\n\nconst emit = defineEmits(['submitted'])\n\nconst cart = useCartStore()\n\nconst name = ref('')\nconst email = ref('')\n\nconst nameError = computed(() => (name.value.trim() ? '' : 'Name is required'))\nconst emailError = computed(() => (email.value.includes('@') ? '' : 'Email must contain @'))\nconst isValid = computed(() => !nameError.value && !emailError.value)\n\nfunction submit() {\n  if (!isValid.value) return\n  cart.clear()\n  emit('submitted')\n}\n</script>\n\n<template>\n  <form @submit.prevent=\"submit\">\n    <label>\n      Name\n      <input v-model=\"name\" type=\"text\" />\n    </label>\n    <p v-if=\"nameError\">{{ nameError }}</p>\n    <label>\n      Email\n      <input v-model=\"email\" type=\"email\" />\n    </label>\n    <p v-if=\"emailError\">{{ emailError }}</p>\n    <button type=\"submit\" :disabled=\"!isValid\">Place order</button>\n  </form>\n</template>\n"
+    },
+    {
+      "path": "components/Header.vue",
+      "text": "<script setup>\nimport { storeToRefs } from 'pinia'\nimport { useCartStore } from '../stores/cart'\n\nconst emit = defineEmits(['checkout'])\n\nconst { count } = storeToRefs(useCartStore())\n</script>\n\n<template>\n  <header>\n    <span>Cart: {{ count }} items</span>\n    <button type=\"button\" @click=\"emit('checkout')\">Checkout</button>\n  </header>\n</template>\n"
+    },
+    {
+      "path": "components/Modal.vue",
+      "text": "<script setup>\nimport { onMounted, onUnmounted } from 'vue'\n\nconst emit = defineEmits(['close'])\n\nfunction onKeydown(event) {\n  if (event.key === 'Escape') emit('close')\n}\n\nonMounted(() => window.addEventListener('keydown', onKeydown))\nonUnmounted(() => window.removeEventListener('keydown', onKeydown))\n</script>\n\n<template>\n  <div role=\"dialog\" aria-modal=\"true\">\n    <button type=\"button\" aria-label=\"Close\" @click=\"emit('close')\">×</button>\n    <slot />\n  </div>\n</template>\n"
+    },
+    {
+      "path": "components/ProductItem.vue",
+      "text": "<script setup>\nimport { inject, computed } from 'vue'\n\nconst props = defineProps({\n  product: { type: Object, required: true }\n})\n\nconst emit = defineEmits(['add'])\n\nconst currency = inject('currency')\n\nconst price = computed(() =>\n  new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(props.product.price)\n)\n</script>\n\n<template>\n  <li>\n    <span>{{ product.name }}</span>\n    <span>{{ price }}</span>\n    <button type=\"button\" @click=\"emit('add', product)\">Add</button>\n  </li>\n</template>\n"
+    },
+    {
+      "path": "components/ProductList.vue",
+      "text": "<script setup>\nimport { ref, computed } from 'vue'\nimport { useCartStore } from '../stores/cart'\nimport SearchBox from './SearchBox.vue'\nimport ProductItem from './ProductItem.vue'\n\nconst props = defineProps({\n  products: { type: Array, required: true }\n})\n\nconst cart = useCartStore()\n\nconst query = ref('')\nconst category = ref('')\n\nconst categories = computed(() => [...new Set(props.products.map((product) => product.category))])\n\nconst filteredProducts = computed(() => {\n  const q = query.value.trim().toLowerCase()\n  return props.products.filter(\n    (product) =>\n      (!category.value || product.category === category.value) &&\n      (!q || product.name.toLowerCase().includes(q))\n  )\n})\n</script>\n\n<template>\n  <section>\n    <SearchBox @search=\"query = $event\" />\n    <select v-model=\"category\">\n      <option value=\"\">All categories</option>\n      <option v-for=\"c in categories\" :key=\"c\" :value=\"c\">{{ c }}</option>\n    </select>\n    <ul v-if=\"filteredProducts.length\">\n      <ProductItem\n        v-for=\"product in filteredProducts\"\n        :key=\"product.id\"\n        :product=\"product\"\n        @add=\"cart.add\"\n      />\n    </ul>\n    <p v-else>No products</p>\n  </section>\n</template>\n"
+    },
+    {
+      "path": "components/SearchBox.vue",
+      "text": "<script setup>\nimport { ref, onUnmounted } from 'vue'\n\nconst emit = defineEmits(['search'])\n\nconst query = ref('')\nlet timer = null\n\nfunction onInput() {\n  clearTimeout(timer)\n  timer = setTimeout(() => {\n    timer = null\n    emit('search', query.value)\n  }, 300)\n}\n\nonUnmounted(() => clearTimeout(timer))\n</script>\n\n<template>\n  <input v-model=\"query\" type=\"search\" placeholder=\"Search products\" @input=\"onInput\" />\n</template>\n"
+    },
+    {
+      "path": "stores/cart.js",
+      "text": "import { defineStore } from 'pinia'\nimport { ref, computed } from 'vue'\n\nexport const useCartStore = defineStore('cart', () => {\n  const items = ref([])\n\n  const count = computed(() => items.value.reduce((sum, item) => sum + item.quantity, 0))\n\n  function add(product) {\n    const existing = items.value.find((item) => item.id === product.id)\n    if (existing) {\n      existing.quantity++\n    } else {\n      items.value.push({ ...product, quantity: 1 })\n    }\n  }\n\n  function remove(id) {\n    items.value = items.value.filter((item) => item.id !== id)\n  }\n\n  function setQuantity(id, quantity) {\n    const item = items.value.find((item) => item.id === id)\n    if (!item) return\n    if (quantity > 0) {\n      item.quantity = quantity\n    } else {\n      remove(id)\n    }\n  }\n\n  function clear() {\n    items.value = []\n  }\n\n  return { items, count, add, remove, setQuantity, clear }\n})\n"
+    }
+  ]
+}

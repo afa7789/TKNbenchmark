@@ -1,0 +1,47 @@
+{
+  "id": "go-lru-r2",
+  "lang": "go",
+  "task": "lru",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 38280,
+  "files": [
+    "build.sh",
+    "go.mod",
+    "lru.go",
+    "main.go"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.1823062,
+  "durationMs": 37495,
+  "apiMs": 34093,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe program is written and builds with `build.sh`. `node check.mjs` passes all 5 example cases. A test run of 1,000,000 commands with capacity 1,000,000 took about 0.5s, and input whose last line has no trailing newline works too.\n\n- **Files:** the cache is in `lru.go`, input handling is in `main.go`, and `build.sh` builds a stripped release binary at `./app`.\n- **Design:** a map from key to slot in a single node array, with a doubly linked recency list, so every command runs in O(1) expec",
+  "usage": {
+    "input": 8,
+    "output": 3722,
+    "thinking": 307,
+    "cacheRead": 38171,
+    "cacheWrite": 12525
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  },
+  "stdlibReads": 0
+}

@@ -1,0 +1,45 @@
+{
+  "id": "asm-wordfreq-r3",
+  "lang": "asm",
+  "task": "wordfreq",
+  "rep": 3,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 123660,
+  "files": [
+    "build.sh",
+    "src/wordfreq.s"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.43108320000000006,
+  "durationMs": 122915,
+  "apiMs": 112999,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 12,
+    "output": 12099,
+    "thinking": 3550,
+    "cacheRead": 93636,
+    "cacheWrite": 21291
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

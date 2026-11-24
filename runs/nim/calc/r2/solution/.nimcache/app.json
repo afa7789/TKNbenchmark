@@ -1,0 +1,60 @@
+{
+  "cacheVersion": "D20260925T120000",
+  "outputFile": "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/app",
+  "compile": [
+    [
+      "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem@sexceptions.nim.c",
+      "clang -c   -w -ferror-limit=3 -fno-strict-aliasing -pthread -O3   -I/opt/homebrew/Cellar/nim/2.4.2/nim/lib -I/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/src -o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem@sexceptions.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem@sexceptions.nim.c"
+    ],
+    [
+      "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@sprivate@sdigitsutils.nim.c",
+      "clang -c   -w -ferror-limit=3 -fno-strict-aliasing -pthread -O3   -I/opt/homebrew/Cellar/nim/2.4.2/nim/lib -I/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/src -o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@sprivate@sdigitsutils.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@sprivate@sdigitsutils.nim.c"
+    ],
+    [
+      "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@sassertions.nim.c",
+      "clang -c   -w -ferror-limit=3 -fno-strict-aliasing -pthread -O3   -I/opt/homebrew/Cellar/nim/2.4.2/nim/lib -I/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/src -o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@sassertions.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@sassertions.nim.c"
+    ],
+    [
+      "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem@sdollars.nim.c",
+      "clang -c   -w -ferror-limit=3 -fno-strict-aliasing -pthread -O3   -I/opt/homebrew/Cellar/nim/2.4.2/nim/lib -I/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/src -o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem@sdollars.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem@sdollars.nim.c"
+    ],
+    [
+      "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pposix.nim.c",
+      "clang -c   -w -ferror-limit=3 -fno-strict-aliasing -pthread -O3   -I/opt/homebrew/Cellar/nim/2.4.2/nim/lib -I/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/src -o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pposix.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pposix.nim.c"
+    ],
+    [
+      "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@ssyncio.nim.c",
+      "clang -c   -w -ferror-limit=3 -fno-strict-aliasing -pthread -O3   -I/opt/homebrew/Cellar/nim/2.4.2/nim/lib -I/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/src -o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@ssyncio.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@ssyncio.nim.c"
+    ],
+    [
+      "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem.nim.c",
+      "clang -c   -w -ferror-limit=3 -fno-strict-aliasing -pthread -O3   -I/opt/homebrew/Cellar/nim/2.4.2/nim/lib -I/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/src -o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem.nim.c"
+    ],
+    [
+      "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@mcalc.nim.c",
+      "clang -c   -w -ferror-limit=3 -fno-strict-aliasing -pthread -O3   -I/opt/homebrew/Cellar/nim/2.4.2/nim/lib -I/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/src -o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@mcalc.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@mcalc.nim.c"
+    ]
+  ],
+  "link": [
+    "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem@sexceptions.nim.c.o",
+    "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@sprivate@sdigitsutils.nim.c.o",
+    "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@sassertions.nim.c.o",
+    "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem@sdollars.nim.c.o",
+    "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pposix.nim.c.o",
+    "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@ssyncio.nim.c.o",
+    "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem.nim.c.o",
+    "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@mcalc.nim.c.o"
+  ],
+  "linkcmd": "clang   -o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/app /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem@sexceptions.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@sprivate@sdigitsutils.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@sassertions.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem@sdollars.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pposix.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@pstd@ssyncio.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@psystem.nim.c.o /private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2/.nimcache/@mcalc.nim.c.o     -ldl",
+  "extraCmds": [],
+  "configFiles": [
+    "/opt/homebrew/Cellar/nim/2.4.2/nim/config/nim.cfg",
+    "/opt/homebrew/Cellar/nim/2.4.2/nim/config/config.nims"
+  ],
+  "stdinInput": false,
+  "projectIsCmd": false,
+  "cmdInput": "",
+  "currentDir": "/private/var/folders/1w/9g6qlcsj6wq1_0p6m8cf8w380000gn/T/tknbench/agent/nim-calc-r2",
+  "depfiles": [],
+  "nimexe": ""
+}

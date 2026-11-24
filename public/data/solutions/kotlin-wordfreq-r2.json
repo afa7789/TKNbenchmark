@@ -1,0 +1,13 @@
+{
+  "id": "kotlin-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nmkdir -p build\nkotlinc src/Main.kt -include-runtime -d build/app.jar\ncat > app <<'SH'\n#!/usr/bin/env bash\nexec java -XX:+UseSerialGC -jar \"$(dirname \"$0\")/build/app.jar\" \"$@\"\nSH\nchmod +x app\n"
+    },
+    {
+      "path": "src/Main.kt",
+      "text": "import java.io.InputStream\nimport java.io.PrintStream\n\nprivate const val TOP_N = 10\nprivate const val BUFFER_SIZE = 1 shl 16\n\n/** Mutable counter boxed once per distinct word to avoid re-boxing on every increment. */\nprivate class Counter(var value: Int = 0)\n\n/**\n * Counts maximal runs of ASCII letters in [input], folded to lowercase.\n * All other bytes act as separators.\n */\nfun countWords(input: InputStream): Map<String, Int> {\n    val counts = HashMap<String, Counter>()\n    val buffer = ByteArray(BUFFER_SIZE)\n    var word = ByteArray(64)\n    var length = 0\n\n    fun flush() {\n        if (length > 0) {\n            val key = String(word, 0, length, Charsets.ISO_8859_1)\n            counts.getOrPut(key) { Counter() }.value++\n            length = 0\n        }\n    }\n\n    while (true) {\n        val read = input.read(buffer)\n        if (read < 0) break\n        for (i in 0 until read) {\n            val b = buffer[i].toInt()\n            val lower = b or 0x20\n            if (lower in 'a'.code..'z'.code) {\n                if (length == word.size) word = word.copyOf(word.size * 2)\n                word[length++] = lower.toByte()\n            } else {\n                flush()\n            }\n        }\n    }\n    flush()\n\n    return counts.mapValues { it.value.value }\n}\n\n/** Returns the [n] most frequent entries: count descending, then word ascending. */\nfun topWords(counts: Map<String, Int>, n: Int = TOP_N): List<Pair<String, Int>> =\n    counts.entries\n        .sortedWith(compareByDescending<Map.Entry<String, Int>> { it.value }.thenBy { it.key })\n        .take(n)\n        .map { it.key to it.value }\n\nfun main() {\n    val top = topWords(countWords(System.`in`))\n    val out = PrintStream(System.out.buffered(), false, Charsets.ISO_8859_1)\n    for ((word, count) in top) out.print(\"$count $word\\n\")\n    out.flush()\n}\n"
+    }
+  ]
+}

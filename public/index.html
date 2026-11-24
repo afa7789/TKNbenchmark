@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TKNbenchmark: what a programming language costs a coding agent</title>
+  <meta name="description" content="One isolated Claude Opus 5.5 agent per case: tokens, dollars, time and correctness for the same tasks in C, C++, C#, Rust, Go, Zig, Odin, Nim, Swift, Java, Kotlin, OCaml, Haskell, JavaScript, TypeScript, Python and Assembly, plus React, Vue and Svelte.">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header>
+    <a class="logo" href="./">TKNbenchmark</a>
+    <nav>
+      <a href="#ranking">Ranking</a>
+      <a href="#tasks">By task</a>
+      <a href="#build">Build &amp; disk</a>
+      <a href="#performance">Performance</a>
+      <a href="#frontend">Front end</a>
+      <a href="#combos">Stacks</a>
+      <a href="#repair">Repair</a>
+      <a href="#cases">Cases</a>
+      <a href="#method">Method</a>
+      <a href="paper.pdf">Paper (PDF)</a>
+      <a href="https://github.com/afa7789/TKNbenchmark">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>How much does a programming language cost a coding agent?</h1>
+    <h2 id="hero-sub">Same tasks, same prompt, one isolated Claude Opus 5.5 agent per case. We count tokens, dollars, time, compiler errors, hidden tests, build disk and final binary performance.</h2>
+  </section>
+
+  <main>
+    <fieldset id="summary" class="prose">
+      <legend>Summary</legend>
+      <div id="kpis" class="kpis"></div>
+      <h3>The hypotheses</h3>
+      <ul>
+        <li><strong>"Zig spends fewer tokens, compiles faster and the LLM gets it right first time":</strong> rejected here. It did pass on the first try, but cost far more than Rust: the agent had to read the Zig 0.16 standard library sources (new I/O API) to learn it, and a cold build compiles the standard library.</li>
+        <li><strong>"Rust's target/ is huge":</strong> confirmed once dependencies and worktrees enter. In the HTTP server, Rust (tokio/hyper/axum) and Haskell (warp) pulled in packages; <code>target/</code> lives per project, so every worktree repeats it (about 200 MB per worktree after debug + release + test builds of a ~200-line server). Rust is not alone: C# and Haskell used even more per project. Go keeps almost everything in its shared global cache.</li>
+        <li><strong>"More concise code costs fewer tokens":</strong> confirmed for code, with caveats for cost. Python, TypeScript, JavaScript and Kotlin were the cheapest, and final code size tracks agent cost closely. But TypeScript's code was ~1.26× JavaScript's (the article says 1.31×) while the agent spent the same on both, and knowing the language version matters as much as conciseness.</li>
+        <li><strong>"Svelte &lt; Vue &lt; React":</strong> confirmed, with ratios close to the article's, measured with a different tokenizer.</li>
+        <li><strong>"Rust + React":</strong> defensible. Rust was among the cheapest back ends for the agent; React was the most expensive front end.</li>
+      </ul>
+      <p>Details in the <a href="paper.pdf">paper (PDF)</a>.</p>
+    </fieldset>
+
+    <fieldset id="ranking">
+      <legend>Ranking</legend>
+      <p class="hint">Sum of the medians of the 4 back-end tasks. Click a header to sort. "Solved" = passed every hidden test, which the agent never saw.</p>
+      <div class="scroll" id="leaderboard"></div>
+      <div class="multiples" id="multiples"></div>
+    </fieldset>
+
+    <fieldset id="tasks">
+      <legend>By task</legend>
+      <div class="segmented" id="task-tabs" role="tablist"></div>
+      <p class="hint" id="task-desc"></p>
+      <div class="scroll" id="task-table"></div>
+      <div class="multiples" id="task-charts"></div>
+    </fieldset>
+
+    <fieldset id="build">
+      <legend>Build &amp; disk</legend>
+      <p>Cold build from a clean copy with isolated caches (<code>HOME</code>, <code>CARGO_HOME</code>, <code>GOCACHE</code>, Zig, Nim, cabal, opam and NuGet caches all point to an empty directory). "Disk" adds the project directory after the build (<code>target/</code>, <code>.zig-cache/</code>…) and the global caches it created. In kvhttp the agent could choose dependencies.</p>
+      <p>Worktrees multiply whatever lives in the project directory (Rust's <code>target/</code>, <code>.zig-cache</code>, .NET's <code>bin/</code> and <code>obj/</code>…); global caches (<code>GOCACHE</code>, the cargo registry, the cabal store) are shared. Parallel agents usually get one worktree per task.</p>
+      <p class="hint" id="devloop-note"></p>
+      <div class="multiples" id="build-charts"></div>
+    </fieldset>
+
+    <fieldset id="performance">
+      <legend>Final code performance</legend>
+      <p>Only runs that passed every hidden test. Command-line tasks: median of 5 runs on a large input (wordfreq 50 MB, lru 1 million commands, calc 200 thousand expressions), with peak memory. kvhttp: requests per second with 64 concurrent clients, one connection per request.</p>
+      <div class="multiples" id="perf-charts"></div>
+    </fieldset>
+
+    <fieldset id="frontend">
+      <legend>React × Vue × Svelte</legend>
+      <div class="callout" id="external"></div>
+      <p>Our measurement: one agent per framework (3 repetitions) wrote the same 6 components (the article's 5 plus a client for kvhttp). Tokens counted with Opus 5.5's tokenizer, with cl100k alongside to compare with the article, which uses Svelte as its baseline. The agent runs nothing; in round 3 the harness builds with Vite and tests in a browser (Chromium, mocked network).</p>
+      <div class="scroll" id="frontend-table"></div>
+      <h3>Mini app: shopping cart</h3>
+      <p>Components talking to each other: parent → child through props, child → parent through events, a global store (the agent picks the library), derived state (subtotal, tax, total), a two-way-bound form with validation, a debounced search with cleanup, context / provide–inject for the currency, and a modal that takes content through children / slot / snippet. Verified in round 3 with a Vite build and a browser (renders, adds to cart, debounced search, no runtime errors). <a href="https://github.com/afa7789/TKNbenchmark/blob/main/bench/tasks/shop/SPEC.md">SPEC</a></p>
+      <div class="scroll" id="shop-table"></div>
+    </fieldset>
+
+    <fieldset id="combos">
+      <legend>Full-stack combinations</legend>
+      <p>One complete feature: the kvhttp server in the back-end language plus the <code>KvBrowser</code> component in the framework, both in Opus 5.5 tokens (median of the repetitions). In bold, the four stacks from the original conversation: Rust/Zig × React/Vue.</p>
+      <div class="scroll" id="combo-table"></div>
+    </fieldset>
+
+    <fieldset id="repair">
+      <legend>Repair (round 4)</legend>
+      <p>Every run that failed verification (round 3) got a fresh agent with the failure report, like a bug report, and up to 3 attempts. We measure what it took to get to green.</p>
+      <div class="scroll" id="repair-table"></div>
+    </fieldset>
+
+    <fieldset id="cases">
+      <legend>Cases</legend>
+      <p>Each individual run: agent metrics, failed tests and the code it left behind.</p>
+      <div class="controls">
+        <label>Language <select id="case-lang"></select></label>
+        <label>Task <select id="case-task"></select></label>
+        <label>Repetition <select id="case-rep"></select></label>
+      </div>
+      <dl class="quote-card" id="case-metrics"></dl>
+      <ul class="failures" id="case-failures"></ul>
+      <div class="segmented" id="case-files"></div>
+      <pre id="case-code"></pre>
+    </fieldset>
+
+    <fieldset id="method" class="prose">
+      <legend>Method</legend>
+      <h3>Inspiration</h3>
+      <p>The series <a href="https://hackernoon.com/we-measured-the-llm-token-cost-of-5-languages-typescript-costs-31percent-more-than-javascript">"The Tokenomics of Web Development"</a> measures hand-written snippets with tiktoken. Here we measure the whole process, in the style of <a href="https://deepswe.datacurve.ai/">DeepSWE</a>: one agent per task, hand-written hidden tests, pass@1 and cost per task.</p>
+      <h3>Rounds</h3>
+      <ol>
+        <li><strong>Write</strong>: one agent per case writes the code, testing only against the examples.</li>
+        <li><strong>Write (extra languages, Svelte, shop)</strong>: the same, same prompt.</li>
+        <li><strong>Verify</strong>, once, live: back ends with a clean build + hidden suite; front ends with a Vite build + browser (Chromium) with mocked network, checking only what the SPEC states literally plus "no runtime errors".</li>
+        <li><strong>Repair</strong>: each failure gets a fresh agent with the failure report, up to 3 attempts.</li>
+      </ol>
+      <h3>Execution</h3>
+      <ul>
+        <li>One <code>claude -p</code> (headless Claude Code) per case: model <code>claude-opus-5-5</code>, effort <code>high</code>, tools <code>Bash, Read, Edit, Write</code>; no web, MCP, plugins or CLAUDE.md; an empty directory outside the repository.</li>
+        <li>Identical prompt for every language; only the language name and toolchain version change. Tasks 1–3: standard library only. kvhttp: dependencies allowed if an experienced engineer would use them in production.</li>
+        <li>The agent gets <code>SPEC.md</code>, examples in <code>cases.json</code> and <code>check.mjs</code>. The grade comes from a separate hidden suite that the harness runs later on a clean build.</li>
+        <li>Tokens and cost come from Claude Code's final event (<code>usage</code>, <code>total_cost_usd</code> at list price: $4 / $20 per million input / output tokens). Cost includes cache reads and writes.</li>
+        <li>"Code tokens": the source files and manifests the agent left (no lockfiles or build output), counted with Opus 5.5's tokenizer as the input-token difference between a prompt with the code and an empty one.</li>
+        <li>"1st try": the first run of <code>check.mjs</code> already passed every example. "Compiler errors": build calls whose output carries a compiler diagnostic (<code>file:line:col: error:</code>, <code>error[E…]</code>, Nim's <code>Error:</code>, a failed <code>go build</code>). "Stdlib reads": tool calls that read the toolchain's own sources or docs (e.g. <code>lib/zig/std</code>, <code>rustlib/src</code>, <code>go doc</code>) to learn an API.</li>
+      </ul>
+      <h3>Tasks</h3>
+      <ul id="task-list"></ul>
+      <h3>Limitations</h3>
+      <ul>
+        <li>3 repetitions per case: small differences are noise. Look at the min–max ranges.</li>
+        <li>One model, one harness, one machine (macOS arm64). Other models know each language differently; Zig and Odin change their APIs often.</li>
+        <li>Small tasks (minutes, not hours). Large projects may reorder the ranking.</li>
+        <li>The front-end check is a smoke test (build + browser), not a full suite.</li>
+        <li>Swift and C# are confounded by the test machine (Command Line Tools, no Xcode): SwiftPM aborts at start-up (mismatched <code>llbuild</code>) and .NET Native AOT cannot link, so their first builds failed until the agent found a workaround. Their costs include that detour.</li>
+        <li>Round 3 found two bugs in the harness itself, fixed before the repair round, with the affected cases re-verified: the build-output filter dropped <code>bin/</code>, which is source in dune (OCaml); and the first launch of a freshly built binary on macOS took over 3 s (Haskell, 48 MB). The verifier now launches each binary once before the suite.</li>
+      </ul>
+      <h3>Reproduce</h3>
+      <pre>npm ci
+npm run selftest            # the verifier accepts the reference solutions
+npm run bench -- --reps 3   # agents (uses your Claude Code login)
+npm run verify              # round 3: cold build + hidden tests
+npm run verify:front        # round 3: Vite + Chromium (front end)
+npm run repair              # round 4: repair with the failure report
+npm run perf                # performance of the passing binaries
+npm run count               # code tokens (Opus 5.5 + cl100k)
+npm run aggregate           # public/data/results.json
+npm run paper               # paper/data.tex + public/paper.pdf (needs tectonic)</pre>
+      <p class="hint" id="toolchains"></p>
+    </fieldset>
+  </main>
+
+  <footer id="footer">Data in <a href="data/results.json">data/results.json</a>.</footer>
+  <div id="tip" role="tooltip"></div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "id": "haskell-lru-r2",
+  "lang": "haskell",
+  "task": "lru",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 84297,
+  "files": [
+    "build.sh",
+    "src/LRU.hs",
+    "src/Main.hs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.32453719999999997,
+  "durationMs": 83683,
+  "apiMs": 75436,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 10,
+    "output": 8185,
+    "thinking": 1697,
+    "cacheRead": 64106,
+    "cacheWrite": 18497
+  },
+  "tools": {
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 1,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

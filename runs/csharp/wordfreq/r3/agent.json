@@ -1,0 +1,47 @@
+{
+  "id": "csharp-wordfreq-r3",
+  "lang": "csharp",
+  "task": "wordfreq",
+  "rep": 3,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 96436,
+  "files": [
+    "build.sh",
+    "src/Program.cs",
+    "src/WordCounter.cs",
+    "src/WordFreq.csproj"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.29657600000000006,
+  "durationMs": 95570,
+  "apiMs": 72135,
+  "turns": 11,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe program is built and `node check.mjs` passes all 6 example cases. On 50 MB inputs (generated word text, random bytes, and one 50 MB word), its output matches a Python reference. It ran in about 0.3 s on the word and random-byte inputs and under 1 s on the single long word.\n\nI first tried Native AOT, which makes a fully native binary, but the link step fails on this machine because the OpenSSL library isn't installed. `build.sh` instead makes a self-contained, trimmed, precompiled singl",
+  "usage": {
+    "input": 22,
+    "output": 5746,
+    "thinking": 1501,
+    "cacheRead": 165040,
+    "cacheWrite": 18570
+  },
+  "tools": {
+    "Bash": 10
+  },
+  "toolErrors": 2,
+  "stdlibReads": 3,
+  "builds": 4,
+  "compileErrors": 1,
+  "checkRuns": 4,
+  "checkFails": 2,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

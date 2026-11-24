@@ -1,0 +1,45 @@
+{
+  "id": "kotlin-lru-r2",
+  "lang": "kotlin",
+  "task": "lru",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 39520,
+  "files": [
+    "build.sh",
+    "src/Main.kt"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.1565958,
+  "durationMs": 38988,
+  "apiMs": 30232,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe cache simulator is written in Kotlin at `src/Main.kt`. `build.sh` compiles it to `build/app.jar` and creates `./app`, a small script that runs it with `java`. All 5 cases in `cases.json` pass with `node check.mjs`. I also tried a 1,000,000-command input with capacity 1,000,000, which finished in about 0.6 seconds.\n\nThe cache uses the standard library's `LinkedHashMap`, which keeps keys in recently-used order. That makes every command O(1). Blank lines and malformed commands produce no ",
+  "usage": {
+    "input": 8,
+    "output": 2822,
+    "thinking": 492,
+    "cacheRead": 37259,
+    "cacheWrite": 11584
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

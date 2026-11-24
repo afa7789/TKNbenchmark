@@ -1,0 +1,47 @@
+{
+  "id": "rust-wordfreq-r2",
+  "lang": "rust",
+  "task": "wordfreq",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 33807,
+  "files": [
+    "Cargo.lock",
+    "Cargo.toml",
+    "build.sh",
+    "src/main.rs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.14087059999999998,
+  "durationMs": 32717,
+  "apiMs": 22738,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 8,
+    "output": 2159,
+    "thinking": 181,
+    "cacheRead": 37013,
+    "cacheWrite": 11282
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 1,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  },
+  "stdlibReads": 0
+}

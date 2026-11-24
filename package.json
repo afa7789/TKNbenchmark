@@ -1,0 +1,27 @@
+{
+  "name": "tknbenchmark",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint --max-warnings 0 .",
+    "selftest": "node bench/selftest.mjs",
+    "bench": "node bench/run.mjs",
+    "verify": "node bench/verify.mjs",
+    "count": "node bench/count.mjs",
+    "aggregate": "node bench/aggregate.mjs",
+    "check": "npm run lint && npm run selftest && node bench/aggregate.mjs --check",
+    "serve": "python3 -m http.server -d public 8080",
+    "perf": "node bench/perf.mjs",
+    "selftest:front": "node bench/selftest-front.mjs",
+    "verify:front": "node bench/verify-front.mjs",
+    "repair": "node bench/repair.mjs",
+    "paper": "node paper/build.mjs && tectonic -o public paper/paper.tex && node paper/arxiv.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.13.0",
+    "globals": "17.13.0",
+    "js-tiktoken": "^1.0.21",
+    "playwright": "^1.65.1"
+  }
+}

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec python3 -OO -I -S -c 'import sys; sys.path.insert(0, sys.argv[1]); import calc; sys.exit(calc.main())' "$dir"

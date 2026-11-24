@@ -1,0 +1,53 @@
+{
+  "id": "swift-kvhttp-r2",
+  "lang": "swift",
+  "task": "kvhttp",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 368945,
+  "files": [
+    ".gitignore",
+    "Package.swift",
+    "Sources/kvhttp/HTTPConnection.swift",
+    "Sources/kvhttp/HTTPMessage.swift",
+    "Sources/kvhttp/KeyValueStore.swift",
+    "Sources/kvhttp/Router.swift",
+    "Sources/kvhttp/Server.swift",
+    "Sources/kvhttp/Socket.swift",
+    "Sources/kvhttp/main.swift",
+    "build.sh"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.9217948000000001,
+  "durationMs": 368289,
+  "apiMs": 225632,
+  "turns": 23,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 46,
+    "output": 23257,
+    "thinking": 5052,
+    "cacheRead": 679114,
+    "cacheWrite": 40081
+  },
+  "tools": {
+    "Bash": 22
+  },
+  "toolErrors": 2,
+  "stdlibReads": 3,
+  "builds": 5,
+  "compileErrors": 1,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

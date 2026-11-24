@@ -1,0 +1,47 @@
+{
+  "id": "java-calc-r3",
+  "lang": "java",
+  "task": "calc",
+  "rep": 3,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 66441,
+  "files": [
+    "build.sh",
+    "src/main/java/calc/CalcException.java",
+    "src/main/java/calc/Main.java",
+    "src/main/java/calc/Parser.java"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2450588,
+  "durationMs": 65634,
+  "apiMs": 60179,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 12,
+    "output": 5488,
+    "thinking": 949,
+    "cacheRead": 73174,
+    "cacheWrite": 15077
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+runs/**/transcript.jsonl
+.cache/
+paper/*.pdf
+paper/arxiv/
+paper/arxiv.tar.gz

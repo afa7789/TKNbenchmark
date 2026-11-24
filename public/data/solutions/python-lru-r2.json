@@ -1,0 +1,13 @@
+{
+  "id": "python-lru-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Byte-compile the module and install the ./app launcher.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\npython3 -O -m py_compile lru.py\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec python3 -O \"$(dirname \"$0\")/lru.py\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "lru.py",
+      "text": "\"\"\"Simulate an LRU cache driven by commands read from standard input.\"\"\"\n\nimport sys\nfrom collections import OrderedDict\n\nNULL = b\"NULL\"\n\n\ndef run(data: bytes) -> bytes:\n    lines = data.split(b\"\\n\")\n    try:\n        capacity = int(lines[0])\n    except (IndexError, ValueError):\n        return b\"\"\n\n    cache: OrderedDict[bytes, bytes] = OrderedDict()\n    move_to_end = cache.move_to_end\n    popitem = cache.popitem\n    get = cache.get\n    pop = cache.pop\n    out: list[bytes] = []\n    emit = out.append\n\n    for line in lines[1:]:\n        parts = line.split()\n        if not parts:\n            continue\n        cmd = parts[0]\n        if cmd == b\"GET\":\n            key = parts[1]\n            value = get(key)\n            if value is None:\n                emit(NULL)\n            else:\n                move_to_end(key)\n                emit(value)\n        elif cmd == b\"SET\":\n            key = parts[1]\n            if key in cache:\n                move_to_end(key)\n            cache[key] = parts[2]\n            if len(cache) > capacity:\n                popitem(last=False)\n        elif cmd == b\"DEL\":\n            emit(b\"0\" if pop(parts[1], None) is None else b\"1\")\n        elif cmd == b\"SIZE\":\n            emit(str(len(cache)).encode())\n\n    if not out:\n        return b\"\"\n    out.append(b\"\")\n    return b\"\\n\".join(out)\n\n\ndef main() -> int:\n    sys.stdout.buffer.write(run(sys.stdin.buffer.read()))\n    sys.stdout.buffer.flush()\n    return 0\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n"
+    }
+  ]
+}

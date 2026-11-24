@@ -1,0 +1,17 @@
+{
+  "id": "go-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nCGO_ENABLED=0 go build -trimpath -ldflags=\"-s -w\" -o app .\n"
+    },
+    {
+      "path": "go.mod",
+      "text": "module wordfreq\n\ngo 1.26\n"
+    },
+    {
+      "path": "main.go",
+      "text": "// Command wordfreq reads standard input and prints the 10 most frequent\n// words, where a word is a maximal run of ASCII letters, case-folded to\n// lowercase.\npackage main\n\nimport (\n\t\"bufio\"\n\t\"cmp\"\n\t\"fmt\"\n\t\"io\"\n\t\"os\"\n\t\"slices\"\n\t\"strconv\"\n)\n\nconst topN = 10\n\ntype entry struct {\n\tword  string\n\tcount int\n}\n\n// counter accumulates case-folded word frequencies from a byte stream.\ntype counter struct {\n\tcounts map[string]*int\n\tword   []byte // word in progress, possibly spanning read boundaries\n}\n\nfunc newCounter() *counter {\n\treturn &counter{counts: make(map[string]*int), word: make([]byte, 0, 64)}\n}\n\n// Write implements io.Writer so a counter can be fed with io.Copy.\nfunc (c *counter) Write(p []byte) (int, error) {\n\tfor _, b := range p {\n\t\tswitch {\n\t\tcase 'a' <= b && b <= 'z':\n\t\t\tc.word = append(c.word, b)\n\t\tcase 'A' <= b && b <= 'Z':\n\t\t\tc.word = append(c.word, b+('a'-'A'))\n\t\tdefault:\n\t\t\tc.flush()\n\t\t}\n\t}\n\treturn len(p), nil\n}\n\n// flush records the word in progress, if any.\nfunc (c *counter) flush() {\n\tif len(c.word) == 0 {\n\t\treturn\n\t}\n\t// The string(c.word) conversion in a map index does not allocate.\n\tif n, ok := c.counts[string(c.word)]; ok {\n\t\t*n++\n\t} else {\n\t\tone := 1\n\t\tc.counts[string(c.word)] = &one\n\t}\n\tc.word = c.word[:0]\n}\n\n// top returns up to n entries ordered by count descending, then word ascending.\nfunc (c *counter) top(n int) []entry {\n\tc.flush()\n\tentries := make([]entry, 0, len(c.counts))\n\tfor w, cnt := range c.counts {\n\t\tentries = append(entries, entry{word: w, count: *cnt})\n\t}\n\tslices.SortFunc(entries, func(a, b entry) int {\n\t\tif r := cmp.Compare(b.count, a.count); r != 0 {\n\t\t\treturn r\n\t\t}\n\t\treturn cmp.Compare(a.word, b.word)\n\t})\n\treturn entries[:min(n, len(entries))]\n}\n\nfunc run(r io.Reader, w io.Writer) error {\n\tc := newCounter()\n\tif _, err := io.CopyBuffer(c, r, make([]byte, 256*1024)); err != nil {\n\t\treturn fmt.Errorf(\"reading input: %w\", err)\n\t}\n\tbw := bufio.NewWriter(w)\n\tvar line []byte\n\tfor _, e := range c.top(topN) {\n\t\tline = strconv.AppendInt(line[:0], int64(e.count), 10)\n\t\tline = append(line, ' ')\n\t\tline = append(line, e.word...)\n\t\tline = append(line, '\\n')\n\t\tif _, err := bw.Write(line); err != nil {\n\t\t\treturn fmt.Errorf(\"writing output: %w\", err)\n\t\t}\n\t}\n\tif err := bw.Flush(); err != nil {\n\t\treturn fmt.Errorf(\"writing output: %w\", err)\n\t}\n\treturn nil\n}\n\nfunc main() {\n\tif err := run(os.Stdin, os.Stdout); err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t}\n}\n"
+    }
+  ]
+}

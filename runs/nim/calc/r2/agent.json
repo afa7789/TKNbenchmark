@@ -1,0 +1,54 @@
+{
+  "id": "nim-calc-r2",
+  "lang": "nim",
+  "task": "calc",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 40498,
+  "files": [
+    ".nimcache/@mcalc.nim.c",
+    ".nimcache/@pposix.nim.c",
+    ".nimcache/@pstd@sassertions.nim.c",
+    ".nimcache/@pstd@sprivate@sdigitsutils.nim.c",
+    ".nimcache/@pstd@ssyncio.nim.c",
+    ".nimcache/@psystem.nim.c",
+    ".nimcache/@psystem@sdollars.nim.c",
+    ".nimcache/@psystem@sexceptions.nim.c",
+    ".nimcache/app.json",
+    "build.sh",
+    "src/calc.nim"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.17740620000000001,
+  "durationMs": 39689,
+  "apiMs": 37093,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 8,
+    "output": 3454,
+    "thinking": 1181,
+    "cacheRead": 38271,
+    "cacheWrite": 12580
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  },
+  "stdlibReads": 0
+}

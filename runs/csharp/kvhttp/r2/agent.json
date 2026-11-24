@@ -1,0 +1,50 @@
+{
+  "id": "csharp-kvhttp-r2",
+  "lang": "csharp",
+  "task": "kvhttp",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 148274,
+  "files": [
+    ".gitignore",
+    "build.sh",
+    "src/KvHttp/KeyValueStore.cs",
+    "src/KvHttp/KvHandler.cs",
+    "src/KvHttp/KvHttp.csproj",
+    "src/KvHttp/KvJsonContext.cs",
+    "src/KvHttp/Program.cs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.4139474000000001,
+  "durationMs": 147734,
+  "apiMs": 102241,
+  "turns": 13,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe server is written in C# on ASP.NET Core (`src/KvHttp/`), and `build.sh` puts an optimized release binary at `./app`. All 4 example cases in `node check.mjs` pass after a clean rebuild. I also ran some edge cases by hand:\n- Bad keys (empty, 65 characters, containing `/`, `%20` or `..`) return 400, and a 64-character key works.\n- Unknown paths return 404 and wrong methods return 405.\n- A 1 MiB random value comes back byte-for-byte; one byte over that is rejected with 413.\n- 300 parallel ",
+  "usage": {
+    "input": 26,
+    "output": 9709,
+    "thinking": 1722,
+    "cacheRead": 233237,
+    "cacheWrite": 21627
+  },
+  "tools": {
+    "Bash": 12
+  },
+  "toolErrors": 2,
+  "stdlibReads": 0,
+  "builds": 4,
+  "compileErrors": 1,
+  "checkRuns": 4,
+  "checkFails": 2,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

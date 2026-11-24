@@ -1,0 +1,13 @@
+{
+  "id": "kotlin-lru-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nrm -rf build\nmkdir -p build\nkotlinc src/Main.kt -include-runtime -d build/app.jar\ncat > app <<'SH'\n#!/usr/bin/env bash\nDIR=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"\nexec java -XX:+UseSerialGC -Xms256m -XX:+TieredCompilation -jar \"$DIR/build/app.jar\" \"$@\"\nSH\nchmod +x app\n"
+    },
+    {
+      "path": "src/Main.kt",
+      "text": "import java.io.BufferedWriter\nimport java.io.OutputStreamWriter\n\n/**\n * Fixed-capacity LRU cache backed by an access-ordered [LinkedHashMap]:\n * every lookup and insertion moves the entry to the tail, so the head is always\n * the least recently used entry. All operations run in O(1) expected time.\n */\nclass LruCache<K, V>(private val capacity: Int) {\n    init {\n        require(capacity >= 1) { \"capacity must be positive, was $capacity\" }\n    }\n\n    private val entries = object : LinkedHashMap<K, V>(16, 0.75f, true) {\n        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<K, V>?): Boolean = size > capacity\n    }\n\n    val size: Int get() = entries.size\n\n    operator fun get(key: K): V? = entries[key]\n\n    operator fun set(key: K, value: V) {\n        entries[key] = value\n    }\n\n    /** Removes [key]; returns true if it was present. */\n    fun remove(key: K): Boolean = entries.remove(key) != null\n}\n\nprivate fun runCommand(line: String, cache: LruCache<String, String>, out: Appendable) {\n    val parts = line.split(' ')\n    when (parts[0]) {\n        \"SET\" -> if (parts.size >= 3) cache[parts[1]] = parts[2]\n        \"GET\" -> if (parts.size >= 2) out.append(cache[parts[1]] ?: \"NULL\").append('\\n')\n        \"DEL\" -> if (parts.size >= 2) out.append(if (cache.remove(parts[1])) \"1\" else \"0\").append('\\n')\n        \"SIZE\" -> out.append(cache.size.toString()).append('\\n')\n    }\n}\n\nfun main() {\n    val lines = System.`in`.bufferedReader(Charsets.ISO_8859_1).lineSequence()\n        .map { it.trimEnd('\\r') }\n        .iterator()\n    if (!lines.hasNext()) return\n    val capacity = lines.next().trim().toInt()\n    val cache = LruCache<String, String>(capacity)\n\n    BufferedWriter(OutputStreamWriter(System.out, Charsets.ISO_8859_1), 1 shl 16).use { out ->\n        for (line in lines) {\n            if (line.isNotEmpty()) runCommand(line, cache, out)\n        }\n    }\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "python-lru-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build: byte-compile the package (optimized) and make the launcher executable.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\npython3 -O -m compileall -q lru\nchmod +x app\n"
+    },
+    {
+      "path": "lru/__init__.py",
+      "text": "\"\"\"LRU cache simulator.\"\"\"\n"
+    },
+    {
+      "path": "lru/__main__.py",
+      "text": "\"\"\"Simulate an LRU cache driven by commands on standard input.\n\nInput: the capacity on the first line, then one command per line:\n``SET <key> <value>``, ``GET <key>``, ``DEL <key>`` or ``SIZE``.\n\"\"\"\n\nfrom __future__ import annotations\n\nimport sys\nfrom collections import OrderedDict\nfrom collections.abc import Iterable, Iterator\n\nNULL = b\"NULL\"\n\n\ndef run(capacity: int, lines: Iterable[bytes]) -> Iterator[bytes]:\n    \"\"\"Execute cache commands, yielding one output line per producing command.\"\"\"\n    cache: OrderedDict[bytes, bytes] = OrderedDict()\n    move_to_end = cache.move_to_end\n    popitem = cache.popitem\n    get = cache.get\n    pop = cache.pop\n\n    for line in lines:\n        parts = line.split()\n        if not parts:\n            continue\n        cmd = parts[0]\n        if cmd == b\"SET\":\n            key = parts[1]\n            if key in cache:\n                move_to_end(key)\n                cache[key] = parts[2]\n            else:\n                cache[key] = parts[2]\n                if len(cache) > capacity:\n                    popitem(last=False)\n        elif cmd == b\"GET\":\n            key = parts[1]\n            value = get(key)\n            if value is None:\n                yield NULL\n            else:\n                move_to_end(key)\n                yield value\n        elif cmd == b\"DEL\":\n            yield b\"1\" if pop(parts[1], None) is not None else b\"0\"\n        elif cmd == b\"SIZE\":\n            yield str(len(cache)).encode()\n\n\ndef main() -> int:\n    data = sys.stdin.buffer.read()\n    lines = data.split(b\"\\n\")\n    if not lines or not lines[0].strip():\n        return 0\n    capacity = int(lines[0])\n    out = list(run(capacity, lines[1:]))\n    if out:\n        sys.stdout.buffer.write(b\"\\n\".join(out) + b\"\\n\")\n    return 0\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n"
+    }
+  ]
+}

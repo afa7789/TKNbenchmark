@@ -1,0 +1,11 @@
+{
+  "name": "kvhttp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=23.6" },
+  "scripts": {
+    "start": "node src/main.ts",
+    "typecheck": "tsc -p ."
+  }
+}

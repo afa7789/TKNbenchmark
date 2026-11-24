@@ -1,0 +1,13 @@
+{
+  "id": "python-wordfreq-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build the wordfreq launcher at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\npython3 -m py_compile wordfreq.py\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec python3 -O \"$(dirname \"$0\")/wordfreq.py\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "wordfreq.py",
+      "text": "\"\"\"Print the 10 most frequent ASCII words read from standard input.\"\"\"\n\nfrom __future__ import annotations\n\nimport heapq\nimport string\nimport sys\nfrom collections import Counter\nfrom typing import BinaryIO, Iterator\n\nTOP_N = 10\nCHUNK_SIZE = 1 << 20\n\n# Map ASCII letters to lowercase and every other byte to a space separator.\n_LETTERS = (string.ascii_lowercase + string.ascii_uppercase).encode()\n_FOLD_TABLE = bytes(\n    ord(chr(b).lower()) if b in _LETTERS else ord(\" \") for b in range(256)\n)\n\n\ndef iter_words(stream: BinaryIO, chunk_size: int = CHUNK_SIZE) -> Iterator[list[bytes]]:\n    \"\"\"Yield batches of lowercase words, never splitting a word across chunks.\"\"\"\n    carry = b\"\"\n    while chunk := stream.read(chunk_size):\n        text = carry + chunk.translate(_FOLD_TABLE)\n        cut = text.rfind(b\" \") + 1\n        carry = text[cut:]\n        yield text[:cut].split()\n    if carry:\n        yield [carry]\n\n\ndef top_words(counts: Counter[bytes], n: int = TOP_N) -> list[tuple[bytes, int]]:\n    \"\"\"Return the n most frequent words: count descending, then word ascending.\"\"\"\n    return heapq.nsmallest(n, counts.items(), key=lambda item: (-item[1], item[0]))\n\n\ndef main() -> int:\n    counts: Counter[bytes] = Counter()\n    for words in iter_words(sys.stdin.buffer):\n        counts.update(words)\n    out = b\"\".join(b\"%d %s\\n\" % (count, word) for word, count in top_words(counts))\n    sys.stdout.buffer.write(out)\n    sys.stdout.buffer.flush()\n    return 0\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n"
+    }
+  ]
+}

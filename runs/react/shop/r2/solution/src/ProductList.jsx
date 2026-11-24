@@ -1,0 +1,51 @@
+import { useMemo, useState } from "react";
+import { useCart } from "./CartContext.jsx";
+import SearchBox from "./SearchBox.jsx";
+import ProductItem from "./ProductItem.jsx";
+
+const ALL_CATEGORIES = "all";
+
+export default function ProductList({ products }) {
+  const { add } = useCart();
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState(ALL_CATEGORIES);
+
+  const categories = useMemo(
+    () => [...new Set(products.map((product) => product.category))],
+    [products]
+  );
+
+  const normalizedQuery = query.trim().toLowerCase();
+  const visibleProducts = products.filter(
+    (product) =>
+      (category === ALL_CATEGORIES || product.category === category) &&
+      product.name.toLowerCase().includes(normalizedQuery)
+  );
+
+  return (
+    <section>
+      <SearchBox onSearch={setQuery} />
+      <select
+        aria-label="Category"
+        value={category}
+        onChange={(event) => setCategory(event.target.value)}
+      >
+        <option value={ALL_CATEGORIES}>All categories</option>
+        {categories.map((name) => (
+          <option key={name} value={name}>
+            {name}
+          </option>
+        ))}
+      </select>
+      {visibleProducts.length === 0 ? (
+        <p>No products</p>
+      ) : (
+        <ul>
+          {visibleProducts.map((product) => (
+            <ProductItem key={product.id} product={product} onAdd={add} />
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}

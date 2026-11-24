@@ -1,0 +1,46 @@
+{
+  "id": "java-lru-r2",
+  "lang": "java",
+  "task": "lru",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 33195,
+  "files": [
+    "build.sh",
+    "src/main/java/lru/LruCache.java",
+    "src/main/java/lru/Main.java"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.160823,
+  "durationMs": 32561,
+  "apiMs": 29311,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 8,
+    "output": 2917,
+    "thinking": 473,
+    "cacheRead": 37535,
+    "cacheWrite": 11868
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

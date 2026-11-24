@@ -1,0 +1,13 @@
+{
+  "id": "python-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build: byte-compile the program and install the ./app launcher.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\npython3 -m py_compile wordfreq.py\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec python3 -O \"$(dirname \"$0\")/wordfreq.py\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "wordfreq.py",
+      "text": "\"\"\"Print the 10 most frequent ASCII words read from standard input.\"\"\"\n\nimport heapq\nimport string\nimport sys\nfrom collections import Counter\n\nTOP_N = 10\n\n# Map uppercase ASCII letters to lowercase and every other byte to a space,\n# so that a plain bytes.split() yields the lowercase words.\n_LETTERS = frozenset(string.ascii_letters.encode())\n_TABLE = bytes(\n    (b | 0x20) if b in _LETTERS else 0x20  # 0x20 is both the case bit and b' '\n    for b in range(256)\n)\n\n\ndef top_words(data: bytes, n: int = TOP_N) -> list[tuple[bytes, int]]:\n    \"\"\"Return up to ``n`` (word, count) pairs, by count desc then word asc.\"\"\"\n    counts = Counter(data.translate(_TABLE).split())\n    return heapq.nsmallest(n, counts.items(), key=lambda item: (-item[1], item[0]))\n\n\ndef main() -> int:\n    data = sys.stdin.buffer.read()\n    out = b\"\".join(b\"%d %s\\n\" % (count, word) for word, count in top_words(data))\n    sys.stdout.buffer.write(out)\n    sys.stdout.buffer.flush()\n    return 0\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n"
+    }
+  ]
+}

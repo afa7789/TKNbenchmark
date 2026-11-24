@@ -1,0 +1,46 @@
+{
+  "id": "react-ui-r2",
+  "lang": "react",
+  "task": "ui",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 33728,
+  "files": [
+    "Counter.jsx",
+    "FetchUsers.jsx",
+    "FilterTable.jsx",
+    "Hello.jsx",
+    "KvBrowser.jsx",
+    "Todo.jsx"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.14163800000000001,
+  "durationMs": 32940,
+  "apiMs": 32118,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 8,
+    "output": 3783,
+    "thinking": 147,
+    "cacheRead": 27370,
+    "cacheWrite": 7559
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "builds": 0,
+  "compileErrors": 0,
+  "checkRuns": 0,
+  "checkFails": 0,
+  "firstCheckPass": false,
+  "lastCheck": null,
+  "stdlibReads": 0
+}

@@ -1,0 +1,50 @@
+{
+  "id": "asm-kvhttp-r1",
+  "lang": "asm",
+  "task": "kvhttp",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 368803,
+  "files": [
+    "build.sh",
+    "src/conn.s",
+    "src/http.s",
+    "src/macros.inc",
+    "src/main.s",
+    "src/store.s"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 1.3224335999999999,
+  "durationMs": 367730,
+  "apiMs": 364593,
+  "turns": 13,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 20,
+    "output": 41456,
+    "thinking": 22793,
+    "cacheRead": 364248,
+    "cacheWrite": 52548
+  },
+  "tools": {
+    "Bash": 6,
+    "Write": 6
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

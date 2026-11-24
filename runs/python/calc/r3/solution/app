@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec python3 -OO "$(dirname "$0")/calc.py" "$@"

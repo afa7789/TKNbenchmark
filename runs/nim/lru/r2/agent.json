@@ -1,0 +1,59 @@
+{
+  "id": "nim-lru-r2",
+  "lang": "nim",
+  "task": "lru",
+  "rep": 2,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 36253,
+  "files": [
+    ".nimcache/@mapp.nim.c",
+    ".nimcache/@phashes.nim.c",
+    ".nimcache/@pmath.nim.c",
+    ".nimcache/@pparseutils.nim.c",
+    ".nimcache/@pposix.nim.c",
+    ".nimcache/@pstd@sassertions.nim.c",
+    ".nimcache/@pstd@sprivate@sdigitsutils.nim.c",
+    ".nimcache/@pstd@ssyncio.nim.c",
+    ".nimcache/@pstrutils.nim.c",
+    ".nimcache/@psystem.nim.c",
+    ".nimcache/@psystem@sdollars.nim.c",
+    ".nimcache/@psystem@sexceptions.nim.c",
+    ".nimcache/@ptables.nim.c",
+    ".nimcache/app.json",
+    "build.sh",
+    "src/app.nim"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.1576978,
+  "durationMs": 35549,
+  "apiMs": 28262,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 8,
+    "output": 2788,
+    "thinking": 333,
+    "cacheRead": 37049,
+    "cacheWrite": 11812
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  },
+  "stdlibReads": 0
+}

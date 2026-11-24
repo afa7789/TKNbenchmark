@@ -1,0 +1,47 @@
+{
+  "id": "js-lru-r1",
+  "lang": "js",
+  "task": "lru",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 37837,
+  "files": [
+    "app",
+    "build.sh",
+    "src/lru.js",
+    "src/main.js"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.15476120000000002,
+  "durationMs": 37110,
+  "apiMs": 34337,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 8,
+    "output": 2681,
+    "thinking": 647,
+    "cacheRead": 37186,
+    "cacheWrite": 11709
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

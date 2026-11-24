@@ -1,0 +1,51 @@
+{
+  "id": "csharp-kvhttp-r1",
+  "lang": "csharp",
+  "task": "kvhttp",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 372846,
+  "files": [
+    ".gitignore",
+    "build.sh",
+    "src/KvHttp/KeyValidator.cs",
+    "src/KvHttp/KeyValueStore.cs",
+    "src/KvHttp/KvHandler.cs",
+    "src/KvHttp/KvHttp.csproj",
+    "src/KvHttp/KvJsonContext.cs",
+    "src/KvHttp/Program.cs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.47603399999999996,
+  "durationMs": 304345,
+  "apiMs": 107382,
+  "turns": 13,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe server is built with ASP.NET Core/Kestrel. A clean build passes all 4 checker cases. My own edge-case tests all came back as expected:\n- **Bad keys get 400:** empty, 65 characters, `..`, `%2F`, `a/b`, `//a`, a space.\n- **Wrong methods get 405:** for example `POST /kv` and `HEAD /health`.\n- **Unknown paths get 404:** for example `/health/`, `/kvx`, `/`.\n- **Values:** a 1 MiB value comes back byte-for-byte identical, and an empty value works.\n- **Concurrency:** 200 simultaneous PUTs to 5",
+  "usage": {
+    "input": 26,
+    "output": 10730,
+    "thinking": 1931,
+    "cacheRead": 252530,
+    "cacheWrite": 26353
+  },
+  "tools": {
+    "Bash": 12
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 5,
+  "compileErrors": 0,
+  "checkRuns": 3,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

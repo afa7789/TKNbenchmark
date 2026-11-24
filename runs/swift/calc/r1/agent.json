@@ -1,0 +1,46 @@
+{
+  "id": "swift-calc-r1",
+  "lang": "swift",
+  "task": "calc",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 110260,
+  "files": [
+    "Sources/calc/Evaluator.swift",
+    "Sources/calc/main.swift",
+    "build.sh"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2990096,
+  "durationMs": 109401,
+  "apiMs": 63304,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 16,
+    "output": 6363,
+    "thinking": 1493,
+    "cacheRead": 117668,
+    "cacheWrite": 18519
+  },
+  "tools": {
+    "Bash": 7
+  },
+  "toolErrors": 2,
+  "stdlibReads": 1,
+  "builds": 3,
+  "compileErrors": 2,
+  "checkRuns": 3,
+  "checkFails": 2,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

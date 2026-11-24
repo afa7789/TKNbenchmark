@@ -1,0 +1,20 @@
+{
+  "c": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+  "cpp": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+  "rust": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "go": "go version go1.26.4 darwin/arm64",
+  "nim": "Nim Compiler Version 2.4.2 [MacOSX: arm64]",
+  "zig": "0.16.0",
+  "swift": "swift-driver version: 1.120.5 Apple Swift version 6.1.2 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)",
+  "java": "openjdk version \"27.0.1.1\" 2026-11-17",
+  "kotlin": "info: kotlinc-jvm 2.4.21 (JRE 27.0.1.1)",
+  "csharp": ".NET SDK 11.0.100",
+  "odin": "Odin dev-2026-11:9a6991685",
+  "ocaml": "The OCaml toplevel, version 5.5.2",
+  "haskell": "The Glorious Glasgow Haskell Compilation System, version 9.14.1",
+  "js": "Node.js v26.13.1",
+  "ts": "Node.js v26.13.1, which runs .ts files natively",
+  "python": "Python 3.15.2",
+  "asm": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+  "claude": "2.1.331 (Claude Code)"
+}

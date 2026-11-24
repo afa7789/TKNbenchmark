@@ -1,0 +1,21 @@
+{
+  "id": "csharp-wordfreq-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds an optimized native release binary and places it at ./app.\nset -euo pipefail\n\ncd \"$(dirname \"$0\")\"\n\nout_dir=\"$(mktemp -d)\"\ntrap 'rm -rf \"$out_dir\"' EXIT\n\ndotnet publish src/WordFreq.csproj -c Release -o \"$out_dir\" --nologo -v quiet\ncp \"$out_dir/app\" ./app\nchmod +x ./app\n"
+    },
+    {
+      "path": "src/Program.cs",
+      "text": "using System.Text;\n\nnamespace WordFreq;\n\n/// <summary>\n/// Reads standard input and prints the most frequent ASCII-letter words.\n/// </summary>\npublic static class Program\n{\n    private const int TopCount = 10;\n\n    public static int Main()\n    {\n        using Stream input = Console.OpenStandardInput();\n        Dictionary<string, int> counts = WordCounter.Count(input);\n\n        using var output = new StreamWriter(Console.OpenStandardOutput(), new UTF8Encoding(false));\n        output.NewLine = \"\\n\";\n\n        var top = counts\n            .OrderByDescending(pair => pair.Value)\n            .ThenBy(pair => pair.Key, StringComparer.Ordinal)\n            .Take(TopCount);\n\n        foreach (var (word, count) in top)\n        {\n            output.Write(count);\n            output.Write(' ');\n            output.WriteLine(word);\n        }\n\n        return 0;\n    }\n}\n"
+    },
+    {
+      "path": "src/WordCounter.cs",
+      "text": "namespace WordFreq;\n\n/// <summary>\n/// Counts case-folded words, where a word is a maximal run of ASCII letters.\n/// Every other byte acts as a separator, so arbitrary (non-UTF-8) input is fine.\n/// </summary>\npublic static class WordCounter\n{\n    private const int ReadBufferSize = 1 << 16;\n\n    public static Dictionary<string, int> Count(Stream input)\n    {\n        ArgumentNullException.ThrowIfNull(input);\n\n        var counts = new Dictionary<string, int>(StringComparer.Ordinal);\n        var lookup = counts.GetAlternateLookup<ReadOnlySpan<char>>();\n\n        byte[] buffer = new byte[ReadBufferSize];\n        char[] word = new char[64];\n        int wordLength = 0;\n\n        int read;\n        while ((read = input.Read(buffer, 0, buffer.Length)) > 0)\n        {\n            foreach (byte b in buffer.AsSpan(0, read))\n            {\n                // Setting bit 0x20 maps 'A'-'Z' onto 'a'-'z' and leaves 'a'-'z' unchanged.\n                int lower = b | 0x20;\n                if ((uint)(lower - 'a') <= 'z' - 'a')\n                {\n                    if (wordLength == word.Length)\n                    {\n                        Array.Resize(ref word, word.Length * 2);\n                    }\n                    word[wordLength++] = (char)lower;\n                }\n                else if (wordLength > 0)\n                {\n                    Increment(lookup, word.AsSpan(0, wordLength));\n                    wordLength = 0;\n                }\n            }\n        }\n\n        if (wordLength > 0)\n        {\n            Increment(lookup, word.AsSpan(0, wordLength));\n        }\n\n        return counts;\n    }\n\n    private static void Increment(\n        Dictionary<string, int>.AlternateLookup<ReadOnlySpan<char>> lookup,\n        ReadOnlySpan<char> word)\n    {\n        lookup.TryGetValue(word, out int current);\n        lookup[word] = current + 1;\n    }\n}\n"
+    },
+    {
+      "path": "src/WordFreq.csproj",
+      "text": "<Project Sdk=\"Microsoft.NET.Sdk\">\n\n  <PropertyGroup>\n    <OutputType>Exe</OutputType>\n    <TargetFramework>net11.0</TargetFramework>\n    <Nullable>enable</Nullable>\n    <ImplicitUsings>enable</ImplicitUsings>\n    <AssemblyName>app</AssemblyName>\n    <RootNamespace>WordFreq</RootNamespace>\n    <InvariantGlobalization>true</InvariantGlobalization>\n    <RuntimeIdentifier>osx-arm64</RuntimeIdentifier>\n    <SelfContained>true</SelfContained>\n    <PublishReadyToRun>true</PublishReadyToRun>\n    <PublishSingleFile>true</PublishSingleFile>\n    <PublishTrimmed>true</PublishTrimmed>\n    <TieredPGO>true</TieredPGO>\n    <DebugType>none</DebugType>\n    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>\n  </PropertyGroup>\n\n</Project>\n"
+    }
+  ]
+}

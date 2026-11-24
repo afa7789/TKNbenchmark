@@ -1,0 +1,46 @@
+{
+  "id": "swift-lru-r3",
+  "lang": "swift",
+  "task": "lru",
+  "rep": 3,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 84497,
+  "files": [
+    "Sources/LRUCache.swift",
+    "Sources/main.swift",
+    "build.sh"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.22688180000000002,
+  "durationMs": 83935,
+  "apiMs": 51571,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 12,
+    "output": 4304,
+    "thinking": 806,
+    "cacheRead": 77249,
+    "cacheWrite": 15663
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 1,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

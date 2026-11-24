@@ -1,0 +1,24 @@
+{
+  "steps": [
+    {
+      "step": "cargo build",
+      "ok": true,
+      "secs": 10.852645790999999,
+      "targetBytes": 172158976
+    },
+    {
+      "step": "cargo build --release",
+      "ok": true,
+      "secs": 10.756894624999997,
+      "targetBytes": 275640320
+    },
+    {
+      "step": "cargo test --no-run",
+      "ok": true,
+      "secs": 0.13953925000000164,
+      "targetBytes": 278032384
+    }
+  ],
+  "targetBytes": 278032384,
+  "registryBytes": 37425152
+}

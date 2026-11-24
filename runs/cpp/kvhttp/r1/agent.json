@@ -1,0 +1,50 @@
+{
+  "id": "cpp-kvhttp-r1",
+  "lang": "cpp",
+  "task": "kvhttp",
+  "rep": 1,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 258380,
+  "files": [
+    "build.sh",
+    "src/http.cpp",
+    "src/http.hpp",
+    "src/kv_store.hpp",
+    "src/main.cpp",
+    "src/router.cpp",
+    "src/router.hpp"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.4430796,
+  "durationMs": 257597,
+  "apiMs": 103184,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 16,
+    "output": 11562,
+    "thinking": 1997,
+    "cacheRead": 137038,
+    "cacheWrite": 23046
+  },
+  "tools": {
+    "Bash": 7
+  },
+  "toolErrors": 0,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  },
+  "stdlibReads": 0
+}

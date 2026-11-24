@@ -1,0 +1,290 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{array,booktabs,microtype,xcolor,enumitem,caption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\captionsetup{font=small,labelfont=bf}
+\setlist{itemsep=2pt,topsep=4pt}
+\input{data}
+
+\title{\textbf{How Much Does a Programming Language Cost a Coding Agent?}\\[4pt]
+\large Tokens, Time and Correctness with Claude Opus 5.5\\across \NLangs{} Languages and Three Front-End Frameworks}
+\author{Arthur De Freitas Abeilice\\
+\small Universidade Federal de Minas Gerais (UFMG)\\
+\small\texttt{abeilice@ufmg.br} \quad \url{https://github.com/afa7789/TKNbenchmark}}
+\date{November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+We measure how much a coding agent spends to solve the same tasks in \NLangs{} programming languages
+and in React, Vue and Svelte. Every case (language $\times$ task $\times$ repetition) was run by its own
+isolated Claude Opus 5.5 agent with an identical prompt, and checked live by hidden tests, a clean build
+and, for front ends, a real browser. Across \NRuns{} agent runs, \NFailedRoundThree{} failed verification and
+\NFixed{} of them were fixed by a repair agent that received the failure report. The language barely
+changed correctness, but it changed the cost: from the cheapest (\CheapestLang, US\$\,\CostCheapest{} for
+four tasks) to the most expensive (Assembly) the gap was \RatioAsm$\times$. Python, TypeScript and
+JavaScript were the three cheapest. Final code size tracks cost closely (Spearman $\rho =
+\CorrCodeCostSpearman$) but not completely: Zig cost \RatioZig$\times$ the cheapest, more than C, whose
+code is larger, because the agent had to read the standard library's source to learn a recently changed
+API. TypeScript's code was \TsJsCodeClk$\times$ JavaScript's in \texttt{cl100k} tokens, close to the
+1.31$\times$ reported for snippets, yet the agent spent the same on both. Rust's build artifacts live per
+project, so parallel agent worktrees multiply them. For front ends we reproduce the published ordering
+(Svelte $<$ Vue $<$ React) with a different tokenizer.
+\end{abstract}
+
+\section{Motivation and hypotheses}
+
+Pereira et al.~\cite{pereira2017} asked how energy, time and memory relate when the same programs
+are written in 27 languages. Coding agents add a fourth resource to that list: the tokens spent to
+produce, test and fix the program. The series \emph{The Tokenomics of Web
+Development}~\cite{tokenomics1,tokenomics2} measured, with \texttt{tiktoken}, the token size of
+hand-written idiomatic snippets: Angular costs 38\% more than Svelte,
+TypeScript 31\% more than JavaScript. An agent, however, does more than emit code: it reads the
+specification, compiles, fails, reads error messages, looks things up and tries again. We wanted to know
+whether the choice of language changes that whole bill. A conversation between two developers, one of
+them running Rust + React in a server for chat bots, supplied the hypotheses:
+
+\begin{description}[leftmargin=1.2em]
+  \item[H1 (Zig)] Zig spends fewer tokens than Rust, compiles faster and is simpler for an LLM to get
+        right on the first try.
+  \item[H2 (Rust disk)] Rust produces very large \texttt{target/} directories, which hurts when agents
+        work in parallel worktrees.
+  \item[H3 (conciseness)] More concise languages cost the agent fewer tokens, as the series showed for
+        static snippets.
+  \item[H4 (front end)] Svelte $<$ Vue $<$ React in tokens~\cite{tokenomics1}.
+  \item[H5 (Rust + React)] Rust + React is a good stack for people who program with agents.
+\end{description}
+
+\section{Related work}
+
+\paragraph{Comparing programming languages.} Empirical comparisons of languages solving the same
+problems go back at least to Prechelt~\cite{prechelt2000}, who compared seven languages on one task for
+program length, development effort, run time and memory. Nanz and Furia~\cite{nanz2015} compared eight
+languages on Rosetta Code for conciseness, size, speed and failures. Closest in spirit to this work,
+Pereira et al.~\cite{pereira2017,pereira2021} ran the Computer Language Benchmarks Game in 27 languages
+and related energy, time and memory; we keep their design (the same problems across many languages, one
+resource measured at a time) and measure the tokens an agent spends instead. Ray et
+al.~\cite{ray2014} and the reproduction by Berger et al.~\cite{berger2019} show how hard it is to
+attribute outcomes to the language alone, a caveat that applies here too.
+
+\paragraph{Language models and code across languages.} HumanEval~\cite{humaneval} measured the
+functional correctness of generated Python. MultiPL-E~\cite{multiple} translated it into 18 more
+languages and found that model performance depends on how common a language is and on its features,
+which matches our finding that the model's familiarity with a language version drives the cost.
+
+\paragraph{Coding agents.} SWE-bench~\cite{swebench} evaluates models on real GitHub issues from
+Python repositories; SWE-agent~\cite{sweagent} showed that the agent--computer interface changes the
+outcome; DeepSWE~\cite{deepswe} reports cost and steps alongside pass@1. These benchmarks hold the
+language fixed and vary the model. We hold the model and harness fixed and vary the language.
+
+\section{Method}
+
+\paragraph{Agents.} Inspired by DeepSWE~\cite{deepswe}, each case runs its own headless Claude Code
+(\texttt{claude -p}): model \texttt{claude-opus-5-5}, effort \texttt{high}, tools \texttt{Bash},
+\texttt{Read}, \texttt{Edit} and \texttt{Write}; no web, MCP, plugins or \texttt{CLAUDE.md}; an empty
+directory outside the repository. The prompt is the same for every language except for the language name
+and toolchain version (Assembly, the JVM languages, JavaScript, TypeScript and Python get one extra line: ``only
+\texttt{.s}, libc calls allowed'', or ``\texttt{./app} may be a launcher script that runs
+\texttt{java}/\texttt{node}/\texttt{python3}''). The agent sees the
+specification, a few examples and the \texttt{check.mjs} script that runs them.
+
+\paragraph{Tasks.} Four back-end programs: \texttt{wordfreq} (bytes, hash maps, sorting, inputs up to
+50\,MB), \texttt{lru} (an LRU cache over one million commands), \texttt{calc} (a recursive-descent
+parser with \texttt{int64} overflow rules) and \texttt{kvhttp} (a concurrent HTTP key--value server,
+where third-party packages are allowed). The first three are standard-library only. For front ends,
+\texttt{ui} (the series' five components plus a client for \texttt{kvhttp}) and \texttt{shop} (a mini
+app with parent/child components, a global store of the agent's choice, derived state, a form, an effect
+with cleanup, context and slots). Three repetitions per case.
+
+\paragraph{Rounds.} (1--2) Write. (3) Verify once, live: for back ends, a cold build of a clean copy with
+isolated caches and a hidden suite larger than the examples; for front ends, a Vite build and checks in
+Chromium with mocked network, testing only what the specification states literally plus the absence of
+runtime errors. (4) Repair: each failure gets a fresh agent with the failure report, up to three
+attempts. Each verifier was first validated against reference implementations.
+
+\paragraph{Metrics.} Tokens and cost come from Claude Code's final event (Opus 5.5 list price: US\$\,4
+and 20 per million input and output tokens, cache included). Final code was counted with Opus 5.5's own
+tokenizer, as the input-token difference between a prompt with the code and an empty one, and also with
+\texttt{cl100k\_base} to compare with the series. We also count compiler errors and reads of the
+toolchain's own sources or docs, binary performance (median of five runs) and server throughput with 64
+concurrent clients. Disk is split into per-project artifacts and shared global caches, so that the cost
+of $N$ worktrees is $N \times \mathrm{project} + \mathrm{cache}$.
+
+\section{Results}
+
+Table~\ref{tab:main} and Figure~\ref{fig:cost} summarise the back ends; costs are the sum of the
+per-task medians over the four tasks. Of the \NRuns{} runs, \NFailedRoundThree{} failed round 3, all of
+them Odin \texttt{calc} on the same hidden random case; the repair round fixed each on the first attempt.
+
+\begin{table}[h]
+\centering\small
+\caption{Per language, summing the medians of the 4 tasks. ``Solved'': passed the hidden suite in
+round 3. ``1st try'': the first run of the examples already passed. ``Code'': Opus 5.5 tokens of the
+final code. ``Stdlib'': reads of the toolchain's own sources/docs.}
+\label{tab:main}
+\LeaderboardTable
+\end{table}
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\linewidth}\centering\CostPlot\end{minipage}\hfill
+\begin{minipage}{0.49\linewidth}\centering\CodePlot\end{minipage}
+\caption{Agent cost (left) and final code size (right), per language.}
+\label{fig:cost}
+\end{figure}
+
+\begin{table}[h]
+\centering\small
+\caption{\texttt{kvhttp}: dependencies chosen by the agent, disk after a cold build (project + caches it
+created), build time and throughput.}
+\label{tab:kv}
+\KvTable
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Final binary performance (median of 5 runs), including process start-up (and JVM start-up for
+Java and Kotlin).}
+\label{tab:perf}
+\PerfTable
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Front end. Ratios to Svelte (= 1): the article~\cite{tokenomics1} and our measurement.}
+\label{tab:front}
+\FrontTable
+\end{table}
+
+\section{Discussion}
+
+\paragraph{H1 (Zig): rejected in this setting.} Zig cost US\$\,\CostZig{} against US\$\,\CostRust{} for
+Rust. It did not fail more often (\FirstZig\% passed on the first try, as Rust did); it spent the money
+learning. The agent made \StdZig{} reads of the Zig~0.16 standard library sources, whose I/O API
+changed recently, against \StdRust{} for Rust. Cold builds were not faster either: \StdBuildZig\,s
+against \StdBuildRust\,s on the standard-library tasks, because Zig compiles its standard library from
+source into an empty cache. A simple language is not enough; the model must know the version in use.
+
+\paragraph{H2 (Rust disk): confirmed once dependencies and worktrees enter.} Without dependencies Rust is
+light: \StdDiskRust\,MB after the build, against \StdDiskZig\,MB for Zig. For the HTTP server Rust and
+Haskell were the only languages whose agents pulled in packages (\texttt{tokio} and
+\texttt{hyper}/\texttt{axum}; \texttt{warp}), and Rust's release build reached \KvDiskRust\,MB and \KvBuildRust\,s. What matters is where those bytes live.
+\texttt{target/} is per project (\KvProjRust\,MB for the release build alone), so every worktree
+repeats it, while Go keeps almost everything in its global cache (\KvProjGo\,MB per project). With four
+worktrees Rust reaches \KvWtRust\,MB and Go \KvWtGo\,MB. After a full development loop (debug build,
+release build and test build) Rust's \texttt{target/} reached \DevloopRust\,MB per worktree, or
+\DevloopRustWt\,MB for four, for a server of about 200 lines. With hundreds of crates and incremental
+builds this becomes the gigabytes that people running parallel agents report. Rust is not alone, though:
+per project, the release builds of C\# (\KvProjCsharp\,MB in \texttt{bin/} and \texttt{obj/}) and
+Haskell (\KvProjHaskell\,MB in \texttt{dist-newstyle/}, plus a shared cabal store; \KvDiskHaskell\,MB
+in total) were larger than Rust's, giving \KvWtCsharp\,MB and \KvWtHaskell\,MB for four worktrees.
+
+\paragraph{H3 (conciseness): confirmed for code, with caveats for cost.} Across languages, final code
+size and agent cost are strongly associated: Spearman $\rho = \CorrCodeCostSpearman$, Pearson $r =
+\CorrCodeCost$, or $r = \CorrCodeCostNoAsm$ without Assembly, which is an outlier on both axes. The four
+cheapest languages (Python, TypeScript, JavaScript and Kotlin) include the three with the least code
+(\ShortestLang, Python and Kotlin). The more verbose Java cost more than Kotlin. C cost more than C++
+because, lacking hash maps and strings in its standard library, it has to write more; Assembly was the
+extreme (\RatioAsm$\times$). The series' headline comparison replicates for code but not for cost:
+TypeScript's final code was \TsJsCodeClk$\times$ JavaScript's in \texttt{cl100k} tokens (the series
+reports 1.31$\times$ for snippets) and \TsJsCode$\times$ in Opus tokens, but the agent's cost ratio was
+\TsJsCost$\times$. Type annotations add tokens to the artefact, not to the process that writes it. The
+exceptions tell the other half of the story. Zig cost more than C, whose code is larger, because the agent paid for API uncertainty
+(\StdZig{} standard-library reads); Odin was the only language whose agents failed hidden tests. Swift
+and C\# also cost more than their code size predicts, but for a reason outside the languages: on the test
+machine, which has Apple's Command Line Tools but no Xcode, SwiftPM aborts at start-up and .NET Native AOT
+cannot link, so the agents' first builds failed (only \FirstSwift\% and \FirstCsharp\% passed on the
+first try) until they found a workaround (calling \texttt{swiftc} directly; a non-AOT build).
+
+\paragraph{H4 (front end): confirmed.} With a different component set, written by agents, and with
+Opus 5.5's tokenizer, the article's ordering holds and the ratios are close (Table~\ref{tab:front}). All
+three frameworks worked in every run. In the mini app the store choices were idiomatic: Context +
+\texttt{useReducer} in React, Pinia or \texttt{reactive()} in Vue, runes in Svelte.
+
+\paragraph{H5 (Rust + React): defensible, not optimal.} For the agent, Rust was among the cheapest back
+ends (US\$\,\CostRust). React was the most expensive front end. The full feature (\texttt{kvhttp} server
++ client component) took \ComboRustReact{} tokens in Rust + React, against \ComboRustSvelte{} in Rust +
+Svelte and \ComboZigVue{} in Zig + Vue. In performance, all native languages were within the same order
+of magnitude under this load (Table~\ref{tab:kv}).
+
+\section{Limitations}
+
+Round 3 itself found two harness bugs, both fixed before the repair round, with the affected cases
+re-verified. (i) The filter that separates source from build output dropped \texttt{bin/} directories,
+which are output in C\# but source in dune (OCaml); the three OCaml servers appeared not to build.
+(ii) On macOS, the first launch of a freshly built binary goes through a system check that took over
+3\,s for the 48\,MB Haskell binary; the verifier now launches each binary once before the suite. No
+failure attributed to an agent comes from these two cases.
+
+Swift and C\# are confounded by the test machine: SwiftPM crashes (a mismatched \texttt{llbuild} in
+the Command Line Tools) and Native AOT needs Xcode, so their costs include finding a workaround.
+
+Three repetitions per case: small differences are noise. One model, one harness, one machine (macOS
+arm64). Tasks take minutes, not days; in large projects reading existing code weighs more, which should
+widen the advantage of concise languages. Cost uses list price and includes cache reads. The front-end
+check is a smoke test, not a full suite. Zig and Odin change their APIs often; another model with
+another training cut-off could reverse H1.
+
+\section{Conclusion}
+
+With Claude Opus 5.5 the language hardly decided whether the agent succeeded (only Odin failed a hidden
+test, and a repair agent fixed it on the first attempt); it decided how much success cost, by up to
+\RatioAsm$\times$. The cheapest were Python, TypeScript, JavaScript and Kotlin: widely used languages with little
+ceremony. Cost follows code size, as the series predicted for snippets,
+but also how well the model knows the language version and its standard library, and how smoothly the
+toolchain works on the machine. For people who program
+with agents the practical question is not only ``which language is most concise'' but ``which language
+does the model already know well, in the version I use''. Data, code and every solution are in the
+repository.
+
+\section*{Use of generative AI}
+
+The benchmark harness, the agents under test and a first draft of this manuscript were produced with
+Claude (Anthropic) under the author's direction. The author defined the questions and hypotheses,
+reviewed the code, data and text, and takes full responsibility for the content.
+
+\begin{thebibliography}{99}\small
+\bibitem{pereira2017} R. Pereira, M. Couto, F. Ribeiro, R. Rua, J. Cunha, J. P. Fernandes and
+J. Saraiva. Energy efficiency across programming languages: how do energy, time, and memory relate?
+In \emph{Proc. ACM SIGPLAN Int. Conf. on Software Language Engineering (SLE)}, 2017.
+\href{https://doi.org/10.1145/3136014.3136031}{doi:10.1145/3136014.3136031}.
+\bibitem{pereira2021} R. Pereira, M. Couto, F. Ribeiro, R. Rua, J. Cunha, J. P. Fernandes and
+J. Saraiva. Ranking programming languages by energy efficiency. \emph{Science of Computer Programming},
+205:102609, 2021.
+\bibitem{prechelt2000} L. Prechelt. An empirical comparison of seven programming languages.
+\emph{IEEE Computer}, 33(10):23--29, 2000.
+\bibitem{nanz2015} S. Nanz and C. A. Furia. A comparative study of programming languages in Rosetta
+Code. In \emph{Proc. 37th Int. Conf. on Software Engineering (ICSE)}, pages 778--788, 2015.
+\bibitem{ray2014} B. Ray, D. Posnett, V. Filkov and P. Devanbu. A large scale study of programming
+languages and code quality in GitHub. In \emph{Proc. 22nd ACM SIGSOFT Int. Symposium on Foundations of
+Software Engineering (FSE)}, pages 155--165, 2014.
+\bibitem{berger2019} E. D. Berger, C. Hollenbeck, P. Maj, O. Vitek and J. Vitek. On the impact of
+programming languages on code quality: a reproduction study. \emph{ACM Transactions on Programming
+Languages and Systems}, 2019.
+\bibitem{humaneval} M. Chen et al. Evaluating large language models trained on code.
+\emph{arXiv:2107.03374}, 2021.
+\bibitem{multiple} F. Cassano et al. MultiPL-E: a scalable and polyglot approach to benchmarking neural
+code generation. \emph{IEEE Transactions on Software Engineering}, 49(7):3675--3691, 2023.
+\bibitem{swebench} C. E. Jimenez, J. Yang, A. Wettig, S. Yao, K. Pei, O. Press and K. Narasimhan.
+SWE-bench: can language models resolve real-world GitHub issues? In \emph{Proc. Int. Conf. on Learning
+Representations (ICLR)}, 2024.
+\bibitem{sweagent} J. Yang, C. E. Jimenez, A. Wettig, K. Lieret, S. Yao, K. Narasimhan and O. Press.
+SWE-agent: agent-computer interfaces enable automated software engineering. In \emph{Advances in
+Neural Information Processing Systems (NeurIPS)}, 2024.
+\bibitem{tokenomics1} A. Kucherenko. \emph{We Measured the LLM Token Cost of 5 Frontend Frameworks: Angular
+Costs 38\% More Than Svelte}. HackerNoon, 2026.
+\bibitem{tokenomics2} A. Kucherenko. \emph{We Measured the LLM Token Cost of 5 Languages: TypeScript Costs
+31\% More Than JavaScript}. HackerNoon, 2026.
+\bibitem{deepswe} Datacurve. \emph{DeepSWE: a long-horizon software engineering benchmark}.
+\url{https://deepswe.datacurve.ai/}, 2026.
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,17 @@
+{
+  "id": "ts-wordfreq-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Produces ./app: a launcher that runs the TypeScript entry point with Node,\n# which strips types natively (no compile step required).\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec node --no-warnings --max-old-space-size=4096 \"$(dirname \"$0\")/src/main.ts\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "package.json",
+      "text": "{\n  \"name\": \"wordfreq\",\n  \"private\": true,\n  \"type\": \"module\"\n}\n"
+    },
+    {
+      "path": "src/main.ts",
+      "text": "/**\n * wordfreq: print the 10 most frequent ASCII words read from standard input.\n *\n * A word is a maximal run of ASCII letters; every other byte is a separator.\n * Words are folded to lowercase and ranked by count descending, then by word\n * ascending (byte order).\n */\n\nconst TOP_N = 10;\n\nconst UPPER_A = 0x41;\nconst UPPER_Z = 0x5a;\nconst LOWER_A = 0x61;\nconst LOWER_Z = 0x7a;\nconst CASE_BIT = 0x20;\n\ninterface WordCount {\n  readonly word: string;\n  readonly count: number;\n}\n\nasync function readStdin(): Promise<Buffer> {\n  const chunks: Buffer[] = [];\n  for await (const chunk of process.stdin) {\n    chunks.push(chunk as Buffer);\n  }\n  return Buffer.concat(chunks);\n}\n\n/**\n * Lowercases ASCII letters in place and replaces every non-letter byte with a\n * space, so the buffer can be decoded as latin1 and split on single bytes.\n * Returns the normalized text.\n */\nfunction normalize(buf: Buffer): string {\n  for (let i = 0; i < buf.length; i++) {\n    const b = buf[i];\n    if (b >= LOWER_A && b <= LOWER_Z) continue;\n    if (b >= UPPER_A && b <= UPPER_Z) {\n      buf[i] = b | CASE_BIT;\n    } else {\n      buf[i] = 0x20;\n    }\n  }\n  return buf.toString('latin1');\n}\n\nfunction countWords(text: string): Map<string, number> {\n  const counts = new Map<string, number>();\n  const len = text.length;\n  let i = 0;\n  while (i < len) {\n    while (i < len && text.charCodeAt(i) === 0x20) i++;\n    if (i >= len) break;\n    const start = i;\n    while (i < len && text.charCodeAt(i) !== 0x20) i++;\n    const word = text.slice(start, i);\n    counts.set(word, (counts.get(word) ?? 0) + 1);\n  }\n  return counts;\n}\n\n/** Byte-order comparison; words are pure ASCII so code-unit order matches. */\nfunction ranksBefore(a: WordCount, b: WordCount): boolean {\n  if (a.count !== b.count) return a.count > b.count;\n  return a.word < b.word;\n}\n\n/** Selects the top `n` entries without sorting the whole map. */\nfunction topWords(counts: Map<string, number>, n: number): WordCount[] {\n  const top: WordCount[] = [];\n  for (const [word, count] of counts) {\n    const entry: WordCount = { word, count };\n    if (top.length === n && !ranksBefore(entry, top[n - 1])) continue;\n    let pos = top.length < n ? top.length : n - 1;\n    while (pos > 0 && ranksBefore(entry, top[pos - 1])) {\n      top[pos] = top[pos - 1];\n      pos--;\n    }\n    top[pos] = entry;\n  }\n  return top;\n}\n\nasync function main(): Promise<void> {\n  const input = await readStdin();\n  const top = topWords(countWords(normalize(input)), TOP_N);\n  if (top.length === 0) return;\n  process.stdout.write(top.map(({ count, word }) => `${count} ${word}\\n`).join(''));\n}\n\nawait main();\n"
+    }
+  ]
+}

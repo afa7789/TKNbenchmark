@@ -1,0 +1,46 @@
+{
+  "id": "js-calc-r3",
+  "lang": "js",
+  "task": "calc",
+  "rep": 3,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 35256,
+  "files": [
+    "app",
+    "build.sh",
+    "src/calc.js"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.1649872,
+  "durationMs": 34615,
+  "apiMs": 32155,
+  "turns": 4,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "usage": {
+    "input": 8,
+    "output": 2960,
+    "thinking": 794,
+    "cacheRead": 38376,
+    "cacheWrite": 12260
+  },
+  "tools": {
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}
