@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-24T15:07:08.738Z",
+    "generatedAt": "2026-11-24T15:25:46.820Z",
     "model": "claude-opus-5-5",
     "effort": "high",
     "toolchains": {
@@ -414,6 +414,13 @@
         "codeTokensCl100k": 14739,
         "buildSecs": 0.36000000000000004,
         "footprintBytes": 147456,
+        "perfPoints": {
+          "wordfreq": 69.62962962962963,
+          "lru": 69.23076923076923,
+          "calc": 69.23076923076923,
+          "kvhttp": 100
+        },
+        "perfTotal": 76.00603894128533,
         "perfScore": 1.3156849296836797
       },
       "cpp": {
@@ -434,7 +441,14 @@
         "codeTokensCl100k": 8549,
         "buildSecs": 2.21,
         "footprintBytes": 921600,
-        "perfScore": 4.306031917014066
+        "perfPoints": {
+          "wordfreq": 47,
+          "lru": 16.143497757847534,
+          "calc": 4.433497536945813,
+          "kvhttp": 86.46673387096774
+        },
+        "perfTotal": 23.22323706075618,
+        "perfScore": 4.306031917014065
       },
       "rust": {
         "n": 12,
@@ -454,6 +468,13 @@
         "codeTokensCl100k": 7107,
         "buildSecs": 16.79,
         "footprintBytes": 111222784,
+        "perfPoints": {
+          "wordfreq": 38.52459016393443,
+          "lru": 20,
+          "calc": 58.06451612903226,
+          "kvhttp": 63.05083525345621
+        },
+        "perfTotal": 40.98193117140465,
         "perfScore": 2.4400997498569685
       },
       "go": {
@@ -474,7 +495,14 @@
         "codeTokensCl100k": 7753,
         "buildSecs": 7.68,
         "footprintBytes": 246476800,
-        "perfScore": 1.5989860562995641
+        "perfPoints": {
+          "wordfreq": 55.62130177514793,
+          "lru": 45,
+          "calc": 69.23076923076923,
+          "kvhttp": 88.28125
+        },
+        "perfTotal": 62.53963229136835,
+        "perfScore": 1.598986056299565
       },
       "nim": {
         "n": 12,
@@ -494,7 +522,14 @@
         "codeTokensCl100k": 4878,
         "buildSecs": 2.97,
         "footprintBytes": 4468736,
-        "perfScore": 2.792488538760682
+        "perfPoints": {
+          "wordfreq": 30.519480519480517,
+          "lru": 14.69387755102041,
+          "calc": 46.15384615384615,
+          "kvhttp": 79.45348502304147
+        },
+        "perfTotal": 35.810352884878945,
+        "perfScore": 2.7924885387606824
       },
       "zig": {
         "n": 12,
@@ -514,7 +549,14 @@
         "codeTokensCl100k": 10438,
         "buildSecs": 25.6,
         "footprintBytes": 212520960,
-        "perfScore": 1.2499345509295332
+        "perfPoints": {
+          "wordfreq": 78.99159663865547,
+          "lru": 64.28571428571429,
+          "calc": 85.71428571428571,
+          "kvhttp": 94.12442396313364
+        },
+        "perfTotal": 80.00418895984069,
+        "perfScore": 1.2499345509295334
       },
       "swift": {
         "n": 12,
@@ -534,7 +576,14 @@
         "codeTokensCl100k": 9258,
         "buildSecs": 51.66,
         "footprintBytes": 327680,
-        "perfScore": 4.108239871883941
+        "perfPoints": {
+          "wordfreq": 48.45360824742268,
+          "lru": 6.857142857142858,
+          "calc": 19.78021978021978,
+          "kvhttp": 53.41661866359447
+        },
+        "perfTotal": 24.341324537640105,
+        "perfScore": 4.10823987188394
       },
       "java": {
         "n": 12,
@@ -554,7 +603,14 @@
         "codeTokensCl100k": 6174,
         "buildSecs": 1.44,
         "footprintBytes": 118784,
-        "perfScore": 3.542813166202979
+        "perfPoints": {
+          "wordfreq": 51.64835164835166,
+          "lru": 12.413793103448276,
+          "calc": 12.080536912751679,
+          "kvhttp": 81.95204493087557
+        },
+        "perfTotal": 28.22615681627247,
+        "perfScore": 3.5428131662029765
       },
       "kotlin": {
         "n": 12,
@@ -574,7 +630,14 @@
         "codeTokensCl100k": 4190,
         "buildSecs": 12.29,
         "footprintBytes": 23015424,
-        "perfScore": 3.9944923164113475
+        "perfPoints": {
+          "wordfreq": 40.869565217391305,
+          "lru": 10.315186246418339,
+          "calc": 12.080536912751679,
+          "kvhttp": 77.12413594470046
+        },
+        "perfTotal": 25.034470485560977,
+        "perfScore": 3.9944923164113484
       },
       "csharp": {
         "n": 12,
@@ -594,6 +657,13 @@
         "codeTokensCl100k": 6801,
         "buildSecs": 57.22,
         "footprintBytes": 1089368064,
+        "perfPoints": {
+          "wordfreq": 29.841269841269842,
+          "lru": 10.909090909090908,
+          "calc": 19.78021978021978,
+          "kvhttp": 80.76756912442397
+        },
+        "perfTotal": 26.854588155462366,
         "perfScore": 3.723758466191911
       },
       "odin": {
@@ -614,7 +684,14 @@
         "codeTokensCl100k": 6850,
         "buildSecs": 4.140000000000001,
         "footprintBytes": 745472,
-        "perfScore": 1.3934524092870104
+        "perfPoints": {
+          "wordfreq": 59.49367088607595,
+          "lru": 61.016949152542374,
+          "calc": 85.71428571428571,
+          "kvhttp": 85.24265552995391
+        },
+        "perfTotal": 71.76420187264746,
+        "perfScore": 1.3934524092870106
       },
       "ocaml": {
         "n": 12,
@@ -634,6 +711,13 @@
         "codeTokensCl100k": 6636,
         "buildSecs": 0.86,
         "footprintBytes": 8384512,
+        "perfPoints": {
+          "wordfreq": 25.683060109289617,
+          "lru": 14.937759336099585,
+          "calc": 33.33333333333333,
+          "kvhttp": 88.95809331797236
+        },
+        "perfTotal": 32.658716243972314,
         "perfScore": 3.061969712862078
       },
       "haskell": {
@@ -654,7 +738,14 @@
         "codeTokensCl100k": 6050,
         "buildSecs": 146.91,
         "footprintBytes": 1528315904,
-        "perfScore": 4.505858099311354
+        "perfPoints": {
+          "wordfreq": 8.545454545454545,
+          "lru": 16.51376146788991,
+          "calc": 20.224719101123593,
+          "kvhttp": 85.00144009216591
+        },
+        "perfTotal": 22.19333094739122,
+        "perfScore": 4.505858099311351
       },
       "js": {
         "n": 12,
@@ -674,6 +765,13 @@
         "codeTokensCl100k": 4193,
         "buildSecs": 0.07,
         "footprintBytes": 0,
+        "perfPoints": {
+          "wordfreq": 11.230585424133812,
+          "lru": 10.285714285714285,
+          "calc": 9.574468085106384,
+          "kvhttp": 88.59447004608295
+        },
+        "perfTotal": 17.692513294794576,
         "perfScore": 5.652108229836493
       },
       "ts": {
@@ -694,7 +792,14 @@
         "codeTokensCl100k": 5284,
         "buildSecs": 0.04,
         "footprintBytes": 0,
-        "perfScore": 6.142021810306228
+        "perfPoints": {
+          "wordfreq": 10.91753774680604,
+          "lru": 9.863013698630137,
+          "calc": 7.171314741035857,
+          "kvhttp": 90.99582373271889
+        },
+        "perfTotal": 16.28128376753748,
+        "perfScore": 6.142021810306231
       },
       "python": {
         "n": 12,
@@ -714,7 +819,14 @@
         "codeTokensCl100k": 3955,
         "buildSecs": 0.12,
         "footprintBytes": 45056,
-        "perfScore": 6.524407628313188
+        "perfPoints": {
+          "wordfreq": 15.485996705107082,
+          "lru": 10.404624277456648,
+          "calc": 3.488372093023256,
+          "kvhttp": 98.18548387096774
+        },
+        "perfTotal": 15.32706196437543,
+        "perfScore": 6.52440762831319
       },
       "asm": {
         "n": 12,
@@ -734,6 +846,13 @@
         "codeTokensCl100k": 27920,
         "buildSecs": 0.26,
         "footprintBytes": 163840,
+        "perfPoints": {
+          "wordfreq": 100,
+          "lru": 100,
+          "calc": 100,
+          "kvhttp": 79.38868087557603
+        },
+        "perfTotal": 94.39296900073674,
         "perfScore": 1.0594009390595553
       }
     },

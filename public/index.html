@@ -52,9 +52,13 @@
 
     <fieldset id="ranking">
       <legend>Ranking</legend>
+      <h3>Cost to write</h3>
       <p class="hint">Sum of the medians of the 4 back-end tasks. Click a header to sort. "Solved" = passed every hidden test, which the agent never saw.</p>
       <div class="scroll" id="leaderboard"></div>
       <div class="multiples" id="multiples"></div>
+      <h3>Performance of the code</h3>
+      <p class="hint">Each task scores 100 × fastest time ÷ this language's time (kvhttp: this throughput ÷ the best), so 100 is the fastest. Score = geometric mean of the four; speed index = 100 ÷ score, how many times slower than the fastest. Hover a cell for the measurement; method in <a href="#performance">Final code performance</a>.</p>
+      <div class="scroll" id="perf-ranking"></div>
     </fieldset>
 
     <fieldset id="tasks">
@@ -75,7 +79,7 @@
 
     <fieldset id="performance">
       <legend>Final code performance</legend>
-      <p>The speed index in the ranking: for each of the four benchmarks below, how many times slower a language is than the fastest (throughput inverted for kvhttp), combined by geometric mean; 1.00× means fastest everywhere.</p>
+      <p>The performance ranking above scores each of the four benchmarks below as 100 × fastest ÷ this (throughput inverted for kvhttp) and combines them by geometric mean; the speed index is 100 ÷ that score, 1.00× meaning fastest everywhere.</p>
       <p>Only runs that passed every hidden test. Command-line tasks: median of 5 runs on a large input (wordfreq 50 MB, lru 1 million commands, calc 200 thousand expressions), with peak memory. kvhttp: requests per second with 64 concurrent clients, one connection per request.</p>
       <div class="multiples" id="perf-charts"></div>
     </fieldset>

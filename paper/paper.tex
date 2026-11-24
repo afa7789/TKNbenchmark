@@ -39,7 +39,11 @@ API. TypeScript's code was \TsJsCodeClk$\times$ JavaScript's in \texttt{cl100k} 
 project, so parallel agent worktrees multiply them. For front ends we reproduce the published ordering
 (Svelte $<$ Vue $<$ React) with a different tokenizer. Four specialised tracks (scientific computing,
 theorem proving, smart contracts and zero-knowledge circuits; \NTrackLangs{} more languages) passed every
-hidden check, and within each track the languages cost about the same.
+hidden check, and within each track the languages cost about the same. We rank the languages twice, by
+cost to write and by the speed of the final code (points per task, 100 for the fastest): the two
+rankings run against each other: the costlier a language was to write, the faster its code tended to be
+(Spearman $\rho = \CorrCostSpeed$ between cost and speed score), with \FastestLang{} first in speed and
+last in cost.
 \end{abstract}
 
 \section{Motivation and hypotheses}
@@ -131,13 +135,17 @@ and 20 per million input and output tokens, cache included). Final code was coun
 tokenizer, as the input-token difference between a prompt with the code and an empty one, and also with
 \texttt{cl100k\_base} to compare with the series. We also count compiler errors and reads of the
 toolchain's own sources or docs, binary performance (median of five runs) and server throughput with 64
-concurrent clients. Disk is split into per-project artifacts and shared global caches, so that the cost
+concurrent clients. Each performance benchmark gives a language $100 \times$ the fastest time divided
+by its own (for throughput, its own divided by the best), so 100 is the fastest; the speed score is the
+geometric mean over the four, and the speed index is $100 / \mathrm{score}$, how many times slower than
+the fastest. Disk is split into per-project artifacts and shared global caches, so that the cost
 of $N$ worktrees is $N \times \mathrm{project} + \mathrm{cache}$.
 
 \section{Results}
 
-Table~\ref{tab:main} and Figure~\ref{fig:cost} summarise the back ends; costs are the sum of the
-per-task medians over the four tasks. Of the \NRuns{} runs, \NFailedRoundThree{} failed round 3, all of
+We rank the back ends twice. By cost to write, Table~\ref{tab:main} and Figure~\ref{fig:cost}; costs are
+the sum of the per-task medians over the four tasks. By speed of the final code, Table~\ref{tab:speed},
+built from the measurements in Tables~\ref{tab:kv} and~\ref{tab:perf}. Of the \NRuns{} runs, \NFailedRoundThree{} failed round 3, all of
 them Odin \texttt{calc} on the same hidden random case; the repair round fixed each on the first attempt.
 
 \begin{table}[h]
@@ -171,6 +179,15 @@ created), build time and throughput.}
 Java and Kotlin).}
 \label{tab:perf}
 \PerfTable
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Performance ranking. Points per task: $100 \times$ the fastest time divided by the language's
+(\texttt{kvhttp}: its throughput divided by the best), so 100 is the fastest. Score: geometric mean of the
+four. $\times$fastest: speed index, $100 / \mathrm{score}$.}
+\label{tab:speed}
+\SpeedTable
 \end{table}
 
 \begin{table}[h]
@@ -239,10 +256,10 @@ ends (US\$\,\CostRust). React was the most expensive front end. The full feature
 Svelte and \ComboZigVue{} in Zig + Vue. In performance, all native languages were within the same order
 of magnitude under this load (Table~\ref{tab:kv}).
 
-\paragraph{Cheap to write is not fast to run.} We combine the four performance measurements into a
-speed index: for each benchmark, how many times slower a language is than the fastest (throughput
-inverted), then the geometric mean, so 1.00 means fastest everywhere. The three cheapest languages for
-the agent produced the slowest code: JavaScript \SpeedJs, TypeScript \SpeedTs{} and Python
+\paragraph{Cheap to write is not fast to run.} The two rankings run against each other: the rank
+correlation between cost and speed score is $\rho = \CorrCostSpeed$ (Table~\ref{tab:speed}), so the
+languages that cost more to write tend to produce faster code. In speed index (1.00 = fastest
+everywhere), the three cheapest languages for the agent produced the slowest code: JavaScript \SpeedJs, TypeScript \SpeedTs{} and Python
 \SpeedPython. Assembly (\SpeedAsm), Zig (\SpeedZig) and C (\SpeedC) were the fastest, and among the most
 expensive to write. Go (\SpeedGo) and Rust (\SpeedRust) were the best compromise: both in the cheaper half to write and the
 faster half to run.
@@ -273,6 +290,10 @@ the Command Line Tools) and Native AOT needs Xcode, so their costs include findi
 The specialised tracks have two small tasks each. The zero-knowledge checks are behavioural: they show
 that valid inputs are provable and that the listed invalid inputs are not, but a circuit could still be
 under-constrained for inputs the suite does not try.
+
+The \texttt{kvhttp} load comes from a single Node.js client, which likely caps the measured throughput:
+every language scored between \KvPointsMin{} and 100 there, so the speed ranking is decided mostly by the
+three command-line tasks. The score weighs the four tasks equally.
 
 Three repetitions per case: small differences are noise. One model, one harness, one machine (macOS
 arm64). Tasks take minutes, not days; in large projects reading existing code weighs more, which should

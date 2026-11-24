@@ -213,7 +213,20 @@ function median(xs) {
   return v.length % 2 ? v[v.length >> 1] : (v[v.length / 2 - 1] + v[v.length / 2]) / 2
 }
 
+const PERF_TASKS = [['wordfreq', 'perfMs', fmt.ms], ['lru', 'perfMs', fmt.ms], ['calc', 'perfMs', fmt.ms], ['kvhttp', 'perfRps', fmt.rps]]
+
+// Performance ranking: points per task (100 = fastest), total = geometric mean, sorted best first.
+function renderPerfRanking(d) {
+  const L = d.summary.langs
+  const langs = Object.keys(L).sort((a, b) => (L[b].perfTotal ?? -1) - (L[a].perfTotal ?? -1))
+  const pointCell = (k, [t, key, f]) => `<td class="num" data-tip="${esc(`${d.meta.langs[k].label} ${t}: ${f(cellMedian(d, k, t, key))}`)}">${fmt.int(L[k].perfPoints?.[t])}</td>`
+  const rows = langs.map((k, i) => `<tr><td>${i + 1}</td><td><strong>${esc(d.meta.langs[k].label)}</strong></td>${PERF_TASKS.map((p) => pointCell(k, p)).join('')}<td class="num"><strong>${fmt.num1(L[k].perfTotal)}</strong></td><td class="num">${fmt.ratio(L[k].perfScore)}</td></tr>`)
+  const head = [{ title: '#' }, { title: 'Language' }, ...PERF_TASKS.map(([t]) => ({ title: t, num: true })), { title: 'Score', num: true }, { title: 'Speed index', num: true }]
+  $('perf-ranking').innerHTML = table(head, rows)
+}
+
 function renderPerf(d) {
+  renderPerfRanking(d)
   const rows = (task, key) => Object.keys(d.summary.langs).map((k) => ({ label: d.meta.langs[k].label, value: cellMedian(d, k, task, key) }))
   $('perf-charts').innerHTML = [
     barChart({ title: 'wordfreq: 50 MB of text', sub: 'time, median (lower is better)', rows: rows('wordfreq', 'perfMs'), format: fmt.ms }),

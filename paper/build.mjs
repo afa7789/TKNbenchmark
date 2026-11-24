@@ -18,6 +18,7 @@ const loc = {
     codeAxis: 'final code tokens (Opus 5.5, thousands)',
     kv: 'Language & Dependencies (most common) & MB & Build s & req/s',
     perf: 'Language & wordfreq ms & lru ms & calc ms & lru RSS MB',
+    speed: '\\# & Language & wordfreq & lru & calc & kvhttp & Score & $\\times$fastest',
     front: [' & Article & Ours & Ours & ui & shop & Store in shop', " & cl100k & cl100k & Opus & tokens & tokens & (agent's choice)"],
 }
 
@@ -82,6 +83,24 @@ function perfTable() {
 \\begin{tabular}{@{}lrrrr@{}}
 \\toprule
 ${loc.perf} \\\\
+\\midrule
+${rows.join('\n')}
+\\bottomrule
+\\end{tabular}}`
+}
+
+// Performance ranking: points per task (100 = fastest), score = geometric mean, best first.
+const bySpeed = Object.keys(L).sort((a, b) => (L[b].perfTotal ?? -1) - (L[a].perfTotal ?? -1))
+
+function speedTable() {
+  const rows = bySpeed.map((k, i) => {
+    const p = L[k].perfPoints ?? {}
+    return `${i + 1} & ${tex(label(k))} & ${int(p.wordfreq)} & ${int(p.lru)} & ${int(p.calc)} & ${int(p.kvhttp)} & \\textbf{${nf(1)(L[k].perfTotal)}} & ${nf(2)(L[k].perfScore)} \\\\`
+  })
+  return `\\newcommand{\\SpeedTable}{%
+\\begin{tabular}{@{}rlrrrrrr@{}}
+\\toprule
+${loc.speed} \\\\
 \\midrule
 ${rows.join('\n')}
 \\bottomrule
@@ -201,6 +220,9 @@ function macros() {
   set('CorrCodeCost', nf(2)(pearson(keys.map((k) => L[k].codeTokens), keys.map((k) => L[k].costUsd))))
   const noAsm = keys.filter((k) => k !== 'asm')
   set('CorrCodeCostSpearman', nf(2)(spearman(keys.map((k) => L[k].codeTokens), keys.map((k) => L[k].costUsd))))
+  set('CorrCostSpeed', nf(2)(spearman(keys.map((k) => L[k].costUsd), keys.map((k) => L[k].perfTotal))))
+  set('FastestLang', tex(label(bySpeed[0])))
+  set('KvPointsMin', int(Math.min(...keys.map((k) => L[k].perfPoints.kvhttp))))
   set('CorrCodeCostNoAsm', nf(2)(pearson(noAsm.map((k) => L[k].codeTokens), noAsm.map((k) => L[k].costUsd))))
   tsJsMacros(set)
   trackMacros(set)
@@ -226,6 +248,7 @@ const out = [
   barPlot('CodePlot', 'codeTokens', loc.codeAxis, 0.001),
   kvTable(),
   perfTable(),
+  speedTable(),
   frontTable(),
   trackTable(),
 ].join('\n\n')
