@@ -1,0 +1,608 @@
+{
+  "asm": {
+    "version": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7992,
+    "costUsd": 1.8739184,
+    "sha": "ba1d13f673b5",
+    "output": 33965,
+    "turns": 50,
+    "durationS": 497.408,
+    "tools": {
+      "WebSearch": 4,
+      "WebFetch": 11,
+      "Bash": 31,
+      "Write": 2,
+      "Read": 1
+    }
+  },
+  "c": {
+    "version": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [
+      "range check"
+    ],
+    "bodyBytes": 7986,
+    "costUsd": 1.4196431,
+    "sha": "cd1c1ef107bf",
+    "output": 27843,
+    "turns": 42,
+    "durationS": 301.434,
+    "tools": {
+      "WebSearch": 7,
+      "WebFetch": 10,
+      "Bash": 22,
+      "Write": 2
+    }
+  },
+  "circom": {
+    "version": "circom compiler 2.2.3",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [
+      "range check"
+    ],
+    "bodyBytes": 7987,
+    "costUsd": 3.1731532,
+    "sha": "4d3c62712085",
+    "output": 47660,
+    "turns": 78,
+    "durationS": 749.952,
+    "tools": {
+      "Bash": 58,
+      "WebFetch": 11,
+      "WebSearch": 4,
+      "Write": 3,
+      "Read": 1
+    }
+  },
+  "clojure": {
+    "version": "Clojure CLI version 1.12.7.1681",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7982,
+    "costUsd": 1.353972,
+    "sha": "a2fbce161227",
+    "output": 22646,
+    "turns": 43,
+    "durationS": 465.87,
+    "tools": {
+      "Bash": 21,
+      "WebSearch": 5,
+      "WebFetch": 15,
+      "Write": 1
+    }
+  },
+  "cpp": {
+    "version": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7696,
+    "costUsd": 1.5847203000000007,
+    "sha": "cf492c39460b",
+    "output": 33526,
+    "turns": 48,
+    "durationS": 473.631,
+    "tools": {
+      "WebSearch": 5,
+      "WebFetch": 11,
+      "Bash": 29,
+      "Write": 2
+    }
+  },
+  "csharp": {
+    "version": ".NET SDK 11.0.100",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7986,
+    "costUsd": 2.966292,
+    "sha": "70830870919a",
+    "output": 37303,
+    "turns": 67,
+    "durationS": 738.001,
+    "tools": {
+      "Bash": 40,
+      "WebSearch": 4,
+      "WebFetch": 18,
+      "Write": 3
+    }
+  },
+  "dafny": {
+    "version": "Dafny 4.11.0",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7948,
+    "costUsd": 3.6928815999999993,
+    "sha": "18221af06cab",
+    "output": 48167,
+    "turns": 85,
+    "durationS": 930.933,
+    "tools": {
+      "Bash": 72,
+      "WebSearch": 9,
+      "Write": 2,
+      "Read": 1
+    }
+  },
+  "go": {
+    "version": "go version go1.26.4 darwin/arm64",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7990,
+    "costUsd": 1.2296808000000001,
+    "sha": "701d2510a22f",
+    "output": 20174,
+    "turns": 40,
+    "durationS": 307.473,
+    "tools": {
+      "Bash": 20,
+      "WebFetch": 16,
+      "WebSearch": 2,
+      "Write": 1
+    }
+  },
+  "haskell": {
+    "version": "The Glorious Glasgow Haskell Compilation System, version 9.14.1",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7513,
+    "costUsd": 1.7595813999999994,
+    "sha": "d23a63f2fa38",
+    "output": 29690,
+    "turns": 56,
+    "durationS": 802.535,
+    "tools": {
+      "Bash": 28,
+      "WebFetch": 16,
+      "WebSearch": 7,
+      "Write": 3
+    }
+  },
+  "java": {
+    "version": "openjdk version \"27.0.1.1\" 2026-11-17",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7915,
+    "costUsd": 2.225454500000001,
+    "sha": "7dd7a2b11c39",
+    "output": 37185,
+    "turns": 56,
+    "durationS": 480.371,
+    "tools": {
+      "Bash": 34,
+      "WebSearch": 8,
+      "WebFetch": 10,
+      "Write": 3
+    }
+  },
+  "js": {
+    "version": "Node.js v26.13.1",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7989,
+    "costUsd": 2.3454699000000003,
+    "sha": "604f5809ad8c",
+    "output": 36839,
+    "turns": 66,
+    "durationS": 868.255,
+    "tools": {
+      "Bash": 45,
+      "WebSearch": 8,
+      "WebFetch": 8,
+      "Write": 3
+    }
+  },
+  "julia": {
+    "version": "julia version 1.13.4",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7972,
+    "costUsd": 2.203642400000001,
+    "sha": "cc533ae1df30",
+    "output": 31990,
+    "turns": 67,
+    "durationS": 839.544,
+    "tools": {
+      "Bash": 47,
+      "WebSearch": 5,
+      "WebFetch": 12,
+      "Write": 2
+    }
+  },
+  "kotlin": {
+    "version": "info: kotlinc-jvm 2.4.21 (JRE 27.0.1.1)",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7993,
+    "costUsd": 2.3215733,
+    "sha": "949f8c5197c2",
+    "output": 37764,
+    "turns": 64,
+    "durationS": 488.254,
+    "tools": {
+      "Bash": 35,
+      "WebSearch": 6,
+      "WebFetch": 12,
+      "Write": 8,
+      "Read": 2
+    }
+  },
+  "lean": {
+    "version": "Lean (version 4.36.0, arm64-apple-darwin24.6.0, commit 611c117bfaf7b7ae1cfcf246ce6fba31e8f509e9, Release)",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7978,
+    "costUsd": 2.2074229000000005,
+    "sha": "6f74f5e6dc07",
+    "output": 36736,
+    "turns": 54,
+    "durationS": 664.763,
+    "tools": {
+      "Bash": 37,
+      "WebFetch": 11,
+      "WebSearch": 2,
+      "Write": 2
+    }
+  },
+  "nim": {
+    "version": "Nim Compiler Version 2.4.2 [MacOSX: arm64]",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7668,
+    "costUsd": 1.7466524999999997,
+    "sha": "902114c23af0",
+    "output": 30583,
+    "turns": 56,
+    "durationS": 455.939,
+    "tools": {
+      "Bash": 40,
+      "WebFetch": 10,
+      "WebSearch": 3,
+      "Write": 2
+    }
+  },
+  "noir": {
+    "version": "nargo version = 1.0.0",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [
+      "range check"
+    ],
+    "bodyBytes": 7992,
+    "costUsd": 3.152458100000002,
+    "sha": "4fd04dc11da7",
+    "output": 37397,
+    "turns": 77,
+    "durationS": 664.809,
+    "tools": {
+      "Bash": 65,
+      "WebSearch": 4,
+      "WebFetch": 5,
+      "Write": 2
+    }
+  },
+  "ocaml": {
+    "version": "The OCaml toplevel, version 5.5.2",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7994,
+    "costUsd": 1.7570729999999997,
+    "sha": "fe503ed6ae88",
+    "output": 30641,
+    "turns": 56,
+    "durationS": 538.675,
+    "tools": {
+      "Bash": 33,
+      "WebSearch": 6,
+      "WebFetch": 12,
+      "Write": 3,
+      "Read": 1
+    }
+  },
+  "octave": {
+    "version": "GNU Octave (aarch64-apple-darwin24.6.0) version 11.3.0",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7976,
+    "costUsd": 1.6571549,
+    "sha": "ce3c88670b4a",
+    "output": 32724,
+    "turns": 52,
+    "durationS": 729.877,
+    "tools": {
+      "WebSearch": 6,
+      "WebFetch": 7,
+      "Bash": 34,
+      "Write": 3
+    }
+  },
+  "odin": {
+    "version": "Odin dev-2026-11:9a6991685",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7988,
+    "costUsd": 2.2363137999999996,
+    "sha": "88c4244847a8",
+    "output": 34423,
+    "turns": 65,
+    "durationS": 536.665,
+    "tools": {
+      "Bash": 41,
+      "WebFetch": 15,
+      "WebSearch": 5,
+      "Write": 3
+    }
+  },
+  "python": {
+    "version": "Python 3.15.2",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7998,
+    "costUsd": 1.2756857999999998,
+    "sha": "4b4e462dd1b5",
+    "output": 23574,
+    "turns": 41,
+    "durationS": 653.462,
+    "tools": {
+      "Bash": 24,
+      "WebFetch": 13,
+      "WebSearch": 2,
+      "Write": 1
+    }
+  },
+  "r": {
+    "version": "R version 4.6.2 (2026-10-29) -- \"Diversified Portfolio\"",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7981,
+    "costUsd": 1.8644636,
+    "sha": "8f686c9114ed",
+    "output": 30680,
+    "turns": 55,
+    "durationS": 635.669,
+    "tools": {
+      "Bash": 30,
+      "WebSearch": 5,
+      "WebFetch": 15,
+      "Write": 3
+    }
+  },
+  "react": {
+    "version": "react 19.3.1, react-dom 19.3.1, vite 8.3.8, @vitejs/plugin-react 6.3.0",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7934,
+    "costUsd": 1.7843127000000003,
+    "sha": "5c2be6b6bbc6",
+    "output": 31729,
+    "turns": 51,
+    "durationS": 489.265,
+    "tools": {
+      "Bash": 30,
+      "WebSearch": 4,
+      "WebFetch": 13,
+      "Write": 2,
+      "Read": 1
+    }
+  },
+  "rocq": {
+    "version": "The Rocq Prover, version 9.3.0",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7995,
+    "costUsd": 2.6048966000000005,
+    "sha": "6dd57da473b7",
+    "output": 39156,
+    "turns": 79,
+    "durationS": 774.449,
+    "tools": {
+      "Bash": 51,
+      "WebFetch": 17,
+      "WebSearch": 6,
+      "Write": 2,
+      "Read": 2
+    }
+  },
+  "rust": {
+    "version": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7997,
+    "costUsd": 2.0965555000000005,
+    "sha": "727e8e1386d3",
+    "output": 34526,
+    "turns": 52,
+    "durationS": 399.094,
+    "tools": {
+      "Bash": 33,
+      "WebFetch": 12,
+      "WebSearch": 3,
+      "Write": 2,
+      "Read": 1
+    }
+  },
+  "solidity": {
+    "version": "forge Version: 1.7.1",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7997,
+    "costUsd": 2.9602524999999997,
+    "sha": "b8fafa6893c9",
+    "output": 50701,
+    "turns": 93,
+    "durationS": 937.602,
+    "tools": {
+      "Bash": 65,
+      "WebSearch": 4,
+      "WebFetch": 20,
+      "Write": 2,
+      "Read": 1
+    }
+  },
+  "svelte": {
+    "version": "svelte 5.59.1, vite 8.3.8, @sveltejs/vite-plugin-svelte 7.3.2",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7987,
+    "costUsd": 3.5720281000000007,
+    "sha": "ee782535a6ad",
+    "output": 54054,
+    "turns": 83,
+    "durationS": 833.566,
+    "tools": {
+      "Bash": 72,
+      "WebFetch": 5,
+      "WebSearch": 2,
+      "Write": 2,
+      "Read": 1
+    }
+  },
+  "swift": {
+    "version": "swift-driver version: 1.120.5 Apple Swift version 6.1.2 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7983,
+    "costUsd": 1.8368151999999995,
+    "sha": "0d84c2e783c7",
+    "output": 32658,
+    "turns": 60,
+    "durationS": 427.045,
+    "tools": {
+      "Bash": 37,
+      "WebSearch": 4,
+      "WebFetch": 15,
+      "Write": 2,
+      "Read": 1
+    }
+  },
+  "ts": {
+    "version": "Node.js v26.13.1, which runs .ts files natively",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7984,
+    "costUsd": 2.2464226,
+    "sha": "8dea152c6bec",
+    "output": 32970,
+    "turns": 60,
+    "durationS": 639.378,
+    "tools": {
+      "Bash": 35,
+      "WebSearch": 9,
+      "WebFetch": 13,
+      "Write": 2
+    }
+  },
+  "vue": {
+    "version": "vue 3.5.46, vite 8.3.8, @vitejs/plugin-vue 6.0.11, pinia 4.1.0",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7990,
+    "costUsd": 1.9909226999999996,
+    "sha": "c0a3d814f2b8",
+    "output": 35081,
+    "turns": 64,
+    "durationS": 650.226,
+    "tools": {
+      "Bash": 42,
+      "WebSearch": 6,
+      "WebFetch": 12,
+      "Write": 3
+    }
+  },
+  "vyper": {
+    "version": "Vyper 0.4.3+commit.bff19ea2",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7969,
+    "costUsd": 2.1942685000000006,
+    "sha": "757a56f3bfb4",
+    "output": 39736,
+    "turns": 68,
+    "durationS": 697.029,
+    "tools": {
+      "Bash": 41,
+      "WebFetch": 19,
+      "WebSearch": 4,
+      "Write": 3
+    }
+  },
+  "zig": {
+    "version": "0.16.0",
+    "claude": "2.1.331 (Claude Code)",
+    "ok": true,
+    "problems": [],
+    "taskTerms": [],
+    "bodyBytes": 7994,
+    "costUsd": 3.1824026000000005,
+    "sha": "4effd501118c",
+    "output": 45901,
+    "turns": 80,
+    "durationS": 588.344,
+    "tools": {
+      "Bash": 64,
+      "WebFetch": 10,
+      "WebSearch": 2,
+      "Write": 2,
+      "Read": 1
+    }
+  }
+}
