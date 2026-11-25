@@ -393,7 +393,7 @@ function skillFindings(d, arm) {
   const n = (side) => rows.reduce((s, r) => s + r[side].n, 0)
   const out = [
     li('A language skill made the agent costlier, not cheaper.', `With one researched SKILL.md per language, ${costlier} of ${rows.length} languages cost more beyond their run-to-run spread and ${cheaper} cost less; per run, the median went ${fmt.usd(e.costUsd.base)} → ${fmt.usd(e.costUsd.arm)} (${pctOf(e.costUsd)}). Correctness did not move (${works('arm')}/${n('arm')} runs worked with it, ${works('base')}/${n('base')} without), nor did the speed of the code (median ${fmt.ratio(speedMedian(rows))}, measured paired).`),
-    li('The skill is paid on every turn.', `Loading it takes ${nf(0).format(e.turns.arm - e.turns.base)} more turns per run (${e.turns.base} → ${e.turns.arm}); context written to the cache grew ${pctOf(e.cacheWrite)} and context re-read ${pctOf(e.cacheRead)}, while the agent's own output grew only ${pctOf(e.output)}.`),
+    li('The skill is paid as context, not as work.', `Loading and applying it takes ${nf(0).format(e.turns.arm - e.turns.base)} more turns per run (${e.turns.base} → ${e.turns.arm}); ${fmt.pct(e.costShare.cacheWrite)} of the extra spend is context written to the prompt cache (the skill's text and those turns, at twice the input price), ${fmt.pct(e.costShare.cacheRead)} context re-read and only ${fmt.pct(e.costShare.output)} the agent's own output.`),
   ]
   if (zig) out.push(li('Where the model is out of date, a skill replaces work instead of adding it.', `Zig 0.16 changed its I/O API: with the skill the agent read the standard library's source ${nf(0).format(zig.base.stdlibReads)} → ${nf(0).format(zig.arm.stdlibReads)} times and wrote ${signed(change(zig.base.output, zig.arm.output))} output, for the same cost (${signed(change(zig.base.costUsd, zig.arm.costUsd))}${zig.beyondNoise ? '' : ', within noise'}).`))
   return out
@@ -410,7 +410,7 @@ function howTo(d, arm) {
   const pays = rows.filter((r) => isNum(r.breakEvenRuns)).length
   tips.push(
     `<li><strong>Do not add a generic language skill by default.</strong> On tasks of a few turns it saved money, beyond run-to-run noise, in ${pays} of ${rows.length} languages. Measure it on your own tasks first, as in <a href="#skills">With a language skill</a>.</li>`,
-    '<li><strong>Write a skill only for what the model gets wrong today</strong> (an API that changed after its training, a house convention), and keep it short: every byte is re-read on every turn.</li>',
+    '<li><strong>Write a skill only for what the model gets wrong today</strong> (an API that changed after its training, a house convention), and keep it short: its text, and every turn it adds, is written into the context at twice the input price.</li>',
   )
   return tips
 }
@@ -421,9 +421,9 @@ function renderFindings(d, arm) {
   $('howto-list').innerHTML = howTo(d, arm).join('')
   if (!arm) return
   const e = arm.summary.effect
-  const rows = [['Turns', e.turns], ['Output tokens', e.output], ['Context written', e.cacheWrite], ['Context re-read', e.cacheRead], ['Cost', e.costUsd]].map(([l, m]) => ({ label: l, value: change(m.base, m.arm), tip: `${l}: median per run ${nf(0).format(m.base)} → ${nf(0).format(m.arm)}` }))
-  rows.at(-1).tip = `Cost: median per run ${fmt.usd(e.costUsd.base)} → ${fmt.usd(e.costUsd.arm)}`
-  $('findings-chart').innerHTML = barChart({ title: 'Where the skill’s cost comes from', sub: `Median per run, with vs without the skill, ${e.pairs} paired runs`, rows, format: signed, higherIsBetter: true })
+  const kinds = [['cacheWrite', 'Context written to the cache'], ['cacheRead', 'Context re-read'], ['output', 'Agent output']]
+  const rows = kinds.map(([k, l]) => ({ label: l, value: e.costShare[k], tip: `${l}: ${fmt.usd(e.extraUsd[k])} of the extra spend` }))
+  $('findings-chart').innerHTML = barChart({ title: 'Where the skill’s extra cost goes', sub: `Share of the extra spend over ${e.pairs} paired runs, at Claude Code's prices`, rows, format: fmt.pct, higherIsBetter: true })
 }
 
 // ---------- skills arm ----------

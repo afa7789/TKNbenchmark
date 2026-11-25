@@ -268,6 +268,10 @@ function skillMacros(set) {
   set('SkillCacheWritePct', effPct(e.cacheWrite))
   set('SkillCacheReadPct', effPct(e.cacheRead))
   set('SkillOutputPct', effPct(e.output))
+  const share = e.costShare ?? {}
+  set('SkillShareWrite', `${nf(0)(share.cacheWrite * 100)}\\%`)
+  set('SkillShareRead', `${nf(0)(share.cacheRead * 100)}\\%`)
+  set('SkillShareOutput', `${nf(0)(share.output * 100)}\\%`)
   const z = V.zig ?? { base: {}, arm: {} }
   set('ZigStdBase', nf(0)(z.base.stdlibReads))
   set('ZigStdArm', nf(0)(z.arm.stdlibReads))

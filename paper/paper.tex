@@ -48,8 +48,8 @@ most 8\,KB per language, written beforehand by a separate Opus 5.5 agent that re
 practitioners use for the installed version and checked every API against the toolchain. The skill did not
 make the agent cheaper: \NSkillCostlier{} of \NSkillLangs{} languages cost more beyond their
 run-to-run spread and \NSkillCheaper{} cost less, correctness was unchanged, and the median run went from
-US\$\,\SkillRunCostBase{} to \SkillRunCostArm{} (\SkillRunCostPct), mostly because the skill is loaded
-in extra turns and its text is re-read on every turn. Only for Zig, whose API changed after the model's
+US\$\,\SkillRunCostBase{} to \SkillRunCostArm{} (\SkillRunCostPct), \SkillShareWrite{} of it context
+written to the prompt cache: the skill's text and the extra turns spent loading it. Only for Zig, whose API changed after the model's
 training, did the skill replace work (standard-library reads \ZigStdBase{}$\to$\ZigStdArm), at the same
 cost (\SkillDeltaZig).
 \end{abstract}
@@ -65,9 +65,9 @@ cost (\SkillDeltaZig).
         \NSkillLangs{} languages cost more beyond noise and \NSkillCheaper{} less (median run
         \SkillRunCostPct), with the same correctness (\SkillWorksArm{} runs worked, \SkillWorksBase{}
         without) and the same code speed (median \SkillSpeedMedian$\times$).
-  \item \textbf{The skill is paid on every turn.} \SkillTurnsBase{}$\to$\SkillTurnsArm{} turns per run;
-        context written to the cache \SkillCacheWritePct{} and re-read \SkillCacheReadPct, while the
-        agent's own output grew only \SkillOutputPct.
+  \item \textbf{The skill is paid as context, not as work.} \SkillTurnsBase{}$\to$\SkillTurnsArm{} turns
+        per run; \SkillShareWrite{} of the extra spend is context written to the prompt cache, \SkillShareRead{}
+        context re-read and only \SkillShareOutput{} the agent's own output.
   \item \textbf{Where the model is out of date, a skill replaces work.} For Zig~0.16, standard-library
         reads went \ZigStdBase{}$\to$\ZigStdArm{} and output \ZigOutPct, at the same cost
         (\SkillDeltaZig).
@@ -163,7 +163,8 @@ runtime errors. (4) Repair: each failure gets a fresh agent with the failure rep
 attempts. Each verifier was first validated against reference implementations.
 
 \paragraph{Metrics.} Tokens and cost come from Claude Code's final event (Opus 5.5 list price: US\$\,4
-and 20 per million input and output tokens, cache included). Final code was counted with Opus 5.5's own
+and 20 per million input and output tokens; cache writes at US\$\,8 and cache reads at US\$\,0.20, which
+reproduces every run's cost). Final code was counted with Opus 5.5's own
 tokenizer, as the input-token difference between a prompt with the code and an empty one, and also with
 \texttt{cl100k\_base} to compare with the series. We also count compiler errors and reads of the
 toolchain's own sources or docs, binary performance (median of five runs) and server throughput with 64
@@ -266,7 +267,9 @@ baseline's spread, \NSkillCheaper{} cost less, and the median change over the ma
 \SkillMedianChange. Over \NSkillPairs{} runs paired by case, the median run went from
 US\$\,\SkillRunCostBase{} to \SkillRunCostArm{} (\SkillRunCostPct) and from \SkillTurnsBase{} to
 \SkillTurnsArm{} turns; the context written to the cache grew \SkillCacheWritePct{} and the context
-re-read \SkillCacheReadPct, while the agent's own output grew only \SkillOutputPct.
+re-read \SkillCacheReadPct, while the agent's own output grew only \SkillOutputPct. At Claude Code's
+prices, \SkillShareWrite{} of the extra spend is context written to the cache, \SkillShareRead{} context
+re-read and \SkillShareOutput{} output.
 Figure~\ref{fig:skillslope} shows how the cost ranking moved.
 
 \begin{table}[h]
@@ -348,14 +351,15 @@ and among the most expensive to write. Rust (\SpeedRust), Go (\SpeedGo), Nim (\S
 and Go closest to the fastest.
 
 \paragraph{H6 (skills): rejected for cost, with one telling exception.} A skill is not free context: the
-agent spends a turn loading it, and its text then stays in the context, written to the cache once and
-re-read on every later turn. On tasks of a few turns that overhead is a large share of the bill, and the
-skill rarely replaced work that the agent would otherwise have done; in several languages it added work
-instead (more runs left test files behind, as the skills recommend). Zig shows what a skill is for.
+agent spends turns loading and applying it, and its text and those turns are appended to the conversation
+and written to the prompt cache, at twice the input price. Per turn, the context re-read barely grew; the
+bill grew with what was written. On tasks of a few turns that overhead is a large share of the cost, and
+the skill rarely replaced work that the agent would otherwise have done; in several languages it added
+work instead (more runs left test files behind, and every skill covers testing). Zig shows what a skill is for.
 Without one, the agent learned the Zig~0.16 I/O API by reading the standard library's sources
 (\ZigStdBase{} reads); with one, the same knowledge came from the skill (\ZigStdArm{} reads, output
 \ZigOutPct), and the cost stayed the same (\SkillDeltaZig). A skill pays where the model's knowledge lags
-the toolchain, and it should be short, since every byte is paid again on every turn. Longer tasks, in which
+the toolchain, and it should be short, since its text and every turn it adds are written into the context. Longer tasks, in which
 the agent would otherwise rediscover the same facts many times, may change the balance; we did not test
 them.
 
@@ -406,7 +410,9 @@ another training cut-off could reverse H1.
 The skills arm separates neither the overhead of the Skill tool from the skill's content (an arm with an
 empty skill would) nor one skill from another: each language got a single skill, capped at 8\,KB and
 written by an agent rather than by experts in the language. A human-curated skill, or a shorter one, could
-do better.
+do better. The skills arm ran a day after the baseline, on the same machine, toolchains and Claude Code;
+Clojure, whose two arms both ran that day, moved like the others (\SkillDeltaClojure), so the gap is not a
+day-to-day effect.
 
 \section{Conclusion}
 

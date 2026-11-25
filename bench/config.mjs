@@ -20,6 +20,8 @@ export const SKILLS = join(ROOT, 'bench', 'skills')
 export const CLAUDE_BIN = process.env.TKN_CLAUDE ?? 'claude'
 
 export const MODEL = 'claude-opus-5-5'
+// US$ per million tokens as Claude Code bills them (cache writes at the 1-hour TTL); fits every run's cost.
+export const PRICE = { input: 4, output: 20, cacheWrite: 8, cacheRead: 0.2 }
 export const EFFORT = 'high'
 export const TOOLS = 'Bash,Read,Edit,Write'
 export const RUN_TIMEOUT_MS = 30 * 60 * 1000

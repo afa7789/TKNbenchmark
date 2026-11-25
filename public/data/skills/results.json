@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-25T23:48:11.611Z",
+    "generatedAt": "2026-11-25T23:57:04.204Z",
     "arm": "skills",
     "model": "claude-opus-5-5",
     "effort": "high",
@@ -14410,6 +14410,18 @@
       "cacheRead": {
         "base": 58202,
         "arm": 85506
+      },
+      "extraUsd": {
+        "input": 0.000576,
+        "output": 2.2138600000000004,
+        "cacheWrite": 17.874208,
+        "cacheRead": 2.4395294
+      },
+      "costShare": {
+        "input": 0.0000255679850191494,
+        "output": 0.09827072797655226,
+        "cacheWrite": 0.793415768008959,
+        "cacheRead": 0.10828793602946966
       }
     }
   },

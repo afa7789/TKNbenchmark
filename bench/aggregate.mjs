@@ -3,7 +3,7 @@
 // node bench/aggregate.mjs --check  validate the committed data (CI smoke)
 import { existsSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { ROOT, RUNS, LANGS, FRONTENDS, TASKS, TRACKS, MODEL, EFFORT, MAIN_LANGS, ARM, SKILLS } from './config.mjs'
+import { ROOT, RUNS, LANGS, FRONTENDS, TASKS, TRACKS, MODEL, EFFORT, MAIN_LANGS, ARM, SKILLS, PRICE } from './config.mjs'
 import { isCounted, readJson, solutionFiles, spearman, writeJson } from './lib.mjs'
 import { detectDeps } from './deps.mjs'
 
@@ -285,7 +285,11 @@ function pairedEffect(baseRuns, runs) {
   const pairs = runs.filter((r) => byId.has(r.id)).map((r) => [byId.get(r.id), r])
   const median = (xs) => stats(xs)?.median ?? null
   const metric = (f) => ({ base: median(pairs.map(([b]) => f(b))), arm: median(pairs.map(([, a]) => f(a))) })
-  return { pairs: pairs.length, costUsd: metric((r) => r.costUsd), turns: metric((r) => r.turns), output: metric((r) => r.usage.output), cacheWrite: metric((r) => r.usage.cacheWrite), cacheRead: metric((r) => r.usage.cacheRead) }
+  // The arm's extra spend split by token kind at Claude Code's prices (sums over the pairs, so they add up).
+  const extra = Object.fromEntries(Object.entries(PRICE).map(([k, usd]) => [k, (usd / 1e6) * sum(pairs.map(([b, a]) => a.usage[k] - b.usage[k]))]))
+  const total = sum(Object.values(extra))
+  const costShare = Object.fromEntries(Object.entries(extra).map(([k, v]) => [k, v / total]))
+  return { pairs: pairs.length, costUsd: metric((r) => r.costUsd), turns: metric((r) => r.turns), output: metric((r) => r.usage.output), cacheWrite: metric((r) => r.usage.cacheWrite), cacheRead: metric((r) => r.usage.cacheRead), extraUsd: extra, costShare }
 }
 
 // This arm vs the published run, per language over the tasks both ran, plus what the skill cost to write.

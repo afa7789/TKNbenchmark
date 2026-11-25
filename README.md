@@ -88,7 +88,7 @@ agent gets the `Skill` tool (bundled skills off, so it sees only its language's 
 export TKN_ARM=skills TKN_CLAUDE=~/.local/share/claude/versions/2.1.331
 npm run skills
 npm run bench -- --reps 3 && npm run verify && npm run verify:front && npm run repair
-npm run perf && npm run count && npm run aggregate   # into runs-skills/
+npm run perf -- --paired && npm run count && npm run aggregate   # into runs-skills/; perf of both arms, interleaved
 ```
 
 ## Layout
