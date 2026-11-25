@@ -33,6 +33,8 @@ function sandboxEnv(home) {
     ELAN_HOME: process.env.ELAN_HOME ?? join(homedir(), '.elan'),
     JULIA_DEPOT_PATH: join(home, '.julia'),
     R_LIBS_USER: join(home, 'R'),
+    CLJ_CONFIG: join(home, '.clojure'),
+    GITLIBS: join(home, '.gitlibs'),
   }
 }
 

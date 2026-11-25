@@ -5,9 +5,9 @@ const BUILD_RE = /\b(cargo (build|run|test|check)|go (build|run|vet|test)|zig (b
 const CHECK_RE = /node (\S*\/)?check\.mjs/
 const HEREDOC_RE = /<<-?\s*['"]?(\w+)['"]?[\s\S]*?\n\1\b/g
 // Compiler diagnostics in tool output (exit codes hide behind pipes like `2>&1 | tail`).
-const COMPILER_ERR_RE = /(:\d+:\d+: error:|^error(\[E\d+\])?: |\.nim\(\d+, \d+\) Error:|^# \S+\n\S+\.go:\d+:\d+: |^BUILD FAIL)/m
+const COMPILER_ERR_RE = /(:\d+:\d+: error:|^error(\[E\d+\])?: |\.nim\(\d+, \d+\) Error:|^# \S+\n\S+\.go:\d+:\d+: |^BUILD FAIL|^Syntax error (compiling|reading source|macroexpanding))/m
 // Reading the toolchain's own library sources or docs to learn an API.
-const STDLIB_RE = /(lib\/zig\/std|zig env|rustlib\/src|\.cargo\/registry|go doc|libexec\/src|GOROOT|nim\/lib|lib\/pure|lib\/std\/|include\/c\+\+|\/usr\/include|SDKs?\/MacOSX|Cellar\/[\w.-]+\/[\w.-]+\/(lib|libexec|share|include|src)|lib\/ocaml|\.opam\/|ocamlfind (list|query)|\.cabal\/packages|ghc-pkg|\.nuget\/packages|javap|swiftinterface|\.swiftmodule|Toolchains\/)/
+const STDLIB_RE = /(lib\/zig\/std|zig env|rustlib\/src|\.cargo\/registry|go doc|libexec\/src|GOROOT|nim\/lib|lib\/pure|lib\/std\/|include\/c\+\+|\/usr\/include|SDKs?\/MacOSX|Cellar\/[\w.-]+\/[\w.-]+\/(lib|libexec|share|include|src)|lib\/ocaml|\.opam\/|ocamlfind (list|query)|\.cabal\/packages|ghc-pkg|\.nuget\/packages|javap|swiftinterface|\.swiftmodule|Toolchains\/|clojure\.repl|\.m2\/repository\/org\/clojure)/
 const RESULT_RE = /RESULT pass=(\d+) total=(\d+)( build=fail)?/
 
 function resultText(block) {

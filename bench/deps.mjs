@@ -33,6 +33,9 @@ const pyRequirements = (t) => all(t, /^\s*([A-Za-z0-9_.-]+)\s*(?:[<>=~!;[]|$)/gm
 const pyProject = (t) => all(t.match(/dependencies\s*=\s*\[([\s\S]*?)\]/)?.[1] ?? '', /["']([A-Za-z0-9_.-]+)/g)
 
 const DUNE_STDLIB = new Set(['unix', 'threads', 'threads.posix', 'str'])
+// deps.edn coordinates (lib {:mvn/version …} / {:git/…} / {:local/…}), minus Clojure itself and tools.build.
+const CLJ_TOOLING = new Set(['clojure', 'tools.build'])
+const depsEdn = (t) => all(t, /([\w.-]+\/)?([\w.-]+)\s*\{\s*:(?:mvn|git|local)\//g, 2).filter((n) => !CLJ_TOOLING.has(n))
 
 const MANIFESTS = [
   [/^Cargo\.toml$/, cargo],
@@ -49,6 +52,7 @@ const MANIFESTS = [
   [/^package\.json$/, packageJson],
   [/^requirements\.txt$/, pyRequirements],
   [/^pyproject\.toml$/, pyProject],
+  [/^deps\.edn$/, depsEdn],
 ]
 
 // Libraries a dune project declares itself, so (libraries kvhttp) is not mistaken for a package.

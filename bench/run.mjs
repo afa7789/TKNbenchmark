@@ -12,16 +12,18 @@ const args = parseArgs(process.argv.slice(2), { reps: '3', jobs: '4' })
 const versions = Object.fromEntries(Object.entries(LANGS).map(([k, l]) => [k, firstLine(l.version)]))
 versions.claude = firstLine([CLAUDE_BIN, '--version'])
 
-// An arm differs from the baseline only by its treatment: same toolchains, same Claude Code.
+// New runs (a new language, or another arm) join the published ones only on the same toolchains and
+// Claude Code; a language the baseline lacks is added. A fresh baseline starts from an empty runs/.
 function requireBaselineToolchains(now) {
-  const base = readJson(join(BASE_RUNS, 'toolchains.json'))
+  const file = join(BASE_RUNS, 'toolchains.json')
+  const base = existsSync(file) ? readJson(file) : {}
   const drift = Object.keys(base).filter((k) => base[k] !== now[k]).map((k) => `  ${k}: ${base[k]} → ${now[k]}`)
   if (!drift.length) return
   console.error(`✖ arm "${ARM}" must use the baseline's toolchains (TKN_CLAUDE pins Claude Code):\n${drift.join('\n')}`)
   process.exit(1)
 }
 
-if (ARM !== 'base') requireBaselineToolchains(versions)
+requireBaselineToolchains(versions)
 writeJson(join(RUNS, 'toolchains.json'), versions)
 
 const skillSha = (lang) => (ARM === 'skills' ? shortSha(readFileSync(join(SKILLS, lang, 'SKILL.md'))) : null)

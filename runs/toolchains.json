@@ -8,6 +8,7 @@
   "swift": "swift-driver version: 1.120.5 Apple Swift version 6.1.2 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)",
   "java": "openjdk version \"27.0.1.1\" 2026-11-17",
   "kotlin": "info: kotlinc-jvm 2.4.21 (JRE 27.0.1.1)",
+  "clojure": "Clojure CLI version 1.12.7.1681",
   "csharp": ".NET SDK 11.0.100",
   "odin": "Odin dev-2026-11:9a6991685",
   "ocaml": "The OCaml toplevel, version 5.5.2",

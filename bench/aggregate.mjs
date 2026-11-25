@@ -3,11 +3,13 @@
 // node bench/aggregate.mjs --check  validate the committed data (CI smoke)
 import { existsSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { ROOT, RUNS, LANGS, FRONTENDS, TASKS, TRACKS, MODEL, EFFORT, MAIN_LANGS } from './config.mjs'
+import { ROOT, RUNS, LANGS, FRONTENDS, TASKS, TRACKS, MODEL, EFFORT, MAIN_LANGS, ARM, SKILLS } from './config.mjs'
 import { isCounted, readJson, solutionFiles, writeJson } from './lib.mjs'
 import { detectDeps } from './deps.mjs'
 
-const OUT = join(ROOT, 'public', 'data')
+// The published run writes public/data; another arm writes public/data/<arm> and compares itself with it.
+const BASE_OUT = join(ROOT, 'public', 'data')
+const OUT = ARM === 'base' ? BASE_OUT : join(BASE_OUT, ARM)
 const EXTERNAL = {
   title: 'We Measured the LLM Token Cost of 5 Frontend Frameworks: Angular Costs 38% More Than Svelte',
   author: 'Andrey Kucherenko (HackerNoon, "The Tokenomics of Web Development", part 1)',
@@ -249,6 +251,32 @@ function addSpeedScores(langs, cells) {
   }
 }
 
+// One arm's side of a language, over the given tasks: sums of per-task medians (as in langSummary),
+// runs that work, and spend (write + repair) per working run.
+function armSide(cells, runs, lang, tasks) {
+  const cs = tasks.map((t) => cells[`${lang}/${t}`])
+  const rs = runs.filter((r) => r.lang === lang && tasks.includes(r.task))
+  const works = rs.filter((r) => r.works).length
+  const spent = sum(rs.map((r) => r.costUsd + (r.repairCostUsd ?? 0)))
+  const keys = ['costUsd', 'output', 'turns', 'durationS', 'compileErrors', 'stdlibReads', 'codeTokens']
+  return { n: rs.length, works, firstTry: rs.filter((r) => r.firstCheckPass).length, costPerWorkingUsd: works ? spent / works : null, ...Object.fromEntries(keys.map((k) => [k, med(cs, k)])) }
+}
+
+// This arm vs the published run, per language over the tasks both ran, plus what the skill cost to write.
+function vsBase(cells, runs, langs) {
+  const base = readJson(join(BASE_OUT, 'results.json'))
+  const skills = opt(join(SKILLS, 'meta.json')) ?? {}
+  const byLang = Object.groupBy(runs, (r) => r.lang)
+  return Object.fromEntries(
+    Object.entries(byLang).map(([lang, rs]) => {
+      const tasks = [...new Set(rs.map((r) => r.task))].filter((t) => base.summary.cells[`${lang}/${t}`]).sort()
+      const perfScore = { base: base.summary.langs[lang]?.perfScore ?? null, arm: langs[lang]?.perfScore ?? null }
+      const skill = { costUsd: skills[lang]?.costUsd ?? null, bodyBytes: skills[lang]?.bodyBytes ?? null, usedRate: rs.filter((r) => r.tools?.Skill).length / rs.length }
+      return [lang, { tasks, base: armSide(base.summary.cells, base.runs, lang, tasks), arm: armSide(cells, runs, lang, tasks), perfScore, skill }]
+    }),
+  )
+}
+
 function build() {
   const raw = collect()
   const runs = raw.map((r) => {
@@ -271,8 +299,9 @@ function build() {
   rmSync(join(OUT, 'solutions'), { recursive: true, force: true })
   raw.forEach(exportSolution)
   const toolchains = opt(join(RUNS, 'toolchains.json'))
-  const meta = { generatedAt: new Date().toISOString(), model: MODEL, effort: EFFORT, toolchains, langs: LANGS, frontends: FRONTENDS, tasks: TASKS, external: EXTERNAL }
-  writeJson(join(OUT, 'results.json'), { meta, summary: { langs, tracks, cells, frontends, shop, combos: combos(cells, frontends) }, runs })
+  const meta = { generatedAt: new Date().toISOString(), arm: ARM, model: MODEL, effort: EFFORT, toolchains, langs: LANGS, frontends: FRONTENDS, tasks: TASKS, external: EXTERNAL }
+  const compare = ARM === 'base' ? {} : { vsBase: vsBase(cells, runs, langs) }
+  writeJson(join(OUT, 'results.json'), { meta, summary: { langs, tracks, cells, frontends, shop, combos: combos(cells, frontends), ...compare }, runs })
   console.log(`${runs.length} runs → public/data/results.json`)
 }
 
@@ -286,11 +315,12 @@ function runProblems(r) {
 
 function check() {
   const file = join(OUT, 'results.json')
-  if (!existsSync(file)) throw new Error('public/data/results.json missing: run npm run aggregate')
+  if (!existsSync(file)) throw new Error(`${file} missing: run npm run aggregate`)
   const d = readJson(file)
   const problems = d.runs.flatMap(runProblems)
   if (!d.runs.length) problems.push('no runs')
   if (!Object.keys(d.summary.langs).length) problems.push('no language summary')
+  if (ARM !== 'base' && !d.summary.vsBase) problems.push(`arm ${ARM}: no comparison with the baseline`)
   if (problems.length) {
     console.error(problems.join('\n'))
     process.exit(1)

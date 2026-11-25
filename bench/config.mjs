@@ -44,6 +44,7 @@ export const LANGS = {
   swift: { label: 'Swift', name: 'Swift', version: ['sh', '-c', 'swift --version 2>&1 | grep "Swift version"'] },
   java: { label: 'Java', name: 'Java', version: ['java', '-version'], note: JVM_NOTE },
   kotlin: { label: 'Kotlin', name: 'Kotlin (JVM)', version: ['kotlinc', '-version'], note: JVM_NOTE },
+  clojure: { label: 'Clojure', name: 'Clojure (JVM)', version: ['clojure', '--version'], note: JVM_NOTE },
   csharp: { label: 'C#', name: 'C# (.NET)', version: ['sh', '-c', 'echo ".NET SDK $(dotnet --version)"'] },
   odin: { label: 'Odin', name: 'Odin', version: ['sh', '-c', 'odin version | sed "s|.*odin version|Odin|"'] },
   ocaml: { label: 'OCaml', name: 'OCaml', version: ['ocaml', '-version'] },
