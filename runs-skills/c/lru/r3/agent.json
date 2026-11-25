@@ -1,0 +1,51 @@
+{
+  "id": "c-lru-r3",
+  "lang": "c",
+  "task": "lru",
+  "rep": 3,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "cd1c1ef107bf",
+  "exitCode": 0,
+  "wallMs": 73953,
+  "files": [
+    "build.sh",
+    "lru.c"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.3783594,
+  "durationMs": 73090,
+  "apiMs": 66529,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "c"
+  ],
+  "usage": {
+    "input": 12,
+    "output": 7294,
+    "thinking": 762,
+    "cacheRead": 118277,
+    "cacheWrite": 26097
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

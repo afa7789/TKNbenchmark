@@ -1,0 +1,17 @@
+{
+  "id": "julia-linalg-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds ./app: a launcher that runs the Julia program in src/ with optimizations enabled.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\ncommand -v julia >/dev/null || { echo \"julia not found on PATH\" >&2; exit 1; }\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nDIR=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"\nexec julia --startup-file=no --history-file=no -O3 \"$DIR/src/main.jl\" \"$@\"\nLAUNCHER\nchmod +x app\n\n# Smoke test so a broken build fails here rather than in the tests.\nprintf '1\\n4\\n2\\n' | ./app >/dev/null\n"
+    },
+    {
+      "path": "src/LinalgApp.jl",
+      "text": "\"\"\"\n    LinalgApp\n\nReads a symmetric positive-definite matrix `A` and a vector `b` from standard input and\nprints `ln(det A)`, the solution of `A x = b`, the ascending eigenvalues of `A` and the\nFrobenius norm of `A`.\n\"\"\"\nmodule LinalgApp\n\nusing LinearAlgebra\n\nexport LinalgResult, analyze, read_problem, write_result\n\nstruct LinalgResult\n    logdet::Float64\n    solution::Vector{Float64}\n    eigenvalues::Vector{Float64}\n    frobenius::Float64\nend\n\n\"\"\"\n    read_problem(io) -> (A, b)\n\nParse `n`, the `n×n` matrix and the length-`n` right-hand side. Tokens may be separated by\nany whitespace (or commas).\n\"\"\"\nfunction read_problem(io::IO)\n    tokens = split(read(io, String), (' ', '\\t', '\\n', '\\r', ','); keepempty = false)\n    isempty(tokens) && throw(ArgumentError(\"empty input\"))\n    n = parse(Int, tokens[1])\n    n ≥ 1 || throw(ArgumentError(\"n must be positive, got $n\"))\n    needed = 1 + n * n + n\n    length(tokens) ≥ needed ||\n        throw(ArgumentError(\"expected $(needed - 1) numbers after n, got $(length(tokens) - 1)\"))\n    A = Matrix{Float64}(undef, n, n)\n    k = 2\n    for i in 1:n, j in 1:n          # row-major input\n        A[i, j] = parse(Float64, tokens[k])\n        k += 1\n    end\n    b = [parse(Float64, tokens[k + i - 1]) for i in 1:n]\n    return A, b\nend\n\n\"\"\"\n    analyze(A, b) -> LinalgResult\n\nCompute log-determinant, solution, eigenvalues and Frobenius norm. A Cholesky\nfactorization is used; if it fails numerically, an LU factorization is used instead.\n\"\"\"\nfunction analyze(A::AbstractMatrix{Float64}, b::AbstractVector{Float64})\n    S = Symmetric((A .+ A') ./ 2)\n    F = cholesky(S; check = false)\n    if issuccess(F)\n        ld = logdet(F)\n        x = F \\ b\n    else\n        L = lu(Matrix(S))\n        ld = first(logabsdet(L))\n        x = L \\ b\n    end\n    λ = eigvals(S)          # LAPACK returns them in ascending order\n    return LinalgResult(ld, x, sort!(λ), norm(A))\nend\n\nfunction write_numbers(io::IO, xs::AbstractVector{Float64})\n    join(io, xs, ' ')\n    println(io)\n    return nothing\nend\n\nfunction write_result(io::IO, r::LinalgResult)\n    println(io, r.logdet)\n    write_numbers(io, r.solution)\n    write_numbers(io, r.eigenvalues)\n    println(io, r.frobenius)\n    return nothing\nend\n\nfunction (@main)(::Vector{String})::Cint\n    A, b = read_problem(stdin)\n    buf = IOBuffer()\n    write_result(buf, analyze(A, b))\n    write(stdout, take!(buf))\n    flush(stdout)\n    return 0\nend\n\nend # module\n"
+    },
+    {
+      "path": "src/main.jl",
+      "text": "include(joinpath(@__DIR__, \"LinalgApp.jl\"))\nusing .LinalgApp: main\n"
+    }
+  ]
+}

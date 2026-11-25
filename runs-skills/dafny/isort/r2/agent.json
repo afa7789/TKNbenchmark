@@ -1,0 +1,51 @@
+{
+  "id": "dafny-isort-r2",
+  "lang": "dafny",
+  "task": "isort",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "18221af06cab",
+  "exitCode": 0,
+  "wallMs": 16805,
+  "files": [
+    "ISort.dfy",
+    "build.sh"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.1774152,
+  "durationMs": 16113,
+  "apiMs": 13223,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "dafny"
+  ],
+  "usage": {
+    "input": 6,
+    "output": 1038,
+    "thinking": 0,
+    "cacheRead": 33596,
+    "cacheWrite": 18739
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 2
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 9,
+    "total": 9
+  }
+}

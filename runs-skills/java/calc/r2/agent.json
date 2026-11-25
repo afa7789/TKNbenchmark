@@ -1,0 +1,54 @@
+{
+  "id": "java-calc-r2",
+  "lang": "java",
+  "task": "calc",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "7dd7a2b11c39",
+  "exitCode": 0,
+  "wallMs": 64771,
+  "files": [
+    "app",
+    "build.sh",
+    "src/calc/EvaluationException.java",
+    "src/calc/Evaluator.java",
+    "src/calc/Main.java"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.3272658,
+  "durationMs": 64119,
+  "apiMs": 59468,
+  "turns": 9,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "java"
+  ],
+  "usage": {
+    "input": 14,
+    "output": 5545,
+    "thinking": 959,
+    "cacheRead": 136349,
+    "cacheWrite": 23630
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 6
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

@@ -1,0 +1,24 @@
+cabal-version:   3.4
+name:            calc
+version:         0.1.0.0
+synopsis:        64-bit signed integer expression evaluator
+build-type:      Simple
+
+common common
+    default-language: GHC2024
+    ghc-options: -Wall -Wcompat -Widentities -Wredundant-constraints
+                 -Wpartial-fields -Wmissing-deriving-strategies -Wunused-packages
+    build-depends: base ^>=4.22
+
+library
+    import:          common
+    hs-source-dirs:  src
+    exposed-modules: Calc
+    build-depends:   bytestring ^>=0.12
+
+executable calc
+    import:         common
+    hs-source-dirs: exe
+    main-is:        Main.hs
+    ghc-options:    -O2
+    build-depends:  calc, bytestring ^>=0.12

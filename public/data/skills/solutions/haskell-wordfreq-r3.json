@@ -1,0 +1,13 @@
+{
+  "id": "haskell-wordfreq-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build an optimized release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nmkdir -p _build\nghc -XGHC2024 -O2 -Wall -Wcompat -outputdir _build -o app src/Main.hs\n"
+    },
+    {
+      "path": "src/Main.hs",
+      "text": "-- | wordfreq: print the ten most frequent ASCII words on standard input.\nmodule Main (main) where\n\nimport Data.ByteString qualified as BS\nimport Data.ByteString.Builder qualified as B\nimport Data.List (sortBy)\nimport Data.Map.Strict qualified as Map\nimport Data.Ord (Down (..), comparing)\nimport Data.Word (Word8)\nimport System.IO (stdout)\n\n-- | How many entries to report.\ntopN :: Int\ntopN = 10\n\nisUpper', isLower' :: Word8 -> Bool\nisUpper' w = w >= 0x41 && w <= 0x5A\nisLower' w = w >= 0x61 && w <= 0x7A\n\n-- | Fold ASCII upper-case letters to lower case; all other bytes are untouched.\ntoLowerAscii :: Word8 -> Word8\ntoLowerAscii w\n  | isUpper' w = w + 0x20\n  | otherwise = w\n\n-- | Split already-lowercased input into words (maximal runs of @a-z@).\ntokenize :: BS.ByteString -> [BS.ByteString]\ntokenize = filter (not . BS.null) . BS.splitWith (not . isLower')\n\n-- | Count occurrences of each word.\ncountWords :: [BS.ByteString] -> Map.Map BS.ByteString Int\ncountWords = foldl' (\\m w -> Map.insertWith (+) w 1 m) Map.empty\n\n-- | The @n@ most frequent words, by count descending then word ascending.\ntopWords :: Int -> Map.Map BS.ByteString Int -> [(BS.ByteString, Int)]\ntopWords n = take n . sortBy (comparing (\\(w, c) -> (Down c, w))) . Map.toList\n\nrender :: [(BS.ByteString, Int)] -> B.Builder\nrender = foldMap line\n  where\n    line (w, c) = B.intDec c <> B.char7 ' ' <> B.byteString w <> B.char7 '\\n'\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let counts = countWords . tokenize $ BS.map toLowerAscii input\n  B.hPutBuilder stdout . render $ topWords topN counts\n"
+    }
+  ]
+}

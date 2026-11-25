@@ -1,0 +1,51 @@
+{
+  "id": "asm-calc-r3",
+  "lang": "asm",
+  "task": "calc",
+  "rep": 3,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "ba1d13f673b5",
+  "exitCode": 0,
+  "wallMs": 163030,
+  "files": [
+    "build.sh",
+    "src/calc.s"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.6542288,
+  "durationMs": 162417,
+  "apiMs": 159824,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "asm"
+  ],
+  "usage": {
+    "input": 12,
+    "output": 17103,
+    "thinking": 8730,
+    "cacheRead": 147764,
+    "cacheWrite": 35321
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 5
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 1,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

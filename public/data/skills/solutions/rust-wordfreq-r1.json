@@ -1,0 +1,21 @@
+{
+  "id": "rust-wordfreq-r1",
+  "files": [
+    {
+      "path": "Cargo.toml",
+      "text": "[package]\nname = \"wordfreq\"\nversion = \"0.1.0\"\nedition = \"2024\"\nrust-version = \"1.96\"\n\n[[bin]]\nname = \"wordfreq\"\npath = \"src/main.rs\"\n\n[lints.rust]\nunsafe_code = \"forbid\"\n\n[lints.clippy]\npedantic = { level = \"warn\", priority = -1 }\n\n[profile.release]\nlto = \"fat\"\ncodegen-units = 1\npanic = \"abort\"\nstrip = \"symbols\"\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncargo build --release\ncp target/release/wordfreq ./app\n"
+    },
+    {
+      "path": "src/lib.rs",
+      "text": "//! Word frequency counting over arbitrary bytes.\n//!\n//! A word is a maximal run of ASCII letters; everything else separates words.\n//! Words are folded to lowercase before counting.\n\nuse std::cmp::Ordering;\nuse std::collections::HashMap;\n\n/// Counts case-folded ASCII-letter words in `input`.\n#[must_use]\npub fn count_words(input: &[u8]) -> HashMap<Box<[u8]>, u64> {\n    let mut counts: HashMap<Box<[u8]>, u64> = HashMap::new();\n    let mut word = Vec::new();\n\n    for run in input\n        .split(|b| !b.is_ascii_alphabetic())\n        .filter(|run| !run.is_empty())\n    {\n        word.clear();\n        word.extend(run.iter().map(u8::to_ascii_lowercase));\n        if let Some(count) = counts.get_mut(word.as_slice()) {\n            *count += 1;\n        } else {\n            counts.insert(word.as_slice().into(), 1);\n        }\n    }\n    counts\n}\n\n/// Orders by count descending, then word ascending (byte order).\nfn rank(a: &(Box<[u8]>, u64), b: &(Box<[u8]>, u64)) -> Ordering {\n    b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0))\n}\n\n/// Returns at most `n` of the `(word, count)` entries, ranked by count\n/// descending, then word ascending.\n#[must_use]\npub fn top_n(\n    counts: impl IntoIterator<Item = (Box<[u8]>, u64)>,\n    n: usize,\n) -> Vec<(Box<[u8]>, u64)> {\n    if n == 0 {\n        return Vec::new();\n    }\n    let mut entries: Vec<_> = counts.into_iter().collect();\n    if entries.len() > n {\n        entries.select_nth_unstable_by(n - 1, rank);\n        entries.truncate(n);\n    }\n    entries.sort_unstable_by(rank);\n    entries\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    fn top(input: &[u8], n: usize) -> Vec<(String, u64)> {\n        top_n(count_words(input), n)\n            .into_iter()\n            .map(|(w, c)| (String::from_utf8(w.into_vec()).expect(\"ascii\"), c))\n            .collect()\n    }\n\n    #[test]\n    fn example() {\n        assert_eq!(\n            top(b\"The cat and the hat.\", 10),\n            [(\"the\", 2), (\"and\", 1), (\"cat\", 1), (\"hat\", 1)].map(|(w, c)| (w.to_owned(), c))\n        );\n    }\n\n    #[test]\n    fn separators_and_invalid_utf8() {\n        assert_eq!(\n            top(b\"don't\\xffstop_me\\xc3(4now\", 10),\n            [(\"don\", 1), (\"me\", 1), (\"now\", 1), (\"stop\", 1), (\"t\", 1)]\n                .map(|(w, c)| (w.to_owned(), c))\n        );\n    }\n\n    #[test]\n    fn empty_and_no_words() {\n        assert!(top(b\"\", 10).is_empty());\n        assert!(top(b\"123 _ '\\x80\", 10).is_empty());\n    }\n\n    #[test]\n    fn truncates_with_ties() {\n        let got = top(b\"d c b a a e\", 3);\n        assert_eq!(\n            got,\n            [(\"a\", 2), (\"b\", 1), (\"c\", 1)].map(|(w, c)| (w.to_owned(), c))\n        );\n    }\n}\n"
+    },
+    {
+      "path": "src/main.rs",
+      "text": "use std::io::{self, BufWriter, Read, Write};\nuse std::process::ExitCode;\n\nuse wordfreq::{count_words, top_n};\n\nconst TOP: usize = 10;\n\nfn run() -> io::Result<()> {\n    let mut input = Vec::new();\n    io::stdin().lock().read_to_end(&mut input)?;\n\n    let mut out = BufWriter::new(io::stdout().lock());\n    for (word, count) in top_n(count_words(&input), TOP) {\n        write!(out, \"{count} \")?;\n        out.write_all(&word)?;\n        out.write_all(b\"\\n\")?;\n    }\n    out.flush()\n}\n\nfn main() -> ExitCode {\n    match run() {\n        Ok(()) => ExitCode::SUCCESS,\n        Err(e) if e.kind() == io::ErrorKind::BrokenPipe => ExitCode::SUCCESS,\n        Err(e) => {\n            eprintln!(\"wordfreq: {e}\");\n            ExitCode::FAILURE\n        }\n    }\n}\n"
+    }
+  ]
+}

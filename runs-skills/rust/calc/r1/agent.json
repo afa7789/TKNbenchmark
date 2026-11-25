@@ -1,0 +1,54 @@
+{
+  "id": "rust-calc-r1",
+  "lang": "rust",
+  "task": "calc",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "727e8e1386d3",
+  "exitCode": 0,
+  "wallMs": 72927,
+  "files": [
+    "Cargo.lock",
+    "Cargo.toml",
+    "build.sh",
+    "src/lib.rs",
+    "src/main.rs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.34108379999999994,
+  "durationMs": 72144,
+  "apiMs": 62347,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "rust"
+  ],
+  "usage": {
+    "input": 10,
+    "output": 6180,
+    "thinking": 871,
+    "cacheRead": 90139,
+    "cacheWrite": 24927
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 1,
+  "checkRuns": 3,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

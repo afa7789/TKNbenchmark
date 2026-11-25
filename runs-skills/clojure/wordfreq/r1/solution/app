@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+exec java -XX:+UseSerialGC -XX:SharedArchiveFile="$dir/target/wordfreq.jsa" -Xshare:auto \
+  -jar "$dir/target/wordfreq.jar" "$@"

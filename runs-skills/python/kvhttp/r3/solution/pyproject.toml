@@ -1,0 +1,16 @@
+[project]
+name = "kvhttp"
+version = "0.1.0"
+description = "An HTTP/1.1 in-memory key-value server"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.mypy]
+strict = true

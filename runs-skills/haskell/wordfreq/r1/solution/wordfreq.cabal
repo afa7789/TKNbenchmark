@@ -1,0 +1,14 @@
+cabal-version:   3.4
+name:            wordfreq
+version:         0.1.0.0
+synopsis:        Print the ten most frequent words read from standard input
+build-type:      Simple
+
+executable wordfreq
+    default-language: GHC2024
+    hs-source-dirs:   exe
+    main-is:          Main.hs
+    ghc-options:      -O2 -Wall -Wcompat -Widentities -Wredundant-constraints
+                      -Wpartial-fields -Wunused-packages -rtsopts
+                      "-with-rtsopts=-A64m"
+    build-depends:    base ^>=4.22, bytestring ^>=0.12, containers ^>=0.8

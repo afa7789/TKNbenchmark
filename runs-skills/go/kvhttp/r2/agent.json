@@ -1,0 +1,55 @@
+{
+  "id": "go-kvhttp-r2",
+  "lang": "go",
+  "task": "kvhttp",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "701d2510a22f",
+  "exitCode": 0,
+  "wallMs": 75062,
+  "files": [
+    "build.sh",
+    "go.mod",
+    "internal/server/server.go",
+    "internal/server/server_test.go",
+    "internal/store/store.go",
+    "main.go"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.36469840000000003,
+  "durationMs": 74408,
+  "apiMs": 67847,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "go"
+  ],
+  "usage": {
+    "input": 12,
+    "output": 6949,
+    "thinking": 1040,
+    "cacheRead": 113712,
+    "cacheWrite": 25366
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

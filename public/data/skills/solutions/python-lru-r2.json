@@ -1,0 +1,13 @@
+{
+  "id": "python-lru-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds ./app: a launcher that runs the byte-compiled LRU simulator.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\npython3 -O -m py_compile src/lru.py\ncat > app <<'LAUNCH'\n#!/usr/bin/env bash\nexec python3 -O \"$(dirname \"$0\")/src/lru.py\" \"$@\"\nLAUNCH\nchmod +x app\n"
+    },
+    {
+      "path": "src/lru.py",
+      "text": "\"\"\"LRU cache simulator: reads a capacity and commands from stdin, writes results.\"\"\"\n\nimport sys\nfrom collections import OrderedDict\n\nNULL = b\"NULL\"\nSIZE = b\"SIZE\"\n\n\ndef run(data: bytes) -> bytes:\n    \"\"\"Execute the command stream in ``data`` and return the combined output.\"\"\"\n    lines = data.split(b\"\\n\")\n    if not lines[0].strip():\n        return b\"\"\n    capacity = int(lines[0])\n    cache: OrderedDict[bytes, bytes] = OrderedDict()\n    move_to_end = cache.move_to_end\n    popitem = cache.popitem\n    out: list[bytes] = []\n    emit = out.append\n\n    for line in lines[1:]:\n        if not line:\n            continue\n        if line[-1] == 13:  # tolerate CRLF line endings\n            line = line[:-1]\n        parts = line.split(b\" \")\n        op = parts[0]\n        if op == b\"SET\":\n            key = parts[1]\n            if key in cache:\n                move_to_end(key)\n                cache[key] = parts[2]\n            else:\n                cache[key] = parts[2]\n                if len(cache) > capacity:\n                    popitem(last=False)\n        elif op == b\"GET\":\n            key = parts[1]\n            value = cache.get(key)\n            if value is None:\n                emit(NULL)\n            else:\n                move_to_end(key)\n                emit(value)\n        elif op == b\"DEL\":\n            emit(b\"1\" if cache.pop(parts[1], None) is not None else b\"0\")\n        elif op == SIZE:\n            emit(str(len(cache)).encode())\n\n    if not out:\n        return b\"\"\n    out.append(b\"\")\n    return b\"\\n\".join(out)\n\n\ndef main() -> None:\n    sys.stdout.buffer.write(run(sys.stdin.buffer.read()))\n    sys.stdout.buffer.flush()\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    }
+  ]
+}

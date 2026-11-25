@@ -1,0 +1,53 @@
+{
+  "id": "julia-linalg-r2",
+  "lang": "julia",
+  "task": "linalg",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "cc533ae1df30",
+  "exitCode": 0,
+  "wallMs": 38142,
+  "files": [
+    "app",
+    "build.sh",
+    "src/LinAlgApp.jl",
+    "src/main.jl"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2277226,
+  "durationMs": 37419,
+  "apiMs": 29373,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "julia"
+  ],
+  "usage": {
+    "input": 8,
+    "output": 2662,
+    "thinking": 634,
+    "cacheRead": 57053,
+    "cacheWrite": 20380
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 3
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 3,
+    "total": 3
+  }
+}

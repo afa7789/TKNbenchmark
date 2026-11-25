@@ -1,0 +1,52 @@
+{
+  "id": "octave-linalg-r1",
+  "lang": "octave",
+  "task": "linalg",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "ce3c88670b4a",
+  "exitCode": 0,
+  "wallMs": 31768,
+  "files": [
+    "app",
+    "build.sh",
+    "linalg.m"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.20033399999999998,
+  "durationMs": 31087,
+  "apiMs": 28177,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "octave"
+  ],
+  "usage": {
+    "input": 8,
+    "output": 1671,
+    "thinking": 324,
+    "cacheRead": 56770,
+    "cacheWrite": 19441
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 3,
+    "total": 3
+  }
+}

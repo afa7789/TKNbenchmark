@@ -1,0 +1,33 @@
+{
+  "id": "ocaml-lru-r3",
+  "files": [
+    {
+      "path": "bin/dune",
+      "text": "(executable\n (name main)\n (libraries lru))\n"
+    },
+    {
+      "path": "bin/main.ml",
+      "text": "(* Reads a capacity and a stream of cache commands from stdin and prints\n   the results of GET, DEL and SIZE to stdout (which is buffered). *)\n\nlet strip_cr line =\n  let n = String.length line in\n  if n > 0 && line.[n - 1] = '\\r' then String.sub line 0 (n - 1) else line\n\nlet print_line s =\n  Out_channel.output_string stdout s;\n  Out_channel.output_char stdout '\\n'\n\nlet run_command cache line =\n  match String.split_on_char ' ' (strip_cr line) with\n  | [ \"SET\"; key; value ] -> Lru.set cache key value\n  | [ \"GET\"; key ] -> print_line (Option.value (Lru.get cache key) ~default:\"NULL\")\n  | [ \"DEL\"; key ] -> print_line (if Lru.remove cache key then \"1\" else \"0\")\n  | [ \"SIZE\" ] -> print_line (Int.to_string (Lru.size cache))\n  | _ -> () (* blank or malformed line: ignore *)\n\nlet () =\n  let capacity =\n    Option.bind (In_channel.input_line stdin) (fun line ->\n        int_of_string_opt (String.trim line))\n  in\n  Option.iter\n    (fun capacity ->\n      let cache = Lru.create (max 1 capacity) in\n      In_channel.fold_lines (fun () line -> run_command cache line) () stdin)\n    capacity;\n  Out_channel.flush stdout\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ndune build --release ./bin/main.exe\ninstall -m 755 _build/default/bin/main.exe ./app\n"
+    },
+    {
+      "path": "dune-project",
+      "text": "(lang dune 3.0)\n"
+    },
+    {
+      "path": "lib/dune",
+      "text": "(library\n (name lru))\n"
+    },
+    {
+      "path": "lib/lru.ml",
+      "text": "(* Bindings live in a circular doubly linked list threaded through a\n   sentinel: [sentinel.next] is the most recently used node and\n   [sentinel.prev] the least recently used one. A hash table maps each key\n   to its node. *)\n\ntype 'a node = {\n  key : string;\n  mutable value : 'a option;  (* [None] only for the sentinel *)\n  mutable prev : 'a node;\n  mutable next : 'a node;\n}\n\ntype 'a t = {\n  capacity : int;\n  table : (string, 'a node) Hashtbl.t;\n  sentinel : 'a node;\n}\n\nlet create capacity =\n  if capacity < 1 then invalid_arg \"Lru.create: capacity must be positive\";\n  let rec sentinel = { key = \"\"; value = None; prev = sentinel; next = sentinel } in\n  { capacity; table = Hashtbl.create (min capacity 65536); sentinel }\n\nlet unlink node =\n  node.prev.next <- node.next;\n  node.next.prev <- node.prev\n\nlet push_front t node =\n  let s = t.sentinel in\n  node.prev <- s;\n  node.next <- s.next;\n  s.next.prev <- node;\n  s.next <- node\n\nlet size t = Hashtbl.length t.table\n\nlet evict_lru t =\n  let lru = t.sentinel.prev in\n  if lru != t.sentinel then begin\n    unlink lru;\n    Hashtbl.remove t.table lru.key\n  end\n\nlet set t key value =\n  match Hashtbl.find_opt t.table key with\n  | Some node ->\n      node.value <- Some value;\n      unlink node;\n      push_front t node\n  | None ->\n      let s = t.sentinel in\n      let node = { key; value = Some value; prev = s; next = s } in\n      Hashtbl.replace t.table key node;\n      push_front t node;\n      if size t > t.capacity then evict_lru t\n\nlet get t key =\n  match Hashtbl.find_opt t.table key with\n  | Some node ->\n      unlink node;\n      push_front t node;\n      node.value\n  | None -> None\n\nlet remove t key =\n  match Hashtbl.find_and_remove t.table key with\n  | Some node ->\n      unlink node;\n      true\n  | None -> false\n"
+    },
+    {
+      "path": "lib/lru.mli",
+      "text": "(** A string-keyed LRU cache with O(1) expected-time operations. *)\n\ntype 'a t\n\nval create : int -> 'a t\n(** [create capacity] makes an empty cache holding at most [capacity] keys.\n    @raise Invalid_argument if [capacity < 1]. *)\n\nval set : 'a t -> string -> 'a -> unit\n(** Insert or overwrite a binding, making it the most recently used.\n    Evicts the least recently used binding when over capacity. *)\n\nval get : 'a t -> string -> 'a option\n(** Look up a binding; a hit makes it the most recently used. *)\n\nval remove : 'a t -> string -> bool\n(** Remove a binding; returns whether it was present. *)\n\nval size : 'a t -> int\n"
+    }
+  ]
+}

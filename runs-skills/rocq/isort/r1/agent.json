@@ -1,0 +1,51 @@
+{
+  "id": "rocq-isort-r1",
+  "lang": "rocq",
+  "task": "isort",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "6dd57da473b7",
+  "exitCode": 0,
+  "wallMs": 31230,
+  "files": [
+    "ISort.v",
+    "build.sh"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2092534,
+  "durationMs": 30475,
+  "apiMs": 28593,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "rocq"
+  ],
+  "usage": {
+    "input": 8,
+    "output": 1904,
+    "thinking": 448,
+    "cacheRead": 57667,
+    "cacheWrite": 19951
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 8,
+    "total": 8
+  }
+}

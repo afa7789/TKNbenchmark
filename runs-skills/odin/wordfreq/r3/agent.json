@@ -1,0 +1,51 @@
+{
+  "id": "odin-wordfreq-r3",
+  "lang": "odin",
+  "task": "wordfreq",
+  "rep": 3,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "88c4244847a8",
+  "exitCode": 0,
+  "wallMs": 61829,
+  "files": [
+    "build.sh",
+    "src/main.odin"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.27982,
+  "durationMs": 61120,
+  "apiMs": 50243,
+  "turns": 11,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "odin"
+  ],
+  "usage": {
+    "input": 18,
+    "output": 3382,
+    "thinking": 496,
+    "cacheRead": 177700,
+    "cacheWrite": 22071
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 8
+  },
+  "toolErrors": 2,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 3,
+  "checkFails": 2,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

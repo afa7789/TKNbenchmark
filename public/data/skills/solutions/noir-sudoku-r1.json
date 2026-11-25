@@ -1,0 +1,21 @@
+{
+  "id": "noir-sudoku-r1",
+  "files": [
+    {
+      "path": "Nargo.toml",
+      "text": "[package]\nname = \"sudoku\"\ntype = \"bin\"\nauthors = [\"\"]\n\n[dependencies]\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Compiles the circuit to target/sudoku.json.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nnargo compile\n"
+    },
+    {
+      "path": "prove.sh",
+      "text": "#!/usr/bin/env bash\n# Usage: bash prove.sh input.json\n# Exits 0 iff a witness satisfying the circuit can be generated for the input.\nset -euo pipefail\n\ninput=\"$(cd \"$(dirname \"$1\")\" && pwd)/$(basename \"$1\")\"\ncd \"$(dirname \"$0\")\"\n\nprover_name=\"Prover_input_$$\"\nprover_file=\"$prover_name.toml\"\ntrap 'rm -f \"$prover_file\"' EXIT\n\n# Convert the JSON input into a Prover.toml. Values are passed through as\n# quoted strings; the circuit itself enforces every rule.\nnode -e '\nconst fs = require(\"fs\");\nconst input = JSON.parse(fs.readFileSync(process.argv[1], \"utf8\"));\nconst arr = (k) => {\n  const v = input[k];\n  if (!Array.isArray(v)) throw new Error(`\"${k}\" must be an array`);\n  return \"[\" + v.map((x) => JSON.stringify(String(x))).join(\", \") + \"]\";\n};\nfs.writeFileSync(process.argv[2], `puzzle = ${arr(\"puzzle\")}\\nsolution = ${arr(\"solution\")}\\n`);\n' \"$input\" \"$prover_file\"\n\nnargo execute --prover-name \"$prover_name\" >/dev/null\n"
+    },
+    {
+      "path": "src/main.nr",
+      "text": "//! Proves knowledge of a solution to a public 4x4 Sudoku puzzle.\n\nglobal SIZE: u32 = 4;\nglobal BOX: u32 = 2;\nglobal CELLS: u32 = SIZE * SIZE;\n\n/// `puzzle`: row-major cells, `0` for empty, `1..=4` for a clue.\n/// `solution`: row-major cells, kept private.\nfn main(puzzle: pub [Field; CELLS], solution: [Field; CELLS]) {\n    for i in 0..CELLS {\n        assert_is_digit(solution[i]);\n        // Either the cell is empty (0) or the solution matches the clue.\n        assert_eq(puzzle[i] * (puzzle[i] - solution[i]), 0, \"solution disagrees with a clue\");\n    }\n\n    for r in 0..SIZE {\n        let mut row = [0; SIZE];\n        for c in 0..SIZE {\n            row[c] = solution[r * SIZE + c];\n        }\n        assert_distinct(row);\n    }\n\n    for c in 0..SIZE {\n        let mut col = [0; SIZE];\n        for r in 0..SIZE {\n            col[r] = solution[r * SIZE + c];\n        }\n        assert_distinct(col);\n    }\n\n    for b in 0..SIZE {\n        let top = (b / BOX) * BOX;\n        let left = (b % BOX) * BOX;\n        let mut group = [0; SIZE];\n        for k in 0..SIZE {\n            group[k] = solution[(top + k / BOX) * SIZE + left + k % BOX];\n        }\n        assert_distinct(group);\n    }\n}\n\n/// Constrains `x` to be one of 1, 2, 3, 4.\nfn assert_is_digit(x: Field) {\n    assert_eq((x - 1) * (x - 2) * (x - 3) * (x - 4), 0, \"cell is not a digit 1-4\");\n}\n\n/// Constrains all elements of `group` to be pairwise distinct. Together with\n/// `assert_is_digit`, this means the group holds each of 1..=4 exactly once.\nfn assert_distinct(group: [Field; SIZE]) {\n    for i in 0..SIZE {\n        for j in i + 1..SIZE {\n            assert(group[i] != group[j], \"duplicate digit in row, column or box\");\n        }\n    }\n}\n\n#[test]\nfn accepts_valid_solution() {\n    main(\n        [1, 0, 0, 4, 0, 4, 1, 0, 2, 0, 0, 3, 0, 3, 2, 0],\n        [1, 2, 3, 4, 3, 4, 1, 2, 2, 1, 4, 3, 4, 3, 2, 1],\n    );\n}\n\n#[test(should_fail_with = \"disagrees with a clue\")]\nfn rejects_clue_mismatch() {\n    main(\n        [1, 3, 0, 4, 0, 4, 1, 0, 2, 0, 0, 3, 0, 3, 2, 0],\n        [1, 2, 3, 4, 3, 4, 1, 2, 2, 1, 4, 3, 4, 3, 2, 1],\n    );\n}\n\n#[test(should_fail_with = \"not a digit\")]\nfn rejects_out_of_range_digit() {\n    main([0; CELLS], [1, 2, 3, 4, 3, 4, 1, 2, 2, 1, 4, 3, 4, 3, 2, 0]);\n}\n\n#[test(should_fail_with = \"duplicate digit\")]\nfn rejects_row_duplicate() {\n    main([0; CELLS], [3, 2, 3, 4, 1, 4, 1, 2, 2, 1, 4, 3, 4, 3, 2, 1]);\n}\n\n#[test(should_fail_with = \"duplicate digit\")]\nfn rejects_box_duplicate() {\n    // Rows and columns are Latin, but the 2x2 boxes are not.\n    main([0; CELLS], [1, 2, 3, 4, 2, 3, 4, 1, 3, 4, 1, 2, 4, 1, 2, 3]);\n}\n"
+    }
+  ]
+}

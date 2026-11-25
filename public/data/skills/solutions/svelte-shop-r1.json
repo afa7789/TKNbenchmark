@@ -1,0 +1,45 @@
+{
+  "id": "svelte-shop-r1",
+  "files": [
+    {
+      "path": "App.svelte",
+      "text": "<script>\n  import { setCurrency } from './currency.js';\n  import Header from './Header.svelte';\n  import ProductList from './ProductList.svelte';\n  import Cart from './Cart.svelte';\n  import Modal from './Modal.svelte';\n  import CheckoutForm from './CheckoutForm.svelte';\n\n  let { products } = $props();\n\n  setCurrency('USD');\n\n  let checkoutOpen = $state(false);\n</script>\n\n<Header oncheckout={() => (checkoutOpen = true)} />\n<ProductList {products} />\n<Cart />\n\n{#if checkoutOpen}\n  <Modal onclose={() => (checkoutOpen = false)}>\n    <CheckoutForm oncomplete={() => (checkoutOpen = false)} />\n  </Modal>\n{/if}\n"
+    },
+    {
+      "path": "Cart.svelte",
+      "text": "<script>\n  import { cart } from './cart.svelte.js';\n  import { getCurrency, formatMoney } from './currency.js';\n\n  const TAX_RATE = 0.1;\n\n  const currency = getCurrency();\n\n  const subtotal = $derived(cart.subtotal);\n  const tax = $derived(subtotal * TAX_RATE);\n  const total = $derived(subtotal + tax);\n</script>\n\n<section>\n  <h2>Cart</h2>\n  {#if cart.items.length === 0}\n    <p>Your cart is empty</p>\n  {:else}\n    <ul>\n      {#each cart.items as item (item.id)}\n        <li>\n          <span>{item.name}</span>\n          <input\n            type=\"number\"\n            min=\"1\"\n            aria-label=\"Quantity for {item.name}\"\n            bind:value={() => item.quantity, (v) => cart.setQuantity(item.id, v)}\n          />\n          <span>{formatMoney(item.price * item.quantity, currency)}</span>\n          <button onclick={() => cart.remove(item.id)}>Remove</button>\n        </li>\n      {/each}\n    </ul>\n  {/if}\n  <p>Subtotal: {formatMoney(subtotal, currency)}</p>\n  <p>Tax (10%): {formatMoney(tax, currency)}</p>\n  <p>Total: {formatMoney(total, currency)}</p>\n</section>\n"
+    },
+    {
+      "path": "CheckoutForm.svelte",
+      "text": "<script>\n  import { cart } from './cart.svelte.js';\n\n  let { oncomplete } = $props();\n\n  let name = $state('');\n  let email = $state('');\n\n  const nameError = $derived(name.trim() ? '' : 'Name is required');\n  const emailError = $derived(email.includes('@') ? '' : 'Email must contain @');\n  const valid = $derived(!nameError && !emailError);\n\n  function handleSubmit(event) {\n    event.preventDefault();\n    if (!valid) return;\n    cart.clear();\n    oncomplete();\n  }\n</script>\n\n<form onsubmit={handleSubmit}>\n  <label>\n    Name\n    <input bind:value={name} />\n  </label>\n  {#if nameError}<p>{nameError}</p>{/if}\n\n  <label>\n    Email\n    <input type=\"email\" bind:value={email} />\n  </label>\n  {#if emailError}<p>{emailError}</p>{/if}\n\n  <button type=\"submit\" disabled={!valid}>Place order</button>\n</form>\n"
+    },
+    {
+      "path": "Header.svelte",
+      "text": "<script>\n  import { cart } from './cart.svelte.js';\n\n  let { oncheckout } = $props();\n</script>\n\n<header>\n  <h1>Shop</h1>\n  <span>Cart: {cart.count} {cart.count === 1 ? 'item' : 'items'}</span>\n  <button onclick={oncheckout}>Checkout</button>\n</header>\n"
+    },
+    {
+      "path": "Modal.svelte",
+      "text": "<script>\n  let { onclose, children } = $props();\n\n  function handleKeydown(event) {\n    if (event.key === 'Escape') onclose();\n  }\n</script>\n\n<svelte:window onkeydown={handleKeydown} />\n\n<div role=\"dialog\" aria-modal=\"true\">\n  <button aria-label=\"Close\" onclick={onclose}>×</button>\n  {@render children?.()}\n</div>\n"
+    },
+    {
+      "path": "ProductItem.svelte",
+      "text": "<script>\n  import { getCurrency, formatMoney } from './currency.js';\n\n  let { product, onadd } = $props();\n\n  const currency = getCurrency();\n</script>\n\n<li>\n  <span>{product.name}</span>\n  <span>{product.category}</span>\n  <span>{formatMoney(product.price, currency)}</span>\n  <button onclick={() => onadd(product)}>Add</button>\n</li>\n"
+    },
+    {
+      "path": "ProductList.svelte",
+      "text": "<script>\n  import { cart } from './cart.svelte.js';\n  import SearchBox from './SearchBox.svelte';\n  import ProductItem from './ProductItem.svelte';\n\n  let { products } = $props();\n\n  let query = $state('');\n  let category = $state('all');\n\n  const categories = $derived([...new Set(products.map((p) => p.category))]);\n\n  const filtered = $derived.by(() => {\n    const q = query.trim().toLowerCase();\n    return products.filter(\n      (p) => (category === 'all' || p.category === category) && p.name.toLowerCase().includes(q)\n    );\n  });\n</script>\n\n<section>\n  <SearchBox onsearch={(q) => (query = q)} />\n  <select bind:value={category}>\n    <option value=\"all\">All categories</option>\n    {#each categories as c (c)}\n      <option value={c}>{c}</option>\n    {/each}\n  </select>\n\n  <ul>\n    {#each filtered as product (product.id)}\n      <ProductItem {product} onadd={cart.add} />\n    {:else}\n      <li>No products</li>\n    {/each}\n  </ul>\n</section>\n"
+    },
+    {
+      "path": "SearchBox.svelte",
+      "text": "<script>\n  import { onDestroy } from 'svelte';\n\n  let { onsearch, delay = 300 } = $props();\n\n  let value = $state('');\n  let timer;\n\n  function handleInput() {\n    clearTimeout(timer);\n    timer = setTimeout(() => onsearch(value), delay);\n  }\n\n  onDestroy(() => clearTimeout(timer));\n</script>\n\n<input type=\"search\" placeholder=\"Search products\" bind:value oninput={handleInput} />\n"
+    },
+    {
+      "path": "cart.svelte.js",
+      "text": "class CartStore {\n  items = $state([]);\n  count = $derived(this.items.reduce((sum, item) => sum + item.quantity, 0));\n  subtotal = $derived(this.items.reduce((sum, item) => sum + item.price * item.quantity, 0));\n\n  add = (product) => {\n    const existing = this.items.find((item) => item.id === product.id);\n    if (existing) existing.quantity += 1;\n    else this.items.push({ ...product, quantity: 1 });\n  };\n\n  remove = (id) => {\n    this.items = this.items.filter((item) => item.id !== id);\n  };\n\n  setQuantity = (id, quantity) => {\n    const n = Math.floor(Number(quantity));\n    if (!Number.isFinite(n) || n < 1) {\n      this.remove(id);\n      return;\n    }\n    const item = this.items.find((item) => item.id === id);\n    if (item) item.quantity = n;\n  };\n\n  clear = () => {\n    this.items = [];\n  };\n}\n\nexport const cart = new CartStore();\n"
+    },
+    {
+      "path": "currency.js",
+      "text": "import { createContext } from 'svelte';\n\nexport const [getCurrency, setCurrency] = createContext();\n\nexport function formatMoney(amount, currency) {\n  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(amount);\n}\n"
+    }
+  ]
+}

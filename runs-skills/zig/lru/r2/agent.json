@@ -1,0 +1,53 @@
+{
+  "id": "zig-lru-r2",
+  "lang": "zig",
+  "task": "lru",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "4effd501118c",
+  "exitCode": 0,
+  "wallMs": 161494,
+  "files": [
+    "build.sh",
+    "build.zig",
+    "build.zig.zon",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.5086068,
+  "durationMs": 160768,
+  "apiMs": 112183,
+  "turns": 11,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe LRU cache program is written in Zig and passes all 5 cases in `node check.mjs`, starting from a clean build. The 5 unit tests also pass, including one that runs 20,000 random operations against a simple reference model at several capacities.\n\n- **Design:** `src/main.zig` reads all of stdin at once. Keys and values point straight into that input instead of being copied. The usage order is a doubly-linked list stored in an array, and when the cache is full the least-recently-used slot is",
+  "skillsOffered": [
+    "zig"
+  ],
+  "usage": {
+    "input": 18,
+    "output": 11439,
+    "thinking": 1968,
+    "cacheRead": 208054,
+    "cacheWrite": 29768
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 8
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 6,
+  "compileErrors": 2,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

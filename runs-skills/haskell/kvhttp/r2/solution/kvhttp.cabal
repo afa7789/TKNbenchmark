@@ -1,0 +1,23 @@
+cabal-version:   3.4
+name:            kvhttp
+version:         0.1.0.0
+synopsis:        In-memory HTTP/1.1 key-value server
+build-type:      Simple
+
+common common
+    default-language: GHC2024
+    ghc-options: -Wall -Wcompat -Widentities -Wredundant-constraints
+                 -Wpartial-fields -Wmissing-deriving-strategies -Wunused-packages
+    build-depends: base ^>=4.22
+
+executable kvhttp
+    import:         common
+    hs-source-dirs: src
+    main-is:        Main.hs
+    ghc-options:    -O2 -threaded -rtsopts "-with-rtsopts=-N -A16m"
+    build-depends:  bytestring ^>=0.12
+                  , containers ^>=0.8
+                  , http-types >=0.12 && <0.13
+                  , stm ^>=2.5
+                  , wai >=3.2 && <3.3
+                  , warp >=3.3 && <3.5

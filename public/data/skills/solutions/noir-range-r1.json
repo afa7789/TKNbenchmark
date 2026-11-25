@@ -1,0 +1,21 @@
+{
+  "id": "noir-range-r1",
+  "files": [
+    {
+      "path": "Nargo.toml",
+      "text": "[package]\nname = \"range\"\ntype = \"bin\"\nauthors = [\"\"]\n\n[dependencies]\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Compiles the circuit to target/range.json.\nset -euo pipefail\ncd \"$(dirname \"${BASH_SOURCE[0]}\")\"\nnargo compile\n"
+    },
+    {
+      "path": "prove.sh",
+      "text": "#!/usr/bin/env bash\n# Usage: bash prove.sh input.json\n# Exits 0 iff a witness satisfying the circuit can be generated for the inputs.\nset -euo pipefail\n\nif [[ $# -ne 1 ]]; then\n  echo \"usage: $0 input.json\" >&2\n  exit 2\nfi\n\ninput=\"$(cd \"$(dirname \"$1\")\" && pwd)/$(basename \"$1\")\"\ncd \"$(dirname \"${BASH_SOURCE[0]}\")\"\n\n# Prover file name is relative to the package root; use a unique one per run.\nprover=\"Prover_$$\"\ntrap 'rm -f \"${prover}.toml\"' EXIT\n\n# Translate the JSON object into Prover.toml. Values are passed through verbatim\n# as TOML strings; all range checking happens inside the circuit.\nnode -e '\nconst fs = require(\"fs\");\nconst input = JSON.parse(fs.readFileSync(process.argv[1], \"utf8\"));\nconst lines = [\"age\", \"threshold\"].map((k) => {\n  if (!(k in input)) throw new Error(`missing input: ${k}`);\n  return `${k} = ${JSON.stringify(String(input[k]))}`;\n});\nfs.writeFileSync(process.argv[2], lines.join(\"\\n\") + \"\\n\");\n' \"$input\" \"${prover}.toml\"\n\nnargo execute --prover-name \"$prover\"\n"
+    },
+    {
+      "path": "src/main.nr",
+      "text": "/// Proves that a private `age` is at least the public `threshold`.\n///\n/// Both values are `u8`, so the circuit range-constrains each to `0..=255`;\n/// any out-of-range or oversized field element is unsatisfiable.\nfn main(age: u8, threshold: pub u8) {\n    assert(age >= threshold, \"age is below threshold\");\n}\n\n#[test]\nfn accepts_above_threshold() {\n    main(25, 18);\n}\n\n#[test]\nfn accepts_equal_to_threshold() {\n    main(18, 18);\n}\n\n#[test]\nfn accepts_bounds() {\n    main(0, 0);\n    main(255, 0);\n    main(255, 255);\n}\n\n#[test(should_fail_with = \"age is below threshold\")]\nfn rejects_below_threshold() {\n    main(17, 18);\n}\n\n#[test(should_fail_with = \"age is below threshold\")]\nfn rejects_zero_age_with_max_threshold() {\n    main(0, 255);\n}\n"
+    }
+  ]
+}

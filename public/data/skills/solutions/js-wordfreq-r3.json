@@ -1,0 +1,21 @@
+{
+  "id": "js-wordfreq-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Produces ./app: a launcher that runs the program with Node.js.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\ncommand -v node >/dev/null || { echo \"node not found\" >&2; exit 1; }\nnode --check src/index.js\nnode --check src/wordfreq.js\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec node --max-old-space-size=4096 \"$(dirname \"$0\")/src/index.js\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "package.json",
+      "text": "{\n  \"name\": \"wordfreq\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"engines\": { \"node\": \">=26\" },\n  \"bin\": { \"wordfreq\": \"./src/index.js\" },\n  \"scripts\": { \"start\": \"node src/index.js\", \"test\": \"node check.mjs\" }\n}\n"
+    },
+    {
+      "path": "src/index.js",
+      "text": "#!/usr/bin/env node\nimport { WordCounter } from './wordfreq.js';\n\nconst TOP_N = 10;\n\nconst counter = new WordCounter();\nfor await (const chunk of process.stdin) counter.push(chunk);\ncounter.end();\n\nconst lines = counter.top(TOP_N).map(([word, count]) => `${count} ${word}\\n`);\nif (lines.length > 0) process.stdout.write(lines.join(''));\n"
+    },
+    {
+      "path": "src/wordfreq.js",
+      "text": "// Word-frequency counting over raw bytes. A word is a maximal run of ASCII letters,\n// folded to lowercase; every other byte is a separator.\n\nconst CASE_BIT = 0x20;\nconst LOWER_A = 0x61;\nconst LOWER_Z = 0x7a;\n\n/**\n * Incremental counter: feed it byte chunks in order, then ask for the top words.\n * A word split across chunk boundaries is carried over and stitched together.\n */\nexport class WordCounter {\n  #counts = new Map();\n  #carry = '';\n\n  /** @param {Buffer} chunk  Lowercased in place. */\n  push(chunk) {\n    const n = chunk.length;\n    let start = 0;\n    let inWord = this.#carry !== '';\n    for (let i = 0; i < n; i++) {\n      const folded = chunk[i] | CASE_BIT;\n      if (folded >= LOWER_A && folded <= LOWER_Z) {\n        chunk[i] = folded;\n        if (!inWord) {\n          start = i;\n          inWord = true;\n        }\n      } else if (inWord) {\n        this.#emit(chunk.latin1Slice(start, i));\n        inWord = false;\n      }\n    }\n    if (inWord) this.#carry += chunk.latin1Slice(start, n);\n  }\n\n  /** Flushes a word left pending at end of input. */\n  end() {\n    if (this.#carry !== '') this.#emit('');\n  }\n\n  #emit(tail) {\n    let word = tail;\n    if (this.#carry !== '') {\n      word = this.#carry + tail;\n      this.#carry = '';\n    }\n    this.#counts.set(word, (this.#counts.get(word) ?? 0) + 1);\n  }\n\n  /**\n   * Single pass over the counts, keeping only the best `limit` entries in sorted order.\n   * @param {number} limit\n   * @returns {Array<[string, number]>} by count descending, then word ascending (byte order)\n   */\n  top(limit) {\n    /** @type {Array<[string, number]>} */\n    const best = [];\n    if (limit <= 0) return best;\n    for (const entry of this.#counts) {\n      if (best.length === limit && !ranksBefore(entry, best[limit - 1])) continue;\n      let i = best.length < limit ? best.length : limit - 1;\n      while (i > 0 && ranksBefore(entry, best[i - 1])) {\n        best[i] = best[i - 1];\n        i--;\n      }\n      best[i] = entry;\n    }\n    return best;\n  }\n}\n\n/** Ordering: higher count first, then lexicographically smaller word (ASCII, so byte order). */\nfunction ranksBefore([wa, ca], [wb, cb]) {\n  return ca !== cb ? ca > cb : wa < wb;\n}\n"
+    }
+  ]
+}

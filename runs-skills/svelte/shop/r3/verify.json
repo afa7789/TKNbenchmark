@@ -1,0 +1,31 @@
+{
+  "buildOk": true,
+  "buildSecs": 0.23,
+  "buildLog": "",
+  "deps": [],
+  "pass": 5,
+  "total": 5,
+  "solved": true,
+  "cases": [
+    {
+      "name": "vite-build",
+      "ok": true
+    },
+    {
+      "name": "products",
+      "ok": true
+    },
+    {
+      "name": "add-to-cart",
+      "ok": true
+    },
+    {
+      "name": "debounced-search",
+      "ok": true
+    },
+    {
+      "name": "no-runtime-errors",
+      "ok": true
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "id": "clojure-calc-r1",
+  "lang": "clojure",
+  "task": "calc",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "a2fbce161227",
+  "exitCode": 0,
+  "wallMs": 94910,
+  "files": [
+    "app",
+    "build.clj",
+    "build.sh",
+    "deps.edn",
+    "src/calc/core.clj"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.336321,
+  "durationMs": 94217,
+  "apiMs": 73199,
+  "turns": 10,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "clojure"
+  ],
+  "usage": {
+    "input": 16,
+    "output": 5678,
+    "thinking": 1367,
+    "cacheRead": 161165,
+    "cacheWrite": 23808
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 7
+  },
+  "toolErrors": 0,
+  "stdlibReads": 1,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

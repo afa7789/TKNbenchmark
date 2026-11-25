@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Produces ./app, a launcher that runs the evaluator on Node.js.
+set -euo pipefail
+cd "$(dirname "$0")"
+cat > app <<'LAUNCHER'
+#!/usr/bin/env bash
+exec node --disable-warning=ExperimentalWarning "$(dirname "$0")/src/main.js" "$@"
+LAUNCHER
+chmod +x app

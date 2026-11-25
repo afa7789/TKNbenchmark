@@ -1,0 +1,17 @@
+{
+  "id": "haskell-wordfreq-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build an optimized release binary and place it at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncabal build -v1 exe:wordfreq\ninstall -m 755 \"$(cabal list-bin exe:wordfreq)\" ./app.tmp\nmv -f ./app.tmp ./app\n"
+    },
+    {
+      "path": "exe/Main.hs",
+      "text": "-- | wordfreq: print the 10 most frequent ASCII-letter words on stdin.\nmodule Main (main) where\n\nimport Data.ByteString (ByteString)\nimport Data.ByteString qualified as BS\nimport Data.ByteString.Builder qualified as B\nimport Data.List (sortBy)\nimport Data.Map.Strict qualified as Map\nimport Data.Ord (Down (..), comparing)\nimport Data.Word (Word8)\nimport System.IO (stdout)\n\n-- | Number of entries to report.\ntopN :: Int\ntopN = 10\n\nisAsciiLetter :: Word8 -> Bool\nisAsciiLetter w = (w >= 0x61 && w <= 0x7a) || (w >= 0x41 && w <= 0x5a)\n\n-- | Fold ASCII upper-case letters to lower case; other bytes are untouched.\ntoLowerAscii :: Word8 -> Word8\ntoLowerAscii w\n  | w >= 0x41 && w <= 0x5a = w + 0x20\n  | otherwise = w\n\n-- | Split input into maximal runs of ASCII letters (the input is assumed\n-- already case-folded; the slices share its buffer).\ntokenize :: ByteString -> [ByteString]\ntokenize s\n  | BS.null rest = []\n  | otherwise = word : tokenize rest'\n  where\n    rest = BS.dropWhile (not . isAsciiLetter) s\n    (word, rest') = BS.span isAsciiLetter rest\n\ncountWords :: [ByteString] -> Map.Map ByteString Int\ncountWords = foldl' (\\m w -> Map.insertWith (+) w 1 m) Map.empty\n\n-- | Order by count descending, then word ascending (byte order).\nrank :: Map.Map ByteString Int -> [(ByteString, Int)]\nrank = sortBy (comparing (Down . snd) <> comparing fst) . Map.toList\n\nrender :: [(ByteString, Int)] -> B.Builder\nrender = foldMap line\n  where\n    line (w, c) = B.intDec c <> B.char7 ' ' <> B.byteString w <> B.char7 '\\n'\n\nmain :: IO ()\nmain = do\n  input <- BS.map toLowerAscii <$> BS.getContents\n  B.hPutBuilder stdout . render . take topN . rank . countWords $ tokenize input\n"
+    },
+    {
+      "path": "wordfreq.cabal",
+      "text": "cabal-version:   3.4\nname:            wordfreq\nversion:         0.1.0.0\nsynopsis:        Print the ten most frequent words read from standard input\nbuild-type:      Simple\n\nexecutable wordfreq\n    default-language: GHC2024\n    hs-source-dirs:   exe\n    main-is:          Main.hs\n    ghc-options:      -O2 -Wall -Wcompat -Widentities -Wredundant-constraints\n                      -Wpartial-fields -Wunused-packages -rtsopts\n                      \"-with-rtsopts=-A64m\"\n    build-depends:    base ^>=4.22, bytestring ^>=0.12, containers ^>=0.8\n"
+    }
+  ]
+}

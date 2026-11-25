@@ -1,0 +1,54 @@
+{
+  "id": "csharp-lru-r1",
+  "lang": "csharp",
+  "task": "lru",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "70830870919a",
+  "exitCode": 0,
+  "wallMs": 99503,
+  "files": [
+    "build.sh",
+    "src/Lru/CommandProcessor.cs",
+    "src/Lru/Lru.csproj",
+    "src/Lru/LruCache.cs",
+    "src/Lru/Program.cs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2640744,
+  "durationMs": 98092,
+  "apiMs": 42542,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "csharp"
+  ],
+  "usage": {
+    "input": 8,
+    "output": 4096,
+    "thinking": 700,
+    "cacheRead": 57852,
+    "cacheWrite": 21319
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

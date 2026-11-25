@@ -1,0 +1,21 @@
+{
+  "id": "noir-sudoku-r3",
+  "files": [
+    {
+      "path": "Nargo.toml",
+      "text": "[package]\nname = \"sudoku\"\ntype = \"bin\"\nauthors = [\"\"]\n\n[dependencies]\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Compiles the circuit (no external dependencies to fetch).\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nnargo compile\n"
+    },
+    {
+      "path": "prove.sh",
+      "text": "#!/usr/bin/env bash\n# Usage: bash prove.sh input.json\n# Exits 0 iff a witness satisfying the circuit can be generated for the inputs.\nset -euo pipefail\n\ninput=$(cd \"$(dirname \"$1\")\" && pwd)/$(basename \"$1\")\ncd \"$(dirname \"$0\")\"\n\nprover=$(mktemp \"./prover-XXXXXX\")\ntrap 'rm -f \"$prover\" \"$prover.toml\"' EXIT\n\n# JSON -> TOML. Values are emitted as quoted decimal strings; anything that is\n# not a 16-element array of decimal strings is rejected up front.\njq -er '\n  def cells($k):\n    .[$k] as $v\n    | if ($v | type) == \"array\" and ($v | length) == 16\n         and all($v[]; type == \"string\" and test(\"^[0-9]+$\"))\n      then \"\\($k) = [\\($v | map(tojson) | join(\", \"))]\"\n      else error(\"\\($k) must be an array of 16 decimal strings\") end;\n  cells(\"puzzle\"), cells(\"solution\")\n' \"$input\" > \"$prover.toml\"\n\nnargo execute --prover-name \"$(basename \"$prover\")\" sudoku-witness\n"
+    },
+    {
+      "path": "src/main.nr",
+      "text": "//! Proves knowledge of a solution to a public 4x4 Sudoku puzzle.\n\nglobal SIZE: u32 = 4;\nglobal BOX: u32 = 2;\nglobal CELLS: u32 = SIZE * SIZE;\n\n/// `puzzle`: row-major clues, `0` for an empty cell.\n/// `solution`: row-major filled grid (private witness).\nfn main(puzzle: pub [Field; CELLS], solution: [Field; CELLS]) {\n    for i in 0..CELLS {\n        assert_digit(solution[i]);\n        // Either the cell is empty (clue == 0) or the clue matches the solution.\n        assert_eq(puzzle[i] * (puzzle[i] - solution[i]), 0, \"solution disagrees with a clue\");\n    }\n\n    for r in 0..SIZE {\n        let mut row = [0; SIZE];\n        for c in 0..SIZE {\n            row[c] = solution[r * SIZE + c];\n        }\n        assert_distinct(row);\n    }\n\n    for c in 0..SIZE {\n        let mut col = [0; SIZE];\n        for r in 0..SIZE {\n            col[r] = solution[r * SIZE + c];\n        }\n        assert_distinct(col);\n    }\n\n    for b in 0..SIZE {\n        let top = (b / BOX) * BOX;\n        let left = (b % BOX) * BOX;\n        let mut cells = [0; SIZE];\n        for k in 0..SIZE {\n            cells[k] = solution[(top + k / BOX) * SIZE + left + k % BOX];\n        }\n        assert_distinct(cells);\n    }\n}\n\n/// Constrains `x` to be one of 1, 2, 3, 4.\nfn assert_digit(x: Field) {\n    assert_eq((x - 1) * (x - 2) * (x - 3) * (x - 4), 0, \"cell is not a digit 1-4\");\n}\n\n/// Constrains all values to be pairwise distinct. Given every value is a digit\n/// in 1..=SIZE, a group of SIZE distinct digits contains each digit exactly once.\nfn assert_distinct(group: [Field; SIZE]) {\n    for i in 0..SIZE {\n        for j in i + 1..SIZE {\n            assert(group[i] != group[j], \"duplicate digit in a row, column or box\");\n        }\n    }\n}\n\n#[test]\nfn accepts_valid_solution() {\n    main(\n        [1, 0, 0, 4, 0, 4, 1, 0, 2, 0, 0, 3, 0, 3, 2, 0],\n        [1, 2, 3, 4, 3, 4, 1, 2, 2, 1, 4, 3, 4, 3, 2, 1],\n    );\n}\n\n#[test(should_fail_with = \"disagrees\")]\nfn rejects_clue_mismatch() {\n    main(\n        [1, 3, 0, 4, 0, 4, 1, 0, 2, 0, 0, 3, 0, 3, 2, 0],\n        [1, 2, 3, 4, 3, 4, 1, 2, 2, 1, 4, 3, 4, 3, 2, 1],\n    );\n}\n\n#[test(should_fail_with = \"not a digit\")]\nfn rejects_out_of_range() {\n    main([0; CELLS], [0, 2, 3, 4, 3, 4, 1, 2, 2, 1, 4, 3, 4, 3, 2, 1]);\n}\n\n#[test(should_fail_with = \"duplicate\")]\nfn rejects_row_duplicate() {\n    main([0; CELLS], [3, 2, 3, 4, 1, 4, 1, 2, 2, 1, 4, 3, 4, 3, 2, 1]);\n}\n\n#[test(should_fail_with = \"duplicate\")]\nfn rejects_box_duplicate() {\n    // Latin square (rows and columns valid) whose 2x2 boxes repeat digits.\n    main([0; CELLS], [1, 2, 3, 4, 2, 3, 4, 1, 3, 4, 1, 2, 4, 1, 2, 3]);\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "id": "asm-kvhttp-r3",
+  "lang": "asm",
+  "task": "kvhttp",
+  "rep": 3,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "ba1d13f673b5",
+  "exitCode": 0,
+  "wallMs": 460108,
+  "files": [
+    "build.sh",
+    "src/conn.s",
+    "src/main.s",
+    "src/store.s",
+    "tests/split.mjs",
+    "tests/stress.mjs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 1.7596198,
+  "durationMs": 459328,
+  "apiMs": 455921,
+  "turns": 14,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "asm"
+  ],
+  "usage": {
+    "input": 20,
+    "output": 53591,
+    "thinking": 30535,
+    "cacheRead": 514359,
+    "cacheWrite": 73106
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 7,
+    "Write": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

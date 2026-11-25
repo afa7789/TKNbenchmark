@@ -1,0 +1,52 @@
+{
+  "id": "odin-calc-r1",
+  "lang": "odin",
+  "task": "calc",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "88c4244847a8",
+  "exitCode": 0,
+  "wallMs": 63784,
+  "files": [
+    "build.sh",
+    "calc/calc.odin",
+    "main.odin"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.3045348,
+  "durationMs": 63083,
+  "apiMs": 54258,
+  "turns": 9,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "odin"
+  ],
+  "usage": {
+    "input": 14,
+    "output": 4750,
+    "thinking": 1303,
+    "cacheRead": 134794,
+    "cacheWrite": 22815
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 6
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

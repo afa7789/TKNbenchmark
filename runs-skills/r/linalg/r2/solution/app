@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+exec Rscript --vanilla -e "invisible(compiler::loadcmp('$dir/linalg.Rc'))"

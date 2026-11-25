@@ -1,0 +1,12 @@
+(lang dune 3.25)
+
+(name kvhttp)
+
+(generate_opam_files true)
+
+(package
+ (name kvhttp)
+ (synopsis "In-memory HTTP/1.1 key-value server")
+ (depends
+  (ocaml (>= 5.3))
+  (dune (>= 3.25))))

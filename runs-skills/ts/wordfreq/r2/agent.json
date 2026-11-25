@@ -1,0 +1,55 @@
+{
+  "id": "ts-wordfreq-r2",
+  "lang": "ts",
+  "task": "wordfreq",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "8dea152c6bec",
+  "exitCode": 0,
+  "wallMs": 54057,
+  "files": [
+    "app",
+    "build.sh",
+    "package.json",
+    "src/main.ts",
+    "src/wordfreq.ts",
+    "tsconfig.json"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.289605,
+  "durationMs": 53400,
+  "apiMs": 47521,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "ts"
+  ],
+  "usage": {
+    "input": 10,
+    "output": 4711,
+    "thinking": 992,
+    "cacheRead": 84405,
+    "cacheWrite": 22308
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

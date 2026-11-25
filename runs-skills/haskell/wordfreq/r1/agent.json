@@ -1,0 +1,53 @@
+{
+  "id": "haskell-wordfreq-r1",
+  "lang": "haskell",
+  "task": "wordfreq",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "d23a63f2fa38",
+  "exitCode": 0,
+  "wallMs": 68020,
+  "files": [
+    "build.sh",
+    "cabal.project",
+    "exe/Main.hs",
+    "wordfreq.cabal"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.28849420000000003,
+  "durationMs": 67318,
+  "apiMs": 50145,
+  "turns": 10,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe program is written and all 6 example cases pass with `node check.mjs`.\n\n- **Correctness:** I compared the output against a separate Python version on two 50 MB inputs, one made of words and one of random bytes. The output matched exactly on both.\n- **Speed:** each 50 MB run took about 1.7–1.9 seconds and used about 185 MB of memory.\n- **Layout:** the source is in `exe/Main.hs`, not `app/`, because a folder named `app` would clash with the `./app` binary. `build.sh` builds with cabal an",
+  "skillsOffered": [
+    "haskell"
+  ],
+  "usage": {
+    "input": 16,
+    "output": 4009,
+    "thinking": 759,
+    "cacheRead": 155451,
+    "cacheWrite": 22145
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 7
+  },
+  "toolErrors": 2,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": "asm-lru-r1",
+  "lang": "asm",
+  "task": "lru",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "ba1d13f673b5",
+  "exitCode": 0,
+  "wallMs": 202788,
+  "files": [
+    "build.sh",
+    "src/lru.S"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.7073734,
+  "durationMs": 202110,
+  "apiMs": 174113,
+  "turns": 10,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "asm"
+  ],
+  "usage": {
+    "input": 16,
+    "output": 17859,
+    "thinking": 8638,
+    "cacheRead": 230727,
+    "cacheWrite": 37998
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 7
+  },
+  "toolErrors": 2,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 2,
+  "checkRuns": 3,
+  "checkFails": 2,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

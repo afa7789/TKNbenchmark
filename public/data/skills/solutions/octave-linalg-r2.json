@@ -1,0 +1,13 @@
+{
+  "id": "octave-linalg-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build: generate the ./app launcher that runs linalg.m with octave-cli.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncommand -v octave-cli >/dev/null || { echo \"build.sh: octave-cli not found\" >&2; exit 1; }\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\ndir=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\nexec octave-cli -q -f --no-window-system -p \"$dir\" --eval \"linalg ()\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "linalg.m",
+      "text": "## -*- texinfo -*-\n## @deftypefn {} {} linalg ()\n## Read a symmetric positive-definite matrix @var{A} and a vector @var{b}\n## from standard input and print ln(det A), the solution of A x = b, the\n## ascending eigenvalues of A and its Frobenius norm.\n## @end deftypefn\n\nfunction linalg ()\n  vals = sscanf (fread (stdin, Inf, \"*char\")', \"%f\");\n  if (isempty (vals))\n    error (\"linalg: missing matrix size\");\n  endif\n\n  n = round (vals(1));\n  if (n < 1 || numel (vals) < 1 + n*n + n)\n    error (\"linalg: expected %d matrix entries and %d vector entries\", n*n, n);\n  endif\n\n  A = reshape (vals(2:1+n*n), n, n)';\n  b = vals(2+n*n:1+n*n+n);\n  A = (A + A') / 2;\n\n  [R, p] = chol (A);\n  if (p == 0)\n    logdet = 2 * sum (log (diag (R)));\n    x = R \\ (R' \\ b);\n  else\n    ## Not numerically positive definite: fall back to an LU-based solution.\n    [~, U] = lu (A);\n    logdet = sum (log (abs (diag (U))));\n    x = A \\ b;\n  endif\n\n  ev = sort (eig (A));\n\n  fprintf (\"%.15g\\n\", logdet);\n  print_row (x);\n  print_row (ev);\n  fprintf (\"%.15g\\n\", norm (A, \"fro\"));\nendfunction\n\nfunction print_row (v)\n  s = sprintf (\"%.15g \", v);\n  fprintf (\"%s\\n\", s(1:end-1));\nendfunction\n"
+    }
+  ]
+}

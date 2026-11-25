@@ -1,0 +1,9 @@
+{
+  "name": "lru",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=26" },
+  "bin": { "lru": "./src/main.js" },
+  "scripts": { "start": "node src/main.js", "test": "node check.mjs" }
+}

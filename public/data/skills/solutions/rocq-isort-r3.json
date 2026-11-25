@@ -1,0 +1,13 @@
+{
+  "id": "rocq-isort-r3",
+  "files": [
+    {
+      "path": "ISort.v",
+      "text": "(* Complete every proof. Do not change any definition or theorem statement. *)\nFrom Stdlib Require Import Arith Lia.\n\nFixpoint insert (x : nat) (l : list nat) : list nat :=\n  match l with\n  | nil => cons x nil\n  | cons y ys => if Nat.leb x y then cons x (cons y ys) else cons y (insert x ys)\n  end.\n\nFixpoint isort (l : list nat) : list nat :=\n  match l with\n  | nil => nil\n  | cons x xs => insert x (isort xs)\n  end.\n\nInductive Sorted : list nat -> Prop :=\n  | sorted_nil : Sorted nil\n  | sorted_single : forall x, Sorted (cons x nil)\n  | sorted_cons : forall x y ys, x <= y -> Sorted (cons y ys) -> Sorted (cons x (cons y ys)).\n\nFixpoint count (n : nat) (l : list nat) : nat :=\n  match l with\n  | nil => 0\n  | cons x xs => (if Nat.eqb x n then 1 else 0) + count n xs\n  end.\n\n(** Inserting into a sorted list yields a sorted list. *)\nLemma insert_sorted : forall x l, Sorted l -> Sorted (insert x l).\nProof.\n  intros x l Hs.\n  induction Hs as [| y | y z zs Hyz Hs IH]; simpl.\n  - apply sorted_single.\n  - destruct (Nat.leb_spec x y) as [Hxy | Hxy].\n    + apply sorted_cons; [assumption | apply sorted_single].\n    + apply sorted_cons; [lia | apply sorted_single].\n  - destruct (Nat.leb_spec x y) as [Hxy | Hxy].\n    + apply sorted_cons; [assumption | apply sorted_cons; assumption].\n    + simpl in IH |- *.\n      destruct (Nat.leb_spec x z) as [Hxz | Hxz].\n      * apply sorted_cons; [lia | exact IH].\n      * apply sorted_cons; [assumption | exact IH].\nQed.\n\nTheorem isort_sorted : forall l, Sorted (isort l).\nProof.\n  induction l as [| x xs IH]; simpl.\n  - apply sorted_nil.\n  - apply insert_sorted, IH.\nQed.\n\n(** Inserting [x] adds exactly one occurrence of [x] and nothing else. *)\nLemma count_insert : forall n x l,\n  count n (insert x l) = (if Nat.eqb x n then 1 else 0) + count n l.\nProof.\n  intros n x l.\n  induction l as [| y ys IH]; simpl.\n  - reflexivity.\n  - destruct (Nat.leb x y); simpl.\n    + reflexivity.\n    + rewrite IH. lia.\nQed.\n\nTheorem isort_count : forall n l, count n (isort l) = count n l.\nProof.\n  intros n l.\n  induction l as [| x xs IH]; simpl.\n  - reflexivity.\n  - rewrite count_insert, IH. reflexivity.\nQed.\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Check every proof in this directory; exits non-zero if any proof is rejected.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nrocq c -w +deprecated ISort.v\n"
+    }
+  ]
+}

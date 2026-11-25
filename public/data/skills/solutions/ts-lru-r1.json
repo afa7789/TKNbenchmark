@@ -1,0 +1,25 @@
+{
+  "id": "ts-lru-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Produces ./app: a launcher that runs the TypeScript sources with Node.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\n# Type-check when a TypeScript compiler is available (optional; Node strips types itself).\nif command -v tsc >/dev/null 2>&1; then\n  tsc -p tsconfig.json\nfi\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec node --disable-warning=ExperimentalWarning \"$(dirname \"$0\")/src/main.ts\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "package.json",
+      "text": "{\n  \"name\": \"lru\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"engines\": { \"node\": \">=26\" },\n  \"scripts\": { \"start\": \"node src/main.ts\", \"check\": \"tsc\" }\n}\n"
+    },
+    {
+      "path": "src/lru.ts",
+      "text": "/**\n * Least-recently-used cache backed by a Map, whose iteration order is\n * insertion order: the first key is the least recently used, the last key\n * the most recently used. Every operation is O(1) expected time.\n */\nexport class LruCache<K, V> {\n  readonly capacity: number;\n  readonly #entries = new Map<K, V>();\n\n  constructor(capacity: number) {\n    if (!Number.isInteger(capacity) || capacity < 1) {\n      throw new RangeError(`capacity must be a positive integer, got ${capacity}`);\n    }\n    this.capacity = capacity;\n  }\n\n  get size(): number {\n    return this.#entries.size;\n  }\n\n  get(key: K): V | undefined {\n    const entries = this.#entries;\n    if (!entries.has(key)) return undefined;\n    const value = entries.get(key) as V;\n    entries.delete(key);\n    entries.set(key, value);\n    return value;\n  }\n\n  set(key: K, value: V): void {\n    const entries = this.#entries;\n    entries.delete(key);\n    entries.set(key, value);\n    if (entries.size > this.capacity) {\n      const oldest = entries.keys().next();\n      if (!oldest.done) entries.delete(oldest.value);\n    }\n  }\n\n  delete(key: K): boolean {\n    return this.#entries.delete(key);\n  }\n}\n"
+    },
+    {
+      "path": "src/main.ts",
+      "text": "import { readFileSync } from 'node:fs';\nimport { LruCache } from './lru.ts';\n\n/** Runs the command script in `input` and returns the output lines. */\nexport function run(input: string): string[] {\n  const lines = input.split('\\n');\n  const capacity = Number.parseInt(lines[0] ?? '', 10);\n  const cache = new LruCache<string, string>(capacity);\n  const out: string[] = [];\n\n  for (let i = 1; i < lines.length; i++) {\n    let line = lines[i] ?? '';\n    if (line.endsWith('\\r')) line = line.slice(0, -1);\n    if (line === '') continue;\n\n    const firstSpace = line.indexOf(' ');\n    const command = firstSpace < 0 ? line : line.slice(0, firstSpace);\n    const rest = firstSpace < 0 ? '' : line.slice(firstSpace + 1);\n\n    switch (command) {\n      case 'SET': {\n        const sep = rest.indexOf(' ');\n        if (sep < 0) throw new Error(`line ${i + 1}: SET needs a key and a value`);\n        cache.set(rest.slice(0, sep), rest.slice(sep + 1));\n        break;\n      }\n      case 'GET':\n        out.push(cache.get(rest) ?? 'NULL');\n        break;\n      case 'DEL':\n        out.push(cache.delete(rest) ? '1' : '0');\n        break;\n      case 'SIZE':\n        out.push(String(cache.size));\n        break;\n      default:\n        throw new Error(`line ${i + 1}: unknown command ${JSON.stringify(command)}`);\n    }\n  }\n  return out;\n}\n\nif (import.meta.main) {\n  const output = run(readFileSync(0, 'latin1'));\n  if (output.length > 0) process.stdout.write(output.join('\\n') + '\\n');\n}\n"
+    },
+    {
+      "path": "tsconfig.json",
+      "text": "{\n  \"compilerOptions\": {\n    \"target\": \"esnext\", \"module\": \"nodenext\", \"types\": [\"node\"],\n    \"noEmit\": true, \"allowImportingTsExtensions\": true,\n    \"erasableSyntaxOnly\": true, \"verbatimModuleSyntax\": true,\n    \"noUncheckedIndexedAccess\": true, \"exactOptionalPropertyTypes\": true,\n    \"noImplicitOverride\": true, \"skipLibCheck\": true\n  },\n  \"include\": [\"src\"]\n}\n"
+    }
+  ]
+}

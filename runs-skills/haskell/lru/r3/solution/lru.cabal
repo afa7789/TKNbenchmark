@@ -1,0 +1,25 @@
+cabal-version:   3.4
+name:            lru
+version:         0.1.0.0
+synopsis:        LRU cache simulator
+build-type:      Simple
+
+common common
+    default-language: GHC2024
+    ghc-options: -Wall -Wcompat -Widentities -Wredundant-constraints
+                 -Wpartial-fields -Wmissing-deriving-strategies -Wunused-packages
+    build-depends: base ^>=4.22
+
+library
+    import:          common
+    hs-source-dirs:  src
+    exposed-modules: Data.Cache.LRU
+    build-depends:   array ^>=0.5, bytestring ^>=0.12
+    ghc-options:     -O2
+
+executable app
+    import:         common
+    hs-source-dirs: exe
+    main-is:        Main.hs
+    ghc-options:    -O2 -rtsopts "-with-rtsopts=-A64m"
+    build-depends:  lru, bytestring

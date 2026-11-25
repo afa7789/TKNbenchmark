@@ -1,0 +1,13 @@
+{
+  "id": "julia-linalg-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds ./app: a launcher that runs the Julia implementation in src/linalg.jl.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\ncommand -v julia >/dev/null || { echo \"julia not found on PATH\" >&2; exit 1; }\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nDIR=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"\nexec julia --startup-file=no --history-file=no -O2 \"$DIR/src/linalg.jl\" \"$@\"\nLAUNCHER\nchmod +x app\n\n# Warm up: ensures LinearAlgebra's precompiled image is present and the script runs.\nprintf '1\\n4\\n2\\n' | ./app >/dev/null\n"
+    },
+    {
+      "path": "src/linalg.jl",
+      "text": "# linalg: log-determinant, linear solve, eigenvalues and Frobenius norm\n# of a symmetric positive-definite matrix read from standard input.\n\nmodule LinalgApp\n\nusing LinearAlgebra\n\n\"\"\"\n    read_problem(io) -> (A, b)\n\nParse `n`, an `n×n` matrix and a length-`n` vector from whitespace-separated tokens.\n\"\"\"\nfunction read_problem(io::IO)\n    tokens = split(read(io, String))\n    isempty(tokens) && throw(ArgumentError(\"empty input\"))\n    n = parse(Int, first(tokens))\n    n ≥ 1 || throw(ArgumentError(\"n must be positive, got $n\"))\n    length(tokens) ≥ 1 + n * n + n ||\n        throw(ArgumentError(\"expected $(n * n + n) numbers after n, got $(length(tokens) - 1)\"))\n    vals = parse.(Float64, @view tokens[2:(1 + n * n + n)])\n    A = permutedims(reshape(vals[1:(n * n)], n, n))   # input is row-major\n    b = vals[(n * n + 1):end]\n    return A, b\nend\n\n\"\"\"\n    analyze(A, b) -> (logdet, x, eigenvalues, frobenius)\n\nUse a Cholesky factorization when `A` is positive definite, falling back to LU otherwise.\n\"\"\"\nfunction analyze(A::Matrix{Float64}, b::Vector{Float64})\n    S = Symmetric(A)\n    F = cholesky(S; check = false)\n    if issuccess(F)\n        ld = logdet(F)\n        x = F \\ b\n    else\n        L = lu(A)\n        ld = first(logabsdet(L))\n        x = L \\ b\n    end\n    λ = eigvals(S)   # returned in ascending order\n    return ld, x, λ, norm(A)\nend\n\nfunction print_vector(io::IO, v::AbstractVector{Float64})\n    join(io, v, ' ')\n    println(io)\n    return nothing\nend\n\nfunction main(io_in::IO = stdin, io_out::IO = stdout)\n    A, b = read_problem(io_in)\n    ld, x, λ, fro = analyze(A, b)\n    buf = IOBuffer()\n    println(buf, ld)\n    print_vector(buf, x)\n    print_vector(buf, λ)\n    println(buf, fro)\n    write(io_out, take!(buf))\n    flush(io_out)\n    return 0\nend\n\nend # module\n\nexit(LinalgApp.main())\n"
+    }
+  ]
+}

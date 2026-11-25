@@ -1,0 +1,17 @@
+{
+  "id": "haskell-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build an optimized release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncabal build -v0 exe:wordfreq\ninstall -m 755 \"$(cabal list-bin exe:wordfreq)\" ./app.tmp\nmv -f ./app.tmp ./app\n"
+    },
+    {
+      "path": "src/Main.hs",
+      "text": "-- | wordfreq: print the ten most frequent ASCII words read from standard input.\n--\n-- A word is a maximal run of ASCII letters, folded to lowercase. Every other\n-- byte is a separator, so the input is processed as raw bytes and never\n-- decoded.\nmodule Main (main) where\n\nimport Data.ByteString (ByteString)\nimport Data.ByteString qualified as BS\nimport Data.ByteString.Builder qualified as B\nimport Data.List (sortBy)\nimport Data.Map.Strict qualified as Map\nimport Data.Ord (Down (..), comparing)\nimport Data.Word (Word8)\nimport System.IO (stdout)\n\n-- | Number of lines to print.\ntopN :: Int\ntopN = 10\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  B.hPutBuilder stdout . render . topWords topN . countWords $ input\n\n-- | Count occurrences of each lowercased word.\ncountWords :: ByteString -> Map.Map ByteString Int\ncountWords =\n  foldl' (\\m w -> Map.insertWith (+) w 1 m) Map.empty\n    . filter (not . BS.null)\n    . BS.splitWith (not . isLower)\n    . BS.map toLowerAscii\n\n-- | The @n@ most frequent words: count descending, then word ascending.\ntopWords :: Int -> Map.Map ByteString Int -> [(ByteString, Int)]\ntopWords n = take n . sortBy (comparing (Down . snd) <> comparing fst) . Map.toList\n\nrender :: [(ByteString, Int)] -> B.Builder\nrender = foldMap line\n  where\n    line (w, c) = B.intDec c <> B.char7 ' ' <> B.byteString w <> B.char7 '\\n'\n\nisLower :: Word8 -> Bool\nisLower b = b >= 0x61 && b <= 0x7a\n{-# INLINE isLower #-}\n\ntoLowerAscii :: Word8 -> Word8\ntoLowerAscii b\n  | b >= 0x41 && b <= 0x5a = b + 0x20\n  | otherwise = b\n{-# INLINE toLowerAscii #-}\n"
+    },
+    {
+      "path": "wordfreq.cabal",
+      "text": "cabal-version:   3.4\nname:            wordfreq\nversion:         0.1.0.0\nsynopsis:        Print the ten most frequent words on standard input\nbuild-type:      Simple\n\ncommon common\n    default-language: GHC2024\n    ghc-options: -Wall -Wcompat -Widentities -Wredundant-constraints\n                 -Wpartial-fields -Wmissing-deriving-strategies -Wunused-packages\n    build-depends: base ^>=4.22\n\nexecutable wordfreq\n    import:         common\n    hs-source-dirs: src\n    main-is:        Main.hs\n    ghc-options:    -O2 -rtsopts \"-with-rtsopts=-A64m\"\n    build-depends:  bytestring ^>=0.12, containers ^>=0.8\n"
+    }
+  ]
+}

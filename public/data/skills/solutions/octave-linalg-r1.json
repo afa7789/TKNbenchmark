@@ -1,0 +1,13 @@
+{
+  "id": "octave-linalg-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Creates ./app, a launcher that runs linalg.m with octave-cli.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncat > app <<'SH'\n#!/usr/bin/env bash\nhere=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\nexec octave-cli -q -f --no-window-system \"$here/linalg.m\"\nSH\nchmod +x app\n"
+    },
+    {
+      "path": "linalg.m",
+      "text": "## linalg: dense linear algebra on a symmetric positive-definite matrix.\n##\n## Reads n, the n-by-n matrix A and the vector b from standard input and\n## prints ln(det A), the solution of A*x = b, the ascending eigenvalues of A\n## and the Frobenius norm of A, one per line.\n\n1;\n\nfunction [A, b] = read_problem (fid)\n  vals = sscanf (fread (fid, Inf, \"*char\")', \"%f\");\n  if (isempty (vals))\n    error (\"linalg: empty input\");\n  endif\n  n = vals(1);\n  if (n != fix (n) || n < 1 || numel (vals) < 1 + n*n + n)\n    error (\"linalg: malformed input\");\n  endif\n  A = reshape (vals(2:1+n*n), n, n)';\n  b = vals(2+n*n:1+n*n+n);\nendfunction\n\nfunction print_row (v)\n  printf (\"%s\\n\", strjoin (arrayfun (@(t) sprintf (\"%.15g\", t), v(:)', ...\n                                     \"UniformOutput\", false), \" \"));\nendfunction\n\nfunction main ()\n  [A, b] = read_problem (stdin);\n  A = (A + A') / 2;                     # enforce exact symmetry\n  [R, p] = chol (A);\n  ev = sort (eig (A));\n  if (p == 0)\n    logdet = 2 * sum (log (diag (R)));\n    x = R \\ (R' \\ b);\n  else\n    ## Numerically not positive definite: fall back to general methods.\n    logdet = sum (log (abs (ev)));\n    x = A \\ b;\n  endif\n  printf (\"%.15g\\n\", logdet);\n  print_row (x);\n  print_row (ev);\n  printf (\"%.15g\\n\", norm (A, \"fro\"));\nendfunction\n\nmain ();\n"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": "kotlin-lru-r1",
+  "lang": "kotlin",
+  "task": "lru",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "949f8c5197c2",
+  "exitCode": 0,
+  "wallMs": 36020,
+  "files": [
+    "app",
+    "build.sh",
+    "src/LruCache.kt",
+    "src/Main.kt"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2030438,
+  "durationMs": 35089,
+  "apiMs": 29183,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "kotlin"
+  ],
+  "usage": {
+    "input": 8,
+    "output": 1924,
+    "thinking": 482,
+    "cacheRead": 56019,
+    "cacheWrite": 19166
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

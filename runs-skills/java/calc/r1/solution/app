@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+opts=(-XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xlog:disable -Xlog:all=off)
+[[ -f "$dir/app.aot" ]] && opts+=(-XX:AOTCache="$dir/app.aot")
+exec java "${opts[@]}" -jar "$dir/app.jar"

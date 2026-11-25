@@ -1,0 +1,17 @@
+{
+  "id": "js-wordfreq-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Produce ./app: a launcher that runs the wordfreq program with Node.js.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec node \"$(dirname \"$0\")/src/wordfreq.js\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "package.json",
+      "text": "{\n  \"name\": \"wordfreq\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"engines\": { \"node\": \">=26\" },\n  \"scripts\": { \"build\": \"bash build.sh\", \"test\": \"node check.mjs\" }\n}\n"
+    },
+    {
+      "path": "src/wordfreq.js",
+      "text": "// wordfreq: print the 10 most frequent ASCII words read from standard input.\n\nconst TOP_N = 10;\n\nconst isUpper = (b) => b >= 0x41 && b <= 0x5a;\nconst isLower = (b) => b >= 0x61 && b <= 0x7a;\n\n/**\n * Count case-folded words (maximal runs of ASCII letters) in a byte buffer.\n * The buffer is lowercased in place.\n * @param {Buffer} buf\n * @returns {Map<string, number>}\n */\nexport function countWords(buf) {\n  for (let i = 0; i < buf.length; i++) {\n    if (isUpper(buf[i])) buf[i] |= 0x20;\n  }\n  // latin1 maps each byte to one UTF-16 code unit, so offsets line up.\n  const text = buf.toString('latin1');\n  const counts = new Map();\n  const n = text.length;\n  let i = 0;\n  while (i < n) {\n    if (!isLower(text.charCodeAt(i))) {\n      i++;\n      continue;\n    }\n    const start = i;\n    do i++;\n    while (i < n && isLower(text.charCodeAt(i)));\n    const word = text.slice(start, i);\n    counts.set(word, (counts.get(word) ?? 0) + 1);\n  }\n  return counts;\n}\n\nconst byCountThenWord = ([wa, ca], [wb, cb]) => cb - ca || (wa < wb ? -1 : wa > wb ? 1 : 0);\n\n/**\n * @param {Map<string, number>} counts\n * @param {number} [n]\n * @returns {Array<[string, number]>}\n */\nexport function topWords(counts, n = TOP_N) {\n  const top = [];\n  for (const entry of counts) {\n    if (top.length === n && byCountThenWord(entry, top[n - 1]) >= 0) continue;\n    let j = top.length < n ? top.length : n - 1;\n    while (j > 0 && byCountThenWord(entry, top[j - 1]) < 0) {\n      top[j] = top[j - 1];\n      j--;\n    }\n    top[j] = entry;\n  }\n  return top;\n}\n\nasync function readAll(stream) {\n  const chunks = [];\n  for await (const chunk of stream) chunks.push(chunk);\n  return Buffer.concat(chunks);\n}\n\nasync function main() {\n  const counts = countWords(await readAll(process.stdin));\n  const lines = topWords(counts).map(([word, count]) => `${count} ${word}\\n`);\n  if (lines.length > 0) process.stdout.write(lines.join(''));\n}\n\nif (import.meta.main) await main();\n"
+    }
+  ]
+}

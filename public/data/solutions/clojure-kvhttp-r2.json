@@ -1,0 +1,29 @@
+{
+  "id": "clojure-kvhttp-r2",
+  "files": [
+    {
+      "path": "build.clj",
+      "text": "(ns build\n  (:require [clojure.tools.build.api :as b]))\n\n(def class-dir \"target/classes\")\n(def uber-file \"target/kvhttp.jar\")\n(def basis (delay (b/create-basis {:project \"deps.edn\"})))\n\n(defn clean [_]\n  (b/delete {:path \"target\"}))\n\n(defn uber [_]\n  (clean nil)\n  (b/copy-dir {:src-dirs [\"src\"] :target-dir class-dir})\n  (b/compile-clj {:basis @basis\n                  :ns-compile '[kvhttp.main]\n                  :class-dir class-dir\n                  :compile-opts {:direct-linking true\n                                 :elide-meta [:doc :file :line :added]}})\n  (b/uber {:class-dir class-dir\n           :uber-file uber-file\n           :basis @basis\n           :main 'kvhttp.main}))\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds an AOT-compiled uberjar and a launcher script at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nclojure -T:build uber\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nDIR=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\nexec java -XX:+UseSerialGC -Xshare:auto -jar \"$DIR/target/kvhttp.jar\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "deps.edn",
+      "text": "{:paths [\"src\"]\n :deps {org.clojure/clojure {:mvn/version \"1.12.3\"}\n        http-kit/http-kit {:mvn/version \"2.8.0\"}}\n :aliases\n {:build {:deps {io.github.clojure/tools.build {:mvn/version \"0.10.14\"}}\n          :ns-default build}}}\n"
+    },
+    {
+      "path": "src/kvhttp/handler.clj",
+      "text": "(ns kvhttp.handler\n  \"Ring handler implementing the kvhttp routes.\"\n  (:require [clojure.string :as str]\n            [kvhttp.store :as store])\n  (:import (java.io ByteArrayOutputStream InputStream)))\n\n(def ^:private key-pattern #\"[A-Za-z0-9_-]{1,64}\")\n\n(def ^:private max-value-bytes (* 1024 1024))\n\n(defn- response\n  ([status] (response status \"\"))\n  ([status body] {:status status :headers {} :body body}))\n\n(def ^:private method-not-allowed (response 405))\n(def ^:private not-found (response 404))\n\n(defn- read-body ^bytes [body]\n  (cond\n    (nil? body) (byte-array 0)\n    (bytes? body) body\n    (string? body) (.getBytes ^String body \"UTF-8\")\n    :else (let [out (ByteArrayOutputStream.)]\n            (.transferTo ^InputStream body out)\n            (.toByteArray out))))\n\n(defn- keys->json\n  \"Encodes keys as a JSON array. Keys are validated against `key-pattern`,\n  so they never need escaping.\"\n  [ks]\n  (str \"[\" (str/join \",\" (map #(str \\\" % \\\") ks)) \"]\"))\n\n(defn- health [{:keys [request-method]}]\n  (if (= :get request-method)\n    (response 200 \"ok\")\n    method-not-allowed))\n\n(defn- list-all [db {:keys [request-method]}]\n  (if (= :get request-method)\n    {:status 200\n     :headers {\"Content-Type\" \"application/json\"}\n     :body (keys->json (store/list-keys db))}\n    method-not-allowed))\n\n(defn- item [db k {:keys [request-method body]}]\n  (if-not (re-matches key-pattern k)\n    (response 400)\n    (case request-method\n      :get (if-some [v (store/fetch db k)]\n             {:status 200\n              :headers {\"Content-Type\" \"application/octet-stream\"}\n              :body v}\n             not-found)\n      :put (let [v (read-body body)]\n             (if (> (alength v) max-value-bytes)\n               (response 413)\n               (response (case (store/put! db k v) :created 201 :replaced 200))))\n      :delete (if (store/delete! db k) (response 204) not-found)\n      method-not-allowed)))\n\n(defn make-handler\n  \"Returns a Ring handler backed by the store `db`.\"\n  [db]\n  (fn [{:keys [uri] :as req}]\n    (cond\n      (= uri \"/health\") (health req)\n      (= uri \"/kv\") (list-all db req)\n      (str/starts-with? uri \"/kv/\") (item db (subs uri 4) req)\n      :else not-found)))\n"
+    },
+    {
+      "path": "src/kvhttp/main.clj",
+      "text": "(ns kvhttp.main\n  (:require [kvhttp.handler :as handler]\n            [kvhttp.store :as store]\n            [org.httpkit.server :as http])\n  (:gen-class))\n\n(defn- usage-exit []\n  (binding [*out* *err*]\n    (println \"usage: app <port>\"))\n  (System/exit 2))\n\n(defn -main [& args]\n  (let [port (some-> (first args) parse-long)]\n    (when-not (and port (< 0 port 65536))\n      (usage-exit))\n    (http/run-server (handler/make-handler (store/create))\n                     {:ip \"127.0.0.1\"\n                      :port port\n                      :thread (max 8 (.availableProcessors (Runtime/getRuntime)))\n                      :max-body (* 2 1024 1024)\n                      :legacy-return-value? false})))\n"
+    },
+    {
+      "path": "src/kvhttp/store.clj",
+      "text": "(ns kvhttp.store\n  \"Thread-safe in-memory key-value store. Keys are kept sorted so listing\n  is a cheap traversal.\")\n\n(defn create\n  \"Returns a new, empty store.\"\n  []\n  (atom (sorted-map)))\n\n(defn put!\n  \"Stores `value` under `k`. Returns :created if the key was new,\n  :replaced otherwise.\"\n  [store k value]\n  (let [[old _] (swap-vals! store assoc k value)]\n    (if (contains? old k) :replaced :created)))\n\n(defn fetch\n  \"Returns the value stored under `k`, or nil.\"\n  [store k]\n  (get @store k))\n\n(defn delete!\n  \"Removes `k`. Returns true if it was present.\"\n  [store k]\n  (let [[old _] (swap-vals! store dissoc k)]\n    (contains? old k)))\n\n(defn list-keys\n  \"Returns all keys in ascending order.\"\n  [store]\n  (keys @store))\n"
+    }
+  ]
+}

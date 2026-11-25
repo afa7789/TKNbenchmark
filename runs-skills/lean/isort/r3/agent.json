@@ -1,0 +1,51 @@
+{
+  "id": "lean-isort-r3",
+  "lang": "lean",
+  "task": "isort",
+  "rep": 3,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "6f74f5e6dc07",
+  "exitCode": 0,
+  "wallMs": 25020,
+  "files": [
+    "ISort.lean",
+    "build.sh"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.19507059999999998,
+  "durationMs": 24413,
+  "apiMs": 21441,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "lean"
+  ],
+  "usage": {
+    "input": 6,
+    "output": 1642,
+    "thinking": 420,
+    "cacheRead": 33833,
+    "cacheWrite": 19430
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 2
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 10,
+    "total": 10
+  }
+}

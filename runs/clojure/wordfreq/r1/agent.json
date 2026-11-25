@@ -1,0 +1,50 @@
+{
+  "id": "clojure-wordfreq-r1",
+  "lang": "clojure",
+  "task": "wordfreq",
+  "rep": 1,
+  "arm": "base",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "exitCode": 0,
+  "wallMs": 82063,
+  "files": [
+    "app",
+    "build.sh",
+    "deps.edn",
+    "src/wordfreq/core.clj"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.24080119999999997,
+  "durationMs": 81090,
+  "apiMs": 51901,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 14,
+    "output": 3616,
+    "thinking": 741,
+    "cacheRead": 107846,
+    "cacheWrite": 18357
+  },
+  "tools": {
+    "Bash": 6
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

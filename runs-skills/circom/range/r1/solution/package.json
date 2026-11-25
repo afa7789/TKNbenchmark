@@ -1,0 +1,10 @@
+{
+  "name": "range-circuit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prove a private 8-bit value is at least a public 8-bit threshold",
+  "devDependencies": {
+    "circomlib": "2.0.5",
+    "snarkjs": "0.7.6"
+  }
+}

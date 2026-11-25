@@ -1,0 +1,55 @@
+{
+  "id": "ts-lru-r2",
+  "lang": "ts",
+  "task": "lru",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "8dea152c6bec",
+  "exitCode": 0,
+  "wallMs": 55449,
+  "files": [
+    "app",
+    "build.sh",
+    "package.json",
+    "src/lru.ts",
+    "src/main.ts",
+    "tsconfig.json"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2839372,
+  "durationMs": 54593,
+  "apiMs": 49727,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "ts"
+  ],
+  "usage": {
+    "input": 12,
+    "output": 4326,
+    "thinking": 786,
+    "cacheRead": 108806,
+    "cacheWrite": 21951
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

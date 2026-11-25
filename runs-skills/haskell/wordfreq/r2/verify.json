@@ -1,0 +1,84 @@
+{
+  "buildOk": true,
+  "buildSecs": 1.65,
+  "buildLog": "",
+  "binaryBytes": 21259080,
+  "projectBytes": 43126784,
+  "cacheBytes": 24576,
+  "footprintBytes": 43151360,
+  "pass": 14,
+  "total": 14,
+  "solved": true,
+  "cases": [
+    {
+      "name": "simple",
+      "ok": true,
+      "ms": 16
+    },
+    {
+      "name": "case-folding",
+      "ok": true,
+      "ms": 15
+    },
+    {
+      "name": "top-10-and-ties",
+      "ok": true,
+      "ms": 16
+    },
+    {
+      "name": "empty",
+      "ok": true,
+      "ms": 18
+    },
+    {
+      "name": "separators",
+      "ok": true,
+      "ms": 20
+    },
+    {
+      "name": "medium-200kb",
+      "ok": true,
+      "ms": 19
+    },
+    {
+      "name": "utf8-letters-are-separators",
+      "ok": true,
+      "ms": 17
+    },
+    {
+      "name": "invalid-utf8",
+      "ok": true,
+      "ms": 17
+    },
+    {
+      "name": "no-words",
+      "ok": true,
+      "ms": 19
+    },
+    {
+      "name": "single-word-no-newline",
+      "ok": true,
+      "ms": 15
+    },
+    {
+      "name": "all-ties",
+      "ok": true,
+      "ms": 18
+    },
+    {
+      "name": "long-word",
+      "ok": true,
+      "ms": 19
+    },
+    {
+      "name": "crlf",
+      "ok": true,
+      "ms": 19
+    },
+    {
+      "name": "large-30mb",
+      "ok": true,
+      "ms": 633
+    }
+  ]
+}

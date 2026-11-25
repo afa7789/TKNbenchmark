@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-25T18:34:38.850Z",
+    "generatedAt": "2026-11-25T22:26:26.981Z",
     "arm": "base",
     "model": "claude-opus-5-5",
     "effort": "high",
@@ -666,6 +666,33 @@
         },
         "perfTotal": 25.034470485560977,
         "perfScore": 3.9944923164113484
+      },
+      "clojure": {
+        "n": 12,
+        "solved": 12,
+        "works": 12,
+        "passRate": 1,
+        "repairCostUsd": 0,
+        "firstTryRate": 0.75,
+        "costUsd": 1.0544068,
+        "costPerSolvedUsd": 0.2692302666666667,
+        "output": 18062,
+        "turns": 26,
+        "durationS": 296.72999999999996,
+        "compileErrors": 0,
+        "stdlibReads": 1,
+        "codeTokens": 9128,
+        "codeTokensCl100k": 5261,
+        "buildSecs": 16.91,
+        "footprintBytes": 112082944,
+        "perfPoints": {
+          "wordfreq": 11.17717003567182,
+          "lru": 6.112054329371817,
+          "calc": 2.4324324324324325,
+          "kvhttp": 62.586405529953915
+        },
+        "perfTotal": 10.098571965608132,
+        "perfScore": 9.902390193441379
       },
       "csharp": {
         "n": 12,
@@ -2223,6 +2250,460 @@
         "perfMs": null,
         "perfRps": null,
         "perfRssBytes": null
+      },
+      "clojure/calc": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 2,
+        "costToGreenUsd": {
+          "median": 0.30190620000000007,
+          "min": 0.294786,
+          "max": 0.3783918,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.30190620000000007,
+          "min": 0.294786,
+          "max": 0.3783918,
+          "n": 3
+        },
+        "output": {
+          "median": 5681,
+          "min": 5623,
+          "max": 8172,
+          "n": 3
+        },
+        "turns": {
+          "median": 8,
+          "min": 7,
+          "max": 9,
+          "n": 3
+        },
+        "durationS": {
+          "median": 90.091,
+          "min": 89.704,
+          "max": 117.593,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 3150,
+          "min": 2956,
+          "max": 3572,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 1834,
+          "min": 1731,
+          "max": 2116,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 3.3,
+          "min": 2.84,
+          "max": 3.67,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 31055872,
+          "min": 30953472,
+          "max": 41484288,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 26095616,
+          "min": 25997312,
+          "max": 36524032,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 4960256,
+          "min": 4956160,
+          "max": 4960256,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 109342720,
+          "min": 108945408,
+          "max": 151056384,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 4962832,
+          "min": 4954928,
+          "max": 4966990,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 740,
+          "min": 722,
+          "max": 802,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 137379840,
+          "min": 133988352,
+          "max": 160956416,
+          "n": 3
+        }
+      },
+      "clojure/kvhttp": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.2975476,
+          "min": 0.2952024000000001,
+          "max": 0.32442839999999995,
+          "n": 3
+        },
+        "deps": {
+          "data.json, http-kit, test-runner": 1,
+          "http-kit": 1,
+          "data.json, http-kit": 1
+        },
+        "costUsd": {
+          "median": 0.2975476,
+          "min": 0.2952024000000001,
+          "max": 0.32442839999999995,
+          "n": 3
+        },
+        "output": {
+          "median": 5562,
+          "min": 5309,
+          "max": 6043,
+          "n": 3
+        },
+        "turns": {
+          "median": 7,
+          "min": 7,
+          "max": 8,
+          "n": 3
+        },
+        "durationS": {
+          "median": 87.913,
+          "min": 87.437,
+          "max": 215.938,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 1,
+          "min": 1,
+          "max": 2,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 2381,
+          "min": 2306,
+          "max": 3375,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 1425,
+          "min": 1381,
+          "max": 2078,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 7.03,
+          "min": 6.6,
+          "max": 7.88,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 18448384,
+          "min": 18235392,
+          "max": 19279872,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 6488064,
+          "min": 5996544,
+          "max": 6557696,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 12451840,
+          "min": 11747328,
+          "max": 12722176,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 37699584,
+          "min": 36438016,
+          "max": 38952960,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 5470367,
+          "min": 5358954,
+          "max": 5490934,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": {
+          "median": 17384,
+          "min": 16942,
+          "max": 17470,
+          "n": 3
+        },
+        "perfRssBytes": {
+          "median": 88244224,
+          "min": 69550080,
+          "max": 91750400,
+          "n": 3
+        }
+      },
+      "clojure/lru": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.2141518,
+          "min": 0.20287500000000003,
+          "max": 0.22393979999999997,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.2141518,
+          "min": 0.20287500000000003,
+          "max": 0.22393979999999997,
+          "n": 3
+        },
+        "output": {
+          "median": 3203,
+          "min": 2882,
+          "max": 3672,
+          "n": 3
+        },
+        "turns": {
+          "median": 5,
+          "min": 5,
+          "max": 5,
+          "n": 3
+        },
+        "durationS": {
+          "median": 54.985,
+          "min": 51.001,
+          "max": 57.979,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1764,
+          "min": 1679,
+          "max": 1831,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 968,
+          "min": 903,
+          "max": 999,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 3.13,
+          "min": 3.13,
+          "max": 3.48,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 30830592,
+          "min": 9965568,
+          "max": 30875648,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 25870336,
+          "min": 5005312,
+          "max": 25915392,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 4960256,
+          "min": 4960256,
+          "max": 4960256,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 108441600,
+          "min": 24981504,
+          "max": 108621824,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 4948351,
+          "min": 4942032,
+          "max": 4997242,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 589,
+          "min": 539,
+          "max": 655,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 147603456,
+          "min": 123830272,
+          "max": 242221056,
+          "n": 3
+        }
+      },
+      "clojure/wordfreq": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 1,
+        "costToGreenUsd": {
+          "median": 0.24080119999999997,
+          "min": 0.21527919999999995,
+          "max": 0.24145379999999997,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.24080119999999997,
+          "min": 0.21527919999999995,
+          "max": 0.24145379999999997,
+          "n": 3
+        },
+        "output": {
+          "median": 3616,
+          "min": 3140,
+          "max": 4105,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 6,
+          "max": 7,
+          "n": 3
+        },
+        "durationS": {
+          "median": 63.741,
+          "min": 58.106,
+          "max": 81.09,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 1,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1833,
+          "min": 1763,
+          "max": 1867,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 1034,
+          "min": 972,
+          "max": 1045,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 3.45,
+          "min": 3.43,
+          "max": 3.46,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 31748096,
+          "min": 30867456,
+          "max": 32366592,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 25911296,
+          "min": 25825280,
+          "max": 26501120,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 5865472,
+          "min": 4956160,
+          "max": 5922816,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 109223936,
+          "min": 108601344,
+          "max": 111869952,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 4948031,
+          "min": 4942618,
+          "max": 4996616,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 841,
+          "min": 779,
+          "max": 912,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 77643776,
+          "min": 76857344,
+          "max": 303677440,
+          "n": 3
+        }
       },
       "cpp/calc": {
         "n": 3,
@@ -11884,6 +12365,22 @@
         "backendCostUsd": 0.25492940000000003
       },
       {
+        "lang": "clojure",
+        "fw": "svelte",
+        "backendTokens": 2381,
+        "frontendTokens": 774,
+        "totalTokens": 3155,
+        "backendCostUsd": 0.2975476
+      },
+      {
+        "lang": "clojure",
+        "fw": "vue",
+        "backendTokens": 2381,
+        "frontendTokens": 828,
+        "totalTokens": 3209,
+        "backendCostUsd": 0.2975476
+      },
+      {
         "lang": "ts",
         "fw": "svelte",
         "backendTokens": 2445,
@@ -11914,6 +12411,14 @@
         "frontendTokens": 828,
         "totalTokens": 3362,
         "backendCostUsd": 0.32905
+      },
+      {
+        "lang": "clojure",
+        "fw": "react",
+        "backendTokens": 2381,
+        "frontendTokens": 1032,
+        "totalTokens": 3413,
+        "backendCostUsd": 0.2975476
       },
       {
         "lang": "java",
@@ -14344,6 +14849,873 @@
       "works": true,
       "costToGreenUsd": 0.18368900000000002,
       "worktrees4Bytes": 376832,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "clojure-calc-r1",
+      "lang": "clojure",
+      "task": "calc",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.30190620000000007,
+      "turns": 8,
+      "usage": {
+        "input": 16,
+        "output": 5623,
+        "thinking": 1093,
+        "cacheRead": 135591,
+        "cacheWrite": 20283
+      },
+      "tools": {
+        "Bash": 7
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 3,
+      "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 90.091,
+      "apiS": 70.434,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 3.3,
+      "footprintBytes": 31055872,
+      "projectBytes": 26095616,
+      "cacheBytes": 4960256,
+      "binaryBytes": 4966990,
+      "failures": [],
+      "codeTokens": 3150,
+      "codeTokensCl100k": 1834,
+      "codeChars": 6787,
+      "codeLines": 229,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "deps.edn"
+        },
+        {
+          "path": "src/calc/main.clj"
+        }
+      ],
+      "perfMs": 740,
+      "perfRps": null,
+      "perfRssBytes": 137379840,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.30190620000000007,
+      "worktrees4Bytes": 109342720,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "clojure-calc-r2",
+      "lang": "clojure",
+      "task": "calc",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.294786,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 5681,
+        "thinking": 1239,
+        "cacheRead": 114990,
+        "cacheWrite": 19764
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 89.704,
+      "apiS": 73.801,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 2.84,
+      "footprintBytes": 30953472,
+      "projectBytes": 25997312,
+      "cacheBytes": 4956160,
+      "binaryBytes": 4954928,
+      "failures": [],
+      "codeTokens": 2956,
+      "codeTokensCl100k": 1731,
+      "codeChars": 6348,
+      "codeLines": 188,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "deps.edn"
+        },
+        {
+          "path": "src/calc/core.clj"
+        }
+      ],
+      "perfMs": 722,
+      "perfRps": null,
+      "perfRssBytes": 133988352,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.294786,
+      "worktrees4Bytes": 108945408,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "clojure-calc-r3",
+      "lang": "clojure",
+      "task": "calc",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.3783918,
+      "turns": 9,
+      "usage": {
+        "input": 18,
+        "output": 8172,
+        "thinking": 1944,
+        "cacheRead": 165359,
+        "cacheWrite": 22726
+      },
+      "tools": {
+        "Bash": 8
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 117.593,
+      "apiS": 95.253,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 3.67,
+      "footprintBytes": 41484288,
+      "projectBytes": 36524032,
+      "cacheBytes": 4960256,
+      "binaryBytes": 4962832,
+      "failures": [],
+      "codeTokens": 3572,
+      "codeTokensCl100k": 2116,
+      "codeChars": 7623,
+      "codeLines": 244,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "deps.edn"
+        },
+        {
+          "path": "src/calc/main.clj"
+        }
+      ],
+      "perfMs": 802,
+      "perfRps": null,
+      "perfRssBytes": 160956416,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.3783918,
+      "worktrees4Bytes": 151056384,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "clojure-kvhttp-r1",
+      "lang": "clojure",
+      "task": "kvhttp",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.32442839999999995,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 6043,
+        "thinking": 1070,
+        "cacheRead": 116882,
+        "cacheWrite": 22517
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 1,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 215.938,
+      "apiS": 74.101,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 7.88,
+      "footprintBytes": 18235392,
+      "projectBytes": 6488064,
+      "cacheBytes": 11747328,
+      "binaryBytes": 5470367,
+      "failures": [],
+      "codeTokens": 3375,
+      "codeTokensCl100k": 2078,
+      "codeChars": 7077,
+      "codeLines": 222,
+      "fileTokens": [
+        {
+          "path": "build.clj"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "deps.edn"
+        },
+        {
+          "path": "src/kvhttp/handler.clj"
+        },
+        {
+          "path": "src/kvhttp/main.clj"
+        },
+        {
+          "path": "src/kvhttp/store.clj"
+        },
+        {
+          "path": "test/kvhttp/handler_test.clj"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 16942,
+      "perfRssBytes": 91750400,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.32442839999999995,
+      "worktrees4Bytes": 37699584,
+      "devloopTargetBytes": null,
+      "deps": [
+        "data.json",
+        "http-kit",
+        "test-runner"
+      ]
+    },
+    {
+      "id": "clojure-kvhttp-r2",
+      "lang": "clojure",
+      "task": "kvhttp",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2952024000000001,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 5562,
+        "thinking": 1328,
+        "cacheRead": 111892,
+        "cacheWrite": 20191
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 1,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 87.913,
+      "apiS": 69.853,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 7.03,
+      "footprintBytes": 18448384,
+      "projectBytes": 5996544,
+      "cacheBytes": 12451840,
+      "binaryBytes": 5358954,
+      "failures": [],
+      "codeTokens": 2306,
+      "codeTokensCl100k": 1381,
+      "codeChars": 4865,
+      "codeLines": 168,
+      "fileTokens": [
+        {
+          "path": "build.clj"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "deps.edn"
+        },
+        {
+          "path": "src/kvhttp/handler.clj"
+        },
+        {
+          "path": "src/kvhttp/main.clj"
+        },
+        {
+          "path": "src/kvhttp/store.clj"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 17384,
+      "perfRssBytes": 88244224,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2952024000000001,
+      "worktrees4Bytes": 36438016,
+      "devloopTargetBytes": null,
+      "deps": [
+        "http-kit"
+      ]
+    },
+    {
+      "id": "clojure-kvhttp-r3",
+      "lang": "clojure",
+      "task": "kvhttp",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2975476,
+      "turns": 8,
+      "usage": {
+        "input": 16,
+        "output": 5309,
+        "thinking": 1127,
+        "cacheRead": 135598,
+        "cacheWrite": 20523
+      },
+      "tools": {
+        "Bash": 7
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 2,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 87.437,
+      "apiS": 68.169,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 6.6,
+      "footprintBytes": 19279872,
+      "projectBytes": 6557696,
+      "cacheBytes": 12722176,
+      "binaryBytes": 5490934,
+      "failures": [],
+      "codeTokens": 2381,
+      "codeTokensCl100k": 1425,
+      "codeChars": 4989,
+      "codeLines": 171,
+      "fileTokens": [
+        {
+          "path": "build.clj"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "deps.edn"
+        },
+        {
+          "path": "src/kvhttp/handler.clj"
+        },
+        {
+          "path": "src/kvhttp/main.clj"
+        },
+        {
+          "path": "src/kvhttp/store.clj"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 17470,
+      "perfRssBytes": 69550080,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2975476,
+      "worktrees4Bytes": 38952960,
+      "devloopTargetBytes": null,
+      "deps": [
+        "data.json",
+        "http-kit"
+      ]
+    },
+    {
+      "id": "clojure-lru-r1",
+      "lang": "clojure",
+      "task": "lru",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.22393979999999997,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 3672,
+        "thinking": 632,
+        "cacheRead": 64939,
+        "cacheWrite": 17184
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 54.985,
+      "apiS": 45.698,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 3.13,
+      "footprintBytes": 30875648,
+      "projectBytes": 25915392,
+      "cacheBytes": 4960256,
+      "binaryBytes": 4948351,
+      "failures": [],
+      "codeTokens": 1831,
+      "codeTokensCl100k": 999,
+      "codeChars": 3694,
+      "codeLines": 108,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "deps.edn"
+        },
+        {
+          "path": "src/lru/main.clj"
+        }
+      ],
+      "perfMs": 539,
+      "perfRps": null,
+      "perfRssBytes": 242221056,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.22393979999999997,
+      "worktrees4Bytes": 108621824,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "clojure-lru-r2",
+      "lang": "clojure",
+      "task": "lru",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2141518,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 3203,
+        "thinking": 822,
+        "cacheRead": 64859,
+        "cacheWrite": 17135
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 57.979,
+      "apiS": 44.608,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 3.13,
+      "footprintBytes": 30830592,
+      "projectBytes": 25870336,
+      "cacheBytes": 4960256,
+      "binaryBytes": 4942032,
+      "failures": [],
+      "codeTokens": 1679,
+      "codeTokensCl100k": 903,
+      "codeChars": 3225,
+      "codeLines": 97,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "deps.edn"
+        },
+        {
+          "path": "src/lru/main.clj"
+        }
+      ],
+      "perfMs": 589,
+      "perfRps": null,
+      "perfRssBytes": 147603456,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2141518,
+      "worktrees4Bytes": 108441600,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "clojure-lru-r3",
+      "lang": "clojure",
+      "task": "lru",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.20287500000000003,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 2882,
+        "thinking": 539,
+        "cacheRead": 66135,
+        "cacheWrite": 16496
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 51.001,
+      "apiS": 39.741,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 3.48,
+      "footprintBytes": 9965568,
+      "projectBytes": 5005312,
+      "cacheBytes": 4960256,
+      "binaryBytes": 4997242,
+      "failures": [],
+      "codeTokens": 1764,
+      "codeTokensCl100k": 968,
+      "codeChars": 3381,
+      "codeLines": 99,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "deps.edn"
+        },
+        {
+          "path": "src/lru/main.clj"
+        }
+      ],
+      "perfMs": 655,
+      "perfRps": null,
+      "perfRssBytes": 123830272,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.20287500000000003,
+      "worktrees4Bytes": 24981504,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "clojure-wordfreq-r1",
+      "lang": "clojure",
+      "task": "wordfreq",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.24080119999999997,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 3616,
+        "thinking": 741,
+        "cacheRead": 107846,
+        "cacheWrite": 18357
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 81.09,
+      "apiS": 51.901,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 3.45,
+      "footprintBytes": 32366592,
+      "projectBytes": 26501120,
+      "cacheBytes": 5865472,
+      "binaryBytes": 4996616,
+      "failures": [],
+      "codeTokens": 1833,
+      "codeTokensCl100k": 1045,
+      "codeChars": 3534,
+      "codeLines": 113,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "deps.edn"
+        },
+        {
+          "path": "src/wordfreq/core.clj"
+        }
+      ],
+      "perfMs": 779,
+      "perfRps": null,
+      "perfRssBytes": 303677440,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.24080119999999997,
+      "worktrees4Bytes": 111869952,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "clojure-wordfreq-r2",
+      "lang": "clojure",
+      "task": "wordfreq",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.24145379999999997,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 4105,
+        "thinking": 600,
+        "cacheRead": 87449,
+        "cacheWrite": 17727
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 1,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 63.741,
+      "apiS": 50.516,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 3.43,
+      "footprintBytes": 30867456,
+      "projectBytes": 25911296,
+      "cacheBytes": 4956160,
+      "binaryBytes": 4948031,
+      "failures": [],
+      "codeTokens": 1867,
+      "codeTokensCl100k": 1034,
+      "codeChars": 3552,
+      "codeLines": 109,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "deps.edn"
+        },
+        {
+          "path": "src/wordfreq/core.clj"
+        }
+      ],
+      "perfMs": 912,
+      "perfRps": null,
+      "perfRssBytes": 76857344,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.24145379999999997,
+      "worktrees4Bytes": 108601344,
+      "devloopTargetBytes": null,
+      "deps": []
+    },
+    {
+      "id": "clojure-wordfreq-r3",
+      "lang": "clojure",
+      "task": "wordfreq",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.21527919999999995,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 3140,
+        "thinking": 485,
+        "cacheRead": 84156,
+        "cacheWrite": 16950
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 58.106,
+      "apiS": 43.735,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 3.46,
+      "footprintBytes": 31748096,
+      "projectBytes": 25825280,
+      "cacheBytes": 5922816,
+      "binaryBytes": 4942618,
+      "failures": [],
+      "codeTokens": 1763,
+      "codeTokensCl100k": 972,
+      "codeChars": 3445,
+      "codeLines": 103,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "deps.edn"
+        },
+        {
+          "path": "src/wordfreq/core.clj"
+        }
+      ],
+      "perfMs": 841,
+      "perfRps": null,
+      "perfRssBytes": 77643776,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.21527919999999995,
+      "worktrees4Bytes": 109223936,
       "devloopTargetBytes": null,
       "deps": []
     },

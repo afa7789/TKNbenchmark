@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+exec octave-cli -q -f --no-window-system -p "$dir" --eval "linalg ()"

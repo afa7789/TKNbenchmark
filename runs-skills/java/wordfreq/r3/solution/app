@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+opts=(-XX:+UseSerialGC -Xms64m)
+if [[ -f "$dir/build/app.aot" ]]; then
+  opts+=(-XX:AOTCache="$dir/build/app.aot")
+fi
+exec java "${opts[@]}" -jar "$dir/build/wordfreq.jar"

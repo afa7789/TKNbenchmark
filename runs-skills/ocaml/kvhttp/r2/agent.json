@@ -1,0 +1,67 @@
+{
+  "id": "ocaml-kvhttp-r2",
+  "lang": "ocaml",
+  "task": "kvhttp",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "fe503ed6ae88",
+  "exitCode": 0,
+  "wallMs": 236291,
+  "files": [
+    "bin/dune",
+    "bin/main.ml",
+    "build.sh",
+    "dune-project",
+    "kvhttp.opam",
+    "lib/dune",
+    "lib/request.ml",
+    "lib/request.mli",
+    "lib/response.ml",
+    "lib/response.mli",
+    "lib/router.ml",
+    "lib/router.mli",
+    "lib/server.ml",
+    "lib/server.mli",
+    "lib/store.ml",
+    "lib/store.mli",
+    "test/dune",
+    "test/test_kvhttp.ml"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.5463948000000001,
+  "durationMs": 235575,
+  "apiMs": 108879,
+  "turns": 13,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "ocaml"
+  ],
+  "usage": {
+    "input": 22,
+    "output": 11072,
+    "thinking": 2108,
+    "cacheRead": 287614,
+    "cacheWrite": 33418
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 10
+  },
+  "toolErrors": 1,
+  "stdlibReads": 1,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 3,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "vue-ui-r1",
+  "files": [
+    {
+      "path": "Counter.vue",
+      "text": "<script setup>\nimport { ref } from 'vue'\n\nconst count = ref(0)\n</script>\n\n<template>\n  <p>{{ count }}</p>\n  <button type=\"button\" @click=\"count++\">Increment</button>\n</template>\n"
+    },
+    {
+      "path": "FetchUsers.vue",
+      "text": "<script setup>\nimport { ref, onMounted } from 'vue'\n\nconst users = ref([])\nconst loading = ref(true)\nconst error = ref(null)\n\nonMounted(async () => {\n  try {\n    const res = await fetch('https://jsonplaceholder.typicode.com/users')\n    if (!res.ok) throw new Error(`HTTP ${res.status}`)\n    users.value = await res.json()\n  } catch (e) {\n    error.value = e.message\n  } finally {\n    loading.value = false\n  }\n})\n</script>\n\n<template>\n  <p v-if=\"loading\">Loading…</p>\n  <p v-else-if=\"error\">Error: {{ error }}</p>\n  <ul v-else>\n    <li v-for=\"user in users\" :key=\"user.id\">{{ user.name }}</li>\n  </ul>\n</template>\n"
+    },
+    {
+      "path": "FilterTable.vue",
+      "text": "<script setup>\nimport { ref, computed } from 'vue'\n\nconst { rows } = defineProps({ rows: { type: Array, default: () => [] } })\n\nconst columns = ['name', 'price', 'qty']\nconst query = ref('')\nconst sortKey = ref(null)\nconst sortAsc = ref(true)\n\nconst visible = computed(() => {\n  const q = query.value.trim().toLowerCase()\n  const filtered = rows.filter((row) => row.name.toLowerCase().includes(q))\n  if (!sortKey.value) return filtered\n  const key = sortKey.value\n  const dir = sortAsc.value ? 1 : -1\n  return filtered.toSorted((a, b) => {\n    const x = a[key]\n    const y = b[key]\n    return (typeof x === 'string' ? x.localeCompare(y) : x - y) * dir\n  })\n})\n\nconst total = computed(() => visible.value.reduce((sum, row) => sum + row.price * row.qty, 0))\n\nfunction sortBy(key) {\n  if (sortKey.value === key) {\n    sortAsc.value = !sortAsc.value\n  } else {\n    sortKey.value = key\n    sortAsc.value = true\n  }\n}\n</script>\n\n<template>\n  <input v-model=\"query\" type=\"search\" placeholder=\"Search\" />\n  <table>\n    <thead>\n      <tr>\n        <th v-for=\"col in columns\" :key=\"col\" @click=\"sortBy(col)\">\n          {{ col }}{{ sortKey === col ? (sortAsc ? ' ▲' : ' ▼') : '' }}\n        </th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr v-for=\"(row, i) in visible\" :key=\"`${row.name}-${i}`\">\n        <td>{{ row.name }}</td>\n        <td>{{ row.price }}</td>\n        <td>{{ row.qty }}</td>\n      </tr>\n    </tbody>\n    <tfoot>\n      <tr>\n        <td colspan=\"2\">Total</td>\n        <td>{{ total }}</td>\n      </tr>\n    </tfoot>\n  </table>\n</template>\n"
+    },
+    {
+      "path": "Hello.vue",
+      "text": "<script setup>\nconst { name } = defineProps({ name: { type: String, required: true } })\n</script>\n\n<template>\n  <p>Hello, {{ name }}!</p>\n</template>\n"
+    },
+    {
+      "path": "KvBrowser.vue",
+      "text": "<script setup>\nimport { ref, onMounted } from 'vue'\n\nconst { baseUrl } = defineProps({ baseUrl: { type: String, required: true } })\n\nconst keys = ref([])\nconst selected = ref(null)\nconst selectedValue = ref('')\nconst newKey = ref('')\nconst newValue = ref('')\nconst error = ref(null)\n\nconst url = (key) => `${baseUrl.replace(/\\/$/, '')}/kv${key == null ? '' : `/${encodeURIComponent(key)}`}`\n\nasync function request(key, options) {\n  const res = await fetch(url(key), options)\n  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)\n  return res\n}\n\nasync function run(action) {\n  error.value = null\n  try {\n    await action()\n  } catch (e) {\n    error.value = e.message\n  }\n}\n\nasync function loadKeys() {\n  keys.value = await (await request()).json()\n}\n\nconst reload = () => run(loadKeys)\n\nconst show = (key) =>\n  run(async () => {\n    selectedValue.value = await (await request(key)).text()\n    selected.value = key\n  })\n\nconst save = () =>\n  run(async () => {\n    if (!newKey.value) return\n    await request(newKey.value, { method: 'PUT', body: newValue.value })\n    if (selected.value === newKey.value) selectedValue.value = newValue.value\n    newKey.value = ''\n    newValue.value = ''\n    await loadKeys()\n  })\n\nconst remove = (key) =>\n  run(async () => {\n    await request(key, { method: 'DELETE' })\n    if (selected.value === key) selected.value = null\n    await loadKeys()\n  })\n\nonMounted(reload)\n</script>\n\n<template>\n  <p v-if=\"error\" role=\"alert\">Error: {{ error }}</p>\n  <form @submit.prevent=\"save\">\n    <input v-model=\"newKey\" placeholder=\"Key\" required />\n    <input v-model=\"newValue\" placeholder=\"Value\" />\n    <button type=\"submit\">Save</button>\n  </form>\n  <ul>\n    <li v-for=\"key in keys\" :key=\"key\">\n      <button type=\"button\" @click=\"show(key)\">{{ key }}</button>\n      <button type=\"button\" @click=\"remove(key)\">Delete</button>\n    </li>\n  </ul>\n  <section v-if=\"selected !== null\">\n    <h3>{{ selected }}</h3>\n    <pre>{{ selectedValue }}</pre>\n  </section>\n</template>\n"
+    },
+    {
+      "path": "Todo.vue",
+      "text": "<script setup>\nimport { ref } from 'vue'\n\nconst text = ref('')\nconst items = ref([])\nlet nextId = 0\n\nfunction add() {\n  const value = text.value.trim()\n  if (!value) return\n  items.value.push({ id: nextId++, text: value })\n  text.value = ''\n}\n\nfunction remove(id) {\n  items.value = items.value.filter((item) => item.id !== id)\n}\n</script>\n\n<template>\n  <form @submit.prevent=\"add\">\n    <input v-model=\"text\" />\n    <button type=\"submit\">Add</button>\n  </form>\n  <ul>\n    <li v-for=\"item in items\" :key=\"item.id\">\n      {{ item.text }}\n      <button type=\"button\" @click=\"remove(item.id)\">Remove</button>\n    </li>\n  </ul>\n</template>\n"
+    }
+  ]
+}

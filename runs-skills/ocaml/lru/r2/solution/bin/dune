@@ -1,0 +1,4 @@
+(executable
+ (name main)
+ (libraries lru)
+ (ocamlopt_flags (:standard -inline 200)))

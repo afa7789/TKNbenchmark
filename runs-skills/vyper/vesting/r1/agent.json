@@ -1,0 +1,51 @@
+{
+  "id": "vyper-vesting-r1",
+  "lang": "vyper",
+  "task": "vesting",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "757a56f3bfb4",
+  "exitCode": 0,
+  "wallMs": 39338,
+  "files": [
+    "build.sh",
+    "src/Vesting.vy"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.22966359999999997,
+  "durationMs": 38605,
+  "apiMs": 36115,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "vyper"
+  ],
+  "usage": {
+    "input": 8,
+    "output": 2702,
+    "thinking": 550,
+    "cacheRead": 57558,
+    "cacheWrite": 20510
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 3,
+    "total": 3
+  }
+}

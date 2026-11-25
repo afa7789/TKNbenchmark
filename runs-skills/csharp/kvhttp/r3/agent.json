@@ -1,0 +1,55 @@
+{
+  "id": "csharp-kvhttp-r3",
+  "lang": "csharp",
+  "task": "kvhttp",
+  "rep": 3,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "70830870919a",
+  "exitCode": 0,
+  "wallMs": 227301,
+  "files": [
+    ".gitignore",
+    "build.sh",
+    "src/KvHttp/KeyValueStore.cs",
+    "src/KvHttp/KvHttp.csproj",
+    "src/KvHttp/KvRequestHandler.cs",
+    "src/KvHttp/Program.cs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.38482759999999994,
+  "durationMs": 226631,
+  "apiMs": 81617,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "csharp"
+  ],
+  "usage": {
+    "input": 12,
+    "output": 7102,
+    "thinking": 1877,
+    "cacheRead": 121578,
+    "cacheWrite": 27303
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 5
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 1,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "id": "svelte-ui-r1",
+  "lang": "svelte",
+  "task": "ui",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "ee782535a6ad",
+  "exitCode": 0,
+  "wallMs": 40253,
+  "files": [
+    "Counter.svelte",
+    "FetchUsers.svelte",
+    "FilterTable.svelte",
+    "Hello.svelte",
+    "KvBrowser.svelte",
+    "Todo.svelte"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.1565234,
+  "durationMs": 39644,
+  "apiMs": 29262,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "svelte"
+  ],
+  "usage": {
+    "input": 8,
+    "output": 3064,
+    "thinking": 256,
+    "cacheRead": 37737,
+    "cacheWrite": 10958
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 3
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 0,
+  "compileErrors": 0,
+  "checkRuns": 0,
+  "checkFails": 0,
+  "firstCheckPass": false,
+  "lastCheck": null
+}

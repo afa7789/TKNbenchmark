@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec Rscript --vanilla --default-packages=base,stats "$(dirname "$0")/R/linreg.R" "$@"

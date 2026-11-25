@@ -1,0 +1,13 @@
+{
+  "id": "r-linalg-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build ./app: a launcher that runs src/linalg.R with Rscript.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncommand -v Rscript >/dev/null || { echo \"Rscript not found\" >&2; exit 1; }\nRscript --vanilla -e 'invisible(parse(\"src/linalg.R\"))'\ncat > app <<'LAUNCH'\n#!/usr/bin/env bash\ndir=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\nexec Rscript --vanilla \"$dir/src/linalg.R\" \"$@\"\nLAUNCH\nchmod +x app\n"
+    },
+    {
+      "path": "src/linalg.R",
+      "text": "#!/usr/bin/env Rscript\n# linalg: log-determinant, linear solve, eigenvalues and Frobenius norm of a\n# symmetric positive-definite matrix read from standard input.\n\nread_problem <- function(con) {\n  tokens <- scan(con, what = double(), quiet = TRUE)\n  if (length(tokens) < 1L) stop(\"Can't read `n` from input.\", call. = FALSE)\n  n <- as.integer(tokens[[1L]])\n  needed <- 1L + n * n + n\n  if (is.na(n) || n < 1L || length(tokens) < needed) {\n    stop(\"Input must contain `n`, an n x n matrix and a vector of length n.\", call. = FALSE)\n  }\n  a <- matrix(tokens[seq.int(2L, length.out = n * n)], nrow = n, ncol = n, byrow = TRUE)\n  b <- tokens[seq.int(2L + n * n, length.out = n)]\n  list(a = a, b = b)\n}\n\nanalyse <- function(a, b) {\n  sym <- (a + t(a)) / 2\n  r <- tryCatch(chol(sym), error = function(e) NULL)\n  if (is.null(r)) {\n    # Not numerically SPD: fall back to an LU-based path.\n    log_det <- as.numeric(determinant(sym, logarithm = TRUE)$modulus)\n    x <- solve(sym, b)\n  } else {\n    log_det <- 2 * sum(log(diag(r)))\n    x <- backsolve(r, forwardsolve(r, b, upper.tri = TRUE, transpose = TRUE))\n  }\n  eig <- eigen(sym, symmetric = TRUE, only.values = TRUE)$values\n  list(\n    log_det = log_det,\n    x = as.vector(x),\n    eigenvalues = sort(eig),\n    frobenius = sqrt(sum(a * a))\n  )\n}\n\nfmt <- function(v) paste(sprintf(\"%.15g\", v), collapse = \" \")\n\nmain <- function() {\n  con <- file(\"stdin\")\n  on.exit(close(con), add = TRUE)\n  p <- read_problem(con)\n  res <- analyse(p$a, p$b)\n  writeLines(c(fmt(res$log_det), fmt(res$x), fmt(res$eigenvalues), fmt(res$frobenius)))\n}\n\nmain()\n"
+    }
+  ]
+}

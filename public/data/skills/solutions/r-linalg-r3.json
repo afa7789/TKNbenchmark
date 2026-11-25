@@ -1,0 +1,13 @@
+{
+  "id": "r-linalg-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds ./app: a launcher that runs linalg.R with Rscript.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nRscript --vanilla -e 'invisible(parse(\"linalg.R\"))'\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec Rscript --vanilla \"$(dirname \"$0\")/linalg.R\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "linalg.R",
+      "text": "#!/usr/bin/env Rscript\n# linalg: log-determinant, linear solve, eigenvalues and Frobenius norm of a\n# symmetric positive-definite matrix read from standard input.\n\nread_input <- function(con = file(\"stdin\")) {\n  tokens <- scan(con, what = double(), quiet = TRUE)\n  if (length(tokens) < 1L) stop(\"Can't read `n` from input.\", call. = FALSE)\n  n <- as.integer(tokens[[1L]])\n  needed <- 1L + n * n + n\n  if (is.na(n) || n < 1L || length(tokens) < needed) {\n    stop(\"Input must contain `n`, an n x n matrix and a vector of length n.\", call. = FALSE)\n  }\n  a <- matrix(tokens[seq.int(2L, length.out = n * n)], nrow = n, ncol = n, byrow = TRUE)\n  b <- tokens[seq.int(2L + n * n, length.out = n)]\n  list(a = a, b = b)\n}\n\nanalyse <- function(a, b) {\n  r <- tryCatch(chol(a), error = function(e) NULL)\n  if (is.null(r)) {\n    # Not numerically positive-definite: fall back to an LU factorisation.\n    logdet <- as.numeric(determinant(a, logarithm = TRUE)$modulus)\n    x <- solve(a, b)\n  } else {\n    logdet <- 2 * sum(log(diag(r)))\n    x <- backsolve(r, forwardsolve(t(r), b))\n  }\n  list(\n    logdet = logdet,\n    x = as.vector(x),\n    eigenvalues = sort(eigen(a, symmetric = TRUE, only.values = TRUE)$values),\n    frobenius = sqrt(sum(a * a))\n  )\n}\n\nfmt <- function(v) paste(sprintf(\"%.15g\", v), collapse = \" \")\n\nmain <- function() {\n  input <- read_input()\n  res <- analyse(input$a, input$b)\n  writeLines(c(fmt(res$logdet), fmt(res$x), fmt(res$eigenvalues), fmt(res$frobenius)))\n}\n\nmain()\n"
+    }
+  ]
+}

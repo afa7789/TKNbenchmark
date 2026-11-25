@@ -1,0 +1,84 @@
+{
+  "buildOk": true,
+  "buildSecs": 11.09,
+  "buildLog": "",
+  "binaryBytes": 5028715,
+  "projectBytes": 15249408,
+  "cacheBytes": 15052800,
+  "footprintBytes": 30302208,
+  "pass": 14,
+  "total": 14,
+  "solved": true,
+  "cases": [
+    {
+      "name": "spec-example",
+      "ok": true,
+      "ms": 109
+    },
+    {
+      "name": "overwrite-refreshes",
+      "ok": true,
+      "ms": 108
+    },
+    {
+      "name": "del-and-size",
+      "ok": true,
+      "ms": 106
+    },
+    {
+      "name": "capacity-one",
+      "ok": true,
+      "ms": 107
+    },
+    {
+      "name": "medium-50k-ops",
+      "ok": true,
+      "ms": 133
+    },
+    {
+      "name": "get-refreshes",
+      "ok": true,
+      "ms": 109
+    },
+    {
+      "name": "overwrite-keeps-size",
+      "ok": true,
+      "ms": 106
+    },
+    {
+      "name": "del-then-set",
+      "ok": true,
+      "ms": 108
+    },
+    {
+      "name": "no-trailing-newline",
+      "ok": true,
+      "ms": 105
+    },
+    {
+      "name": "only-capacity",
+      "ok": true,
+      "ms": 106
+    },
+    {
+      "name": "long-tokens",
+      "ok": true,
+      "ms": 102
+    },
+    {
+      "name": "punctuation-keys",
+      "ok": true,
+      "ms": 102
+    },
+    {
+      "name": "large-1m-ops",
+      "ok": true,
+      "ms": 398
+    },
+    {
+      "name": "large-tiny-cap",
+      "ok": true,
+      "ms": 164
+    }
+  ]
+}

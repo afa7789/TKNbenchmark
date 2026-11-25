@@ -1,0 +1,17 @@
+{
+  "id": "kotlin-lru-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nmkdir -p build\nkotlinc src/*.kt -include-runtime -jvm-target 21 -d build/app.jar\ncat > app <<'SH'\n#!/usr/bin/env bash\nexec java -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xss8m -jar \"$(dirname \"$0\")/build/app.jar\" \"$@\"\nSH\nchmod +x app\n"
+    },
+    {
+      "path": "src/LruCache.kt",
+      "text": "/**\n * Fixed-capacity cache that evicts the least recently used entry once it holds more than [capacity] keys.\n * Backed by an access-ordered [LinkedHashMap], so every operation runs in O(1) expected time.\n */\nclass LruCache<K : Any, V : Any>(private val capacity: Int) {\n    init {\n        require(capacity >= 1) { \"capacity must be positive, was $capacity\" }\n    }\n\n    private val entries = object : LinkedHashMap<K, V>(16, 0.75f, true) {\n        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<K, V>): Boolean = size > capacity\n    }\n\n    val size: Int get() = entries.size\n\n    /** Returns the value for [key] and marks it most recently used, or `null` on a miss. */\n    operator fun get(key: K): V? = entries[key]\n\n    /** Inserts or overwrites [key], marks it most recently used and evicts if over capacity. */\n    operator fun set(key: K, value: V) {\n        entries[key] = value\n    }\n\n    /** Removes [key]; returns whether it was present. */\n    fun remove(key: K): Boolean = entries.remove(key) != null\n}\n"
+    },
+    {
+      "path": "src/Main.kt",
+      "text": "import java.io.BufferedReader\nimport java.io.BufferedWriter\nimport java.io.InputStreamReader\nimport java.io.OutputStreamWriter\n\nprivate const val BUFFER_SIZE = 1 shl 16\n\nfun main() {\n    val reader = BufferedReader(InputStreamReader(System.`in`, Charsets.ISO_8859_1), BUFFER_SIZE)\n    val out = BufferedWriter(OutputStreamWriter(System.out, Charsets.ISO_8859_1), BUFFER_SIZE)\n\n    val capacity = reader.readLine()?.trim()?.toIntOrNull() ?: return\n    val cache = LruCache<String, String>(capacity)\n\n    out.use {\n        while (true) {\n            val line = reader.readLine()?.trimEnd('\\r') ?: break\n            execute(line, cache, out)\n        }\n    }\n}\n\nprivate fun execute(line: String, cache: LruCache<String, String>, out: BufferedWriter) {\n    val firstSpace = line.indexOf(' ')\n    val command = if (firstSpace < 0) line else line.substring(0, firstSpace)\n    when (command) {\n        \"SET\" -> {\n            val secondSpace = line.indexOf(' ', firstSpace + 1)\n            if (secondSpace < 0) return\n            cache[line.substring(firstSpace + 1, secondSpace)] = line.substring(secondSpace + 1)\n        }\n        \"GET\" -> if (firstSpace >= 0) out.writeLine(cache[line.substring(firstSpace + 1)] ?: \"NULL\")\n        \"DEL\" -> if (firstSpace >= 0) out.writeLine(if (cache.remove(line.substring(firstSpace + 1))) \"1\" else \"0\")\n        \"SIZE\" -> out.writeLine(cache.size.toString())\n    }\n}\n\nprivate fun BufferedWriter.writeLine(text: String) {\n    write(text)\n    write('\\n'.code)\n}\n"
+    }
+  ]
+}

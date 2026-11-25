@@ -1,0 +1,51 @@
+{
+  "id": "c-calc-r3",
+  "lang": "c",
+  "task": "calc",
+  "rep": 3,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "cd1c1ef107bf",
+  "exitCode": 0,
+  "wallMs": 47649,
+  "files": [
+    "build.sh",
+    "main.c"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.29074940000000005,
+  "durationMs": 46956,
+  "apiMs": 45233,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "c"
+  ],
+  "usage": {
+    "input": 8,
+    "output": 4858,
+    "thinking": 1070,
+    "cacheRead": 60067,
+    "cacheWrite": 22693
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

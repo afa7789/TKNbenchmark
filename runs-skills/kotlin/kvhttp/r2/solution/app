@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+exec java -XX:+UseParallelGC -cp "$dir/build/app.jar" kvhttp.MainKt "$@"

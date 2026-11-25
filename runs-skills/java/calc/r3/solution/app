@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+aot=()
+[[ -f "$dir/build/calc.aot" ]] && aot=(-XX:AOTCache="$dir/build/calc.aot" -Xlog:aot=off -Xlog:cds=off)
+exec java -XX:+UseSerialGC "${aot[@]}" -jar "$dir/build/calc.jar" "$@"

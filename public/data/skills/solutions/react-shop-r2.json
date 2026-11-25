@@ -1,0 +1,49 @@
+{
+  "id": "react-shop-r2",
+  "files": [
+    {
+      "path": "src/App.jsx",
+      "text": "import { useState } from 'react'\nimport { CurrencyContext } from './CurrencyContext.js'\nimport CartProvider from './CartProvider.jsx'\nimport Header from './Header.jsx'\nimport ProductList from './ProductList.jsx'\nimport Cart from './Cart.jsx'\nimport Modal from './Modal.jsx'\nimport CheckoutForm from './CheckoutForm.jsx'\n\nexport default function App({ products = [] }) {\n  const [checkoutOpen, setCheckoutOpen] = useState(false)\n  const closeCheckout = () => setCheckoutOpen(false)\n\n  return (\n    <CurrencyContext value=\"USD\">\n      <CartProvider>\n        <Header onCheckout={() => setCheckoutOpen(true)} />\n        <main>\n          <ProductList products={products} />\n          <Cart />\n        </main>\n        {checkoutOpen && (\n          <Modal title=\"Checkout\" onClose={closeCheckout}>\n            <CheckoutForm onSubmitted={closeCheckout} />\n          </Modal>\n        )}\n      </CartProvider>\n    </CurrencyContext>\n  )\n}\n"
+    },
+    {
+      "path": "src/Cart.jsx",
+      "text": "import { useCart } from './CartContext.js'\nimport { formatMoney, useCurrency } from './CurrencyContext.js'\n\nconst TAX_RATE = 0.1\n\nexport default function Cart() {\n  const { items, remove, setQuantity } = useCart()\n  const currency = useCurrency()\n\n  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)\n  const tax = subtotal * TAX_RATE\n  const total = subtotal + tax\n\n  return (\n    <section>\n      <h2>Cart</h2>\n      {items.length === 0 ? (\n        <p>Your cart is empty</p>\n      ) : (\n        <ul>\n          {items.map((item) => (\n            <li key={item.id}>\n              <span>{item.name}</span>{' '}\n              <input\n                type=\"number\"\n                min=\"1\"\n                aria-label={`Quantity for ${item.name}`}\n                value={item.quantity}\n                onChange={(event) => setQuantity(item.id, event.target.value)}\n              />{' '}\n              <span>{formatMoney(item.price * item.quantity, currency)}</span>{' '}\n              <button type=\"button\" onClick={() => remove(item.id)}>\n                Remove\n              </button>\n            </li>\n          ))}\n        </ul>\n      )}\n      <p>Subtotal: {formatMoney(subtotal, currency)}</p>\n      <p>Tax (10%): {formatMoney(tax, currency)}</p>\n      <p>Total: {formatMoney(total, currency)}</p>\n    </section>\n  )\n}\n"
+    },
+    {
+      "path": "src/CartContext.js",
+      "text": "import { createContext, use } from 'react'\n\nexport const CartContext = createContext(null)\n\nexport const initialCart = []\n\nexport function cartReducer(items, action) {\n  switch (action.type) {\n    case 'add': {\n      const existing = items.find((item) => item.id === action.product.id)\n      if (existing) {\n        return items.map((item) =>\n          item.id === action.product.id ? { ...item, quantity: item.quantity + 1 } : item\n        )\n      }\n      return [...items, { ...action.product, quantity: 1 }]\n    }\n    case 'remove':\n      return items.filter((item) => item.id !== action.id)\n    case 'setQuantity': {\n      const quantity = Math.max(1, Math.floor(Number(action.quantity)) || 1)\n      return items.map((item) => (item.id === action.id ? { ...item, quantity } : item))\n    }\n    case 'clear':\n      return []\n    default:\n      throw new Error(`Unknown action: ${action.type}`)\n  }\n}\n\nexport function useCart() {\n  const cart = use(CartContext)\n  if (!cart) throw new Error('useCart must be used within a CartProvider')\n  return cart\n}\n"
+    },
+    {
+      "path": "src/CartProvider.jsx",
+      "text": "import { useReducer } from 'react'\nimport { CartContext, cartReducer, initialCart } from './CartContext.js'\n\nexport default function CartProvider({ children }) {\n  const [items, dispatch] = useReducer(cartReducer, initialCart)\n\n  const value = {\n    items,\n    count: items.reduce((sum, item) => sum + item.quantity, 0),\n    add: (product) => dispatch({ type: 'add', product }),\n    remove: (id) => dispatch({ type: 'remove', id }),\n    setQuantity: (id, quantity) => dispatch({ type: 'setQuantity', id, quantity }),\n    clear: () => dispatch({ type: 'clear' }),\n  }\n\n  return <CartContext value={value}>{children}</CartContext>\n}\n"
+    },
+    {
+      "path": "src/CheckoutForm.jsx",
+      "text": "import { useState } from 'react'\nimport { useCart } from './CartContext.js'\n\nexport default function CheckoutForm({ onSubmitted }) {\n  const { clear } = useCart()\n  const [name, setName] = useState('')\n  const [email, setEmail] = useState('')\n\n  const nameError = name.trim() ? '' : 'Name is required'\n  const emailError = email.includes('@') ? '' : 'Email must contain @'\n  const isValid = !nameError && !emailError\n\n  function handleSubmit(event) {\n    event.preventDefault()\n    if (!isValid) return\n    clear()\n    onSubmitted()\n  }\n\n  return (\n    <form onSubmit={handleSubmit} noValidate>\n      <label>\n        Name\n        <input value={name} onChange={(event) => setName(event.target.value)} />\n      </label>\n      {nameError && <p role=\"alert\">{nameError}</p>}\n      <label>\n        Email\n        <input type=\"email\" value={email} onChange={(event) => setEmail(event.target.value)} />\n      </label>\n      {emailError && <p role=\"alert\">{emailError}</p>}\n      <button type=\"submit\" disabled={!isValid}>\n        Place order\n      </button>\n    </form>\n  )\n}\n"
+    },
+    {
+      "path": "src/CurrencyContext.js",
+      "text": "import { createContext, use } from 'react'\n\nexport const CurrencyContext = createContext('USD')\n\nexport function useCurrency() {\n  return use(CurrencyContext)\n}\n\nexport function formatMoney(amount, currency) {\n  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(amount)\n}\n"
+    },
+    {
+      "path": "src/Header.jsx",
+      "text": "import { useCart } from './CartContext.js'\n\nexport default function Header({ onCheckout }) {\n  const { count } = useCart()\n\n  return (\n    <header>\n      <h1>Shop</h1>\n      <span>Cart: {count} {count === 1 ? 'item' : 'items'}</span>\n      <button type=\"button\" onClick={onCheckout}>\n        Checkout\n      </button>\n    </header>\n  )\n}\n"
+    },
+    {
+      "path": "src/Modal.jsx",
+      "text": "import { useEffect, useEffectEvent } from 'react'\n\nexport default function Modal({ title, onClose, children }) {\n  const handleKeyDown = useEffectEvent((event) => {\n    if (event.key === 'Escape') onClose()\n  })\n\n  useEffect(() => {\n    const listener = (event) => handleKeyDown(event)\n    window.addEventListener('keydown', listener)\n    return () => window.removeEventListener('keydown', listener)\n  }, [])\n\n  return (\n    <div role=\"dialog\" aria-modal=\"true\" aria-label={title}>\n      {title && <h2>{title}</h2>}\n      <button type=\"button\" aria-label=\"Close\" onClick={onClose}>\n        Close\n      </button>\n      {children}\n    </div>\n  )\n}\n"
+    },
+    {
+      "path": "src/ProductItem.jsx",
+      "text": "import { formatMoney, useCurrency } from './CurrencyContext.js'\n\nexport default function ProductItem({ product, onAdd }) {\n  const currency = useCurrency()\n\n  return (\n    <li>\n      <span>{product.name}</span> <span>{formatMoney(product.price, currency)}</span>{' '}\n      <button type=\"button\" onClick={() => onAdd(product)}>\n        Add\n      </button>\n    </li>\n  )\n}\n"
+    },
+    {
+      "path": "src/ProductList.jsx",
+      "text": "import { useState } from 'react'\nimport { useCart } from './CartContext.js'\nimport SearchBox from './SearchBox.jsx'\nimport ProductItem from './ProductItem.jsx'\n\nexport default function ProductList({ products }) {\n  const { add } = useCart()\n  const [query, setQuery] = useState('')\n  const [category, setCategory] = useState('all')\n\n  const categories = [...new Set(products.map((product) => product.category))]\n  const normalizedQuery = query.trim().toLowerCase()\n  const visible = products.filter(\n    (product) =>\n      (category === 'all' || product.category === category) &&\n      product.name.toLowerCase().includes(normalizedQuery)\n  )\n\n  return (\n    <section>\n      <h2>Products</h2>\n      <SearchBox onSearch={setQuery} />\n      <select\n        aria-label=\"Category\"\n        value={category}\n        onChange={(event) => setCategory(event.target.value)}\n      >\n        <option value=\"all\">All categories</option>\n        {categories.map((name) => (\n          <option key={name} value={name}>\n            {name}\n          </option>\n        ))}\n      </select>\n      {visible.length === 0 ? (\n        <p>No products</p>\n      ) : (\n        <ul>\n          {visible.map((product) => (\n            <ProductItem key={product.id} product={product} onAdd={add} />\n          ))}\n        </ul>\n      )}\n    </section>\n  )\n}\n"
+    },
+    {
+      "path": "src/SearchBox.jsx",
+      "text": "import { useEffect, useRef, useState } from 'react'\n\nexport default function SearchBox({ onSearch, delay = 300 }) {\n  const [text, setText] = useState('')\n  const timerRef = useRef(null)\n\n  useEffect(() => () => clearTimeout(timerRef.current), [])\n\n  function handleChange(event) {\n    const value = event.target.value\n    setText(value)\n    clearTimeout(timerRef.current)\n    timerRef.current = setTimeout(() => onSearch(value), delay)\n  }\n\n  return (\n    <input\n      type=\"search\"\n      placeholder=\"Search products\"\n      aria-label=\"Search products\"\n      value={text}\n      onChange={handleChange}\n    />\n  )\n}\n"
+    }
+  ]
+}

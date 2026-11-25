@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+exec java -XX:+UseSerialGC -XX:TieredStopAtLevel=4 -Xss8m -Xshare:auto \
+  -XX:SharedArchiveFile="$dir/target/app.jsa" -XX:+AutoCreateSharedArchive \
+  -jar "$dir/target/wordfreq-standalone.jar" "$@"

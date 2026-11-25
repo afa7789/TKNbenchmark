@@ -1,0 +1,25 @@
+{
+  "id": "circom-range-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Fetches dependencies and compiles the circuit to R1CS + WASM witness generator.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nif [ -f package-lock.json ]; then\n  npm ci --no-audit --no-fund --silent\nelse\n  npm install --no-audit --no-fund --silent\nfi\n\nmkdir -p build\ncircom circuits/main/range.circom --r1cs --wasm --sym -l node_modules -o build\n"
+    },
+    {
+      "path": "circuits/main/range.circom",
+      "text": "pragma circom 2.2.3;\n\ninclude \"../range.circom\";\n\n// age is private; threshold is public. Both are bytes (0..255).\ncomponent main {public [threshold]} = AgeAtLeast(8);\n"
+    },
+    {
+      "path": "circuits/range.circom",
+      "text": "pragma circom 2.2.3;\n\ninclude \"circomlib/circuits/bitify.circom\";\ninclude \"circomlib/circuits/comparators.circom\";\n\n// Constrains `age` and `threshold` to be n-bit unsigned integers with\n// age >= threshold.\ntemplate AgeAtLeast(n) {\n    // LessThan-family comparators are only sound for n <= 252.\n    assert(n > 0 && n <= 252);\n\n    signal input age;\n    signal input threshold;\n\n    // Range checks: both values must lie in [0, 2^n - 1]. These are also the\n    // preconditions for GreaterEqThan(n) to be sound.\n    _ <== Num2Bits(n)(age);\n    _ <== Num2Bits(n)(threshold);\n\n    signal ok <== GreaterEqThan(n)([age, threshold]);\n    ok === 1;\n}\n"
+    },
+    {
+      "path": "package.json",
+      "text": "{\n  \"name\": \"range-circuit\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"description\": \"Prove a private 8-bit value is at least a public 8-bit threshold\",\n  \"devDependencies\": {\n    \"circomlib\": \"2.0.5\",\n    \"snarkjs\": \"0.7.6\"\n  }\n}\n"
+    },
+    {
+      "path": "prove.sh",
+      "text": "#!/usr/bin/env bash\n# Usage: bash prove.sh input.json\n# Exits 0 iff a witness satisfying every circuit constraint exists for the input.\nset -euo pipefail\n\nif [ $# -ne 1 ]; then\n  echo \"usage: $0 input.json\" >&2\n  exit 2\nfi\n\ninput=\"$(cd \"$(dirname \"$1\")\" && pwd)/$(basename \"$1\")\"\ncd \"$(dirname \"$0\")\"\n\nif [ ! -f build/range_js/range.wasm ]; then\n  echo \"circuit not built; run build.sh first\" >&2\n  exit 2\nfi\n\nwtns=\"$(mktemp -t range.XXXXXX)\"\ntrap 'rm -f \"$wtns\"' EXIT\n\n# Witness generation fails on any violated constraint.\nnode build/range_js/generate_witness.js build/range_js/range.wasm \"$input\" \"$wtns\"\n# Independently re-check the witness against the R1CS.\nnpx --no-install snarkjs wtns check build/range.r1cs \"$wtns\" >/dev/null\n"
+    }
+  ]
+}

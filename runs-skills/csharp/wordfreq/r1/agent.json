@@ -1,0 +1,53 @@
+{
+  "id": "csharp-wordfreq-r1",
+  "lang": "csharp",
+  "task": "wordfreq",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "70830870919a",
+  "exitCode": 0,
+  "wallMs": 43967,
+  "files": [
+    "build.sh",
+    "src/WordFreq/Program.cs",
+    "src/WordFreq/WordCounter.cs",
+    "src/WordFreq/WordFreq.csproj"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.24810239999999997,
+  "durationMs": 43305,
+  "apiMs": 35306,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "csharp"
+  ],
+  "usage": {
+    "input": 8,
+    "output": 3489,
+    "thinking": 677,
+    "cacheRead": 57572,
+    "cacheWrite": 20847
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

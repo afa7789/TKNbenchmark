@@ -1,0 +1,52 @@
+{
+  "id": "julia-linreg-r2",
+  "lang": "julia",
+  "task": "linreg",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "cc533ae1df30",
+  "exitCode": 0,
+  "wallMs": 76416,
+  "files": [
+    "app",
+    "build.sh",
+    "src/LinReg.jl"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.31396019999999997,
+  "durationMs": 75431,
+  "apiMs": 60030,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "julia"
+  ],
+  "usage": {
+    "input": 12,
+    "output": 5366,
+    "thinking": 1957,
+    "cacheRead": 111961,
+    "cacheWrite": 23025
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 5
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 3,
+    "total": 3
+  }
+}

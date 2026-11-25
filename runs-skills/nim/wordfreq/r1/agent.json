@@ -1,0 +1,51 @@
+{
+  "id": "nim-wordfreq-r1",
+  "lang": "nim",
+  "task": "wordfreq",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "902114c23af0",
+  "exitCode": 0,
+  "wallMs": 35702,
+  "files": [
+    "build.sh",
+    "src/wordfreq.nim"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.203147,
+  "durationMs": 34985,
+  "apiMs": 26998,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "nim"
+  ],
+  "usage": {
+    "input": 10,
+    "output": 1750,
+    "thinking": 266,
+    "cacheRead": 78255,
+    "cacheWrite": 19057
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

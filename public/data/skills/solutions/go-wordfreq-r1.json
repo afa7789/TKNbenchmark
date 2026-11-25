@@ -1,0 +1,21 @@
+{
+  "id": "go-wordfreq-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ngo build -trimpath -ldflags=\"-s -w\" -o app .\n"
+    },
+    {
+      "path": "go.mod",
+      "text": "module wordfreq\n\ngo 1.26.4\n"
+    },
+    {
+      "path": "main.go",
+      "text": "// Command wordfreq reads standard input and prints the 10 most frequent\n// ASCII words, case-insensitively, as \"<count> <word>\" lines.\npackage main\n\nimport (\n\t\"bufio\"\n\t\"cmp\"\n\t\"fmt\"\n\t\"io\"\n\t\"os\"\n\t\"slices\"\n)\n\nconst topN = 10\n\n// entry is a word together with its number of occurrences.\ntype entry struct {\n\tword  string\n\tcount int\n}\n\nfunc main() {\n\tif err := run(os.Stdin, os.Stdout); err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t\tos.Exit(1)\n\t}\n}\n\nfunc run(r io.Reader, w io.Writer) error {\n\tcounts, err := countWords(r)\n\tif err != nil {\n\t\treturn fmt.Errorf(\"read input: %w\", err)\n\t}\n\tbw := bufio.NewWriter(w)\n\tfor _, e := range top(counts, topN) {\n\t\tfmt.Fprintf(bw, \"%d %s\\n\", e.count, e.word)\n\t}\n\treturn bw.Flush()\n}\n\n// countWords counts maximal runs of ASCII letters in r, folded to lowercase.\n// Every other byte is a separator. Input is streamed, so words may span\n// read boundaries.\nfunc countWords(r io.Reader) (map[string]int, error) {\n\tcounts := make(map[string]int)\n\tbuf := make([]byte, 64*1024)\n\tword := make([]byte, 0, 64)\n\tfor {\n\t\tn, err := r.Read(buf)\n\t\tfor _, c := range buf[:n] {\n\t\t\tswitch {\n\t\t\tcase 'a' <= c && c <= 'z':\n\t\t\t\tword = append(word, c)\n\t\t\tcase 'A' <= c && c <= 'Z':\n\t\t\t\tword = append(word, c+('a'-'A'))\n\t\t\tcase len(word) > 0:\n\t\t\t\tcounts[string(word)]++ // no allocation for existing keys\n\t\t\t\tword = word[:0]\n\t\t\t}\n\t\t}\n\t\tif err == io.EOF {\n\t\t\tbreak\n\t\t}\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\tif len(word) > 0 {\n\t\tcounts[string(word)]++\n\t}\n\treturn counts, nil\n}\n\n// top returns up to n entries ordered by count descending, then word ascending.\nfunc top(counts map[string]int, n int) []entry {\n\tentries := make([]entry, 0, len(counts))\n\tfor w, c := range counts {\n\t\tentries = append(entries, entry{word: w, count: c})\n\t}\n\tslices.SortFunc(entries, func(a, b entry) int {\n\t\tif c := cmp.Compare(b.count, a.count); c != 0 {\n\t\t\treturn c\n\t\t}\n\t\treturn cmp.Compare(a.word, b.word)\n\t})\n\treturn entries[:min(n, len(entries))]\n}\n"
+    },
+    {
+      "path": "main_test.go",
+      "text": "package main\n\nimport (\n\t\"strings\"\n\t\"testing\"\n)\n\nfunc TestRun(t *testing.T) {\n\tt.Parallel()\n\ttests := []struct {\n\t\tname, in, want string\n\t}{\n\t\t{\"simple\", \"The cat and the hat.\", \"2 the\\n1 and\\n1 cat\\n1 hat\\n\"},\n\t\t{\"empty\", \"\", \"\"},\n\t\t{\"separators\", \"don't stop_me 4now, now-NOW\", \"3 now\\n1 don\\n1 me\\n1 stop\\n1 t\\n\"},\n\t\t{\"high bytes\", \"caf\\xc3\\xa9 caf\\xffx\", \"2 caf\\n1 x\\n\"},\n\t\t{\"trailing word\", \"a b a\", \"2 a\\n1 b\\n\"},\n\t}\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tt.Parallel()\n\t\t\tvar out strings.Builder\n\t\t\tif err := run(strings.NewReader(tt.in), &out); err != nil {\n\t\t\t\tt.Fatal(err)\n\t\t\t}\n\t\t\tif got := out.String(); got != tt.want {\n\t\t\t\tt.Errorf(\"run(%q) = %q, want %q\", tt.in, got, tt.want)\n\t\t\t}\n\t\t})\n\t}\n}\n"
+    }
+  ]
+}

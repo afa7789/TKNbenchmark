@@ -1,0 +1,17 @@
+{
+  "id": "kotlin-lru-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nmkdir -p build\nkotlinc src/*.kt -include-runtime -jvm-target 21 -d build/app.jar\ncat > app <<'SH'\n#!/usr/bin/env bash\nexec java -XX:+UseSerialGC -Xshare:auto -jar \"$(dirname \"$0\")/build/app.jar\" \"$@\"\nSH\nchmod +x app\n"
+    },
+    {
+      "path": "src/LruCache.kt",
+      "text": "/**\n * Fixed-capacity cache that evicts the least recently used entry once it would exceed [capacity].\n * Every operation runs in O(1) expected time.\n */\nclass LruCache<K : Any, V : Any>(val capacity: Int) {\n    init {\n        require(capacity >= 1) { \"capacity must be at least 1, was $capacity\" }\n    }\n\n    // Access-ordered map: iteration starts at the least recently used entry.\n    private val entries = object : LinkedHashMap<K, V>(16, 0.75f, true) {\n        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<K, V>): Boolean = size > capacity\n    }\n\n    val size: Int get() = entries.size\n\n    /** Inserts or overwrites [key], making it the most recently used. */\n    operator fun set(key: K, value: V) {\n        entries[key] = value\n    }\n\n    /** Returns the value for [key], marking it most recently used on a hit. */\n    operator fun get(key: K): V? = entries[key]\n\n    /** Removes [key]; returns whether it was present. */\n    fun remove(key: K): Boolean = entries.remove(key) != null\n}\n"
+    },
+    {
+      "path": "src/Main.kt",
+      "text": "import java.io.BufferedWriter\nimport java.io.OutputStreamWriter\n\nprivate const val OUTPUT_BUFFER = 1 shl 16\n\nfun main() {\n    val reader = System.`in`.bufferedReader(Charsets.US_ASCII)\n    val out = BufferedWriter(OutputStreamWriter(System.out, Charsets.US_ASCII), OUTPUT_BUFFER)\n\n    val capacity = reader.readLine()?.trim()?.toIntOrNull() ?: return\n    val cache = LruCache<String, String>(capacity)\n\n    out.use {\n        reader.lineSequence().forEach { line -> execute(line.trimEnd('\\r'), cache, out) }\n    }\n}\n\nprivate fun execute(line: String, cache: LruCache<String, String>, out: Appendable) {\n    val parts = line.split(' ')\n    when (parts[0]) {\n        \"SET\" -> if (parts.size >= 3) cache[parts[1]] = parts[2]\n        \"GET\" -> if (parts.size >= 2) out.appendLine(cache[parts[1]] ?: \"NULL\")\n        \"DEL\" -> if (parts.size >= 2) out.appendLine(if (cache.remove(parts[1])) \"1\" else \"0\")\n        \"SIZE\" -> out.appendLine(cache.size.toString())\n    }\n}\n"
+    }
+  ]
+}

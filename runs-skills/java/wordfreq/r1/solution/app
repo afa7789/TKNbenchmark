@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+aot=()
+[[ -f "$dir/build/app.aot" ]] && aot=(-XX:AOTCache="$dir/build/app.aot")
+exec java -XX:+UseSerialGC -Xss512k -XX:-UsePerfData -Xms64m "${aot[@]}" -jar "$dir/build/app.jar" "$@"

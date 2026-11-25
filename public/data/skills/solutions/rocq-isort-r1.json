@@ -1,0 +1,13 @@
+{
+  "id": "rocq-isort-r1",
+  "files": [
+    {
+      "path": "ISort.v",
+      "text": "(* Complete every proof. Do not change any definition or theorem statement. *)\nFrom Stdlib Require Import Arith Lia.\n\nFixpoint insert (x : nat) (l : list nat) : list nat :=\n  match l with\n  | nil => cons x nil\n  | cons y ys => if Nat.leb x y then cons x (cons y ys) else cons y (insert x ys)\n  end.\n\nFixpoint isort (l : list nat) : list nat :=\n  match l with\n  | nil => nil\n  | cons x xs => insert x (isort xs)\n  end.\n\nInductive Sorted : list nat -> Prop :=\n  | sorted_nil : Sorted nil\n  | sorted_single : forall x, Sorted (cons x nil)\n  | sorted_cons : forall x y ys, x <= y -> Sorted (cons y ys) -> Sorted (cons x (cons y ys)).\n\nFixpoint count (n : nat) (l : list nat) : nat :=\n  match l with\n  | nil => 0\n  | cons x xs => (if Nat.eqb x n then 1 else 0) + count n xs\n  end.\n\n(** Inserting into a sorted list keeps it sorted. *)\nLemma insert_sorted : forall x l, Sorted l -> Sorted (insert x l).\nProof.\n  intros x l Hs.\n  induction Hs as [| y | y z zs Hyz Hs IH]; cbn [insert].\n  - constructor.\n  - destruct (Nat.leb_spec x y); constructor; auto with arith; constructor.\n  - destruct (Nat.leb_spec x y).\n    + constructor; [assumption | constructor; assumption].\n    + cbn [insert] in IH |- *.\n      destruct (Nat.leb_spec x z); constructor; auto with arith.\nQed.\n\nTheorem isort_sorted : forall l, Sorted (isort l).\nProof.\n  induction l as [| x xs IH]; cbn [isort].\n  - constructor.\n  - apply insert_sorted, IH.\nQed.\n\n(** [insert x] adds exactly one occurrence of [x]. *)\nLemma insert_count : forall n x l,\n  count n (insert x l) = (if Nat.eqb x n then 1 else 0) + count n l.\nProof.\n  intros n x l.\n  induction l as [| y ys IH]; cbn [insert count].\n  - reflexivity.\n  - destruct (Nat.leb x y); cbn [count].\n    + reflexivity.\n    + rewrite IH. lia.\nQed.\n\nTheorem isort_count : forall n l, count n (isort l) = count n l.\nProof.\n  intros n l.\n  induction l as [| x xs IH]; cbn [isort count].\n  - reflexivity.\n  - rewrite insert_count, IH. reflexivity.\nQed.\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nrocq c -w +deprecated ISort.v\n"
+    }
+  ]
+}

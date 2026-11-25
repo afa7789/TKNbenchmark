@@ -1,0 +1,55 @@
+{
+  "id": "haskell-lru-r2",
+  "lang": "haskell",
+  "task": "lru",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "d23a63f2fa38",
+  "exitCode": 0,
+  "wallMs": 161441,
+  "files": [
+    "build.sh",
+    "cabal.project",
+    "exe/Main.hs",
+    "lru.cabal",
+    "src/Data/LRU.hs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.5667887999999999,
+  "durationMs": 160716,
+  "apiMs": 135500,
+  "turns": 19,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "haskell"
+  ],
+  "usage": {
+    "input": 32,
+    "output": 11168,
+    "thinking": 2724,
+    "cacheRead": 432424,
+    "cacheWrite": 32102
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 14,
+    "Write": 2
+  },
+  "toolErrors": 3,
+  "stdlibReads": 1,
+  "builds": 4,
+  "compileErrors": 1,
+  "checkRuns": 3,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

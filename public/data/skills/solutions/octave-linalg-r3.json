@@ -1,0 +1,13 @@
+{
+  "id": "octave-linalg-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds ./app: a launcher that runs the Octave implementation in src/.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncommand -v octave-cli >/dev/null || { echo \"build.sh: octave-cli not found\" >&2; exit 1; }\ncat > app <<'LAUNCH'\n#!/usr/bin/env bash\nhere=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\nexec octave-cli -q -f --no-window-system -p \"$here/src\" --eval \"linalg_main ()\"\nLAUNCH\nchmod +x app\n"
+    },
+    {
+      "path": "src/linalg_main.m",
+      "text": "## -*- texinfo -*-\n## @deftypefn {} {} linalg_main ()\n## Read a symmetric positive-definite system from standard input and print\n## ln(det A), the solution of A x = b, the ascending eigenvalues of A and\n## its Frobenius norm, one item per line.\n## @end deftypefn\n\nfunction linalg_main ()\n  [A, b] = read_system (stdin);\n\n  ## Use only the upper triangle so tiny input asymmetries cannot skew results.\n  A = triu (A) + triu (A, 1).';\n\n  [R, p] = chol (A);\n  if (p == 0)\n    logdet = 2 * sum (log (diag (R)));\n    x = R \\ (R.' \\ b);\n  else\n    ## Not numerically positive definite: fall back to an LU factorization.\n    [L, U, P] = lu (A);\n    logdet = sum (log (abs (diag (U))));\n    x = U \\ (L \\ (P * b));\n  endif\n\n  ev = sort (eig (A), \"ascend\");\n\n  print_row (logdet);\n  print_row (x);\n  print_row (ev);\n  print_row (norm (A, \"fro\"));\nendfunction\n\nfunction [A, b] = read_system (fid)\n  vals = fscanf (fid, \"%f\");\n  if (isempty (vals))\n    error (\"linalg_main: missing matrix size\");\n  endif\n  n = round (vals(1));\n  if (n < 1 || numel (vals) < 1 + n * n + n)\n    error (\"linalg_main: expected %d matrix entries and %d vector entries\",\n           n * n, n);\n  endif\n  A = reshape (vals(2:1 + n * n), n, n).';\n  b = vals(2 + n * n:1 + n * n + n);\nendfunction\n\nfunction print_row (v)\n  s = sprintf (\"%.15g \", v);\n  fprintf (\"%s\\n\", s(1:end-1));\nendfunction\n"
+    }
+  ]
+}

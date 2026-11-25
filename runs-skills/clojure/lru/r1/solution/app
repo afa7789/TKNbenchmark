@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+DIR="$(cd "$(dirname "$0")" && pwd)"
+exec java -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xss8m -Xshare:auto -jar "$DIR/target/lru-standalone.jar" "$@"

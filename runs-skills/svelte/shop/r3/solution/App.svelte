@@ -1,0 +1,23 @@
+<script>
+  import { setCurrency } from './currency.js';
+  import Header from './Header.svelte';
+  import ProductList from './ProductList.svelte';
+  import Cart from './Cart.svelte';
+  import Modal from './Modal.svelte';
+  import CheckoutForm from './CheckoutForm.svelte';
+
+  let { products } = $props();
+
+  setCurrency('USD');
+
+  let checkoutOpen = $state(false);
+</script>
+
+<Header oncheckout={() => (checkoutOpen = true)} />
+<ProductList {products} />
+<Cart />
+{#if checkoutOpen}
+  <Modal onclose={() => (checkoutOpen = false)}>
+    <CheckoutForm oncomplete={() => (checkoutOpen = false)} />
+  </Modal>
+{/if}

@@ -1,0 +1,33 @@
+{
+  "id": "ocaml-lru-r2",
+  "files": [
+    {
+      "path": "bin/dune",
+      "text": "(executable\n (name main)\n (libraries lru)\n (ocamlopt_flags (:standard -inline 200)))\n"
+    },
+    {
+      "path": "bin/main.ml",
+      "text": "(* Reads a capacity and a stream of cache commands from stdin and writes the\n   results of GET, DEL and SIZE to stdout, one per line. *)\n\nlet strip_cr line =\n  let n = String.length line in\n  if n > 0 && line.[n - 1] = '\\r' then String.sub line 0 (n - 1) else line\n\nlet read_line ic = Option.map strip_cr (In_channel.input_line ic)\n\nlet print_line oc s =\n  Out_channel.output_string oc s;\n  Out_channel.output_char oc '\\n'\n\nlet execute cache oc line =\n  match String.split_on_char ' ' line with\n  | [ \"SET\"; key; value ] -> Lru.set cache key value\n  | [ \"GET\"; key ] -> print_line oc (Option.value (Lru.get cache key) ~default:\"NULL\")\n  | [ \"DEL\"; key ] -> print_line oc (if Lru.remove cache key then \"1\" else \"0\")\n  | [ \"SIZE\" ] -> print_line oc (Int.to_string (Lru.size cache))\n  | _ -> () (* Blank or malformed lines are ignored. *)\n\nlet fail msg =\n  prerr_endline (\"lru: \" ^ msg);\n  exit 2\n\nlet run ic oc =\n  match Option.bind (read_line ic) (fun l -> int_of_string_opt (String.trim l)) with\n  | None -> fail \"expected a capacity on the first line\"\n  | Some capacity when capacity < 1 -> fail \"capacity must be positive\"\n  | Some capacity ->\n      let cache = Lru.create capacity in\n      In_channel.fold_lines (fun () line -> execute cache oc (strip_cr line)) () ic;\n      Out_channel.flush oc\n\nlet () = run stdin stdout\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds the optimized release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ndune build --profile release ./bin/main.exe\ncp -f _build/default/bin/main.exe ./app\nchmod +x ./app\n"
+    },
+    {
+      "path": "dune-project",
+      "text": "(lang dune 3.0)\n"
+    },
+    {
+      "path": "lib/dune",
+      "text": "(library\n (name lru))\n"
+    },
+    {
+      "path": "lib/lru.ml",
+      "text": "(* Entries live in parallel arrays indexed by slot; the recency order is an\n   intrusive doubly linked list over slots, threaded through [prev]/[next].\n   Slot [sentinel] (= capacity) is the list head: [next.(sentinel)] is the\n   most recently used slot and [prev.(sentinel)] the least recently used.\n   Free slots are chained through [next], starting at [free]. *)\n\ntype t = {\n  capacity : int;\n  index : (string, int) Hashtbl.t;\n  keys : string array;\n  values : string array;\n  prev : int array;\n  next : int array;\n  mutable free : int;\n  mutable size : int;\n}\n\nlet nil = -1\n\nlet create capacity =\n  if capacity < 1 then invalid_arg \"Lru.create: capacity must be positive\";\n  let sentinel = capacity in\n  let next = Array.init (capacity + 1) (fun i -> if i + 1 < capacity then i + 1 else nil) in\n  let prev = Array.make (capacity + 1) nil in\n  next.(sentinel) <- sentinel;\n  prev.(sentinel) <- sentinel;\n  {\n    capacity;\n    index = Hashtbl.create (min capacity 65536);\n    keys = Array.make capacity \"\";\n    values = Array.make capacity \"\";\n    prev;\n    next;\n    free = 0;\n    size = 0;\n  }\n\nlet sentinel t = t.capacity\n\nlet unlink t i =\n  let p = t.prev.(i) and n = t.next.(i) in\n  t.next.(p) <- n;\n  t.prev.(n) <- p\n\nlet push_front t i =\n  let s = sentinel t in\n  let first = t.next.(s) in\n  t.prev.(i) <- s;\n  t.next.(i) <- first;\n  t.prev.(first) <- i;\n  t.next.(s) <- i\n\nlet touch t i =\n  if t.next.(sentinel t) <> i then begin\n    unlink t i;\n    push_front t i\n  end\n\nlet release t i =\n  t.keys.(i) <- \"\";\n  t.values.(i) <- \"\";\n  t.next.(i) <- t.free;\n  t.free <- i;\n  t.size <- t.size - 1\n\n(* A slot for a new entry, evicting the least recently used one if full. *)\nlet acquire t =\n  if t.free = nil then begin\n    let lru = t.prev.(sentinel t) in\n    unlink t lru;\n    Hashtbl.remove t.index t.keys.(lru);\n    release t lru\n  end;\n  let i = t.free in\n  t.free <- t.next.(i);\n  t.size <- t.size + 1;\n  i\n\nlet set t key value =\n  match Hashtbl.find_opt t.index key with\n  | Some i ->\n      t.values.(i) <- value;\n      touch t i\n  | None ->\n      let i = acquire t in\n      t.keys.(i) <- key;\n      t.values.(i) <- value;\n      push_front t i;\n      Hashtbl.replace t.index key i\n\nlet get t key =\n  match Hashtbl.find_opt t.index key with\n  | Some i ->\n      touch t i;\n      Some t.values.(i)\n  | None -> None\n\nlet remove t key =\n  match Hashtbl.find_and_remove t.index key with\n  | Some i ->\n      unlink t i;\n      release t i;\n      true\n  | None -> false\n\nlet size t = t.size\n"
+    },
+    {
+      "path": "lib/lru.mli",
+      "text": "(** A fixed-capacity least-recently-used cache from string keys to string\n    values. Every operation runs in O(1) expected time. *)\n\ntype t\n\nval create : int -> t\n(** [create capacity] is an empty cache holding at most [capacity] keys.\n    @raise Invalid_argument if [capacity < 1]. *)\n\nval set : t -> string -> string -> unit\n(** [set t k v] binds [k] to [v] and marks [k] most recently used, evicting\n    the least recently used key if the capacity would be exceeded. *)\n\nval get : t -> string -> string option\n(** [get t k] is the value bound to [k], if any; a hit marks [k] most\n    recently used. *)\n\nval remove : t -> string -> bool\n(** [remove t k] unbinds [k] and reports whether it was present. *)\n\nval size : t -> int\n(** Number of keys currently held. *)\n"
+    }
+  ]
+}

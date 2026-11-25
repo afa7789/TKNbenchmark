@@ -1,0 +1,52 @@
+{
+  "id": "r-linalg-r1",
+  "lang": "r",
+  "task": "linalg",
+  "rep": 1,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "8f686c9114ed",
+  "exitCode": 0,
+  "wallMs": 29040,
+  "files": [
+    "app",
+    "build.sh",
+    "src/linalg.R"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2025458,
+  "durationMs": 26030,
+  "apiMs": 20910,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "r"
+  ],
+  "usage": {
+    "input": 6,
+    "output": 1901,
+    "thinking": 317,
+    "cacheRead": 33509,
+    "cacheWrite": 19725
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 2
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 3,
+    "total": 3
+  }
+}

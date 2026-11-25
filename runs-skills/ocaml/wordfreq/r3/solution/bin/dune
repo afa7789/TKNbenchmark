@@ -1,0 +1,3 @@
+(executable
+ (name main)
+ (ocamlopt_flags (:standard -O3 -inline 200)))

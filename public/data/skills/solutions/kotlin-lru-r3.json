@@ -1,0 +1,13 @@
+{
+  "id": "kotlin-lru-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nmkdir -p build\nkotlinc src/Main.kt -include-runtime -jvm-target 21 -d build/app.jar\ncat > app <<'SH'\n#!/usr/bin/env bash\nDIR=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\nexec java -XX:+UseSerialGC -jar \"$DIR/build/app.jar\" \"$@\"\nSH\nchmod +x app\n"
+    },
+    {
+      "path": "src/Main.kt",
+      "text": "import java.io.BufferedReader\nimport java.io.InputStreamReader\nimport java.io.PrintWriter\nimport java.io.BufferedWriter\nimport java.io.OutputStreamWriter\n\n/** A fixed-capacity cache that evicts the least recently used key once [capacity] is exceeded. */\nclass LruCache<K, V>(private val capacity: Int) {\n    init {\n        require(capacity >= 1) { \"capacity must be positive, was $capacity\" }\n    }\n\n    private val entries = object : LinkedHashMap<K, V>(initialCapacityFor(capacity), LOAD_FACTOR, true) {\n        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<K, V>?): Boolean = size > capacity\n    }\n\n    val size: Int get() = entries.size\n\n    operator fun get(key: K): V? = entries[key]\n\n    operator fun set(key: K, value: V) {\n        entries[key] = value\n    }\n\n    /** Removes [key]; returns true if it was present. */\n    fun remove(key: K): Boolean = entries.remove(key) != null\n\n    private companion object {\n        const val LOAD_FACTOR = 0.75f\n        const val MAX_PREALLOCATED = 1 shl 16\n\n        fun initialCapacityFor(capacity: Int): Int = (minOf(capacity, MAX_PREALLOCATED) / LOAD_FACTOR).toInt() + 1\n    }\n}\n\nfun main() {\n    val reader = BufferedReader(InputStreamReader(System.`in`, Charsets.ISO_8859_1), 1 shl 16)\n    val out = PrintWriter(BufferedWriter(OutputStreamWriter(System.out, Charsets.ISO_8859_1), 1 shl 16), false)\n\n    val capacity = reader.readLine()?.trim()?.toIntOrNull() ?: return\n    val cache = LruCache<String, String>(capacity)\n\n    reader.lineSequence().forEach { raw ->\n        val line = raw.trimEnd('\\r')\n        if (line.isEmpty()) return@forEach\n        val parts = line.split(' ')\n        when (parts[0]) {\n            \"SET\" -> if (parts.size >= 3) cache[parts[1]] = parts[2]\n            \"GET\" -> if (parts.size >= 2) out.println(cache[parts[1]] ?: \"NULL\")\n            \"DEL\" -> if (parts.size >= 2) out.println(if (cache.remove(parts[1])) 1 else 0)\n            \"SIZE\" -> out.println(cache.size)\n        }\n    }\n    out.flush()\n}\n"
+    }
+  ]
+}

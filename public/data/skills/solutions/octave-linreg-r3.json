@@ -1,0 +1,13 @@
+{
+  "id": "octave-linreg-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Produce ./app: a launcher that runs the Octave implementation in src/.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncommand -v octave-cli >/dev/null || { echo \"build.sh: octave-cli not found\" >&2; exit 1; }\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nhere=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\nexec octave-cli -q -f --no-window-system \"$here/src/linreg.m\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "src/linreg.m",
+      "text": "1;\n\n## Read all of standard input and return the numeric tokens as a column.\n## Reading through a fresh descriptor on /dev/stdin is far faster than the\n## built-in stdin stream for large inputs; fall back to stdin if unavailable.\nfunction v = read_numbers ()\n  fid = fopen (\"/dev/stdin\", \"r\");\n  if (fid < 0)\n    fid = stdin;\n  endif\n  unwind_protect\n    txt = fread (fid, Inf, \"uint8=>char\")';\n  unwind_protect_cleanup\n    if (fid != stdin)\n      fclose (fid);\n    endif\n  end_unwind_protect\n  v = sscanf (txt, \"%f\");\nendfunction\n\n## Ordinary least squares with intercept.  Features are centred before the\n## QR-based solve, which keeps the problem well conditioned when the features\n## have large offsets.  Returns [b0; b1; ...; bk] and R^2.\nfunction [beta, r2] = ols_fit (x, y)\n  xm = mean (x, 1);\n  ym = mean (y);\n  xc = x - xm;\n  yc = y - ym;\n  b = xc \\ yc;\n  beta = [ym - xm * b; b];\n  res = yc - xc * b;\n  r2 = 1 - sumsq (res) / sumsq (yc);\nendfunction\n\nfunction main ()\n  v = read_numbers ();\n  if (numel (v) < 2)\n    error (\"linreg: missing header line\");\n  endif\n  n = v(1);\n  k = v(2);\n  need = n * (k + 1);\n  if (numel (v) - 2 < need)\n    error (\"linreg: expected %d values, got %d\", need, numel (v) - 2);\n  endif\n  data = reshape (v(3:need + 2), k + 1, n)';\n  [beta, r2] = ols_fit (data(:, 1:k), data(:, k + 1));\n  fprintf (\"%.15g\\n\", [beta; r2]);\nendfunction\n\nmain ();\n"
+    }
+  ]
+}

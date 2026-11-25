@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Launcher for the kvhttp server: ./app <port>
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PYTHONPATH="$here${PYTHONPATH:+:$PYTHONPATH}" exec python3 -O -m kvhttp "$@"

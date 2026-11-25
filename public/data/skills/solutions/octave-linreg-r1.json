@@ -1,0 +1,13 @@
+{
+  "id": "octave-linreg-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build: install a launcher at ./app that runs linreg.m with octave-cli.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncommand -v octave-cli >/dev/null || { echo \"build.sh: octave-cli not found\" >&2; exit 1; }\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\ndir=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\nexec octave-cli -q -f --no-window-system \"$dir/linreg.m\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "linreg.m",
+      "text": "## linreg: ordinary least-squares regression read from standard input.\n##\n## Input:  \"n k\" followed by n rows of k feature values and the response y.\n## Output: b0, b1, ..., bk and R^2, one per line.\n\n1;\n\nfunction text = read_stdin ()\n  ## fread on the built-in stdin stream is very slow for large inputs;\n  ## reopening the descriptor through /dev/stdin is buffered and fast.\n  fid = fopen (\"/dev/stdin\", \"r\");\n  if (fid < 0)\n    text = fread (stdin, Inf, \"*char\")';\n    return;\n  endif\n  unwind_protect\n    text = fread (fid, Inf, \"*char\")';\n  unwind_protect_cleanup\n    fclose (fid);\n  end_unwind_protect\nendfunction\n\nfunction [n, k, data] = parse_input (text)\n  vals = sscanf (text, \"%f\");\n  if (numel (vals) < 2)\n    error (\"linreg: missing header line\");\n  endif\n  n = vals(1);\n  k = vals(2);\n  need = n * (k + 1);\n  if (numel (vals) - 2 < need)\n    error (\"linreg: expected %d values, got %d\", need, numel (vals) - 2);\n  endif\n  data = reshape (vals(3:need + 2), k + 1, n)';\nendfunction\n\nfunction [beta, r2] = ols_fit (x, y)\n  ## Centre the data so the intercept decouples and the QR-based solve\n  ## is well conditioned even with large feature offsets.\n  mx = mean (x, 1);\n  my = mean (y);\n  xc = x - mx;\n  yc = y - my;\n  b = xc \\ yc;\n  beta = [my - mx * b; b];\n  res = yc - xc * b;\n  r2 = 1 - (res' * res) / (yc' * yc);\nendfunction\n\n[n, k, data] = parse_input (read_stdin ());\n[beta, r2] = ols_fit (data(:, 1:k), data(:, k + 1));\nfprintf (\"%.15g\\n\", [beta; r2]);\n"
+    }
+  ]
+}

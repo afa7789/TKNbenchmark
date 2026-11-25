@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+DIR="$(cd "$(dirname "$0")" && pwd)"
+exec java -XX:+UseSerialGC -XX:SharedArchiveFile="$DIR/target/app.jsa" -Xshare:auto \
+  -Xlog:cds=off -Xlog:aot=off -jar "$DIR/target/lru-standalone.jar" "$@"

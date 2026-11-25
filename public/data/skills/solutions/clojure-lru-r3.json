@@ -1,0 +1,21 @@
+{
+  "id": "clojure-lru-r3",
+  "files": [
+    {
+      "path": "build.clj",
+      "text": "(ns build\n  (:require [clojure.tools.build.api :as b]))\n\n(def class-dir \"target/classes\")\n(def uber-file \"target/lru-standalone.jar\")\n(def basis (delay (b/create-basis {:project \"deps.edn\"})))\n\n(defn clean [_]\n  (b/delete {:path \"target\"}))\n\n(defn uber [_]\n  (clean nil)\n  (b/copy-dir {:src-dirs [\"src\"] :target-dir class-dir})\n  (b/compile-clj {:basis @basis\n                  :ns-compile '[lru.core]\n                  :class-dir class-dir\n                  :compiler-options {:direct-linking true}})\n  (b/uber {:class-dir class-dir\n           :uber-file uber-file\n           :basis @basis\n           :main 'lru.core}))\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nclojure -T:build uber\ncat > app <<'SH'\n#!/usr/bin/env bash\nexec java -XX:+UseSerialGC -jar \"$(dirname \"$0\")/target/lru-standalone.jar\" \"$@\"\nSH\nchmod +x app\n"
+    },
+    {
+      "path": "deps.edn",
+      "text": "{:paths [\"src\"]\n :deps {org.clojure/clojure {:mvn/version \"1.12.7\"}}\n :aliases\n {:build {:deps {io.github.clojure/tools.build\n                 {:git/tag \"v0.10.14\" :git/sha \"1176afd\"}}\n          :ns-default build}}}\n"
+    },
+    {
+      "path": "src/lru/core.clj",
+      "text": "(ns lru.core\n  \"LRU cache simulator: reads a capacity and a stream of commands from stdin,\n  writes command results to stdout.\"\n  (:import (java.io BufferedReader BufferedWriter InputStreamReader\n                    OutputStreamWriter)\n           (java.nio.charset StandardCharsets)\n           (java.util LinkedHashMap))\n  (:gen-class))\n\n(set! *warn-on-reflection* true)\n\n(defn make-cache\n  \"Returns an access-ordered LinkedHashMap: iteration order runs from least\n  to most recently used, and get/put move the touched key to the end.\"\n  ^LinkedHashMap [^long capacity]\n  (LinkedHashMap. (int (min (inc capacity) 1048576)) (float 0.75) true))\n\n(defn- evict-eldest!\n  \"Removes the least recently used entry.\"\n  [^LinkedHashMap cache]\n  (let [it (.iterator (.keySet cache))]\n    (.next it)\n    (.remove it)))\n\n(defn cache-set!\n  \"Inserts or overwrites key, evicting the LRU entry if over capacity.\"\n  [^LinkedHashMap cache ^long capacity k v]\n  (.put cache k v)\n  (when (> (.size cache) capacity)\n    (evict-eldest! cache)))\n\n(defn execute!\n  \"Runs one command line against the cache. Returns the output string, or\n  nil when the command produces no output.\"\n  [^LinkedHashMap cache ^long capacity ^String line]\n  (let [sp1 (.indexOf line (int \\space))\n        cmd (if (neg? sp1) line (subs line 0 sp1))]\n    (case cmd\n      \"SET\" (let [sp2 (.indexOf line (int \\space) (inc sp1))]\n              (cache-set! cache capacity\n                          (subs line (inc sp1) sp2)\n                          (subs line (inc sp2)))\n              nil)\n      \"GET\" (or (.get cache (subs line (inc sp1))) \"NULL\")\n      \"DEL\" (if (some? (.remove cache (subs line (inc sp1)))) \"1\" \"0\")\n      \"SIZE\" (String/valueOf (.size cache))\n      nil)))\n\n(defn process!\n  \"Processes the whole input from reader, writing results to writer.\"\n  [^BufferedReader in ^BufferedWriter out]\n  (when-let [first-line (.readLine in)]\n    (let [capacity (parse-long (.trim ^String first-line))\n          cache (make-cache capacity)]\n      (loop []\n        (when-let [line (.readLine in)]\n          (when-let [^String result (execute! cache capacity line)]\n            (.write out result)\n            (.write out \"\\n\"))\n          (recur)))))\n  (.flush out))\n\n(defn -main\n  [& _args]\n  (let [in (BufferedReader. (InputStreamReader. System/in StandardCharsets/ISO_8859_1)\n                            (* 1 1024 1024))\n        out (BufferedWriter. (OutputStreamWriter. System/out StandardCharsets/ISO_8859_1)\n                             (* 1 1024 1024))]\n    (process! in out)))\n"
+    }
+  ]
+}

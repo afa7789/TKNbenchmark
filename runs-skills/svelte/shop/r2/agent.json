@@ -1,0 +1,56 @@
+{
+  "id": "svelte-shop-r2",
+  "lang": "svelte",
+  "task": "shop",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "ee782535a6ad",
+  "exitCode": 0,
+  "wallMs": 49105,
+  "files": [
+    "App.svelte",
+    "Cart.svelte",
+    "CheckoutForm.svelte",
+    "Header.svelte",
+    "Modal.svelte",
+    "ProductItem.svelte",
+    "ProductList.svelte",
+    "SearchBox.svelte",
+    "cart.svelte.js",
+    "currency.js"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.1838358,
+  "durationMs": 48471,
+  "apiMs": 37844,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "svelte"
+  ],
+  "usage": {
+    "input": 6,
+    "output": 4064,
+    "thinking": 974,
+    "cacheRead": 23259,
+    "cacheWrite": 12235
+  },
+  "tools": {
+    "Bash": 2,
+    "Skill": 1
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 0,
+  "compileErrors": 0,
+  "checkRuns": 0,
+  "checkFails": 0,
+  "firstCheckPass": false,
+  "lastCheck": null
+}

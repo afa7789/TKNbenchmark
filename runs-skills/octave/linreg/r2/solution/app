@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec octave-cli -q -f --no-window-system "$(dirname "$0")/linreg.m"

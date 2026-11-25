@@ -1,0 +1,25 @@
+{
+  "id": "circom-range-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Compile the range circuit to R1CS + WASM witness generator in build/.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nif [ ! -d node_modules/circomlib ] || [ ! -d node_modules/snarkjs ]; then\n    npm install --no-audit --no-fund --loglevel=error\nfi\n\nmkdir -p build\ncircom circuits/main/range.circom --r1cs --wasm --sym -l node_modules -o build\n"
+    },
+    {
+      "path": "circuits/main/range.circom",
+      "text": "pragma circom 2.2.3;\n\ninclude \"../range.circom\";\n\n// age is private, threshold is public; both must fit in 8 bits (0..255).\ntemplate Range() {\n    signal input age;\n    signal input threshold;\n\n    AtLeast(8)(age, threshold);\n}\n\ncomponent main {public [threshold]} = Range();\n"
+    },
+    {
+      "path": "circuits/range.circom",
+      "text": "pragma circom 2.2.3;\n\ninclude \"circomlib/circuits/bitify.circom\";\ninclude \"circomlib/circuits/comparators.circom\";\n\n// Proves 0 <= threshold < 2^n, 0 <= value < 2^n and value >= threshold.\ntemplate AtLeast(n) {\n    assert(n > 0 && n <= 252);\n\n    signal input value;\n    signal input threshold;\n\n    // Range checks: also rule out field elements >= 2^n (incl. \"negative\" values).\n    _ <== Num2Bits(n)(value);\n    _ <== Num2Bits(n)(threshold);\n\n    signal ok <== GreaterEqThan(n)([value, threshold]);\n    ok === 1;\n}\n"
+    },
+    {
+      "path": "package.json",
+      "text": "{\n  \"name\": \"circom-range\",\n  \"private\": true,\n  \"scripts\": {\n    \"build\": \"bash build.sh\"\n  },\n  \"devDependencies\": {\n    \"circomlib\": \"2.0.5\",\n    \"snarkjs\": \"0.7.5\"\n  }\n}\n"
+    },
+    {
+      "path": "prove.sh",
+      "text": "#!/usr/bin/env bash\n# Usage: bash prove.sh input.json\n# Exits 0 iff a witness satisfying the circuit's constraints exists for the input.\nset -euo pipefail\n\nif [ $# -ne 1 ]; then\n    echo \"usage: $0 input.json\" >&2\n    exit 2\nfi\n\ninput=\"$(cd \"$(dirname \"$1\")\" && pwd)/$(basename \"$1\")\"\ncd \"$(dirname \"$0\")\"\n\nif [ ! -f build/range_js/range.wasm ]; then\n    echo \"circuit not built; run build.sh first\" >&2\n    exit 2\nfi\n\ntmp=\"$(mktemp -d)\"\ntrap 'rm -rf \"$tmp\"' EXIT\n\nnode build/range_js/generate_witness.js build/range_js/range.wasm \"$input\" \"$tmp/witness.wtns\"\nnpx --no-install snarkjs wtns check build/range.r1cs \"$tmp/witness.wtns\" >\"$tmp/check.log\" 2>&1 || {\n    cat \"$tmp/check.log\" >&2\n    exit 1\n}\n"
+    }
+  ]
+}

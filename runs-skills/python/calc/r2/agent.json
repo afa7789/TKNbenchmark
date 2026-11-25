@@ -1,0 +1,52 @@
+{
+  "id": "python-calc-r2",
+  "lang": "python",
+  "task": "calc",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "4b4e462dd1b5",
+  "exitCode": 0,
+  "wallMs": 43481,
+  "files": [
+    "app",
+    "build.sh",
+    "calc.py"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.24922279999999997,
+  "durationMs": 42765,
+  "apiMs": 39114,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "python"
+  ],
+  "usage": {
+    "input": 8,
+    "output": 3475,
+    "thinking": 1095,
+    "cacheRead": 57814,
+    "cacheWrite": 21016
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

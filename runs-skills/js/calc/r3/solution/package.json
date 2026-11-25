@@ -1,0 +1,9 @@
+{
+  "name": "calc",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=26" },
+  "bin": { "calc": "./src/main.js" },
+  "scripts": { "build": "bash build.sh", "test": "node --test", "check": "node check.mjs" }
+}

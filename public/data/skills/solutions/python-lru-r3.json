@@ -1,0 +1,13 @@
+{
+  "id": "python-lru-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build the release launcher at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\npython3 -O -m py_compile lru.py\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec python3 -O \"$(dirname \"$0\")/lru.py\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "lru.py",
+      "text": "\"\"\"Simulate an LRU cache driven by commands on standard input.\"\"\"\n\nimport sys\nfrom collections import OrderedDict\nfrom collections.abc import Iterable\n\n\ndef run(lines: Iterable[bytes], capacity: int) -> list[bytes]:\n    \"\"\"Execute cache commands and return the output lines.\"\"\"\n    cache: OrderedDict[bytes, bytes] = OrderedDict()\n    out: list[bytes] = []\n    emit = out.append\n    move_to_end = cache.move_to_end\n    pop = cache.pop\n    popitem = cache.popitem\n\n    for line in lines:\n        parts = line.split()\n        if not parts:\n            continue\n        match parts:\n            case [b\"SET\", key, value]:\n                if key in cache:\n                    move_to_end(key)\n                cache[key] = value\n                if len(cache) > capacity:\n                    popitem(last=False)\n            case [b\"GET\", key]:\n                value = cache.get(key)\n                if value is None:\n                    emit(b\"NULL\")\n                else:\n                    move_to_end(key)\n                    emit(value)\n            case [b\"DEL\", key]:\n                emit(b\"0\" if pop(key, None) is None else b\"1\")\n            case [b\"SIZE\"]:\n                emit(str(len(cache)).encode())\n            case _:\n                pass  # Malformed commands are ignored.\n    return out\n\n\ndef main() -> int:\n    data = sys.stdin.buffer.read().splitlines()\n    if not data:\n        return 0\n    capacity = int(data[0])\n    out = run(data[1:], capacity)\n    if out:\n        sys.stdout.buffer.write(b\"\\n\".join(out) + b\"\\n\")\n    return 0\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n"
+    }
+  ]
+}

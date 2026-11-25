@@ -1,0 +1,55 @@
+{
+  "id": "zig-kvhttp-r2",
+  "lang": "zig",
+  "task": "kvhttp",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "4effd501118c",
+  "exitCode": 0,
+  "wallMs": 200685,
+  "files": [
+    ".gitignore",
+    "build.sh",
+    "build.zig",
+    "build.zig.zon",
+    "src/Store.zig",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.8129898000000001,
+  "durationMs": 200038,
+  "apiMs": 169344,
+  "turns": 18,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe server builds from a clean copy and passes all 4 example cases in `node check.mjs`. The unit tests pass, and so did my own run of extra edge cases against the binary: 1 MiB round-trip, 200 parallel PUTs and GETs, bad keys, wrong methods, GET with a body.\n\nIt uses only the standard library, so `build.sh` has nothing to fetch. It runs a ReleaseFast build and copies the binary to `./app`. Each connection gets its own task, and the stored data is protected by a mutex.\n\nA few behaviours SPE",
+  "skillsOffered": [
+    "zig"
+  ],
+  "usage": {
+    "input": 32,
+    "output": 16301,
+    "thinking": 4944,
+    "cacheRead": 526969,
+    "cacheWrite": 47681
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 15
+  },
+  "toolErrors": 1,
+  "stdlibReads": 8,
+  "builds": 4,
+  "compileErrors": 1,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

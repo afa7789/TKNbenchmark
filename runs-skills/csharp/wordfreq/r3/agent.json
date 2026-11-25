@@ -1,0 +1,53 @@
+{
+  "id": "csharp-wordfreq-r3",
+  "lang": "csharp",
+  "task": "wordfreq",
+  "rep": 3,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "70830870919a",
+  "exitCode": 0,
+  "wallMs": 76976,
+  "files": [
+    "build.sh",
+    "src/Program.cs",
+    "src/WordCounter.cs",
+    "src/WordFreq.csproj"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.27623800000000004,
+  "durationMs": 76114,
+  "apiMs": 45206,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe program is in `src/` and builds to a native `./app`. All 6 example cases in `node check.mjs` pass.\n\n- **Build:** `build.sh` compiles a Native AOT binary. On this Homebrew install, linking needs the Homebrew openssl, brotli and zstd libraries, so the script adds them to the linker path. If the AOT build still fails, it falls back to a single-file build.\n- **Speed:** a generated 50 MB input took about 0.34 s.\n- **Edge cases:** tried by hand, all correct with exit status 0. These were inv",
+  "skillsOffered": [
+    "csharp"
+  ],
+  "usage": {
+    "input": 10,
+    "output": 3825,
+    "thinking": 686,
+    "cacheRead": 85370,
+    "cacheWrite": 22828
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

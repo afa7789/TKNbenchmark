@@ -1,0 +1,33 @@
+{
+  "id": "ocaml-lru-r1",
+  "files": [
+    {
+      "path": "bin/dune",
+      "text": "(executable\n (name main)\n (ocamlopt_flags (:standard -unsafe -inline 200))\n (libraries lru))\n"
+    },
+    {
+      "path": "bin/main.ml",
+      "text": "(* Reads a capacity, then LRU cache commands, from standard input and writes\n   one line of output per query command to standard output. *)\n\nlet run_command cache out line =\n  match String.split_on_char ' ' line with\n  | [ \"SET\"; key; value ] -> Lru.set cache key value\n  | [ \"GET\"; key ] ->\n      Buffer.add_string out (Option.value (Lru.get cache key) ~default:\"NULL\");\n      Buffer.add_char out '\\n'\n  | [ \"DEL\"; key ] ->\n      Buffer.add_string out (if Lru.remove cache key then \"1\\n\" else \"0\\n\")\n  | [ \"SIZE\" ] ->\n      Buffer.add_string out (string_of_int (Lru.size cache));\n      Buffer.add_char out '\\n'\n  | _ -> () (* Blank or malformed lines are ignored. *)\n\nlet strip_cr line =\n  let n = String.length line in\n  if n > 0 && Char.equal line.[n - 1] '\\r' then String.sub line 0 (n - 1) else line\n\nlet flush_threshold = 1 lsl 16\n\nlet () =\n  match In_channel.input_line stdin with\n  | None -> ()\n  | Some first -> (\n      match int_of_string_opt (String.trim first) with\n      | None -> prerr_endline \"lru: invalid capacity\"\n      | Some capacity when capacity < 1 -> prerr_endline \"lru: invalid capacity\"\n      | Some capacity ->\n          let cache = Lru.create capacity in\n          let out = Buffer.create (2 * flush_threshold) in\n          let rec loop () =\n            match In_channel.input_line stdin with\n            | None -> ()\n            | Some line ->\n                run_command cache out (strip_cr line);\n                if Buffer.length out >= flush_threshold then begin\n                  Buffer.output_buffer stdout out;\n                  Buffer.clear out\n                end;\n                loop ()\n          in\n          loop ();\n          Buffer.output_buffer stdout out;\n          Out_channel.flush stdout)\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ndune build --release ./bin/main.exe\ncp -f _build/default/bin/main.exe ./app\nchmod +x ./app\n"
+    },
+    {
+      "path": "dune-project",
+      "text": "(lang dune 3.25)\n"
+    },
+    {
+      "path": "lib/dune",
+      "text": "(library\n (name lru))\n"
+    },
+    {
+      "path": "lib/lru.ml",
+      "text": "(* A hash table maps each key to its cell in a doubly linked recency list.\n   [head] is the most recently used cell and [tail] the least recently used\n   one. Cells are inline records, so links cost no extra indirection. *)\n\ntype ('k, 'v) cell =\n  | Nil\n  | Cell of {\n      key : 'k;\n      mutable value : 'v;\n      mutable prev : ('k, 'v) cell;\n      mutable next : ('k, 'v) cell;\n    }\n\ntype ('k, 'v) t = {\n  capacity : int;\n  table : ('k, ('k, 'v) cell) Hashtbl.t;\n  mutable head : ('k, 'v) cell;\n  mutable tail : ('k, 'v) cell;\n}\n\nlet create capacity =\n  if capacity < 1 then invalid_arg \"Lru.create: capacity must be positive\";\n  { capacity; table = Hashtbl.create (min capacity 1_000_000); head = Nil; tail = Nil }\n\nlet size t = Hashtbl.length t.table\n\nlet set_next cell next =\n  match cell with Nil -> () | Cell c -> c.next <- next\n\nlet set_prev cell prev =\n  match cell with Nil -> () | Cell c -> c.prev <- prev\n\nlet unlink t cell =\n  match cell with\n  | Nil -> ()\n  | Cell c ->\n      (match c.prev with Nil -> t.head <- c.next | prev -> set_next prev c.next);\n      (match c.next with Nil -> t.tail <- c.prev | next -> set_prev next c.prev);\n      c.prev <- Nil;\n      c.next <- Nil\n\nlet push_front t cell =\n  match cell with\n  | Nil -> ()\n  | Cell c ->\n      c.prev <- Nil;\n      c.next <- t.head;\n      (match t.head with Nil -> t.tail <- cell | head -> set_prev head cell);\n      t.head <- cell\n\nlet touch t cell =\n  if t.head != cell then begin\n    unlink t cell;\n    push_front t cell\n  end\n\nlet evict_lru t =\n  match t.tail with\n  | Nil -> ()\n  | Cell { key; _ } as lru ->\n      unlink t lru;\n      Hashtbl.remove t.table key\n\nlet set t key value =\n  match Hashtbl.find_opt t.table key with\n  | Some (Cell c as cell) ->\n      c.value <- value;\n      touch t cell\n  | Some Nil | None ->\n      (* Evicting first is equivalent to evicting after the insertion: the\n         new key is the most recently used, so it is never the victim. *)\n      if Hashtbl.length t.table >= t.capacity then evict_lru t;\n      let cell = Cell { key; value; prev = Nil; next = Nil } in\n      push_front t cell;\n      Hashtbl.replace t.table key cell\n\nlet get t key =\n  match Hashtbl.find_opt t.table key with\n  | Some (Cell { value; _ } as cell) ->\n      touch t cell;\n      Some value\n  | Some Nil | None -> None\n\nlet remove t key =\n  match Hashtbl.find_and_remove t.table key with\n  | Some cell ->\n      unlink t cell;\n      true\n  | None -> false\n"
+    },
+    {
+      "path": "lib/lru.mli",
+      "text": "(** Mutable LRU cache with O(1) expected-time operations. *)\n\ntype ('k, 'v) t\n\nval create : int -> ('k, 'v) t\n(** [create capacity] makes an empty cache holding at most [capacity] keys.\n    @raise Invalid_argument if [capacity < 1]. *)\n\nval set : ('k, 'v) t -> 'k -> 'v -> unit\n(** Insert or overwrite a binding, making it the most recently used and\n    evicting the least recently used binding if the capacity is exceeded. *)\n\nval get : ('k, 'v) t -> 'k -> 'v option\n(** Look up a key; a hit makes it the most recently used. *)\n\nval remove : ('k, 'v) t -> 'k -> bool\n(** Remove a key; returns whether it was present. *)\n\nval size : ('k, 'v) t -> int\n(** Number of keys currently held. *)\n"
+    }
+  ]
+}

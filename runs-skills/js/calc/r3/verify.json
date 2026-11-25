@@ -1,0 +1,90 @@
+{
+  "buildOk": true,
+  "buildSecs": 0.09,
+  "buildLog": "",
+  "binaryBytes": 55,
+  "projectBytes": 0,
+  "cacheBytes": 0,
+  "footprintBytes": 0,
+  "pass": 14,
+  "total": 15,
+  "solved": false,
+  "cases": [
+    {
+      "name": "spec-example",
+      "ok": true,
+      "ms": 47
+    },
+    {
+      "name": "precedence",
+      "ok": true,
+      "ms": 47
+    },
+    {
+      "name": "division-and-remainder",
+      "ok": true,
+      "ms": 47
+    },
+    {
+      "name": "unary-minus",
+      "ok": true,
+      "ms": 46
+    },
+    {
+      "name": "syntax-errors",
+      "ok": true,
+      "ms": 45
+    },
+    {
+      "name": "blank-lines",
+      "ok": true,
+      "ms": 48
+    },
+    {
+      "name": "literal-overflow",
+      "ok": true,
+      "ms": 48
+    },
+    {
+      "name": "int64-min",
+      "ok": true,
+      "ms": 49
+    },
+    {
+      "name": "mul-overflow",
+      "ok": true,
+      "ms": 47
+    },
+    {
+      "name": "sub-overflow",
+      "ok": true,
+      "ms": 45
+    },
+    {
+      "name": "parens",
+      "ok": true,
+      "ms": 49
+    },
+    {
+      "name": "whitespace",
+      "ok": true,
+      "ms": 48
+    },
+    {
+      "name": "operators-misused",
+      "ok": true,
+      "ms": 53
+    },
+    {
+      "name": "other-chars",
+      "ok": true,
+      "ms": 51
+    },
+    {
+      "name": "random-20k-lines",
+      "ok": false,
+      "ms": 54,
+      "why": "exit code 1  node:fs:1005\n  return binding.read(fd, buffer, offset, length, position);\n                 ^\n\nError: EAGAIN: resource temporarily unavailable, read\n    at Object.readSync (node:fs:1005:18)\n    at tryReadSync (node:fs:558:20)\n    at readFileSync (node:fs:670:19)\n    at file:///private/var/folders/1w/…"
+    }
+  ]
+}

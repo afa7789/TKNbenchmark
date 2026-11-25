@@ -1,0 +1,9 @@
+{
+  "name": "range-circuit",
+  "private": true,
+  "description": "Prove a private age is in [0, 255] and at least a public threshold",
+  "devDependencies": {
+    "circomlib": "2.0.5",
+    "snarkjs": "0.7.6"
+  }
+}

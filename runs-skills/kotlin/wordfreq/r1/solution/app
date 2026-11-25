@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec java -XX:+UseSerialGC -jar "$(dirname "$0")/build/app.jar"

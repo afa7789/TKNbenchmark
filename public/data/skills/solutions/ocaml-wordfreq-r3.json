@@ -1,0 +1,21 @@
+{
+  "id": "ocaml-wordfreq-r3",
+  "files": [
+    {
+      "path": "bin/dune",
+      "text": "(executable\n (name main)\n (ocamlopt_flags (:standard -O3 -inline 200)))\n"
+    },
+    {
+      "path": "bin/main.ml",
+      "text": "(* wordfreq: print the 10 most frequent ASCII words read from stdin. *)\n\nlet top_n = 10\n\nlet is_letter c = match c with 'A' .. 'Z' | 'a' .. 'z' -> true | _ -> false\n\n(* Count lowercase words in [text]. A word is a maximal run of ASCII letters. *)\nlet count_words (text : string) : (string, int ref) Hashtbl.t =\n  let counts = Hashtbl.create 65536 in\n  let len = String.length text in\n  let add start stop =\n    let word =\n      String.init (stop - start) (fun i ->\n          Char.lowercase_ascii (String.unsafe_get text (start + i)))\n    in\n    match Hashtbl.find_opt counts word with\n    | Some n -> incr n\n    | None -> Hashtbl.add counts word (ref 1)\n  in\n  let rec skip i =\n    if i >= len then ()\n    else if is_letter (String.unsafe_get text i) then scan i (i + 1)\n    else skip (i + 1)\n  and scan start i =\n    if i < len && is_letter (String.unsafe_get text i) then scan start (i + 1)\n    else begin\n      add start i;\n      skip i\n    end\n  in\n  skip 0;\n  counts\n\n(* Order by count descending, then by word ascending (byte order). *)\nlet compare_entries (w1, c1) (w2, c2) =\n  match Int.compare c2 c1 with 0 -> String.compare w1 w2 | c -> c\n\nlet top counts =\n  Hashtbl.fold (fun w n acc -> (w, !n) :: acc) counts []\n  |> List.sort compare_entries\n  |> List.take top_n\n\nlet () =\n  set_binary_mode_in stdin true;\n  let text = In_channel.input_all stdin in\n  let buf = Buffer.create 256 in\n  List.iter\n    (fun (w, c) -> Printf.bprintf buf \"%d %s\\n\" c w)\n    (top (count_words text));\n  print_string (Buffer.contents buf)\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build an optimized release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ndune build --release ./bin/main.exe\ninstall -m 755 _build/default/bin/main.exe ./app\n"
+    },
+    {
+      "path": "dune-project",
+      "text": "(lang dune 3.0)\n"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "nim-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nnim c -d:danger -d:lto --opt:speed --hints:off --nimcache:./.nimcache -o:./app wordfreq.nim\n"
+    },
+    {
+      "path": "wordfreq.nim",
+      "text": "## wordfreq: print the 10 most frequent ASCII words read from standard input.\n\nimport std/[algorithm, tables]\n\nconst TopN = 10\n\ntype WordCount = tuple[word: string, count: int]\n\nfunc toLowerAscii(c: char): char {.inline.} =\n  if c in {'A'..'Z'}: char(ord(c) + (ord('a') - ord('A'))) else: c\n\nproc countWords(data: string): Table[string, int] =\n  ## Counts maximal runs of ASCII letters, folded to lowercase.\n  result = initTable[string, int]()\n  var word = newStringOfCap(64)\n  for c in data:\n    if c in {'A'..'Z', 'a'..'z'}:\n      word.add toLowerAscii(c)\n    elif word.len > 0:\n      inc result.mgetOrPut(word, 0)\n      word.setLen 0\n  if word.len > 0:\n    inc result.mgetOrPut(word, 0)\n\nfunc byFrequency(a, b: WordCount): int =\n  ## Count descending, then word ascending (byte order).\n  result = cmp(b.count, a.count)\n  if result == 0:\n    result = cmp(a.word, b.word)\n\nproc topWords(counts: Table[string, int]; n: int): seq[WordCount] =\n  result = newSeqOfCap[WordCount](counts.len)\n  for word, count in counts:\n    result.add (word: word, count: count)\n  result.sort(byFrequency)\n  if result.len > n:\n    result.setLen n\n\nproc main() =\n  let counts = countWords(stdin.readAll())\n  var output = \"\"\n  for (word, count) in topWords(counts, TopN):\n    output.add $count\n    output.add ' '\n    output.add word\n    output.add '\\n'\n  stdout.write output\n  stdout.flushFile()\n\nwhen isMainModule:\n  main()\n"
+    }
+  ]
+}

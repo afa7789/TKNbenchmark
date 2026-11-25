@@ -1,0 +1,33 @@
+{
+  "id": "ocaml-calc-r2",
+  "files": [
+    {
+      "path": "bin/dune",
+      "text": "(executable\n (name main)\n (libraries calc))\n"
+    },
+    {
+      "path": "bin/main.ml",
+      "text": "let () =\n  In_channel.fold_lines\n    (fun () line ->\n      if not (Calc.is_blank line) then\n        let result =\n          match Calc.eval line with\n          | Ok v -> Int64.to_string v\n          | Error (Syntax | Division_by_zero | Overflow) -> \"error\"\n        in\n        Out_channel.output_string stdout result;\n        Out_channel.output_char stdout '\\n')\n    () stdin;\n  Out_channel.flush stdout\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ndune build --release ./bin/main.exe\ncp -f _build/default/bin/main.exe ./app\nchmod +x ./app\n"
+    },
+    {
+      "path": "dune-project",
+      "text": "(lang dune 3.25)\n"
+    },
+    {
+      "path": "lib/calc.ml",
+      "text": "type error =\n  | Syntax\n  | Division_by_zero\n  | Overflow\n\nexception Fail of error\n\nlet fail e = raise_notrace (Fail e)\n\n(* Checked 64-bit arithmetic. *)\n\nlet add a b =\n  let r = Int64.add a b in\n  (* Overflow iff both operands share a sign that differs from the result. *)\n  if Int64.logand (Int64.logxor a r) (Int64.logxor b r) < 0L then fail Overflow\n  else r\n\nlet sub a b =\n  let r = Int64.sub a b in\n  (* Overflow iff operands differ in sign and the result's sign differs from [a]. *)\n  if Int64.logand (Int64.logxor a b) (Int64.logxor a r) < 0L then fail Overflow\n  else r\n\nlet neg a = if Int64.equal a Int64.min_int then fail Overflow else Int64.neg a\n\nlet mul a b =\n  if Int64.equal a 0L || Int64.equal b 0L then 0L\n  else if\n    (Int64.equal a (-1L) && Int64.equal b Int64.min_int)\n    || (Int64.equal b (-1L) && Int64.equal a Int64.min_int)\n  then fail Overflow\n  else\n    let r = Int64.mul a b in\n    if Int64.equal (Int64.div r b) a then r else fail Overflow\n\nlet div a b =\n  if Int64.equal b 0L then fail Division_by_zero\n  else if Int64.equal b (-1L) then neg a\n  else Int64.div a b\n\nlet rem a b =\n  if Int64.equal b 0L then fail Division_by_zero\n  else if Int64.equal b (-1L) then 0L\n  else Int64.rem a b\n\n(* Recursive-descent parser that evaluates as it goes. *)\n\nlet is_space c = Char.equal c ' ' || Char.equal c '\\t'\n\nlet is_blank s = String.for_all is_space s\n\nlet eval s =\n  let len = String.length s in\n  let pos = ref 0 in\n  let rec skip () =\n    if !pos < len && is_space s.[!pos] then (\n      incr pos;\n      skip ())\n  in\n  (* Next significant character, or ['\\000'] at end of input. *)\n  let peek () =\n    skip ();\n    if !pos < len then s.[!pos] else '\\000'\n  in\n  let advance () = incr pos in\n  let number () =\n    let start = !pos in\n    let rec digits acc =\n      if !pos < len && Char.Ascii.is_digit s.[!pos] then begin\n        let d = Int64.of_int (Char.code s.[!pos] - Char.code '0') in\n        if Int64.compare acc (Int64.div (Int64.sub Int64.max_int d) 10L) > 0\n        then fail Overflow;\n        advance ();\n        digits (Int64.add (Int64.mul acc 10L) d)\n      end\n      else acc\n    in\n    let n = digits 0L in\n    if !pos = start then fail Syntax else n\n  in\n  let rec expr () =\n    let rec loop acc =\n      match peek () with\n      | '+' -> advance (); loop (add acc (term ()))\n      | '-' -> advance (); loop (sub acc (term ()))\n      | _ -> acc\n    in\n    loop (term ())\n  and term () =\n    let rec loop acc =\n      match peek () with\n      | '*' -> advance (); loop (mul acc (unary ()))\n      | '/' -> advance (); loop (div acc (unary ()))\n      | '%' -> advance (); loop (rem acc (unary ()))\n      | _ -> acc\n    in\n    loop (unary ())\n  and unary () =\n    match peek () with\n    | '-' -> advance (); neg (unary ())\n    | _ -> primary ()\n  and primary () =\n    match peek () with\n    | '(' ->\n        advance ();\n        let v = expr () in\n        if Char.equal (peek ()) ')' then (advance (); v) else fail Syntax\n    | '0' .. '9' -> number ()\n    | _ -> fail Syntax\n  in\n  match\n    let v = expr () in\n    skip ();\n    if !pos < len then fail Syntax else v\n  with\n  | v -> Ok v\n  | exception Fail e -> Error e\n"
+    },
+    {
+      "path": "lib/calc.mli",
+      "text": "(** Evaluator for signed 64-bit integer arithmetic expressions.\n\n    Grammar (spaces and tabs allowed between tokens):\n    {v\n    expr    := term    (('+' | '-') term)*\n    term    := unary   (('*' | '/' | '%') unary)*\n    unary   := '-' unary | primary\n    primary := NUMBER | '(' expr ')'\n    v} *)\n\ntype error =\n  | Syntax  (** Malformed input. *)\n  | Division_by_zero  (** Right operand of [/] or [%] is zero. *)\n  | Overflow  (** A literal or intermediate result exceeds 64 bits. *)\n\nval eval : string -> (int64, error) result\n(** [eval s] evaluates the expression [s]. *)\n\nval is_blank : string -> bool\n(** [is_blank s] holds when [s] contains only spaces and tabs. *)\n"
+    },
+    {
+      "path": "lib/dune",
+      "text": "(library\n (name calc))\n"
+    }
+  ]
+}

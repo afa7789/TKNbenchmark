@@ -1,0 +1,55 @@
+{
+  "id": "go-lru-r2",
+  "lang": "go",
+  "task": "lru",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "701d2510a22f",
+  "exitCode": 0,
+  "wallMs": 50279,
+  "files": [
+    "build.sh",
+    "go.mod",
+    "internal/lru/lru.go",
+    "internal/lru/lru_test.go",
+    "main.go"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.3045504,
+  "durationMs": 49537,
+  "apiMs": 47130,
+  "turns": 10,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "go"
+  ],
+  "usage": {
+    "input": 10,
+    "output": 5149,
+    "thinking": 291,
+    "cacheRead": 82132,
+    "cacheWrite": 23138
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 4,
+    "Write": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

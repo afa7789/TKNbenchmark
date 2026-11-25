@@ -1,0 +1,89 @@
+DIGEST 48256054d697142a73fb81c1e190a34b
+FLists
+def 88:93 <> append
+binder 96:96 <> A:1
+R115:118 Corelib.Init.Datatypes <> list ind
+R120:120 Lists <> A:1 var
+binder 107:108 <> xs:2
+binder 110:111 <> ys:3
+R125:128 Corelib.Init.Datatypes <> list ind
+R130:130 Lists <> A:1 var
+R143:144 Lists <> xs:2 var
+R155:157 Corelib.Init.Datatypes <> nil constr
+R162:163 Lists <> ys:3 var
+R169:172 Corelib.Init.Datatypes <> cons constr
+R183:186 Corelib.Init.Datatypes <> cons constr
+R191:196 Lists <> append:4 def
+R202:203 Lists <> ys:3 var
+def 223:225 <> rev
+binder 228:228 <> A:6
+R244:247 Corelib.Init.Datatypes <> list ind
+R249:249 Lists <> A:6 var
+binder 239:240 <> xs:7
+R254:257 Corelib.Init.Datatypes <> list ind
+R259:259 Lists <> A:6 var
+R272:273 Lists <> xs:7 var
+R284:286 Corelib.Init.Datatypes <> nil constr
+R291:293 Corelib.Init.Datatypes <> nil constr
+R299:302 Corelib.Init.Datatypes <> cons constr
+R313:318 Lists <> append def
+R331:334 Corelib.Init.Datatypes <> cons constr
+R338:340 Corelib.Init.Datatypes <> nil constr
+R321:323 Lists <> rev:8 def
+prf 359:368 <> append_nil
+binder 380:380 <> A:10
+R396:399 Corelib.Init.Datatypes <> list ind
+R401:401 Lists <> A:10 var
+binder 391:392 <> xs:11
+R418:420 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R405:410 Lists <> append def
+R415:417 Corelib.Init.Datatypes <> nil constr
+R412:413 Lists <> xs:11 var
+R421:422 Lists <> xs:11 var
+prf 545:556 <> append_assoc
+binder 568:568 <> A:12
+R590:593 Corelib.Init.Datatypes <> list ind
+R595:595 Lists <> A:12 var
+binder 579:580 <> xs:13
+binder 582:583 <> ys:14
+binder 585:586 <> zs:15
+R625:627 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R601:606 Lists <> append def
+R623:624 Lists <> zs:15 var
+R609:614 Lists <> append def
+R619:620 Lists <> ys:14 var
+R616:617 Lists <> xs:13 var
+R628:633 Lists <> append def
+R639:644 Lists <> append def
+R649:650 Lists <> zs:15 var
+R646:647 Lists <> ys:14 var
+R635:636 Lists <> xs:13 var
+prf 780:789 <> rev_append
+binder 801:801 <> A:16
+R820:823 Corelib.Init.Datatypes <> list ind
+R825:825 Lists <> A:16 var
+binder 812:813 <> xs:17
+binder 815:816 <> ys:18
+R849:851 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R831:833 Lists <> rev def
+R836:841 Lists <> append def
+R846:847 Lists <> ys:18 var
+R843:844 Lists <> xs:17 var
+R852:857 Lists <> append def
+R869:871 Lists <> rev def
+R873:874 Lists <> xs:17 var
+R860:862 Lists <> rev def
+R864:865 Lists <> ys:18 var
+R953:962 Lists <> append_nil thm
+R994:1005 Lists <> append_assoc thm
+prf 1035:1041 <> rev_rev
+binder 1053:1053 <> A:19
+R1069:1072 Corelib.Init.Datatypes <> list ind
+R1074:1074 Lists <> A:19 var
+binder 1064:1065 <> xs:20
+R1090:1092 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1078:1080 Lists <> rev def
+R1083:1085 Lists <> rev def
+R1087:1088 Lists <> xs:20 var
+R1093:1094 Lists <> xs:20 var
+R1186:1195 Lists <> rev_append thm

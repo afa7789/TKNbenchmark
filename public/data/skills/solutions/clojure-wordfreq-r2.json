@@ -1,0 +1,21 @@
+{
+  "id": "clojure-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.clj",
+      "text": "(ns build\n  (:require [clojure.tools.build.api :as b]))\n\n(def class-dir \"target/classes\")\n(def uber-file \"target/wordfreq-standalone.jar\")\n(def basis (delay (b/create-basis {:project \"deps.edn\"})))\n\n(defn clean [_]\n  (b/delete {:path \"target\"}))\n\n(defn uber [_]\n  (clean nil)\n  (b/compile-clj {:basis @basis\n                  :ns-compile '[wordfreq.core]\n                  :class-dir class-dir\n                  :compiler-options {:direct-linking true\n                                     :elide-meta [:doc :file :line :added]}})\n  (b/uber {:class-dir class-dir\n           :uber-file uber-file\n           :basis @basis\n           :main 'wordfreq.core}))\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds the release uberjar and an ./app launcher that runs it.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nclojure -T:build uber\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\ndir=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\nexec java -XX:+UseSerialGC -XX:TieredStopAtLevel=4 -Xss8m -Xshare:auto \\\n  -XX:SharedArchiveFile=\"$dir/target/app.jsa\" -XX:+AutoCreateSharedArchive \\\n  -jar \"$dir/target/wordfreq-standalone.jar\" \"$@\"\nLAUNCHER\nchmod +x app\n\n# Warm up the class-data sharing archive so the first real run starts fast.\necho \"warm up\" | ./app > /dev/null\n"
+    },
+    {
+      "path": "deps.edn",
+      "text": "{:paths [\"src\"]\n :deps {org.clojure/clojure {:mvn/version \"1.12.7\"}}\n :aliases\n {:run   {:main-opts [\"-m\" \"wordfreq.core\"]}\n  :build {:deps {io.github.clojure/tools.build\n                 {:git/tag \"v0.10.14\" :git/sha \"1176afd\"}}\n          :ns-default build}}}\n"
+    },
+    {
+      "path": "src/wordfreq/core.clj",
+      "text": "(ns wordfreq.core\n  \"Prints the 10 most frequent ASCII words read from standard input.\"\n  (:require [clojure.string :as str])\n  (:import (java.io InputStream)\n           (java.nio.charset StandardCharsets)\n           (java.util HashMap Map$Entry))\n  (:gen-class))\n\n(set! *warn-on-reflection* true)\n\n(def ^:private top-n 10)\n(def ^:private chunk-size (* 1024 1024))\n\n(defn- lower-ascii-letter\n  \"Returns the lowercase form of byte `b` if it is an ASCII letter, else -1.\"\n  ^long [^long b]\n  (cond\n    (<= 97 b 122) b\n    (<= 65 b 90) (+ b 32)\n    :else -1))\n\n(defn count-words\n  \"Reads `in` to exhaustion and returns a HashMap of lowercase word -> long[1] count.\"\n  ^HashMap [^InputStream in]\n  (let [counts (HashMap.)\n        buf    (byte-array chunk-size)\n        word   (java.io.ByteArrayOutputStream. 64)\n        flush! (fn []\n                 (when (pos? (.size word))\n                   (let [w (.toString word StandardCharsets/ISO_8859_1)\n                         ^longs c (.get counts w)]\n                     (if c\n                       (aset c 0 (inc (aget c 0)))\n                       (.put counts w (long-array [1]))))\n                   (.reset word)))]\n    (loop []\n      (let [n (.read in buf)]\n        (when (pos? n)\n          (dotimes [i n]\n            (let [ch (lower-ascii-letter (aget buf i))]\n              (if (neg? ch)\n                (flush!)\n                (.write word (unchecked-int ch)))))\n          (recur))))\n    (flush!)\n    counts))\n\n(defn top-words\n  \"Returns up to `n` [word count] pairs, by count descending then word ascending.\"\n  [^HashMap counts n]\n  (->> (.entrySet counts)\n       (map (fn [^Map$Entry e] [(.getKey e) (aget ^longs (.getValue e) 0)]))\n       (sort (fn [[wa ca] [wb cb]]\n                           (let [c (compare cb ca)]\n                             (if (zero? c) (compare wa wb) c))))\n       (take n)))\n\n(defn -main\n  [& _]\n  (let [lines (for [[w c] (top-words (count-words System/in) top-n)]\n                (str c \" \" w))]\n    (when (seq lines)\n      (print (str (str/join \"\\n\" lines) \"\\n\")))\n    (flush)))\n"
+    }
+  ]
+}

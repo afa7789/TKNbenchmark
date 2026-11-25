@@ -1,0 +1,21 @@
+{
+  "id": "circom-sudoku-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Compiles the Sudoku circuit to R1CS + WASM witness generator in build/.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\ncommand -v circom >/dev/null || { echo \"circom not found (need circom 2.2.3)\" >&2; exit 1; }\n\nmkdir -p build\ncircom circuits/main/sudoku.circom --r1cs --wasm --sym --O2 -o build\n"
+    },
+    {
+      "path": "circuits/main/sudoku.circom",
+      "text": "pragma circom 2.2.3;\n\ninclude \"../sudoku.circom\";\n\n// 4×4 Sudoku (2×2 boxes).\ncomponent main {public [puzzle]} = Sudoku(2);\n"
+    },
+    {
+      "path": "circuits/sudoku.circom",
+      "text": "pragma circom 2.2.3;\n\n// Decomposes `in` into a one-hot vector over the digits 1..n:\n// out[k] == 1 iff in == k + 1. Unsatisfiable unless 1 <= in <= n.\ntemplate OneHotDigit(n) {\n    signal input in;\n    signal output out[n];\n\n    var sum = 0;\n    var value = 0;\n    for (var k = 0; k < n; k++) {\n        out[k] <-- in == k + 1 ? 1 : 0;\n        out[k] * (out[k] - 1) === 0;\n        sum += out[k];\n        value += (k + 1) * out[k];\n    }\n    // Exactly one bit set, and it encodes `in`.\n    sum === 1;\n    in === value;\n}\n\n// Proves knowledge of a valid Sudoku solution for `puzzle`.\n// Grid side is b*b, with b×b boxes; cells are row-major, 0 marks an empty puzzle cell.\ntemplate Sudoku(b) {\n    var n = b * b;\n\n    signal input puzzle[n * n];\n    signal input solution[n * n];\n\n    // 1. Every solution cell is a digit 1..n (enforced by the one-hot decomposition).\n    signal digit[n * n][n];\n    for (var i = 0; i < n * n; i++) {\n        digit[i] <== OneHotDigit(n)(solution[i]);\n    }\n\n    // 2. Solution agrees with every clue: puzzle == 0 or puzzle == solution.\n    for (var i = 0; i < n * n; i++) {\n        puzzle[i] * (puzzle[i] - solution[i]) === 0;\n    }\n\n    // 3. Each row, column and box contains every digit exactly once.\n    for (var g = 0; g < n; g++) {\n        for (var k = 0; k < n; k++) {\n            var inRow = 0;\n            var inCol = 0;\n            var inBox = 0;\n            for (var j = 0; j < n; j++) {\n                inRow += digit[g * n + j][k];\n                inCol += digit[j * n + g][k];\n                var r = (g \\ b) * b + j \\ b;\n                var c = (g % b) * b + j % b;\n                inBox += digit[r * n + c][k];\n            }\n            inRow === 1;\n            inCol === 1;\n            inBox === 1;\n        }\n    }\n}\n"
+    },
+    {
+      "path": "prove.sh",
+      "text": "#!/usr/bin/env bash\n# Usage: bash prove.sh input.json\n# Exits 0 iff a witness satisfying the circuit can be generated for the input.\nset -euo pipefail\n\nif [[ $# -ne 1 ]]; then\n    echo \"usage: $0 input.json\" >&2\n    exit 2\nfi\n\ninput=\"$(cd \"$(dirname \"$1\")\" && pwd)/$(basename \"$1\")\"\ncd \"$(dirname \"$0\")\"\n\njs=build/sudoku_js\n[[ -f $js/sudoku.wasm ]] || { echo \"circuit not built; run build.sh\" >&2; exit 2; }\n\ntmp=\"$(mktemp -d)\"\ntrap 'rm -rf \"$tmp\"' EXIT\n\nnode \"$js/generate_witness.js\" \"$js/sudoku.wasm\" \"$input\" \"$tmp/witness.wtns\"\n"
+    }
+  ]
+}

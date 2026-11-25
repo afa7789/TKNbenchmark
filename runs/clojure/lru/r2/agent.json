@@ -1,0 +1,50 @@
+{
+  "id": "clojure-lru-r2",
+  "lang": "clojure",
+  "task": "lru",
+  "rep": 2,
+  "arm": "base",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "exitCode": 0,
+  "wallMs": 58641,
+  "files": [
+    "app",
+    "build.sh",
+    "deps.edn",
+    "src/lru/main.clj"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2141518,
+  "durationMs": 57979,
+  "apiMs": 44608,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 10,
+    "output": 3203,
+    "thinking": 822,
+    "cacheRead": 64859,
+    "cacheWrite": 17135
+  },
+  "tools": {
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

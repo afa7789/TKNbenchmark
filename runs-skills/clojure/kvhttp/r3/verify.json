@@ -1,0 +1,71 @@
+{
+  "buildOk": true,
+  "buildSecs": 11.42,
+  "buildLog": "",
+  "binaryBytes": 5467788,
+  "projectBytes": 6471680,
+  "cacheBytes": 14950400,
+  "footprintBytes": 21422080,
+  "pass": 9,
+  "total": 11,
+  "solved": false,
+  "cases": [
+    {
+      "name": "health",
+      "ok": true,
+      "ms": 270
+    },
+    {
+      "name": "crud",
+      "ok": true,
+      "ms": 268
+    },
+    {
+      "name": "list-sorted",
+      "ok": true,
+      "ms": 269
+    },
+    {
+      "name": "errors",
+      "ok": true,
+      "ms": 267
+    },
+    {
+      "name": "empty-list",
+      "ok": false,
+      "ms": 265,
+      "why": "GET /kv: json [] got null"
+    },
+    {
+      "name": "empty-value",
+      "ok": true,
+      "ms": 268
+    },
+    {
+      "name": "binary-1mib",
+      "ok": true,
+      "ms": 325
+    },
+    {
+      "name": "key-rules",
+      "ok": true,
+      "ms": 321
+    },
+    {
+      "name": "methods",
+      "ok": true,
+      "ms": 268
+    },
+    {
+      "name": "value-bytes-preserved",
+      "ok": true,
+      "ms": 266
+    },
+    {
+      "name": "concurrent-64",
+      "ok": false,
+      "ms": 288,
+      "why": "GET /kv: json [] got null"
+    }
+  ]
+}

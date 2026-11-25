@@ -1,0 +1,51 @@
+{
+  "id": "dafny-lists-r2",
+  "lang": "dafny",
+  "task": "lists",
+  "rep": 2,
+  "arm": "skills",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": "18221af06cab",
+  "exitCode": 0,
+  "wallMs": 19307,
+  "files": [
+    "Lists.dfy",
+    "build.sh"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.18370720000000001,
+  "durationMs": 18579,
+  "apiMs": 15287,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [
+    "dafny"
+  ],
+  "usage": {
+    "input": 8,
+    "output": 1112,
+    "thinking": 68,
+    "cacheRead": 55296,
+    "cacheWrite": 18797
+  },
+  "tools": {
+    "Skill": 1,
+    "Bash": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 9,
+    "total": 9
+  }
+}

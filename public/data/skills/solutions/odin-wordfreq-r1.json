@@ -1,0 +1,13 @@
+{
+  "id": "odin-wordfreq-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nodin build src -o:speed -out:app\n"
+    },
+    {
+      "path": "src/main.odin",
+      "text": "// wordfreq: prints the 10 most frequent ASCII words read from standard input.\npackage main\n\nimport \"core:bufio\"\nimport \"core:fmt\"\nimport \"core:os\"\nimport \"core:slice\"\n\nTOP_N :: 10\nREAD_CHUNK :: 1 << 20\n\nEntry :: struct {\n\tword:  string,\n\tcount: int,\n}\n\n// Reads all of `f` into a single buffer, growing it in large chunks.\nread_all :: proc(f: ^os.File, allocator := context.allocator) -> (data: [dynamic]byte, err: os.Error) {\n\tdata = make([dynamic]byte, 0, READ_CHUNK, allocator) or_return\n\tfor {\n\t\tif cap(data) - len(data) < READ_CHUNK {\n\t\t\treserve(&data, 2 * cap(data)) or_return\n\t\t}\n\t\tstart := len(data)\n\t\tresize(&data, cap(data)) or_return\n\t\tn, rerr := os.read(f, data[start:])\n\t\tresize(&data, start + n) or_return\n\t\tif rerr == .EOF || rerr == .Broken_Pipe || (rerr == nil && n == 0) {\n\t\t\treturn data, nil\n\t\t}\n\t\tif rerr != nil {\n\t\t\treturn data, rerr\n\t\t}\n\t}\n}\n\nis_letter :: #force_inline proc \"contextless\" (b: byte) -> bool {\n\treturn (b | 0x20) - 'a' < 26\n}\n\n// Counts words in `text`, lowercasing it in place. Map keys are views into `text`.\ncount_words :: proc(text: []byte, counts: ^map[string]int) #no_bounds_check {\n\ti := 0\n\tn := len(text)\n\tfor i < n {\n\t\tfor i < n && !is_letter(text[i]) {\n\t\t\ti += 1\n\t\t}\n\t\tstart := i\n\t\tfor i < n && is_letter(text[i]) {\n\t\t\ttext[i] |= 0x20\n\t\t\ti += 1\n\t\t}\n\t\tif i > start {\n\t\t\tcounts[string(text[start:i])] += 1\n\t\t}\n\t}\n}\n\nentry_less :: proc(a, b: Entry) -> bool {\n\tif a.count != b.count {\n\t\treturn a.count > b.count\n\t}\n\treturn a.word < b.word\n}\n\nmain :: proc() {\n\tdata, err := read_all(os.stdin)\n\tdefer delete(data)\n\tif err != nil {\n\t\tfmt.eprintln(\"wordfreq: reading stdin:\", os.error_string(err))\n\t\tos.exit(1)\n\t}\n\n\tcounts := make(map[string]int)\n\tdefer delete(counts)\n\tcount_words(data[:], &counts)\n\n\tentries := make([dynamic]Entry, 0, len(counts))\n\tdefer delete(entries)\n\tfor word, count in counts {\n\t\tappend(&entries, Entry{word, count})\n\t}\n\tslice.sort_by(entries[:], entry_less)\n\n\tw: bufio.Writer\n\tbufio.writer_init(&w, os.to_stream(os.stdout))\n\tdefer bufio.writer_destroy(&w)\n\tout := bufio.writer_to_stream(&w)\n\tfor e in entries[:min(TOP_N, len(entries))] {\n\t\tfmt.wprintf(out, \"%d %s\\n\", e.count, e.word)\n\t}\n\tif ferr := bufio.writer_flush(&w); ferr != .None {\n\t\tos.exit(1)\n\t}\n}\n"
+    }
+  ]
+}

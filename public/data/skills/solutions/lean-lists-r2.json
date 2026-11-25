@@ -1,0 +1,13 @@
+{
+  "id": "lean-lists-r2",
+  "files": [
+    {
+      "path": "Lists.lean",
+      "text": "-- Complete every proof. Do not change any definition or theorem statement.\nnamespace TKN\n\ndef append {α : Type} : List α → List α → List α\n  | [], ys => ys\n  | x :: xs, ys => x :: append xs ys\n\ndef rev {α : Type} : List α → List α\n  | [] => []\n  | x :: xs => append (rev xs) [x]\n\ntheorem append_nil {α : Type} (xs : List α) : append xs [] = xs := by\n  induction xs with\n  | nil => rfl\n  | cons x xs ih => simp [append, ih]\n\ntheorem append_assoc {α : Type} (xs ys zs : List α) :\n    append (append xs ys) zs = append xs (append ys zs) := by\n  induction xs with\n  | nil => rfl\n  | cons x xs ih => simp [append, ih]\n\ntheorem rev_append {α : Type} (xs ys : List α) :\n    rev (append xs ys) = append (rev ys) (rev xs) := by\n  induction xs with\n  | nil => simp [append, rev, append_nil]\n  | cons x xs ih => simp [append, rev, ih, append_assoc]\n\ntheorem rev_rev {α : Type} (xs : List α) : rev (rev xs) = xs := by\n  induction xs with\n  | nil => rfl\n  | cons x xs ih => simp [rev, rev_append, ih, append]\n\nend TKN\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Check every proof in Lists.lean; exits non-zero if any proof fails.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nlean Lists.lean\n"
+    }
+  ]
+}

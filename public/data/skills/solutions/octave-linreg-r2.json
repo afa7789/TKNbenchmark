@@ -1,0 +1,17 @@
+{
+  "id": "octave-linreg-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build the compiled number parser into build/ and install the ./app launcher.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nmkdir -p build\nCXXFLAGS=\"-O2 -DNDEBUG\" mkoctfile -o build/parse_numbers.oct src/parse_numbers.cc\nrm -f build/*.o\n\ncat > app <<'LAUNCH'\n#!/usr/bin/env bash\nexec octave-cli -q -f --no-window-system \"$(dirname \"$0\")/linreg.m\"\nLAUNCH\nchmod +x app\n"
+    },
+    {
+      "path": "linreg.m",
+      "text": "## linreg: ordinary least-squares regression read from standard input.\n##\n## Input:  \"n k\" followed by n rows of k features and the response y.\n## Output: b0, b1, ..., bk and R^2, one per line.\n\n1;\n\nfunction vals = parse_values (text)\n  ## Prefer the compiled parser built by build.sh; sscanf is the fallback.\n  if (exist (\"parse_numbers\") == 3)\n    vals = parse_numbers (text);\n  else\n    vals = sscanf (text, \"%f\");\n  endif\nendfunction\n\nfunction [x, y] = read_problem (path)\n  ## Reading through a named stream is far faster than the stdin handle.\n  fid = fopen (path, \"r\");\n  if (fid < 0)\n    error (\"linreg: cannot open %s\", path);\n  endif\n  unwind_protect\n    text = fread (fid, Inf, \"*char\")';\n  unwind_protect_cleanup\n    fclose (fid);\n  end_unwind_protect\n  vals = parse_values (text);\n  if (numel (vals) < 2)\n    error (\"linreg: missing header\");\n  endif\n  n = vals(1);\n  k = vals(2);\n  if (numel (vals) < 2 + n * (k + 1))\n    error (\"linreg: expected %d data values, got %d\", n * (k + 1), numel (vals) - 2);\n  endif\n  data = reshape (vals(3:2 + n * (k + 1)), k + 1, n)';\n  x = data(:, 1:k);\n  y = data(:, k + 1);\nendfunction\n\nfunction [beta, r2] = ols_fit (x, y)\n  ## Center the data so the intercept decouples; solve the slopes by QR.\n  mx = mean (x, 1);\n  my = mean (y);\n  xc = x - mx;\n  yc = y - my;\n  slopes = xc \\ yc;\n  beta = [my - mx * slopes; slopes];\n  resid = yc - xc * slopes;\n  r2 = 1 - sumsq (resid) / sumsq (yc);\nendfunction\n\naddpath (fullfile (fileparts (mfilename (\"fullpath\")), \"build\"));\n[x, y] = read_problem (\"/dev/stdin\");\n[beta, r2] = ols_fit (x, y);\nprintf (\"%.15g\\n\", [beta; r2]);\n"
+    },
+    {
+      "path": "src/parse_numbers.cc",
+      "text": "// parse_numbers: fast whitespace-separated number parser for linreg.\n#include <octave/oct.h>\n\n#include <cstdlib>\n#include <vector>\n\nDEFUN_DLD (parse_numbers, args, ,\n           \"-*- texinfo -*-\\n\\\n@deftypefn {} {@var{v} =} parse_numbers (@var{text})\\n\\\nParse whitespace-separated decimal numbers in the char row @var{text}\\n\\\ninto a column vector.  Parsing stops at the first unparsable token.\\n\\\n@end deftypefn\")\n{\n  if (args.length () != 1 || ! args(0).is_string ())\n    print_usage ();\n\n  const charNDArray chars = args(0).char_array_value ();\n  const octave_idx_type len = chars.numel ();\n  std::string buf (chars.data (), len);   // NUL-terminated copy for strtod\n\n  std::vector<double> vals;\n  vals.reserve (len / 4 + 1);\n\n  const char *p = buf.c_str ();\n  const char *end = p + len;\n  while (p < end)\n    {\n      char *next;\n      const double x = std::strtod (p, &next);\n      if (next == p)\n        break;\n      vals.push_back (x);\n      p = next;\n    }\n\n  ColumnVector out (vals.size ());\n  std::copy (vals.begin (), vals.end (), out.fortran_vec ());\n  return ovl (out);\n}\n"
+    }
+  ]
+}

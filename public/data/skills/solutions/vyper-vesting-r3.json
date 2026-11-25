@@ -1,0 +1,13 @@
+{
+  "id": "vyper-vesting-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nmkdir -p out\nvyper -f abi,bytecode src/Vesting.vy | python3 -c '\nimport json, sys\nabi, bytecode = sys.stdin.read().strip().split(\"\\n\", 1)\njson.dump({\"abi\": json.loads(abi), \"bytecode\": bytecode.strip()}, open(\"out/Vesting.json\", \"w\"))\n'\n"
+    },
+    {
+      "path": "src/Vesting.vy",
+      "text": "# pragma version ~=0.4.3\n\"\"\"\n@title Vesting\n@notice Holds ether and releases it linearly to a beneficiary between\n        `start` and `start + duration`.\n\"\"\"\n\n\nevent Released:\n    amount: uint256\n\n\nbeneficiary: public(immutable(address))\nstart: public(immutable(uint64))\nduration: public(immutable(uint64))\n\nreleased: public(uint256)\n\n\n@deploy\n@payable\ndef __init__(beneficiary_: address, start_: uint64, duration_: uint64):\n    assert beneficiary_ != empty(address), \"Vesting: zero beneficiary\"\n    assert duration_ != 0, \"Vesting: zero duration\"\n    beneficiary = beneficiary_\n    start = start_\n    duration = duration_\n\n\n@external\n@payable\ndef __default__():\n    \"\"\"\n    @notice Accept plain ether transfers; they add to the vesting total.\n    \"\"\"\n    pass\n\n\n@external\n@view\ndef vestedAmount(timestamp: uint64) -> uint256:\n    return self._vested_amount(timestamp)\n\n\n@external\n@view\ndef releasable() -> uint256:\n    return self._releasable()\n\n\n@external\n@nonreentrant\ndef release():\n    \"\"\"\n    @notice Send all currently releasable ether to the beneficiary.\n    \"\"\"\n    amount: uint256 = self._releasable()\n    assert amount != 0, \"Vesting: nothing to release\"\n    self.released += amount\n    log Released(amount=amount)\n    raw_call(beneficiary, b\"\", value=amount)\n\n\n@internal\n@view\ndef _releasable() -> uint256:\n    return self._vested_amount(convert(block.timestamp, uint64)) - self.released\n\n\n@internal\n@view\ndef _vested_amount(timestamp: uint64) -> uint256:\n    if timestamp < start:\n        return 0\n    total: uint256 = self.balance + self.released\n    elapsed: uint64 = unsafe_sub(timestamp, start)\n    if elapsed >= duration:\n        return total\n    return total * convert(elapsed, uint256) // convert(duration, uint256)\n"
+    }
+  ]
+}

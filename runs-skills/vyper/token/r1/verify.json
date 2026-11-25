@@ -1,0 +1,69 @@
+{
+  "buildOk": true,
+  "buildSecs": 0.5,
+  "buildLog": "",
+  "binaryBytes": 0,
+  "projectBytes": 8192,
+  "cacheBytes": 0,
+  "footprintBytes": 8192,
+  "pass": 11,
+  "total": 11,
+  "solved": true,
+  "cases": [
+    {
+      "name": "metadata-and-mint",
+      "ok": true,
+      "ms": 143
+    },
+    {
+      "name": "transfer",
+      "ok": true,
+      "ms": 141
+    },
+    {
+      "name": "approve-and-transfer-from",
+      "ok": true,
+      "ms": 176
+    },
+    {
+      "name": "transfer-above-balance-reverts",
+      "ok": true,
+      "ms": 140
+    },
+    {
+      "name": "transfer-from-above-allowance-reverts",
+      "ok": true,
+      "ms": 159
+    },
+    {
+      "name": "zero-address-reverts",
+      "ok": true,
+      "ms": 147
+    },
+    {
+      "name": "infinite-allowance",
+      "ok": true,
+      "ms": 158
+    },
+    {
+      "name": "approve-overwrites",
+      "ok": true,
+      "ms": 137
+    },
+    {
+      "name": "zero-value-transfer",
+      "ok": true,
+      "ms": 135
+    },
+    {
+      "name": "self-transfer",
+      "ok": true,
+      "ms": 138
+    },
+    {
+      "name": "transfer-from-drains-allowance",
+      "ok": true,
+      "ms": 149
+    }
+  ]
+}
