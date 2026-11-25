@@ -9,7 +9,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { join } from 'node:path'
 import { getEncoding } from 'js-tiktoken'
-import { MODEL, RUNS, TASKS } from './config.mjs'
+import { CLAUDE_BIN, MODEL, RUNS, TASKS } from './config.mjs'
 import { claudeEnv, isCounted, parseArgs, pool, readJson, solutionFiles, writeJson } from './lib.mjs'
 
 const args = parseArgs(process.argv.slice(2), { jobs: '4' })
@@ -22,7 +22,7 @@ function inputTokens(text) {
   const argv = ['-p', '--model', MODEL, '--effort', 'low', '--output-format', 'json', '--tools', '', '--system-prompt', 'Reply with OK.',
     '--setting-sources', 'project', '--strict-mcp-config', '--no-session-persistence']
   return new Promise((resolve, reject) => {
-    const child = spawn('claude', argv, { env: claudeEnv(), stdio: ['pipe', 'pipe', 'inherit'] })
+    const child = spawn(CLAUDE_BIN, argv, { env: claudeEnv(), stdio: ['pipe', 'pipe', 'inherit'] })
     let out = ''
     child.stdout.on('data', (d) => (out += d))
     child.on('close', () => {

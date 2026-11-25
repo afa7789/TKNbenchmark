@@ -32,6 +32,8 @@ async function attempt(run, meta, n, sol, last) {
   const transcript = join(out, 'transcript.jsonl')
   await runAgent(dir, repairPrompt(meta.task, meta.lang, versions[meta.lang], report(last)), transcript)
   const metrics = parseTranscript(readFileSync(transcript, 'utf8'))
+  // A usage limit or API failure is not a failed repair: leave the run for the next pass.
+  if (metrics.terminalReason === 'api_error') return { apiError: metrics.reply }
   copyFiles(dir, join(out, 'solution'), solutionFiles(dir))
   const v = await verifyAny(join(out, 'solution'), meta, id)
   if (v.solved && !TASKS[meta.task].frontend) {
@@ -50,6 +52,7 @@ async function repair(run) {
   const attempts = []
   for (let n = 1; n <= Number(args.attempts) && !last.solved; n++) {
     const a = await attempt(run, meta, n, sol, last)
+    if (a.apiError) return console.log(`✖ ${meta.id}: API error, not recorded, rerun later. ${a.apiError}`)
     attempts.push({ n, costUsd: a.costUsd, durationS: a.durationMs / 1000, turns: a.turns, usage: a.usage, compileErrors: a.compileErrors, pass: a.verify.pass, total: a.verify.total, solved: a.verify.solved })
     last = a.verify
     sol = join(run, 'repair', `a${n}`, 'solution')
