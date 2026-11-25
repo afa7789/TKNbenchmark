@@ -82,7 +82,8 @@ export function killStragglers(dir) {
   let pid = 0
   for (const line of out.split('\n')) {
     if (line.startsWith('p')) pid = Number(line.slice(1))
-    else if (line.startsWith('n') && line.slice(1).startsWith(root) && pid !== process.pid) {
+    // Whole path components only: skillgen/c must not match skillgen/cpp.
+    else if (line.startsWith('n') && `${line.slice(1)}/`.startsWith(`${root}/`) && pid !== process.pid) {
       try {
         process.kill(pid, 'SIGKILL')
       } catch {

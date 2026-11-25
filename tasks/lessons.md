@@ -8,5 +8,7 @@
 - Prove what an agent's context holds by observation (a canary word it must repeat), never by reading
   flags: CLAUDE.md loads under `$TMPDIR/tknbench` but not in the Claude Code session scratchpad, and
   bundled skills survive `--tools` lists. A non-base arm must also match the baseline's toolchains.
+- Path ownership checks compare whole components (`p + '/'` startsWith `root + '/'`): a bare prefix let
+  the C skill writer's cleanup kill the C++ writer (`skillgen/c` ⊂ `skillgen/cpp`).
 - Agents leave background servers and .NET build daemons holding the CLI's stdout; wait on the
   final event + kill stragglers by cwd, and disable MSBuild node reuse / shared compilation.
