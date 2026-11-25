@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-25T22:26:27.422Z",
+    "generatedAt": "2026-11-25T22:31:13.188Z",
     "arm": "skills",
     "model": "claude-opus-5-5",
     "effort": "high",
@@ -12744,6 +12744,7 @@
         "backendCostUsd": 1.582475
       }
     ],
+    "costSpeedRho": 0.41176470588235287,
     "vsBase": {
       "asm": {
         "tasks": [
@@ -13079,7 +13080,7 @@
           "bodyBytes": 7986,
           "usedRate": 1
         },
-        "breakEvenRuns": 287.87771739130335
+        "breakEvenRuns": null
       },
       "dafny": {
         "tasks": [
@@ -14385,7 +14386,30 @@
           "bodyBytes": 7994,
           "usedRate": 1
         },
-        "breakEvenRuns": 268.04484255831846
+        "breakEvenRuns": null
+      }
+    },
+    "effect": {
+      "pairs": 294,
+      "costUsd": {
+        "base": 0.2082268,
+        "arm": 0.28702819999999996
+      },
+      "turns": {
+        "base": 5,
+        "arm": 7
+      },
+      "output": {
+        "base": 4054,
+        "arm": 4516.5
+      },
+      "cacheWrite": {
+        "base": 14535.5,
+        "arm": 22291
+      },
+      "cacheRead": {
+        "base": 58202,
+        "arm": 85506
       }
     }
   },

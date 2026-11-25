@@ -4,7 +4,7 @@
 import { existsSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { ROOT, RUNS, LANGS, FRONTENDS, TASKS, TRACKS, MODEL, EFFORT, MAIN_LANGS, ARM, SKILLS } from './config.mjs'
-import { isCounted, readJson, solutionFiles, writeJson } from './lib.mjs'
+import { isCounted, readJson, solutionFiles, spearman, writeJson } from './lib.mjs'
 import { detectDeps } from './deps.mjs'
 
 // The published run writes public/data; another arm writes public/data/<arm> and compares itself with it.
@@ -279,6 +279,15 @@ function breakEven(authorUsd, { base, arm }, nTasks) {
   return Number.isFinite(authorUsd) && saving > 0 ? authorUsd / saving : null
 }
 
+// Per-run medians over runs paired by case (language, task, repetition): where the arm's cost comes from.
+function pairedEffect(baseRuns, runs) {
+  const byId = new Map(baseRuns.map((r) => [r.id, r]))
+  const pairs = runs.filter((r) => byId.has(r.id)).map((r) => [byId.get(r.id), r])
+  const median = (xs) => stats(xs)?.median ?? null
+  const metric = (f) => ({ base: median(pairs.map(([b]) => f(b))), arm: median(pairs.map(([, a]) => f(a))) })
+  return { pairs: pairs.length, costUsd: metric((r) => r.costUsd), turns: metric((r) => r.turns), output: metric((r) => r.usage.output), cacheWrite: metric((r) => r.usage.cacheWrite), cacheRead: metric((r) => r.usage.cacheRead) }
+}
+
 // This arm vs the published run, per language over the tasks both ran, plus what the skill cost to write.
 function vsBase(cells, runs) {
   const base = readJson(join(BASE_OUT, 'results.json'))
@@ -291,7 +300,9 @@ function vsBase(cells, runs) {
       const skill = { costUsd: skills[lang]?.costUsd ?? null, bodyBytes: skills[lang]?.bodyBytes ?? null, usedRate: rs.filter((r) => r.tools?.Skill).length / rs.length }
       // A cost change counts only outside the baseline's own spread between repetitions.
       const beyondNoise = sides.arm.costUsd < sides.base.costMin || sides.arm.costUsd > sides.base.costMax
-      return [lang, { tasks, ...sides, beyondNoise, speedChange: speedChange(sides.base, sides.arm), skill, breakEvenRuns: breakEven(skill.costUsd, sides, tasks.length) }]
+      // Break-even only for a saving outside the noise: a within-noise "saving" is no saving.
+      const breakEvenRuns = beyondNoise ? breakEven(skill.costUsd, sides, tasks.length) : null
+      return [lang, { tasks, ...sides, beyondNoise, speedChange: speedChange(sides.base, sides.arm), skill, breakEvenRuns }]
     }),
   )
 }
@@ -319,8 +330,11 @@ function build() {
   raw.forEach(exportSolution)
   const toolchains = opt(join(RUNS, 'toolchains.json'))
   const meta = { generatedAt: new Date().toISOString(), arm: ARM, model: MODEL, effort: EFFORT, toolchains, langs: LANGS, frontends: FRONTENDS, tasks: TASKS, external: EXTERNAL }
-  const compare = ARM === 'base' ? {} : { vsBase: vsBase(cells, runs) }
-  writeJson(join(OUT, 'results.json'), { meta, summary: { langs, tracks, cells, frontends, shop, combos: combos(cells, frontends), ...compare }, runs })
+  const compare = ARM === 'base' ? {} : { vsBase: vsBase(cells, runs), effect: pairedEffect(readJson(join(BASE_OUT, 'results.json')).runs, runs) }
+  // The two rankings against each other: cost to write vs speed of the code (main languages).
+  const ranked = Object.keys(langs).filter((l) => Number.isFinite(langs[l].perfTotal))
+  const costSpeedRho = spearman(ranked.map((l) => langs[l].costUsd), ranked.map((l) => langs[l].perfTotal))
+  writeJson(join(OUT, 'results.json'), { meta, summary: { langs, tracks, cells, frontends, shop, combos: combos(cells, frontends), costSpeedRho, ...compare }, runs })
   console.log(`${runs.length} runs → public/data/results.json`)
 }
 

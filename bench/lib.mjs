@@ -14,6 +14,23 @@ const COUNTED_NAMES = new Set(['Makefile', 'dune', 'dune-project', 'package.json
 const MAX_SOURCE_BYTES = 200 * 1024
 
 export const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'))
+// Correlation of two equal-length number lists; spearman ranks them first (ties broken by order).
+export function pearson(xs, ys) {
+  const mean = (a) => a.reduce((s, x) => s + x, 0) / a.length
+  const [mx, my] = [mean(xs), mean(ys)]
+  const cov = xs.reduce((s, x, i) => s + (x - mx) * (ys[i] - my), 0)
+  const sd = (a, m) => Math.sqrt(a.reduce((s, x) => s + (x - m) ** 2, 0))
+  return cov / (sd(xs, mx) * sd(ys, my))
+}
+
+const ranks = (xs) => {
+  const order = xs.map((x, i) => [x, i]).sort((a, b) => a[0] - b[0])
+  const r = []
+  order.forEach(([, i], pos) => (r[i] = pos))
+  return r
+}
+export const spearman = (xs, ys) => pearson(ranks(xs), ranks(ys))
+
 export const shortSha = (text) => createHash('sha256').update(text).digest('hex').slice(0, 12)
 
 export function writeJson(p, data) {

@@ -359,6 +359,68 @@ function renderCombos(d) {
   )
 }
 
+// ---------- key findings (generated from both runs' data) ----------
+const byKey = (langs, key, dir = 1) => Object.keys(langs).filter((k) => isNum(langs[k][key])).sort((a, b) => dir * (langs[a][key] - langs[b][key]))
+const names = (d, ks) => ks.map((k) => label(d, k)).join(', ')
+const li = (head, body) => `<li><strong>${esc(head)}</strong> ${body}</li>`
+
+function baseFindings(d) {
+  const L = d.summary.langs
+  const cost = byKey(L, 'costUsd')
+  const speed = byKey(L, 'perfScore')
+  const [cheap, dear, fast] = [cost[0], cost.at(-1), speed[0]]
+  const works = Object.values(L).reduce((s, x) => s + x.works, 0)
+  const total = Object.values(L).reduce((s, x) => s + x.n, 0)
+  return [
+    li('The language changes the bill, not whether the code works.', `${esc(label(d, cheap))} was cheapest (${fmt.usd(L[cheap].costUsd)} for 4 tasks), ${esc(label(d, dear))} the most expensive (×${nf(1).format(L[dear].costUsd / L[cheap].costUsd)}); ${works}/${total} runs ended passing every hidden test.`),
+    li('Cheap to write is not fast to run.', `Cost and code speed rank against each other (Spearman ρ = ${nf(2).format(d.summary.costSpeedRho)}): the cheapest to write (${esc(names(d, cost.slice(0, 3)))}) wrote code ${fmt.ratio(Math.min(...cost.slice(0, 3).map((k) => L[k].perfScore)))}–${fmt.ratio(Math.max(...cost.slice(0, 3).map((k) => L[k].perfScore)))} slower than the fastest, ${esc(label(d, fast))}.`),
+  ]
+}
+
+function skillFindings(d, arm) {
+  const rows = skillRows(arm)
+  const e = arm.summary.effect
+  const pctOf = (m) => signed(change(m.base, m.arm))
+  const costlier = rows.filter((r) => r.dCost > 0 && r.beyondNoise).length
+  const cheaper = rows.filter((r) => r.dCost < 0 && r.beyondNoise).length
+  const zig = arm.summary.vsBase.zig
+  const works = (side) => rows.reduce((s, r) => s + r[side].works, 0)
+  const n = (side) => rows.reduce((s, r) => s + r[side].n, 0)
+  const out = [
+    li('A language skill made the agent costlier, not cheaper.', `With one researched SKILL.md per language, ${costlier} of ${rows.length} languages cost more beyond their run-to-run spread and ${cheaper} cost less; per run, the median went ${fmt.usd(e.costUsd.base)} → ${fmt.usd(e.costUsd.arm)} (${pctOf(e.costUsd)}). Correctness did not move: ${works('arm')}/${n('arm')} runs worked with it, ${works('base')}/${n('base')} without.`),
+    li('The skill is paid on every turn.', `Loading it takes ${nf(0).format(e.turns.arm - e.turns.base)} more turns per run (${e.turns.base} → ${e.turns.arm}); context written to the cache grew ${pctOf(e.cacheWrite)} and context re-read ${pctOf(e.cacheRead)}, while the agent's own output grew only ${pctOf(e.output)}.`),
+  ]
+  if (zig) out.push(li('Where the model is out of date, a skill replaces work instead of adding it.', `Zig 0.16 changed its I/O API: with the skill the agent read the standard library's source ${nf(0).format(zig.base.stdlibReads)} → ${nf(0).format(zig.arm.stdlibReads)} times and wrote ${signed(change(zig.base.output, zig.arm.output))} output, for the same cost (${signed(change(zig.base.costUsd, zig.arm.costUsd))}${zig.beyondNoise ? '' : ', within noise'}).`))
+  return out
+}
+
+function howTo(d, arm) {
+  const L = d.summary.langs
+  const tips = [
+    `<li><strong>Cheapest for an agent to write:</strong> ${esc(names(d, byKey(L, 'costUsd').slice(0, 3)))}. <strong>Fastest code:</strong> ${esc(names(d, byKey(L, 'perfScore').slice(0, 3)))}. Pick by what you pay for more: agent time or CPU time.</li>`,
+    '<li><strong>Check the I/O idiom before blaming the language.</strong> C++ was slow on <code>calc</code> because the agent read stdin through <code>istreambuf_iterator</code> one character at a time; the same code with <code>fread</code> ran ~20× faster (paper, Discussion).</li>',
+  ]
+  if (!arm) return tips
+  const rows = skillRows(arm)
+  const pays = rows.filter((r) => isNum(r.breakEvenRuns)).length
+  tips.push(
+    `<li><strong>Do not add a generic language skill by default.</strong> On tasks of a few turns it saved money, beyond run-to-run noise, in ${pays} of ${rows.length} languages. Measure it on your own tasks first, as in <a href="#skills">With a language skill</a>.</li>`,
+    '<li><strong>Write a skill only for what the model gets wrong today</strong> (an API that changed after its training, a house convention), and keep it short: every byte is re-read on every turn.</li>',
+  )
+  return tips
+}
+
+function renderFindings(d, arm) {
+  const items = [...baseFindings(d), ...(arm ? skillFindings(d, arm) : [])]
+  $('findings-list').innerHTML = items.join('')
+  $('howto-list').innerHTML = howTo(d, arm).join('')
+  if (!arm) return
+  const e = arm.summary.effect
+  const rows = [['Turns', e.turns], ['Output tokens', e.output], ['Context written', e.cacheWrite], ['Context re-read', e.cacheRead], ['Cost', e.costUsd]].map(([l, m]) => ({ label: l, value: change(m.base, m.arm), tip: `${l}: median per run ${nf(0).format(m.base)} → ${nf(0).format(m.arm)}` }))
+  rows.at(-1).tip = `Cost: median per run ${fmt.usd(e.costUsd.base)} → ${fmt.usd(e.costUsd.arm)}`
+  $('findings-chart').innerHTML = barChart({ title: 'Where the skill’s cost comes from', sub: `Median per run, with vs without the skill, ${e.pairs} paired runs`, rows, format: signed, higherIsBetter: true })
+}
+
 // ---------- skills arm ----------
 // data/skills/results.json: the same rounds with one SKILL.md per language; summary.vsBase pairs it with this run.
 const change = (a, b) => (isNum(a) && isNum(b) && a ? b / a - 1 : null)
@@ -422,7 +484,7 @@ const SKILL_COLS = [
   ['Code speed', (r) => (r.main ? fmt.ratio(r.speedChange) : '–')],
   ['Skill used', (r) => fmt.pct(r.skill.usedRate)],
   ['Skill cost', (r) => fmt.usd(r.skill.costUsd)],
-  ['Pays off after', (r) => (isNum(r.breakEvenRuns) ? `${fmt.num1(r.breakEvenRuns)} runs` : 'never')],
+  ['Pays off after', (r) => (isNum(r.breakEvenRuns) ? `${fmt.num1(r.breakEvenRuns)} runs` : 'no saving')],
 ]
 
 function skillKpis(rows, main) {
@@ -535,9 +597,11 @@ const data = await getJson('data/results.json')
 initTooltip()
 initCopy()
 renderMeta(data)
+const arm = await getJson('data/skills/results.json').catch(() => null)
+renderFindings(data, Object.keys(arm?.summary?.vsBase ?? {}).length ? arm : null)
 renderKpis(data)
 renderLeaderboard(data)
-renderSkills(await getJson('data/skills/results.json').catch(() => null))
+renderSkills(arm)
 renderMultiples(data)
 renderTasks(data)
 renderBuild(data)

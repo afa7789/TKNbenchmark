@@ -3,6 +3,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { ROOT, TASKS } from '../bench/config.mjs'
+import { pearson, spearman } from '../bench/lib.mjs'
 
 const d = JSON.parse(readFileSync(join(ROOT, 'public', 'data', 'results.json'), 'utf8'))
 const L = d.summary.langs
@@ -164,21 +165,6 @@ const medianOf = (xs) => {
 }
 const stdlibMedian = (k, key) => medianOf(STDLIB_TASKS.map((t) => C[`${k}/${t}`]?.[key]?.median))
 
-function pearson(xs, ys) {
-  const mean = (a) => a.reduce((s, x) => s + x, 0) / a.length
-  const [mx, my] = [mean(xs), mean(ys)]
-  const cov = xs.reduce((s, x, i) => s + (x - mx) * (ys[i] - my), 0)
-  const sd = (a, m) => Math.sqrt(a.reduce((s, x) => s + (x - m) ** 2, 0))
-  return cov / (sd(xs, mx) * sd(ys, my))
-}
-
-const ranks = (xs) => {
-  const order = xs.map((x, i) => [x, i]).sort((a, b) => a[0] - b[0])
-  const r = []
-  order.forEach(([, i], pos) => (r[i] = pos))
-  return r
-}
-const spearman = (xs, ys) => pearson(ranks(xs), ranks(ys))
 
 function langMacros(set, k) {
   const m = macroName(k)
@@ -218,7 +204,7 @@ const mainSkillKeys = skillKeys.filter((k) => L[k])
 function skillTable() {
   const rows = skillKeys.map((k) => {
     const v = V[k]
-    const pays = Number.isFinite(v.breakEvenRuns) ? nf(1)(v.breakEvenRuns) : 'never'
+    const pays = Number.isFinite(v.breakEvenRuns) ? nf(1)(v.breakEvenRuns) : 'no saving'
     return `${tex(label(k))} & ${v.base.works}/${v.base.n}\\,$\\to$\\,${v.arm.works}/${v.arm.n} & ${usd(v.base.costUsd)}\\,$\\to$\\,${usd(v.arm.costUsd)} & ${pct(dCost(k))}${v.beyondNoise ? '' : '$^{\\sim}$'} & ${pct(change(v.base.output, v.arm.output))} & ${nf(1)(v.base.compileErrors)}\\,$\\to$\\,${nf(1)(v.arm.compileErrors)} & ${nf(0)(v.skill.usedRate * 100)}\\% & ${usd(v.skill.costUsd)} & ${pays} \\\\`
   })
   return `\\newcommand{\\SkillTable}{%
@@ -280,7 +266,7 @@ function macros() {
   set('CorrCodeCost', nf(2)(pearson(keys.map((k) => L[k].codeTokens), keys.map((k) => L[k].costUsd))))
   const noAsm = keys.filter((k) => k !== 'asm')
   set('CorrCodeCostSpearman', nf(2)(spearman(keys.map((k) => L[k].codeTokens), keys.map((k) => L[k].costUsd))))
-  set('CorrCostSpeed', nf(2)(spearman(keys.map((k) => L[k].costUsd), keys.map((k) => L[k].perfTotal))))
+  set('CorrCostSpeed', nf(2)(d.summary.costSpeedRho))
   set('FastestLang', tex(label(bySpeed[0])))
   set('KvPointsMin', int(Math.min(...keys.map((k) => L[k].perfPoints.kvhttp))))
   set('CorrCodeCostNoAsm', nf(2)(pearson(noAsm.map((k) => L[k].codeTokens), noAsm.map((k) => L[k].costUsd))))
