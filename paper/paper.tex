@@ -64,7 +64,7 @@ cost (\SkillDeltaZig).
   \item \textbf{A language skill made the agent costlier, not cheaper.} \NSkillCostlier{} of
         \NSkillLangs{} languages cost more beyond noise and \NSkillCheaper{} less (median run
         \SkillRunCostPct), with the same correctness (\SkillWorksArm{} runs worked, \SkillWorksBase{}
-        without).
+        without) and the same code speed (median \SkillSpeedMedian$\times$).
   \item \textbf{The skill is paid on every turn.} \SkillTurnsBase{}$\to$\SkillTurnsArm{} turns per run;
         context written to the cache \SkillCacheWritePct{} and re-read \SkillCacheReadPct, while the
         agent's own output grew only \SkillOutputPct.
@@ -226,7 +226,7 @@ created), build time and throughput.}
 \begin{table}[h]
 \centering\small
 \caption{Final binary performance (median of 5 runs), including process start-up (and JVM start-up for
-Java and Kotlin).}
+Java, Kotlin and Clojure).}
 \label{tab:perf}
 \PerfTable
 \end{table}
@@ -258,7 +258,8 @@ comparable within a track, not with Table~\ref{tab:main}.}
 \subsection{With a language skill}
 
 The agent loaded its skill in every run (Table~\ref{tab:skills}). Correctness did not change:
-\SkillWorksArm{} runs worked with the skill and \SkillWorksBase{} without; \NSkillFailed{} runs failed
+\SkillWorksArm{} runs worked with the skill and \SkillWorksBase{} without, and neither did the speed of the
+code (median ratio \SkillSpeedMedian$\times$ over the main languages, measured paired); \NSkillFailed{} runs failed
 verification, including the same Odin \texttt{calc} case as in the baseline, and the first repair fixed
 \NSkillFixed{} of them. Cost rose: \NSkillCostlier{} of \NSkillLangs{} languages cost more beyond the
 baseline's spread, \NSkillCheaper{} cost less, and the median change over the main languages was
@@ -339,10 +340,12 @@ of magnitude under this load (Table~\ref{tab:kv}).
 \paragraph{Cheap to write is not fast to run.} The two rankings run against each other: the rank
 correlation between cost and speed score is $\rho = \CorrCostSpeed$ (Table~\ref{tab:speed}), so the
 languages that cost more to write tend to produce faster code. In speed index (1.00 = fastest
-everywhere), the three cheapest languages for the agent produced the slowest code: JavaScript \SpeedJs, TypeScript \SpeedTs{} and Python
-\SpeedPython. Assembly (\SpeedAsm), Zig (\SpeedZig) and C (\SpeedC) were the fastest, and among the most
-expensive to write. Go (\SpeedGo) and Rust (\SpeedRust) were the best compromise: both in the cheaper half to write and the
-faster half to run.
+everywhere), the three cheapest languages for the agent produced some of the slowest code: JavaScript
+\SpeedJs, TypeScript \SpeedTs{} and Python \SpeedPython, behind only Clojure (\SpeedClojure), whose JVM
+start-up weighs on every run. Assembly (\SpeedAsm), Zig (\SpeedZig) and C (\SpeedC) were the fastest,
+and among the most expensive to write. Rust (\SpeedRust), Go (\SpeedGo), Nim (\SpeedNim) and OCaml
+(\SpeedOcaml) were the compromise: all four in the cheaper half to write and the faster half to run, Rust
+and Go closest to the fastest.
 
 \paragraph{H6 (skills): rejected for cost, with one telling exception.} A skill is not free context: the
 agent spends a turn loading it, and its text then stays in the context, written to the cache once and

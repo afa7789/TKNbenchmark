@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "wallMs": 98,
-  "minMs": 96,
+  "wallMs": 60,
+  "minMs": 59,
   "rssBytes": 1507328
 }

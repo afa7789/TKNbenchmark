@@ -258,6 +258,8 @@ function skillMacros(set) {
   const e = ARM_DATA.effect ?? { pairs: 0, costUsd: none, turns: none, cacheWrite: none, cacheRead: none, output: none }
   const effPct = (m) => pct(change(m.base, m.arm))
   set('NSkillPairs', e.pairs)
+  const speeds = mainSkillKeys.map((k) => V[k].speedChange).filter(Number.isFinite).sort((a, b) => a - b)
+  set('SkillSpeedMedian', nf(2)(speeds[speeds.length >> 1]))
   set('SkillRunCostBase', nf(3)(e.costUsd.base))
   set('SkillRunCostArm', nf(3)(e.costUsd.arm))
   set('SkillRunCostPct', effPct(e.costUsd))

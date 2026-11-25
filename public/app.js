@@ -377,6 +377,11 @@ function baseFindings(d) {
   ]
 }
 
+const speedMedian = (rows) => {
+  const xs = rows.filter((r) => r.main && isNum(r.speedChange)).map((r) => r.speedChange).sort((a, b) => a - b)
+  return xs[xs.length >> 1]
+}
+
 function skillFindings(d, arm) {
   const rows = skillRows(arm)
   const e = arm.summary.effect
@@ -387,7 +392,7 @@ function skillFindings(d, arm) {
   const works = (side) => rows.reduce((s, r) => s + r[side].works, 0)
   const n = (side) => rows.reduce((s, r) => s + r[side].n, 0)
   const out = [
-    li('A language skill made the agent costlier, not cheaper.', `With one researched SKILL.md per language, ${costlier} of ${rows.length} languages cost more beyond their run-to-run spread and ${cheaper} cost less; per run, the median went ${fmt.usd(e.costUsd.base)} → ${fmt.usd(e.costUsd.arm)} (${pctOf(e.costUsd)}). Correctness did not move: ${works('arm')}/${n('arm')} runs worked with it, ${works('base')}/${n('base')} without.`),
+    li('A language skill made the agent costlier, not cheaper.', `With one researched SKILL.md per language, ${costlier} of ${rows.length} languages cost more beyond their run-to-run spread and ${cheaper} cost less; per run, the median went ${fmt.usd(e.costUsd.base)} → ${fmt.usd(e.costUsd.arm)} (${pctOf(e.costUsd)}). Correctness did not move (${works('arm')}/${n('arm')} runs worked with it, ${works('base')}/${n('base')} without), nor did the speed of the code (median ${fmt.ratio(speedMedian(rows))}, measured paired).`),
     li('The skill is paid on every turn.', `Loading it takes ${nf(0).format(e.turns.arm - e.turns.base)} more turns per run (${e.turns.base} → ${e.turns.arm}); context written to the cache grew ${pctOf(e.cacheWrite)} and context re-read ${pctOf(e.cacheRead)}, while the agent's own output grew only ${pctOf(e.output)}.`),
   ]
   if (zig) out.push(li('Where the model is out of date, a skill replaces work instead of adding it.', `Zig 0.16 changed its I/O API: with the skill the agent read the standard library's source ${nf(0).format(zig.base.stdlibReads)} → ${nf(0).format(zig.arm.stdlibReads)} times and wrote ${signed(change(zig.base.output, zig.arm.output))} output, for the same cost (${signed(change(zig.base.costUsd, zig.arm.costUsd))}${zig.beyondNoise ? '' : ', within noise'}).`))
