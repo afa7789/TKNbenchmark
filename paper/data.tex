@@ -266,6 +266,12 @@
 \newcommand{\TrkEvmVyper}{0.41}
 \newcommand{\TrkZkCircom}{0.46}
 \newcommand{\TrkZkNoir}{0.47}
+\newcommand{\NSkillLangs}{0}
+\newcommand{\NSkillCheaper}{0}
+\newcommand{\NSkillWorksUp}{0}
+\newcommand{\NSkillWorksDown}{0}
+\newcommand{\SkillMedianChange}{--}
+\newcommand{\SkillAuthorCost}{0.00}
 \newcommand{\CorrStdCost}{0.32}
 \newcommand{\DevloopRust}{206}
 \newcommand{\DevloopRustWt}{857}
@@ -494,3 +500,19 @@ Zero-knowledge circuits & Circom & 6/6 & 6/6 & 83\% & 0.46 & 8\,613 & 3\,032 & 1
  & Noir & 6/6 & 6/6 & 33\% & 0.47 & 7\,330 & 3\,169 & 12 \\
 \bottomrule
 \end{tabular}}
+
+\newcommand{\SkillTable}{%
+\begin{tabular}{@{}lrrrrrrrr@{}}
+\toprule
+Language & Works & US\$ & $\Delta$US\$ & $\Delta$Output & Errors & Used & Skill US\$ & Pays off \\
+\midrule
+
+\bottomrule
+\end{tabular}}
+
+\newcommand{\SkillSlope}{%
+\begin{tikzpicture}
+\node[anchor=east, font=\footnotesize\bfseries] at (-0.1,0.5) {Without skill};
+\node[anchor=west, font=\footnotesize\bfseries] at (4.1,0.5) {With skill};
+
+\end{tikzpicture}}

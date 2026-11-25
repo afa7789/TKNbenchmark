@@ -1,6 +1,6 @@
 // Generates paper/data.tex (tables, plots, macros) from public/data/results.json,
 // so every number in the paper comes from the benchmark data. Then: tectonic paper/paper.tex
-import { readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { ROOT, TASKS } from '../bench/config.mjs'
 
@@ -206,6 +206,65 @@ function tsJsMacros(set) {
   set('TsJsCost', nf(2)(L.ts.costUsd / L.js.costUsd))
 }
 
+// ---------- skills arm (public/data/skills/results.json, written by TKN_ARM=skills npm run aggregate) ----------
+const ARM_FILE = join(ROOT, 'public', 'data', 'skills', 'results.json')
+const V = existsSync(ARM_FILE) ? JSON.parse(readFileSync(ARM_FILE, 'utf8')).summary.vsBase : {}
+const change = (a, b) => (a ? b / a - 1 : NaN)
+const pct = (v) => (Number.isFinite(v) ? `${v > 0 ? '+' : ''}${nf(0)(v * 100)}\\%` : '--')
+const dCost = (k) => change(V[k].base.costUsd, V[k].arm.costUsd)
+const skillKeys = Object.keys(V).sort((a, b) => dCost(a) - dCost(b))
+const mainSkillKeys = skillKeys.filter((k) => L[k])
+
+function skillTable() {
+  const rows = skillKeys.map((k) => {
+    const v = V[k]
+    const pays = Number.isFinite(v.breakEvenRuns) ? nf(1)(v.breakEvenRuns) : 'never'
+    return `${tex(label(k))} & ${v.base.works}/${v.base.n}\\,$\\to$\\,${v.arm.works}/${v.arm.n} & ${usd(v.base.costUsd)}\\,$\\to$\\,${usd(v.arm.costUsd)} & ${pct(dCost(k))} & ${pct(change(v.base.output, v.arm.output))} & ${nf(1)(v.base.compileErrors)}\\,$\\to$\\,${nf(1)(v.arm.compileErrors)} & ${nf(0)(v.skill.usedRate * 100)}\\% & ${usd(v.skill.costUsd)} & ${pays} \\\\`
+  })
+  return `\\newcommand{\\SkillTable}{%
+\\begin{tabular}{@{}lrrrrrrrr@{}}
+\\toprule
+Language & Works & US\\$ & $\\Delta$US\\$ & $\\Delta$Output & Errors & Used & Skill US\\$ & Pays off \\\\
+\\midrule
+${rows.join('\n')}
+\\bottomrule
+\\end{tabular}}`
+}
+
+// Slope chart: place in the cost ranking without (left) and with (right) the skill, main languages.
+function skillSlope() {
+  const rank = (side) => Object.fromEntries([...mainSkillKeys].sort((a, b) => V[a][side].costUsd - V[b][side].costUsd).map((k, i) => [k, i]))
+  const [rb, ra] = [rank('base'), rank('arm')]
+  const y = (i) => nf(2)(-0.42 * i)
+  const lines = mainSkillKeys.map((k) => {
+    const style = Math.abs(rb[k] - ra[k]) >= 3 ? 'black, line width=0.9pt' : 'black!35, line width=0.6pt'
+    return `\\draw[${style}] (0,${y(rb[k])}) -- (4,${y(ra[k])});
+\\node[anchor=east, font=\\scriptsize] at (-0.1,${y(rb[k])}) {${rb[k] + 1}. ${tex(label(k))}};
+\\node[anchor=west, font=\\scriptsize] at (4.1,${y(ra[k])}) {${ra[k] + 1}. ${tex(label(k))}};`
+  })
+  return `\\newcommand{\\SkillSlope}{%
+\\begin{tikzpicture}
+\\node[anchor=east, font=\\footnotesize\\bfseries] at (-0.1,0.5) {Without skill};
+\\node[anchor=west, font=\\footnotesize\\bfseries] at (4.1,0.5) {With skill};
+${lines.join('\n')}
+\\end{tikzpicture}}`
+}
+
+function skillMacros(set) {
+  const n = skillKeys.length
+  set('NSkillLangs', n)
+  set('NSkillCheaper', skillKeys.filter((k) => dCost(k) < 0).length)
+  set('NSkillWorksUp', skillKeys.filter((k) => V[k].arm.works > V[k].base.works).length)
+  set('NSkillWorksDown', skillKeys.filter((k) => V[k].arm.works < V[k].base.works).length)
+  const mid = mainSkillKeys.map(dCost).sort((a, b) => a - b)[mainSkillKeys.length >> 1]
+  set('SkillMedianChange', pct(mid))
+  set('SkillAuthorCost', usd(skillKeys.reduce((a, k) => a + (V[k].skill.costUsd ?? 0), 0)))
+  for (const k of skillKeys) {
+    set(`SkillDelta${macroName(k)}`, pct(dCost(k)))
+    set(`SkillCost${macroName(k)}`, usd(V[k].arm.costUsd))
+  }
+}
+
 function macros() {
   const out = []
   const set = (name, v) => out.push(`\\newcommand{\\${name}}{${v}}`)
@@ -226,6 +285,7 @@ function macros() {
   set('CorrCodeCostNoAsm', nf(2)(pearson(noAsm.map((k) => L[k].codeTokens), noAsm.map((k) => L[k].costUsd))))
   tsJsMacros(set)
   trackMacros(set)
+  skillMacros(set)
   set('CorrStdCost', nf(2)(pearson(keys.map((k) => L[k].stdlibReads), keys.map((k) => L[k].costUsd))))
   const dl = C['rust/kvhttp']?.devloopTargetBytes?.median
   set('DevloopRust', mb(dl))
@@ -251,6 +311,8 @@ const out = [
   speedTable(),
   frontTable(),
   trackTable(),
+  skillTable(),
+  skillSlope(),
 ].join('\n\n')
 writeFileSync(join(ROOT, 'paper', 'data.tex'), out + '\n')
 console.log('paper/data.tex written')
