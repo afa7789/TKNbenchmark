@@ -70,7 +70,7 @@ const worktrees = (v, n) => (v ? n * v.projectBytes + v.cacheBytes : null)
 
 function publicRun({ agent: a, verify: v, tokens: t, perf: p, repair: rp, devloop: dl }) {
   return {
-    ...fields(a, same('id', 'lang', 'task', 'rep', 'finished', 'terminalReason', 'costUsd', 'turns', 'usage', 'tools', 'builds', 'compileErrors', 'stdlibReads', 'checkRuns', 'firstCheckPass')),
+    ...fields(a, same('id', 'lang', 'task', 'rep', 'finished', 'terminalReason', 'costUsd', 'turns', 'usage', 'tools', 'builds', 'compileErrors', 'stdlibReads', 'checkRuns', 'firstCheckPass', 'models')),
     durationS: a.durationMs / 1000,
     apiS: a.apiMs / 1000,
     ...fields(v, same('solved', 'pass', 'total', 'buildOk', 'buildSecs', 'footprintBytes', 'projectBytes', 'cacheBytes', 'binaryBytes')),
@@ -251,15 +251,26 @@ function addSpeedScores(langs, cells) {
   }
 }
 
-// One arm's side of a language, over the given tasks: sums of per-task medians (as in langSummary),
-// runs that work, and spend (write + repair) per working run.
+// One arm's side of a language, over the given tasks: sums of per-task medians (as in langSummary) and
+// of per-task min / max cost (the spread between repetitions), runs that work, spend (write + repair) per
+// working run, and the raw performance medians of the benchmarked tasks.
 function armSide(cells, runs, lang, tasks) {
   const cs = tasks.map((t) => cells[`${lang}/${t}`])
   const rs = runs.filter((r) => r.lang === lang && tasks.includes(r.task))
   const works = rs.filter((r) => r.works).length
   const spent = sum(rs.map((r) => r.costUsd + (r.repairCostUsd ?? 0)))
   const keys = ['costUsd', 'output', 'turns', 'durationS', 'compileErrors', 'stdlibReads', 'codeTokens']
-  return { n: rs.length, works, firstTry: rs.filter((r) => r.firstCheckPass).length, costPerWorkingUsd: works ? spent / works : null, ...Object.fromEntries(keys.map((k) => [k, med(cs, k)])) }
+  const perf = Object.fromEntries(PERF.filter(([t]) => tasks.includes(t)).map(([t, k]) => [t, cells[`${lang}/${t}`]?.[k]?.median ?? null]))
+  const spread = { costMin: sum(cs.map((c) => c?.costUsd?.min)), costMax: sum(cs.map((c) => c?.costUsd?.max)) }
+  return { n: rs.length, works, firstTry: rs.filter((r) => r.firstCheckPass).length, costPerWorkingUsd: works ? spent / works : null, ...Object.fromEntries(keys.map((k) => [k, med(cs, k)])), ...spread, perf }
+}
+
+// How much faster the arm's code is than the baseline's: geometric mean over the benchmarked tasks of
+// base time ÷ arm time (throughput: arm ÷ base), so 1.10 = 10% faster with the treatment. Raw medians,
+// because each arm's speed index is relative to its own fastest language.
+function speedChange(base, arm) {
+  const ratios = PERF.map(([t, , higher]) => (higher ? arm.perf[t] / base.perf[t] : base.perf[t] / arm.perf[t])).filter((x) => Number.isFinite(x) && x > 0)
+  return ratios.length ? geomean(ratios) : null
 }
 
 // Runs until writing the skill has paid for itself: authoring cost ÷ median saving per run. null = no saving.
@@ -269,17 +280,18 @@ function breakEven(authorUsd, { base, arm }, nTasks) {
 }
 
 // This arm vs the published run, per language over the tasks both ran, plus what the skill cost to write.
-function vsBase(cells, runs, langs) {
+function vsBase(cells, runs) {
   const base = readJson(join(BASE_OUT, 'results.json'))
   const skills = opt(join(SKILLS, 'meta.json')) ?? {}
   const byLang = Object.groupBy(runs, (r) => r.lang)
   return Object.fromEntries(
     Object.entries(byLang).map(([lang, rs]) => {
       const tasks = [...new Set(rs.map((r) => r.task))].filter((t) => base.summary.cells[`${lang}/${t}`]).sort()
-      const perfScore = { base: base.summary.langs[lang]?.perfScore ?? null, arm: langs[lang]?.perfScore ?? null }
       const sides = { base: armSide(base.summary.cells, base.runs, lang, tasks), arm: armSide(cells, runs, lang, tasks) }
       const skill = { costUsd: skills[lang]?.costUsd ?? null, bodyBytes: skills[lang]?.bodyBytes ?? null, usedRate: rs.filter((r) => r.tools?.Skill).length / rs.length }
-      return [lang, { tasks, ...sides, perfScore, skill, breakEvenRuns: breakEven(skill.costUsd, sides, tasks.length) }]
+      // A cost change counts only outside the baseline's own spread between repetitions.
+      const beyondNoise = sides.arm.costUsd < sides.base.costMin || sides.arm.costUsd > sides.base.costMax
+      return [lang, { tasks, ...sides, beyondNoise, speedChange: speedChange(sides.base, sides.arm), skill, breakEvenRuns: breakEven(skill.costUsd, sides, tasks.length) }]
     }),
   )
 }
@@ -307,7 +319,7 @@ function build() {
   raw.forEach(exportSolution)
   const toolchains = opt(join(RUNS, 'toolchains.json'))
   const meta = { generatedAt: new Date().toISOString(), arm: ARM, model: MODEL, effort: EFFORT, toolchains, langs: LANGS, frontends: FRONTENDS, tasks: TASKS, external: EXTERNAL }
-  const compare = ARM === 'base' ? {} : { vsBase: vsBase(cells, runs, langs) }
+  const compare = ARM === 'base' ? {} : { vsBase: vsBase(cells, runs) }
   writeJson(join(OUT, 'results.json'), { meta, summary: { langs, tracks, cells, frontends, shop, combos: combos(cells, frontends), ...compare }, runs })
   console.log(`${runs.length} runs → public/data/results.json`)
 }
@@ -320,6 +332,14 @@ function runProblems(r) {
   return out
 }
 
+// An arm is comparable only if it ran the baseline's model(s) and has its comparison.
+function armProblems(d) {
+  const models = new Set(readJson(join(BASE_OUT, 'results.json')).runs.flatMap((r) => r.models ?? []))
+  const out = d.runs.filter((r) => (r.models ?? []).some((m) => !models.has(m))).map((r) => `${r.id}: model ${r.models} not in the baseline`)
+  if (!d.summary.vsBase) out.push(`arm ${ARM}: no comparison with the baseline`)
+  return out
+}
+
 function check() {
   const file = join(OUT, 'results.json')
   if (!existsSync(file)) throw new Error(`${file} missing: run npm run aggregate`)
@@ -327,7 +347,7 @@ function check() {
   const problems = d.runs.flatMap(runProblems)
   if (!d.runs.length) problems.push('no runs')
   if (!Object.keys(d.summary.langs).length) problems.push('no language summary')
-  if (ARM !== 'base' && !d.summary.vsBase) problems.push(`arm ${ARM}: no comparison with the baseline`)
+  if (ARM !== 'base') problems.push(...armProblems(d))
   if (problems.length) {
     console.error(problems.join('\n'))
     process.exit(1)

@@ -219,7 +219,7 @@ function skillTable() {
   const rows = skillKeys.map((k) => {
     const v = V[k]
     const pays = Number.isFinite(v.breakEvenRuns) ? nf(1)(v.breakEvenRuns) : 'never'
-    return `${tex(label(k))} & ${v.base.works}/${v.base.n}\\,$\\to$\\,${v.arm.works}/${v.arm.n} & ${usd(v.base.costUsd)}\\,$\\to$\\,${usd(v.arm.costUsd)} & ${pct(dCost(k))} & ${pct(change(v.base.output, v.arm.output))} & ${nf(1)(v.base.compileErrors)}\\,$\\to$\\,${nf(1)(v.arm.compileErrors)} & ${nf(0)(v.skill.usedRate * 100)}\\% & ${usd(v.skill.costUsd)} & ${pays} \\\\`
+    return `${tex(label(k))} & ${v.base.works}/${v.base.n}\\,$\\to$\\,${v.arm.works}/${v.arm.n} & ${usd(v.base.costUsd)}\\,$\\to$\\,${usd(v.arm.costUsd)} & ${pct(dCost(k))}${v.beyondNoise ? '' : '$^{\\sim}$'} & ${pct(change(v.base.output, v.arm.output))} & ${nf(1)(v.base.compileErrors)}\\,$\\to$\\,${nf(1)(v.arm.compileErrors)} & ${nf(0)(v.skill.usedRate * 100)}\\% & ${usd(v.skill.costUsd)} & ${pays} \\\\`
   })
   return `\\newcommand{\\SkillTable}{%
 \\begin{tabular}{@{}lrrrrrrrr@{}}
@@ -253,7 +253,8 @@ ${lines.join('\n')}
 function skillMacros(set) {
   const n = skillKeys.length
   set('NSkillLangs', n)
-  set('NSkillCheaper', skillKeys.filter((k) => dCost(k) < 0).length)
+  set('NSkillCheaper', skillKeys.filter((k) => dCost(k) < 0 && V[k].beyondNoise).length)
+  set('NSkillCostlier', skillKeys.filter((k) => dCost(k) > 0 && V[k].beyondNoise).length)
   set('NSkillWorksUp', skillKeys.filter((k) => V[k].arm.works > V[k].base.works).length)
   set('NSkillWorksDown', skillKeys.filter((k) => V[k].arm.works < V[k].base.works).length)
   const mid = mainSkillKeys.map(dCost).sort((a, b) => a - b)[mainSkillKeys.length >> 1]

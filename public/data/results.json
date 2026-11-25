@@ -1,6 +1,7 @@
 {
   "meta": {
-    "generatedAt": "2026-11-24T15:25:46.820Z",
+    "generatedAt": "2026-11-25T18:34:38.850Z",
+    "arm": "base",
     "model": "claude-opus-5-5",
     "effort": "high",
     "toolchains": {
@@ -13,6 +14,7 @@
       "swift": "swift-driver version: 1.120.5 Apple Swift version 6.1.2 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)",
       "java": "openjdk version \"27.0.1.1\" 2026-11-17",
       "kotlin": "info: kotlinc-jvm 2.4.21 (JRE 27.0.1.1)",
+      "clojure": "Clojure CLI version 1.12.7.1681",
       "csharp": ".NET SDK 11.0.100",
       "odin": "Odin dev-2026-11:9a6991685",
       "ocaml": "The OCaml toplevel, version 5.5.2",
@@ -106,6 +108,15 @@
         "version": [
           "kotlinc",
           "-version"
+        ],
+        "note": "On the JVM, ./app may be a small launcher script that runs java."
+      },
+      "clojure": {
+        "label": "Clojure",
+        "name": "Clojure (JVM)",
+        "version": [
+          "clojure",
+          "--version"
         ],
         "note": "On the JVM, ./app may be a small launcher script that runs java."
       },
@@ -285,15 +296,32 @@
     "frontends": {
       "react": {
         "label": "React",
-        "name": "React 19 (function components + hooks, .jsx files)"
+        "name": "React 19 (function components + hooks, .jsx files)",
+        "pins": {
+          "react": "19.3.1",
+          "react-dom": "19.3.1",
+          "vite": "8.3.8",
+          "@vitejs/plugin-react": "6.3.0"
+        }
       },
       "vue": {
         "label": "Vue",
-        "name": "Vue 3 (single-file components with <script setup>, .vue files)"
+        "name": "Vue 3 (single-file components with <script setup>, .vue files)",
+        "pins": {
+          "vue": "3.5.46",
+          "vite": "8.3.8",
+          "@vitejs/plugin-vue": "6.0.11",
+          "pinia": "4.1.0"
+        }
       },
       "svelte": {
         "label": "Svelte",
-        "name": "Svelte 5 (components with runes, .svelte files)"
+        "name": "Svelte 5 (components with runes, .svelte files)",
+        "pins": {
+          "svelte": "5.59.1",
+          "vite": "8.3.8",
+          "@sveltejs/vite-plugin-svelte": "7.3.2"
+        }
       }
     },
     "tasks": {
@@ -12242,6 +12270,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 133.478,
       "apiS": 128.001,
       "solved": true,
@@ -12305,6 +12336,9 @@
       "stdlibReads": 0,
       "checkRuns": 4,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 150.528,
       "apiS": 146.733,
       "solved": true,
@@ -12369,6 +12403,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 191.676,
       "apiS": 184.655,
       "solved": true,
@@ -12436,6 +12473,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 367.73,
       "apiS": 364.593,
       "solved": true,
@@ -12509,6 +12549,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 383.133,
       "apiS": 376.629,
       "solved": true,
@@ -12581,6 +12624,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 354.491,
       "apiS": 352.094,
       "solved": true,
@@ -12651,6 +12697,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 253.817,
       "apiS": 246.39,
       "solved": true,
@@ -12714,6 +12763,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 195.498,
       "apiS": 175.478,
       "solved": true,
@@ -12777,6 +12829,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 271.426,
       "apiS": 253.828,
       "solved": true,
@@ -12840,6 +12895,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 175.63,
       "apiS": 156.976,
       "solved": true,
@@ -12903,6 +12961,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 175.319,
       "apiS": 139.319,
       "solved": true,
@@ -12966,6 +13027,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 122.915,
       "apiS": 112.999,
       "solved": true,
@@ -13029,6 +13093,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 48.224,
       "apiS": 46.221,
       "solved": true,
@@ -13092,6 +13159,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 42.866,
       "apiS": 41.765,
       "solved": true,
@@ -13155,6 +13225,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 55.563,
       "apiS": 52.214,
       "solved": true,
@@ -13218,6 +13291,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 264.788,
       "apiS": 141.079,
       "solved": true,
@@ -13288,6 +13364,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 148.911,
       "apiS": 146.379,
       "solved": true,
@@ -13363,6 +13442,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 206.881,
       "apiS": 198.711,
       "solved": true,
@@ -13450,6 +13532,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 109.417,
       "apiS": 89.843,
       "solved": true,
@@ -13519,6 +13604,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 62.966,
       "apiS": 59.314,
       "solved": true,
@@ -13582,6 +13670,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 60.844,
       "apiS": 59.173,
       "solved": true,
@@ -13645,6 +13736,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 47.481,
       "apiS": 39.241,
       "solved": true,
@@ -13708,6 +13802,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 50.178,
       "apiS": 45.694,
       "solved": true,
@@ -13771,6 +13868,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 40.483,
       "apiS": 38.105,
       "solved": true,
@@ -13834,6 +13934,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 48.271,
       "apiS": 42.487,
       "solved": true,
@@ -13905,6 +14008,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 50.266,
       "apiS": 45.929,
       "solved": true,
@@ -13976,6 +14082,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 42.133,
       "apiS": 38.192,
       "solved": true,
@@ -14047,6 +14156,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 66.506,
       "apiS": 54.527,
       "solved": true,
@@ -14118,6 +14230,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 61.835,
       "apiS": 59.149,
       "solved": true,
@@ -14184,6 +14299,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 42.96,
       "apiS": 41.542,
       "solved": true,
@@ -14253,6 +14371,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 38.855,
       "apiS": 36.659,
       "solved": true,
@@ -14316,6 +14437,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 37.328,
       "apiS": 35.815,
       "solved": true,
@@ -14379,6 +14503,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 42.058,
       "apiS": 40.197,
       "solved": true,
@@ -14442,6 +14569,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 257.597,
       "apiS": 103.184,
       "solved": true,
@@ -14520,6 +14650,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 123.412,
       "apiS": 111.93,
       "solved": true,
@@ -14607,6 +14740,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 235.864,
       "apiS": 103.566,
       "solved": true,
@@ -14688,6 +14824,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 55.478,
       "apiS": 44.165,
       "solved": true,
@@ -14751,6 +14890,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 58.337,
       "apiS": 47.82,
       "solved": true,
@@ -14817,6 +14959,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 30.534,
       "apiS": 25.122,
       "solved": true,
@@ -14880,6 +15025,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 21.202,
       "apiS": 18.209,
       "solved": true,
@@ -14943,6 +15091,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 21.896,
       "apiS": 19.145,
       "solved": true,
@@ -15006,6 +15157,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 22.649,
       "apiS": 19.925,
       "solved": true,
@@ -15069,6 +15223,9 @@
       "stdlibReads": 1,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 82.48,
       "apiS": 67.73,
       "solved": true,
@@ -15141,6 +15298,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 83.216,
       "apiS": 73.677,
       "solved": true,
@@ -15213,6 +15373,9 @@
       "stdlibReads": 2,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 91.312,
       "apiS": 87.928,
       "solved": true,
@@ -15288,6 +15451,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 304.345,
       "apiS": 107.382,
       "solved": true,
@@ -15366,6 +15532,9 @@
       "stdlibReads": 0,
       "checkRuns": 4,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 147.734,
       "apiS": 102.241,
       "solved": true,
@@ -15441,6 +15610,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 209.103,
       "apiS": 80.209,
       "solved": true,
@@ -15516,6 +15688,9 @@
       "stdlibReads": 1,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 168.939,
       "apiS": 140.778,
       "solved": true,
@@ -15588,6 +15763,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 73.472,
       "apiS": 57.798,
       "solved": true,
@@ -15657,6 +15835,9 @@
       "stdlibReads": 0,
       "checkRuns": 4,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 64.935,
       "apiS": 49.676,
       "solved": true,
@@ -15726,6 +15907,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 165.748,
       "apiS": 146.718,
       "solved": true,
@@ -15792,6 +15976,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 74.324,
       "apiS": 53.932,
       "solved": true,
@@ -15861,6 +16048,9 @@
       "stdlibReads": 3,
       "checkRuns": 4,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 95.57,
       "apiS": 72.135,
       "solved": true,
@@ -15930,6 +16120,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 16.04,
       "apiS": 13.257,
       "solved": true,
@@ -15993,6 +16186,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 16.865,
       "apiS": 14.079,
       "solved": true,
@@ -16056,6 +16252,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 16.927,
       "apiS": 14.178,
       "solved": true,
@@ -16119,6 +16318,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 20.872,
       "apiS": 17.836,
       "solved": true,
@@ -16182,6 +16384,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 17.105,
       "apiS": 14.189,
       "solved": true,
@@ -16245,6 +16450,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 18.968,
       "apiS": 15.407,
       "solved": true,
@@ -16308,6 +16516,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 42.607,
       "apiS": 38.498,
       "solved": true,
@@ -16377,6 +16588,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 44.114,
       "apiS": 41.544,
       "solved": true,
@@ -16449,6 +16663,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 43.651,
       "apiS": 40.657,
       "solved": true,
@@ -16521,6 +16738,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 76.772,
       "apiS": 68.209,
       "solved": true,
@@ -16596,6 +16816,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 190.169,
       "apiS": 65.874,
       "solved": true,
@@ -16671,6 +16894,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 58.325,
       "apiS": 52.951,
       "solved": true,
@@ -16746,6 +16972,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 40.212,
       "apiS": 37.241,
       "solved": true,
@@ -16818,6 +17047,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 37.495,
       "apiS": 34.093,
       "solved": true,
@@ -16887,6 +17119,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 46.826,
       "apiS": 43.212,
       "solved": true,
@@ -16959,6 +17194,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 24.604,
       "apiS": 22.831,
       "solved": true,
@@ -17025,6 +17263,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 27.497,
       "apiS": 24.539,
       "solved": true,
@@ -17091,6 +17332,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 28.452,
       "apiS": 21.087,
       "solved": true,
@@ -17160,6 +17404,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 40.928,
       "apiS": 37.823,
       "solved": true,
@@ -17223,6 +17470,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 40.925,
       "apiS": 38.469,
       "solved": true,
@@ -17286,6 +17536,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 45.978,
       "apiS": 43.811,
       "solved": true,
@@ -17350,6 +17603,9 @@
       "stdlibReads": 1,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 462.105,
       "apiS": 81.646,
       "solved": true,
@@ -17422,6 +17678,9 @@
       "stdlibReads": 2,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 202.902,
       "apiS": 72.791,
       "solved": true,
@@ -17495,6 +17754,9 @@
       "stdlibReads": 1,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 231.047,
       "apiS": 89.763,
       "solved": true,
@@ -17568,6 +17830,9 @@
       "stdlibReads": 1,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 111.069,
       "apiS": 105.105,
       "solved": true,
@@ -17634,6 +17899,9 @@
       "stdlibReads": 1,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 83.683,
       "apiS": 75.436,
       "solved": true,
@@ -17701,6 +17969,9 @@
       "stdlibReads": 1,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 132.528,
       "apiS": 124.96,
       "solved": true,
@@ -17767,6 +18038,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 41.66,
       "apiS": 34.858,
       "solved": true,
@@ -17830,6 +18104,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 64.771,
       "apiS": 56.013,
       "solved": true,
@@ -17893,6 +18170,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 46.222,
       "apiS": 38.476,
       "solved": true,
@@ -17956,6 +18236,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 47.687,
       "apiS": 43.627,
       "solved": true,
@@ -18022,6 +18305,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 70.827,
       "apiS": 59,
       "solved": true,
@@ -18091,6 +18377,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 65.634,
       "apiS": 60.179,
       "solved": true,
@@ -18160,6 +18449,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 187.465,
       "apiS": 61.921,
       "solved": true,
@@ -18229,6 +18521,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 170.007,
       "apiS": 46.624,
       "solved": true,
@@ -18298,6 +18593,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 60.136,
       "apiS": 49.285,
       "solved": true,
@@ -18361,6 +18659,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 41.902,
       "apiS": 34.666,
       "solved": true,
@@ -18427,6 +18728,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 32.561,
       "apiS": 29.311,
       "solved": true,
@@ -18493,6 +18797,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 47.824,
       "apiS": 42.115,
       "solved": true,
@@ -18559,6 +18866,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 72.943,
       "apiS": 42.742,
       "solved": true,
@@ -18625,6 +18935,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 52.839,
       "apiS": 42.284,
       "solved": true,
@@ -18691,6 +19004,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 58.948,
       "apiS": 46.901,
       "solved": true,
@@ -18757,6 +19073,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 66.61,
       "apiS": 65.316,
       "solved": true,
@@ -18823,6 +19142,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 39.302,
       "apiS": 37.977,
       "solved": true,
@@ -18889,6 +19211,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 34.615,
       "apiS": 32.155,
       "solved": true,
@@ -18952,6 +19277,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 119.971,
       "apiS": 45.965,
       "solved": true,
@@ -19018,6 +19346,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 32.899,
       "apiS": 31.087,
       "solved": true,
@@ -19084,6 +19415,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 51.02,
       "apiS": 48.861,
       "solved": true,
@@ -19153,6 +19487,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 37.11,
       "apiS": 34.337,
       "solved": true,
@@ -19219,6 +19556,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 38.697,
       "apiS": 35.858,
       "solved": true,
@@ -19282,6 +19622,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 36.88,
       "apiS": 34.8,
       "solved": true,
@@ -19348,6 +19691,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 51.564,
       "apiS": 43.126,
       "solved": true,
@@ -19411,6 +19757,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 44.644,
       "apiS": 41.508,
       "solved": true,
@@ -19474,6 +19823,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 42.563,
       "apiS": 34.893,
       "solved": true,
@@ -19537,6 +19889,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 52.402,
       "apiS": 36.096,
       "solved": true,
@@ -19603,6 +19958,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 41.684,
       "apiS": 30.729,
       "solved": true,
@@ -19666,6 +20024,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 38.833,
       "apiS": 32.308,
       "solved": true,
@@ -19732,6 +20093,9 @@
       "stdlibReads": 0,
       "checkRuns": 4,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 162.627,
       "apiS": 107.922,
       "solved": true,
@@ -19798,6 +20162,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 117.099,
       "apiS": 69.076,
       "solved": true,
@@ -19867,6 +20234,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 67.34,
       "apiS": 53.632,
       "solved": true,
@@ -19933,6 +20303,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 62.497,
       "apiS": 44.706,
       "solved": true,
@@ -19996,6 +20369,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 58.047,
       "apiS": 39.843,
       "solved": true,
@@ -20059,6 +20435,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 53.737,
       "apiS": 47.565,
       "solved": true,
@@ -20122,6 +20501,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 189.772,
       "apiS": 58.289,
       "solved": true,
@@ -20185,6 +20567,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 177.575,
       "apiS": 45.954,
       "solved": true,
@@ -20248,6 +20633,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 185.269,
       "apiS": 56.217,
       "solved": true,
@@ -20311,6 +20699,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 38.133,
       "apiS": 22.575,
       "solved": true,
@@ -20374,6 +20765,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 38.988,
       "apiS": 30.232,
       "solved": true,
@@ -20437,6 +20831,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 43.553,
       "apiS": 30.269,
       "solved": true,
@@ -20500,6 +20897,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 53.877,
       "apiS": 30.99,
       "solved": true,
@@ -20563,6 +20963,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 32.246,
       "apiS": 21.561,
       "solved": true,
@@ -20626,6 +21029,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 56.104,
       "apiS": 36.723,
       "solved": true,
@@ -20689,6 +21095,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 35.054,
       "apiS": 30.466,
       "solved": true,
@@ -20752,6 +21161,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 21.12,
       "apiS": 19.541,
       "solved": true,
@@ -20815,6 +21227,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 23.897,
       "apiS": 21.724,
       "solved": true,
@@ -20878,6 +21293,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 16.841,
       "apiS": 15.134,
       "solved": true,
@@ -20941,6 +21359,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 15.672,
       "apiS": 14.035,
       "solved": true,
@@ -21004,6 +21425,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 16.552,
       "apiS": 15.078,
       "solved": true,
@@ -21067,6 +21491,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 38.958,
       "apiS": 37.503,
       "solved": true,
@@ -21130,6 +21557,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 39.689,
       "apiS": 37.093,
       "solved": true,
@@ -21193,6 +21623,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 59.625,
       "apiS": 48.359,
       "solved": true,
@@ -21256,6 +21689,9 @@
       "stdlibReads": 1,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 297.542,
       "apiS": 82.39,
       "solved": true,
@@ -21329,6 +21765,9 @@
       "stdlibReads": 2,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 98.329,
       "apiS": 92.69,
       "solved": true,
@@ -21398,6 +21837,9 @@
       "stdlibReads": 2,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 237.318,
       "apiS": 66.072,
       "solved": true,
@@ -21461,6 +21903,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 30.068,
       "apiS": 26.956,
       "solved": true,
@@ -21524,6 +21969,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 35.549,
       "apiS": 28.262,
       "solved": true,
@@ -21587,6 +22035,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 40.932,
       "apiS": 34.678,
       "solved": true,
@@ -21650,6 +22101,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 29.825,
       "apiS": 25.613,
       "solved": true,
@@ -21713,6 +22167,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 25.286,
       "apiS": 22.097,
       "solved": true,
@@ -21776,6 +22233,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 18.951,
       "apiS": 15.841,
       "solved": true,
@@ -21839,6 +22299,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 44.55,
       "apiS": 36.345,
       "solved": true,
@@ -21908,6 +22371,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 39.863,
       "apiS": 33.855,
       "solved": true,
@@ -21977,6 +22443,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 36.782,
       "apiS": 31.308,
       "solved": true,
@@ -22046,6 +22515,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 51.269,
       "apiS": 47.83,
       "solved": true,
@@ -22115,6 +22587,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 58.257,
       "apiS": 53.549,
       "solved": true,
@@ -22184,6 +22659,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 44.527,
       "apiS": 41.709,
       "solved": true,
@@ -22253,6 +22731,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 44.169,
       "apiS": 41.655,
       "solved": true,
@@ -22316,6 +22797,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 52.964,
       "apiS": 51.252,
       "solved": true,
@@ -22379,6 +22863,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 55.507,
       "apiS": 52.686,
       "solved": true,
@@ -22445,6 +22932,9 @@
       "stdlibReads": 1,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 139.645,
       "apiS": 134.807,
       "solved": true,
@@ -22541,6 +23031,9 @@
       "stdlibReads": 1,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 107.363,
       "apiS": 104.037,
       "solved": true,
@@ -22625,6 +23118,9 @@
       "stdlibReads": 1,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 88.937,
       "apiS": 86.847,
       "solved": true,
@@ -22703,6 +23199,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 62.919,
       "apiS": 57.983,
       "solved": true,
@@ -22772,6 +23271,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 40.626,
       "apiS": 38.245,
       "solved": true,
@@ -22841,6 +23343,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 38.146,
       "apiS": 36.292,
       "solved": true,
@@ -22910,6 +23415,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 39.873,
       "apiS": 37.367,
       "solved": true,
@@ -22973,6 +23481,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 22.601,
       "apiS": 19.727,
       "solved": true,
@@ -23036,6 +23547,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 30.561,
       "apiS": 27.327,
       "solved": true,
@@ -23099,6 +23613,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 27.672,
       "apiS": 24.504,
       "solved": true,
@@ -23162,6 +23679,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 22.128,
       "apiS": 19.894,
       "solved": true,
@@ -23225,6 +23745,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 27.406,
       "apiS": 25.084,
       "solved": true,
@@ -23288,6 +23811,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 105.981,
       "apiS": 55.472,
       "solved": true,
@@ -23351,6 +23877,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 162.893,
       "apiS": 85.598,
       "solved": true,
@@ -23414,6 +23943,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 264.354,
       "apiS": 123.415,
       "solved": true,
@@ -23477,6 +24009,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 60.318,
       "apiS": 56.74,
       "solved": false,
@@ -23555,6 +24090,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 65.976,
       "apiS": 64.146,
       "solved": false,
@@ -23633,6 +24171,9 @@
       "stdlibReads": 2,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 63.598,
       "apiS": 62.02,
       "solved": false,
@@ -23711,6 +24252,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 110.08,
       "apiS": 104.409,
       "solved": true,
@@ -23783,6 +24327,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 238.27,
       "apiS": 108.425,
       "solved": true,
@@ -23848,6 +24395,9 @@
       "stdlibReads": 0,
       "checkRuns": 4,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 179.964,
       "apiS": 169.281,
       "solved": true,
@@ -23920,6 +24470,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 177.472,
       "apiS": 165.211,
       "solved": true,
@@ -23983,6 +24536,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 56.715,
       "apiS": 52.816,
       "solved": true,
@@ -24046,6 +24602,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 65.526,
       "apiS": 62.134,
       "solved": true,
@@ -24109,6 +24668,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 62.859,
       "apiS": 55.939,
       "solved": true,
@@ -24172,6 +24734,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 53.299,
       "apiS": 46.128,
       "solved": true,
@@ -24235,6 +24800,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 46.846,
       "apiS": 39.219,
       "solved": true,
@@ -24298,6 +24866,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 51.435,
       "apiS": 49.52,
       "solved": true,
@@ -24361,6 +24932,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 53.913,
       "apiS": 49.616,
       "solved": true,
@@ -24424,6 +24998,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 43.862,
       "apiS": 41.574,
       "solved": true,
@@ -24487,6 +25064,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 174.419,
       "apiS": 52.492,
       "solved": true,
@@ -24557,6 +25137,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 61.565,
       "apiS": 58.543,
       "solved": true,
@@ -24620,6 +25203,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 54.831,
       "apiS": 52.167,
       "solved": true,
@@ -24689,6 +25275,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 28.948,
       "apiS": 27.145,
       "solved": true,
@@ -24755,6 +25344,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 30.536,
       "apiS": 27.859,
       "solved": true,
@@ -24818,6 +25410,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 23.285,
       "apiS": 21.434,
       "solved": true,
@@ -24881,6 +25476,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 26.398,
       "apiS": 23.406,
       "solved": true,
@@ -24944,6 +25542,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 20.537,
       "apiS": 17.835,
       "solved": true,
@@ -25007,6 +25608,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 26.193,
       "apiS": 21.933,
       "solved": true,
@@ -25070,6 +25674,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 20.631,
       "apiS": 19.267,
       "solved": true,
@@ -25133,6 +25740,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 24.019,
       "apiS": 21.855,
       "solved": true,
@@ -25196,6 +25806,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 32.013,
       "apiS": 28.764,
       "solved": true,
@@ -25259,6 +25872,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 46.712,
       "apiS": 31.312,
       "solved": true,
@@ -25322,6 +25938,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 35.04,
       "apiS": 28.168,
       "solved": true,
@@ -25385,6 +26004,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 55.388,
       "apiS": 42.129,
       "solved": true,
@@ -25448,6 +26070,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 37.365,
       "apiS": 36.469,
       "solved": true,
@@ -25576,6 +26201,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 60.078,
       "apiS": 48.444,
       "solved": true,
@@ -25704,6 +26332,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 40.184,
       "apiS": 39.634,
       "solved": true,
@@ -25832,6 +26463,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 31.611,
       "apiS": 31.044,
       "solved": true,
@@ -25931,6 +26565,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 32.94,
       "apiS": 32.118,
       "solved": true,
@@ -26030,6 +26667,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 25.125,
       "apiS": 24.37,
       "solved": true,
@@ -26129,6 +26769,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 25.636,
       "apiS": 24.325,
       "solved": true,
@@ -26192,6 +26835,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 24.17,
       "apiS": 23.149,
       "solved": true,
@@ -26255,6 +26901,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 22.182,
       "apiS": 21.132,
       "solved": true,
@@ -26318,6 +26967,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 15.911,
       "apiS": 15.321,
       "solved": true,
@@ -26381,6 +27033,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 16.939,
       "apiS": 16.224,
       "solved": true,
@@ -26444,6 +27099,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 15.891,
       "apiS": 15.177,
       "solved": true,
@@ -26507,6 +27165,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 50.786,
       "apiS": 44.166,
       "solved": true,
@@ -26573,6 +27234,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 53.893,
       "apiS": 49.332,
       "solved": true,
@@ -26643,6 +27307,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 83.219,
       "apiS": 62.733,
       "solved": true,
@@ -26712,6 +27379,9 @@
       "stdlibReads": 2,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 175.725,
       "apiS": 65.503,
       "solved": true,
@@ -26787,6 +27457,9 @@
       "stdlibReads": 2,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 264.857,
       "apiS": 45.171,
       "solved": true,
@@ -26858,6 +27531,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 97.924,
       "apiS": 48.464,
       "solved": true,
@@ -26931,6 +27607,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 43.755,
       "apiS": 37.124,
       "solved": true,
@@ -27000,6 +27679,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 39.529,
       "apiS": 34.458,
       "solved": true,
@@ -27069,6 +27751,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 39.716,
       "apiS": 34.866,
       "solved": true,
@@ -27138,6 +27823,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 42.726,
       "apiS": 35.965,
       "solved": true,
@@ -27204,6 +27892,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 32.717,
       "apiS": 22.738,
       "solved": true,
@@ -27270,6 +27961,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 37.213,
       "apiS": 23.311,
       "solved": true,
@@ -27336,6 +28030,9 @@
       "stdlibReads": 0,
       "checkRuns": 4,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 51.981,
       "apiS": 35.887,
       "solved": true,
@@ -27405,6 +28102,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 44.163,
       "apiS": 35.09,
       "solved": true,
@@ -27474,6 +28174,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 29.598,
       "apiS": 23.466,
       "solved": true,
@@ -27540,6 +28243,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 30.463,
       "apiS": 28.405,
       "solved": true,
@@ -27606,6 +28312,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 23.668,
       "apiS": 22.546,
       "solved": true,
@@ -27672,6 +28381,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 31.391,
       "apiS": 29.498,
       "solved": true,
@@ -27738,6 +28450,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 40.993,
       "apiS": 36.496,
       "solved": true,
@@ -27866,6 +28581,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 39.83,
       "apiS": 38.682,
       "solved": true,
@@ -27994,6 +28712,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 32.702,
       "apiS": 32.159,
       "solved": true,
@@ -28122,6 +28843,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 29.573,
       "apiS": 25.971,
       "solved": true,
@@ -28221,6 +28945,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 23.697,
       "apiS": 23.137,
       "solved": true,
@@ -28320,6 +29047,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 30.089,
       "apiS": 28.579,
       "solved": true,
@@ -28419,6 +29149,9 @@
       "stdlibReads": 1,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 109.401,
       "apiS": 63.304,
       "solved": true,
@@ -28485,6 +29218,9 @@
       "stdlibReads": 1,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 103.945,
       "apiS": 65.054,
       "solved": true,
@@ -28551,6 +29287,9 @@
       "stdlibReads": 1,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 95.034,
       "apiS": 66.216,
       "solved": true,
@@ -28617,6 +29356,9 @@
       "stdlibReads": 0,
       "checkRuns": 4,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 317.632,
       "apiS": 190.742,
       "solved": true,
@@ -28698,6 +29440,9 @@
       "stdlibReads": 3,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 368.289,
       "apiS": 225.632,
       "solved": true,
@@ -28783,6 +29528,9 @@
       "stdlibReads": 0,
       "checkRuns": 3,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 219.035,
       "apiS": 179.158,
       "solved": true,
@@ -28861,6 +29609,9 @@
       "stdlibReads": 1,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 69.312,
       "apiS": 45.26,
       "solved": true,
@@ -28927,6 +29678,9 @@
       "stdlibReads": 4,
       "checkRuns": 5,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 160.962,
       "apiS": 73.454,
       "solved": true,
@@ -28993,6 +29747,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 83.935,
       "apiS": 51.571,
       "solved": true,
@@ -29059,6 +29816,9 @@
       "stdlibReads": 2,
       "checkRuns": 4,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 242.86,
       "apiS": 69.144,
       "solved": true,
@@ -29122,6 +29882,9 @@
       "stdlibReads": 2,
       "checkRuns": 4,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 175.103,
       "apiS": 71.102,
       "solved": true,
@@ -29185,6 +29948,9 @@
       "stdlibReads": 1,
       "checkRuns": 2,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 86.326,
       "apiS": 56.035,
       "solved": true,
@@ -29248,6 +30014,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 46.708,
       "apiS": 44.707,
       "solved": true,
@@ -29317,6 +30086,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 50.701,
       "apiS": 48.459,
       "solved": true,
@@ -29386,6 +30158,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 65.657,
       "apiS": 64.054,
       "solved": true,
@@ -29452,6 +30227,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 45.393,
       "apiS": 43.513,
       "solved": true,
@@ -29527,6 +30305,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 40.508,
       "apiS": 38.601,
       "solved": true,
@@ -29602,6 +30383,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 49.676,
       "apiS": 46.516,
       "solved": true,
@@ -29677,6 +30461,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 34.109,
       "apiS": 32.099,
       "solved": true,
@@ -29746,6 +30533,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 45.938,
       "apiS": 43.94,
       "solved": true,
@@ -29812,6 +30602,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 35.248,
       "apiS": 32.928,
       "solved": true,
@@ -29878,6 +30671,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 34.909,
       "apiS": 30.905,
       "solved": true,
@@ -29941,6 +30737,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 28.115,
       "apiS": 25.613,
       "solved": true,
@@ -30004,6 +30803,9 @@
       "stdlibReads": 0,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 32.163,
       "apiS": 28.49,
       "solved": true,
@@ -30070,6 +30872,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 33.576,
       "apiS": 32.969,
       "solved": true,
@@ -30191,6 +30996,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 39.443,
       "apiS": 38.208,
       "solved": true,
@@ -30319,6 +31127,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 39.315,
       "apiS": 38.816,
       "solved": true,
@@ -30440,6 +31251,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 31.516,
       "apiS": 31.068,
       "solved": true,
@@ -30539,6 +31353,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 24.065,
       "apiS": 23.444,
       "solved": true,
@@ -30638,6 +31455,9 @@
       "stdlibReads": 0,
       "checkRuns": 0,
       "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 24.2,
       "apiS": 23.544,
       "solved": true,
@@ -30737,6 +31557,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 32.307,
       "apiS": 29.58,
       "solved": true,
@@ -30800,6 +31623,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 31.374,
       "apiS": 29.174,
       "solved": true,
@@ -30863,6 +31689,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 33.495,
       "apiS": 31.407,
       "solved": true,
@@ -30926,6 +31755,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 28.382,
       "apiS": 26.025,
       "solved": true,
@@ -30989,6 +31821,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 37.758,
       "apiS": 35.248,
       "solved": true,
@@ -31052,6 +31887,9 @@
       "stdlibReads": 0,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 32.907,
       "apiS": 30.412,
       "solved": true,
@@ -31115,6 +31953,9 @@
       "stdlibReads": 4,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 75.165,
       "apiS": 63.989,
       "solved": true,
@@ -31178,6 +32019,9 @@
       "stdlibReads": 7,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 140.368,
       "apiS": 109.993,
       "solved": true,
@@ -31247,6 +32091,9 @@
       "stdlibReads": 3,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 79.889,
       "apiS": 57.729,
       "solved": true,
@@ -31312,6 +32159,9 @@
       "stdlibReads": 11,
       "checkRuns": 3,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 296.922,
       "apiS": 241.78,
       "solved": true,
@@ -31388,6 +32238,9 @@
       "stdlibReads": 11,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 238.327,
       "apiS": 204.596,
       "solved": true,
@@ -31460,6 +32313,9 @@
       "stdlibReads": 10,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 375.391,
       "apiS": 189.287,
       "solved": true,
@@ -31533,6 +32389,9 @@
       "stdlibReads": 4,
       "checkRuns": 3,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 142.721,
       "apiS": 113.624,
       "solved": true,
@@ -31596,6 +32455,9 @@
       "stdlibReads": 4,
       "checkRuns": 2,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 150.091,
       "apiS": 88.211,
       "solved": true,
@@ -31659,6 +32521,9 @@
       "stdlibReads": 2,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 76.527,
       "apiS": 58.618,
       "solved": true,
@@ -31722,6 +32587,9 @@
       "stdlibReads": 3,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 71.293,
       "apiS": 57.483,
       "solved": true,
@@ -31785,6 +32653,9 @@
       "stdlibReads": 2,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 61.1,
       "apiS": 45.165,
       "solved": true,
@@ -31848,6 +32719,9 @@
       "stdlibReads": 2,
       "checkRuns": 1,
       "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
       "durationS": 44.927,
       "apiS": 37.113,
       "solved": true,

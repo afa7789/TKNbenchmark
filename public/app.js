@@ -414,12 +414,12 @@ const SKILL_COLS = [
   ['Tasks', (r) => r.tasks.length],
   ['Works', (r) => `${r.base.works}/${r.base.n} → ${r.arm.works}/${r.arm.n}`],
   ['Cost', (r) => arrow(r.base.costUsd, r.arm.costUsd, fmt.usd)],
-  ['Δ cost', (r) => signed(r.dCost)],
+  ['Δ cost', (r) => `${signed(r.dCost)}${r.beyondNoise ? '' : ' ~'}`],
   ['Δ output tokens', (r) => signed(change(r.base.output, r.arm.output))],
   ['Δ turns', (r) => signed(change(r.base.turns, r.arm.turns))],
   ['Compiler errors', (r) => arrow(r.base.compileErrors, r.arm.compileErrors, fmt.num1)],
   ['Stdlib reads', (r) => arrow(r.base.stdlibReads, r.arm.stdlibReads, fmt.num1)],
-  ['Speed (×fastest)', (r) => (r.main ? arrow(r.perfScore.base, r.perfScore.arm, fmt.ratio) : '–')],
+  ['Code speed', (r) => (r.main ? fmt.ratio(r.speedChange) : '–')],
   ['Skill used', (r) => fmt.pct(r.skill.usedRate)],
   ['Skill cost', (r) => fmt.usd(r.skill.costUsd)],
   ['Pays off after', (r) => (isNum(r.breakEvenRuns) ? `${fmt.num1(r.breakEvenRuns)} runs` : 'never')],
@@ -429,7 +429,7 @@ function skillKpis(rows, main) {
   const median = (xs) => xs.sort((a, b) => a - b)[xs.length >> 1]
   const authoring = rows.reduce((s, r) => s + (r.skill.costUsd ?? 0), 0)
   const tiles = [
-    ['Cheaper with the skill', `${rows.filter((r) => r.dCost < 0).length}/${rows.length}`, 'languages, cost to write summed over their tasks'],
+    ['Cheaper with the skill', `${rows.filter((r) => r.dCost < 0 && r.beyondNoise).length}/${rows.length}`, `languages, beyond the no-skill spread between repetitions (${rows.filter((r) => r.dCost > 0 && r.beyondNoise).length} costlier)`],
     ['Works more often', `${rows.filter((r) => r.arm.works > r.base.works).length}`, `${rows.filter((r) => r.arm.works < r.base.works).length} work less often`],
     ['Median cost change', signed(median(main.map((r) => r.dCost))), 'main languages'],
     ['Writing every skill', fmt.usd(authoring), 'one researching agent per language'],
@@ -438,7 +438,7 @@ function skillKpis(rows, main) {
 }
 
 function renderSkills(arm) {
-  if (!arm?.summary?.vsBase) return ($('skills').hidden = true)
+  if (!Object.keys(arm?.summary?.vsBase ?? {}).length) return ($('skills').hidden = true)
   const rows = skillRows(arm).sort((a, b) => a.dCost - b.dCost)
   const main = rows.filter((r) => r.main)
   $('skill-kpis').innerHTML = skillKpis(rows, main)
