@@ -89,6 +89,19 @@
       <div class="scroll" id="perf-ranking"></div>
     </fieldset>
 
+    <fieldset id="skills">
+      <legend>With a language skill</legend>
+      <p class="hint">The ranking above is the no-rules run: no CLAUDE.md, no skills. Here every round runs again with one change: the agent's workdir holds a skill for its language (<code>.claude/skills/&lt;lang&gt;/SKILL.md</code>), written beforehand by a separate Opus 5.5 agent that researched what practitioners use for the installed version and checked every API against the toolchain. Same prompt, model, toolchains and Claude Code. Skills: <a href="https://github.com/afa7789/TKNbenchmark/tree/main/bench/skills">bench/skills</a>.</p>
+      <div id="skill-kpis" class="kpis"></div>
+      <div class="multiples">
+        <div class="chart"><h4>Cost to write, without → with the skill</h4><p class="sub"><span class="key hollow"></span> without · <span class="key filled"></span> with · sorted by change · main languages</p><div id="skill-dumbbell"></div></div>
+        <div class="chart"><h4>Place in the cost ranking</h4><p class="sub">Lines in full ink moved 3 or more places</p><div id="skill-slope"></div></div>
+      </div>
+      <h3>Every language</h3>
+      <p class="hint">Medians per task, summed over the tasks both runs share; arrows read without → with. "Pays off after" = cost of writing the skill ÷ median saving per run.</p>
+      <div class="scroll" id="skill-table"></div>
+    </fieldset>
+
     <fieldset id="tasks">
       <legend>By task</legend>
       <div class="segmented" id="task-tabs" role="tablist"></div>

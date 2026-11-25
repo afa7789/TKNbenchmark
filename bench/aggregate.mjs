@@ -262,6 +262,12 @@ function armSide(cells, runs, lang, tasks) {
   return { n: rs.length, works, firstTry: rs.filter((r) => r.firstCheckPass).length, costPerWorkingUsd: works ? spent / works : null, ...Object.fromEntries(keys.map((k) => [k, med(cs, k)])) }
 }
 
+// Runs until writing the skill has paid for itself: authoring cost ÷ median saving per run. null = no saving.
+function breakEven(authorUsd, { base, arm }, nTasks) {
+  const saving = (base.costUsd - arm.costUsd) / nTasks
+  return Number.isFinite(authorUsd) && saving > 0 ? authorUsd / saving : null
+}
+
 // This arm vs the published run, per language over the tasks both ran, plus what the skill cost to write.
 function vsBase(cells, runs, langs) {
   const base = readJson(join(BASE_OUT, 'results.json'))
@@ -271,8 +277,9 @@ function vsBase(cells, runs, langs) {
     Object.entries(byLang).map(([lang, rs]) => {
       const tasks = [...new Set(rs.map((r) => r.task))].filter((t) => base.summary.cells[`${lang}/${t}`]).sort()
       const perfScore = { base: base.summary.langs[lang]?.perfScore ?? null, arm: langs[lang]?.perfScore ?? null }
+      const sides = { base: armSide(base.summary.cells, base.runs, lang, tasks), arm: armSide(cells, runs, lang, tasks) }
       const skill = { costUsd: skills[lang]?.costUsd ?? null, bodyBytes: skills[lang]?.bodyBytes ?? null, usedRate: rs.filter((r) => r.tools?.Skill).length / rs.length }
-      return [lang, { tasks, base: armSide(base.summary.cells, base.runs, lang, tasks), arm: armSide(cells, runs, lang, tasks), perfScore, skill }]
+      return [lang, { tasks, ...sides, perfScore, skill, breakEvenRuns: breakEven(skill.costUsd, sides, tasks.length) }]
     }),
   )
 }

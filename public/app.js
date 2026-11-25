@@ -359,6 +359,95 @@ function renderCombos(d) {
   )
 }
 
+// ---------- skills arm ----------
+// data/skills/results.json: the same rounds with one SKILL.md per language; summary.vsBase pairs it with this run.
+const change = (a, b) => (isNum(a) && isNum(b) && a ? b / a - 1 : null)
+const signed = guard((v) => `${v > 0 ? '+' : ''}${nf(0).format(v * 100)}%`)
+const arrow = (a, b, f) => `${f(a)} → ${f(b)}`
+
+function skillRows(arm) {
+  const meta = (k) => arm.meta.langs[k] ?? arm.meta.frontends[k]
+  return Object.entries(arm.summary.vsBase).map(([k, v]) => ({ k, label: meta(k).label, main: !meta(k).track && !arm.meta.frontends[k], ...v, dCost: change(v.base.costUsd, v.arm.costUsd) }))
+}
+
+const svgText = (x, y, text, attrs = '') => `<text x="${x}" y="${y}" ${attrs}>${esc(text)}</text>`
+
+// Cost per language without (hollow) and with (filled) the skill, sorted by the change.
+function dumbbell(rows) {
+  const [W, L, R, H, top] = [640, 96, 56, 22, 26]
+  const max = Math.max(...rows.flatMap((r) => [r.base.costUsd, r.arm.costUsd])) * 1.05
+  const x = (v) => L + (v / max) * (W - L - R)
+  const step = [0.25, 0.5, 1, 2, 5, 10, 20].find((st) => max / st <= 6)
+  const ticks = Array.from({ length: Math.floor(max / step) + 1 }, (_, i) => i * step)
+  const height = top + rows.length * H + 8
+  const grid = ticks.map((t) => `<line x1="${x(t)}" x2="${x(t)}" y1="${top - 6}" y2="${height - 8}" class="grid"/>${svgText(x(t), top - 10, `$${t}`, 'class="muted" text-anchor="middle"')}`).join('')
+  const body = [...rows]
+    .sort((a, b) => a.dCost - b.dCost)
+    .map((r, i) => {
+      const y = top + i * H + H / 2
+      const [b, a] = [x(r.base.costUsd), x(r.arm.costUsd)]
+      const tip = `${r.label}: ${arrow(r.base.costUsd, r.arm.costUsd, fmt.usd)} (${signed(r.dCost)}), works ${r.base.works}/${r.base.n} → ${r.arm.works}/${r.arm.n}`
+      return `<g data-tip="${esc(tip)}"><rect x="0" y="${y - H / 2}" width="${W}" height="${H}" fill="transparent"/>${svgText(L - 10, y + 4, r.label, 'text-anchor="end" class="strong"')}<line x1="${b}" x2="${a}" y1="${y}" y2="${y}" class="link"/><circle cx="${b}" cy="${y}" r="5" class="hollow"/><circle cx="${a}" cy="${y}" r="5" class="filled"/>${svgText(Math.max(a, b) + 10, y + 4, signed(r.dCost))}</g>`
+    })
+    .join('')
+  return `<svg class="viz" viewBox="0 0 ${W} ${height}" role="img" aria-label="Cost per language without and with the skill">${grid}${body}</svg>`
+}
+
+// Place in the cost ranking without the skill (left) and with it (right); moves of 3+ places in full ink.
+function slope(rows) {
+  const [W, H, top, xl, xr] = [640, 22, 34, 200, 440]
+  const rank = (side) => Object.fromEntries([...rows].sort((a, b) => a[side].costUsd - b[side].costUsd).map((r, i) => [r.k, i]))
+  const [rb, ra] = [rank('base'), rank('arm')]
+  const y = (i) => top + i * H + H / 2
+  const head = svgText(xl, 16, 'Without skill', 'text-anchor="end" class="muted"') + svgText(xr, 16, 'With skill', 'class="muted"')
+  const body = rows
+    .map((r) => {
+      const moved = Math.abs(rb[r.k] - ra[r.k]) >= 3 ? ' moved' : ''
+      const tip = `${r.label}: #${rb[r.k] + 1} → #${ra[r.k] + 1} by cost`
+      return `<g data-tip="${esc(tip)}" class="slope${moved}"><line x1="${xl + 8}" x2="${xr - 8}" y1="${y(rb[r.k])}" y2="${y(ra[r.k])}" class="link"/>${svgText(xl, y(rb[r.k]) + 4, `${rb[r.k] + 1}. ${r.label}`, 'text-anchor="end"')}${svgText(xr, y(ra[r.k]) + 4, `${ra[r.k] + 1}. ${r.label}`)}</g>`
+    })
+    .join('')
+  return `<svg class="viz" viewBox="0 0 ${W} ${top + rows.length * H + 8}" role="img" aria-label="Cost ranking without and with the skill">${head}${body}</svg>`
+}
+
+const SKILL_COLS = [
+  ['Tasks', (r) => r.tasks.length],
+  ['Works', (r) => `${r.base.works}/${r.base.n} → ${r.arm.works}/${r.arm.n}`],
+  ['Cost', (r) => arrow(r.base.costUsd, r.arm.costUsd, fmt.usd)],
+  ['Δ cost', (r) => signed(r.dCost)],
+  ['Δ output tokens', (r) => signed(change(r.base.output, r.arm.output))],
+  ['Δ turns', (r) => signed(change(r.base.turns, r.arm.turns))],
+  ['Compiler errors', (r) => arrow(r.base.compileErrors, r.arm.compileErrors, fmt.num1)],
+  ['Stdlib reads', (r) => arrow(r.base.stdlibReads, r.arm.stdlibReads, fmt.num1)],
+  ['Speed (×fastest)', (r) => (r.main ? arrow(r.perfScore.base, r.perfScore.arm, fmt.ratio) : '–')],
+  ['Skill used', (r) => fmt.pct(r.skill.usedRate)],
+  ['Skill cost', (r) => fmt.usd(r.skill.costUsd)],
+  ['Pays off after', (r) => (isNum(r.breakEvenRuns) ? `${fmt.num1(r.breakEvenRuns)} runs` : 'never')],
+]
+
+function skillKpis(rows, main) {
+  const median = (xs) => xs.sort((a, b) => a - b)[xs.length >> 1]
+  const authoring = rows.reduce((s, r) => s + (r.skill.costUsd ?? 0), 0)
+  const tiles = [
+    ['Cheaper with the skill', `${rows.filter((r) => r.dCost < 0).length}/${rows.length}`, 'languages, cost to write summed over their tasks'],
+    ['Works more often', `${rows.filter((r) => r.arm.works > r.base.works).length}`, `${rows.filter((r) => r.arm.works < r.base.works).length} work less often`],
+    ['Median cost change', signed(median(main.map((r) => r.dCost))), 'main languages'],
+    ['Writing every skill', fmt.usd(authoring), 'one researching agent per language'],
+  ]
+  return tiles.map(([l, v, n]) => `<div class="kpi"><div class="label">${esc(l)}</div><div class="value">${esc(v)}</div><div class="note">${esc(n)}</div></div>`).join('')
+}
+
+function renderSkills(arm) {
+  if (!arm?.summary?.vsBase) return ($('skills').hidden = true)
+  const rows = skillRows(arm).sort((a, b) => a.dCost - b.dCost)
+  const main = rows.filter((r) => r.main)
+  $('skill-kpis').innerHTML = skillKpis(rows, main)
+  $('skill-dumbbell').innerHTML = dumbbell(main)
+  $('skill-slope').innerHTML = slope(main)
+  const head = [{ title: 'Language' }, ...SKILL_COLS.map(([title]) => ({ title, num: true }))]
+  $('skill-table').innerHTML = table(head, rows.map((r) => `<tr><td><strong>${esc(r.label)}</strong></td>${SKILL_COLS.map(([, f]) => `<td class="num">${esc(f(r))}</td>`).join('')}</tr>`))
+}
+
 // ---------- case viewer ----------
 function caseMetrics(r) {
   const items = [
@@ -448,6 +537,7 @@ initCopy()
 renderMeta(data)
 renderKpis(data)
 renderLeaderboard(data)
+renderSkills(await getJson('data/skills/results.json').catch(() => null))
 renderMultiples(data)
 renderTasks(data)
 renderBuild(data)
