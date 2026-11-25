@@ -14,6 +14,7 @@ const armSuffix = ARM === 'base' ? '' : `-${ARM}`
 export const BASE_RUNS = join(ROOT, 'runs')
 export const RUNS = join(ROOT, `runs${armSuffix}`)
 export const WORK = process.env.TKN_WORK ?? join(tmpdir(), `tknbench${armSuffix}`)
+export const BASE_WORK = join(tmpdir(), 'tknbench')
 export const SKILLS = join(ROOT, 'bench', 'skills')
 // Claude Code binary. Arms other than base must match the baseline's version (run.mjs checks).
 export const CLAUDE_BIN = process.env.TKN_CLAUDE ?? 'claude'

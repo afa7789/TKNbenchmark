@@ -15,5 +15,8 @@
   reports a non-zero cache in the sandbox before trusting its disk numbers.
 - A gate test must use input that cannot pass the gate: testing "missing skill" with a language whose skill
   had just been written ran a real benchmark case.
+- Never compare performance measured in different sessions, or in one block per arm: the same binaries ran
+  30% slower in macOS Low Power Mode and drifted again mid-session in High Power. Measure arms paired and
+  interleaved per case (`perf.mjs --paired`), and re-time a few reference binaries before trusting a session.
 - Agents leave background servers and .NET build daemons holding the CLI's stdout; wait on the
   final event + kill stragglers by cwd, and disable MSBuild node reuse / shared compilation.

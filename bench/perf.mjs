@@ -1,14 +1,15 @@
 // Perf phase, one binary at a time on a quiet machine, only for runs that passed every hidden test.
 // stdio tasks: median wall time of 5 runs on one large input + peak RSS.
 // kvhttp: requests/second under 64 concurrent clients (median of 3 rounds) + RSS after load.
-// node bench/perf.mjs [--force]
+// node bench/perf.mjs [--force] [--paired]
+// --paired (an arm other than base): each case is measured right next to the baseline's same case,
+// alternating which goes first, so drift in machine speed falls on both arms alike.
 import { spawn, spawnSync } from 'node:child_process'
 import { existsSync, mkdirSync, openSync, closeSync, readdirSync, writeFileSync } from 'node:fs'
 import http from 'node:http'
 import net from 'node:net'
-import { dirname, join } from 'node:path'
-import { RUNS, WORK } from './config.mjs'
-import { builtDir } from './verify.mjs'
+import { dirname, join, relative } from 'node:path'
+import { ARM, BASE_RUNS, BASE_WORK, RUNS, WORK } from './config.mjs'
 import { genInput } from './harness/check.mjs'
 import { parseArgs, readJson, writeJson } from './lib.mjs'
 
@@ -113,14 +114,26 @@ for (const lang of readdirSync(RUNS, { withFileTypes: true }).filter((e) => e.is
     for (const rep of readdirSync(join(RUNS, lang.name, task))) runs.push(join(RUNS, lang.name, task, rep))
   }
 }
-for (const run of runs) {
-  if (!existsSync(join(run, 'verify.json')) || (existsSync(join(run, 'perf.json')) && !args.force)) continue
+// A run worth measuring: verified, working (in round 3 or after repair), built, and benchmarked; else null.
+function measurable(run, built) {
+  if (!existsSync(join(run, 'verify.json'))) return null
   const meta = readJson(join(run, 'agent.json'))
-  const bin = join(builtDir(meta.id), 'app')
+  const bin = join(built, meta.id, 'app')
   const fixed = existsSync(join(run, 'repair.json')) && readJson(join(run, 'repair.json')).fixed
-  if (!(readJson(join(run, 'verify.json')).solved || fixed) || !existsSync(bin)) continue
-  if (meta.task !== 'kvhttp' && !INPUTS[meta.task]) continue
-  const perf = meta.task === 'kvhttp' ? await perfHttp(bin) : perfStdio(bin, meta.task)
-  writeJson(join(run, 'perf.json'), perf)
-  console.log(`${meta.id}: ${JSON.stringify(perf)}`)
+  if (!(readJson(join(run, 'verify.json')).solved || fixed) || !existsSync(bin)) return null
+  return meta.task === 'kvhttp' || INPUTS[meta.task] ? { dir: run, id: meta.id, task: meta.task, bin } : null
+}
+
+async function measure(m) {
+  const perf = m.task === 'kvhttp' ? await perfHttp(m.bin) : perfStdio(m.bin, m.task)
+  writeJson(join(m.dir, 'perf.json'), perf)
+  console.log(`${relative(dirname(RUNS), m.dir)}: ${JSON.stringify(perf)}`)
+}
+
+const paired = args.paired && ARM !== 'base'
+for (const [i, run] of runs.entries()) {
+  if (existsSync(join(run, 'perf.json')) && !args.force) continue
+  const own = measurable(run, join(WORK, 'built'))
+  const twin = paired ? measurable(join(BASE_RUNS, relative(RUNS, run)), join(BASE_WORK, 'built')) : null
+  for (const m of (i % 2 ? [twin, own] : [own, twin]).filter(Boolean)) await measure(m)
 }
