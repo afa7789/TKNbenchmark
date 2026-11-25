@@ -35,6 +35,8 @@ function sandboxEnv(home) {
     R_LIBS_USER: join(home, 'R'),
     CLJ_CONFIG: join(home, '.clojure'),
     GITLIBS: join(home, '.gitlibs'),
+    // Maven's local repo follows the JVM's user.home, not $HOME; only the Clojure CLI reads this variable.
+    CLJ_JVM_OPTS: `-Duser.home=${home}`,
   }
 }
 

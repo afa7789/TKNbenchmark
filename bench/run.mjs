@@ -26,6 +26,14 @@ function requireBaselineToolchains(now) {
 requireBaselineToolchains(versions)
 writeJson(join(RUNS, 'toolchains.json'), versions)
 
+// The skills arm needs every language's skill before any agent starts (a missing one would abort mid-run).
+function requireSkills(langs) {
+  const missing = langs.filter((l) => !existsSync(join(SKILLS, l, 'SKILL.md')))
+  if (!missing.length) return
+  console.error(`✖ no skill for: ${missing.join(', ')}. Run npm run skills first.`)
+  process.exit(1)
+}
+
 const skillSha = (lang) => (ARM === 'skills' ? shortSha(readFileSync(join(SKILLS, lang, 'SKILL.md'))) : null)
 // In the skills arm the agent must be offered its language's skill and nothing else.
 const wrongSkills = (lang, offered) => ARM === 'skills' && offered.join(',') !== lang
@@ -97,5 +105,6 @@ for (let rep = 1; rep <= reps; rep++) {
   batch.sort((a, b) => a.key[0] - b.key[0] || a.key[1] - b.key[1])
   cells.push(...batch)
 }
+if (ARM === 'skills') requireSkills([...new Set(cells.map((c) => c.lang))])
 console.log(`${cells.length} runs, ${args.jobs} at a time, work dir ${WORK}`)
 await pool(cells, Number(args.jobs), runCell)

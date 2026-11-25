@@ -1,9 +1,26 @@
 // One headless Claude Code agent in a workdir: the unit every round runs.
 import { spawn } from 'node:child_process'
-import { createWriteStream, existsSync, mkdirSync, rmSync, copyFileSync, writeFileSync } from 'node:fs'
+import { createWriteStream, existsSync, mkdirSync, readFileSync, rmSync, copyFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { TASKS, MODEL, EFFORT, RUN_TIMEOUT_MS, ROOT, ARM, AGENT_CLI, CLAUDE_BIN, SKILLS } from './config.mjs'
-import { claudeEnv, copyFiles, killStragglers, solutionFiles } from './lib.mjs'
+import { TASKS, MODEL, EFFORT, RUN_TIMEOUT_MS, ROOT, ARM, AGENT_CLI, BASE_RUNS, CLAUDE_BIN, SKILLS } from './config.mjs'
+import { claudeEnv, copyFiles, firstLine, killStragglers, readJson, solutionFiles } from './lib.mjs'
+
+// Every round that starts agents (write, repair, skill writing) runs the published run's Claude Code.
+const BASE_TOOLCHAINS = join(BASE_RUNS, 'toolchains.json')
+if (existsSync(BASE_TOOLCHAINS)) {
+  const [want, have] = [readJson(BASE_TOOLCHAINS).claude, firstLine([CLAUDE_BIN, '--version'])]
+  if (want !== have) {
+    console.error(`✖ Claude Code ${have} ≠ baseline ${want}: set TKN_CLAUDE to the baseline's binary`)
+    process.exit(1)
+  }
+}
+
+// Claude Code keeps auto-memory per working directory; a rerun of the same case must not inherit it.
+function forgetMemory(transcript) {
+  const init = JSON.parse(readFileSync(transcript, 'utf8').split('\n', 1)[0] || '{}')
+  const dir = init.memory_paths?.auto
+  if (dir) rmSync(dir, { recursive: true, force: true })
+}
 
 // Fresh workdir with what the agent may see: SPEC.md, per-language templates (proof statements),
 // the language's skill in the skills arm, plus check.mjs and the visible cases for non-front-end tasks.
@@ -42,7 +59,10 @@ export function runAgent(dir, text, transcript, cli = AGENT_CLI) {
     child.stderr.on('data', (d) => process.stderr.write(`[${dir}] ${d}`))
     child.on('close', (code) => {
       clearTimeout(timer)
-      out.end(() => resolve(code))
+      out.end(() => {
+        forgetMemory(transcript)
+        resolve(code)
+      })
     })
   })
 }
