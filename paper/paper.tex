@@ -43,8 +43,37 @@ hidden check, and within each track the languages cost about the same. We rank t
 cost to write and by the speed of the final code (points per task, 100 for the fastest): the two
 rankings run against each other: the costlier a language was to write, the faster its code tended to be
 (Spearman $\rho = \CorrCostSpeed$ between cost and speed score), with \FastestLang{} first in speed and
-last in cost.
+last in cost. We then repeated every round with one change, a language skill: a \texttt{SKILL.md} of at
+most 8\,KB per language, written beforehand by a separate Opus 5.5 agent that researched what
+practitioners use for the installed version and checked every API against the toolchain. The skill did not
+make the agent cheaper: \NSkillCostlier{} of \NSkillLangs{} languages cost more beyond their
+run-to-run spread and \NSkillCheaper{} cost less, correctness was unchanged, and the median run went from
+US\$\,\SkillRunCostBase{} to \SkillRunCostArm{} (\SkillRunCostPct), mostly because the skill is loaded
+in extra turns and its text is re-read on every turn. Only for Zig, whose API changed after the model's
+training, did the skill replace work (standard-library reads \ZigStdBase{}$\to$\ZigStdArm), at the same
+cost (\SkillDeltaZig).
 \end{abstract}
+
+\paragraph{Key findings.}
+\begin{enumerate}[leftmargin=1.4em]
+  \item \textbf{The language changes the bill, not whether the code works.} \CheapestLang{} was the
+        cheapest (US\$\,\CostCheapest{} for four tasks) and Assembly cost \RatioAsm$\times$ that; every
+        main-track run passed the hidden tests, at most after one repair.
+  \item \textbf{Cheap to write is not fast to run.} Cost to write and speed of the code rank against
+        each other (Spearman $\rho = \CorrCostSpeed$).
+  \item \textbf{A language skill made the agent costlier, not cheaper.} \NSkillCostlier{} of
+        \NSkillLangs{} languages cost more beyond noise and \NSkillCheaper{} less (median run
+        \SkillRunCostPct), with the same correctness (\SkillWorksArm{} runs worked, \SkillWorksBase{}
+        without).
+  \item \textbf{The skill is paid on every turn.} \SkillTurnsBase{}$\to$\SkillTurnsArm{} turns per run;
+        context written to the cache \SkillCacheWritePct{} and re-read \SkillCacheReadPct, while the
+        agent's own output grew only \SkillOutputPct.
+  \item \textbf{Where the model is out of date, a skill replaces work.} For Zig~0.16, standard-library
+        reads went \ZigStdBase{}$\to$\ZigStdArm{} and output \ZigOutPct, at the same cost
+        (\SkillDeltaZig).
+  \item \textbf{Check the I/O idiom before blaming the language.} C++'s slow \texttt{calc} read standard
+        input one character at a time; with \texttt{fread} the same program ran about 20$\times$ faster.
+\end{enumerate}
 
 \section{Motivation and hypotheses}
 
@@ -67,6 +96,9 @@ them running Rust + React in a server for chat bots, supplied the hypotheses:
         static snippets.
   \item[H4 (front end)] Svelte $<$ Vue $<$ React in tokens~\cite{tokenomics1}.
   \item[H5 (Rust + React)] Rust + React is a good stack for people who program with agents.
+  \item[H6 (skills)] Giving the agent a skill for its language (the version's API, build commands and
+        idioms) lowers the cost, most for the languages the model knows least, such as Zig. A reader of
+        the first version of this paper suggested it.
 \end{description}
 
 \section{Related work}
@@ -141,6 +173,21 @@ geometric mean over the four, and the speed index is $100 / \mathrm{score}$, how
 the fastest. Disk is split into per-project artifacts and shared global caches, so that the cost
 of $N$ worktrees is $N \times \mathrm{project} + \mathrm{cache}$.
 
+\paragraph{Skills arm (H6).} The runs above are the no-rules arm: no \texttt{CLAUDE.md}, no skills and
+no Skill tool. The skills arm repeats every round, for every language and task, with one change. First,
+for each of the \NSkillLangs{} languages and frameworks, a separate headless Opus 5.5 agent with web access
+wrote a skill from the same prompt, filled in only with the installed version: research what
+practitioners use for this version (official documentation and release notes, the style guide, published
+agent skills and rules), check every API, command and flag against the installed toolchain by reading its
+sources or compiling a snippet, and write a body of at most 8\,KB. The prompt never mentions the benchmark
+or its tasks; the harness adds the same front matter to every skill, so the text that triggers it does not
+vary. Writing all of them cost US\$\,\SkillAuthorCost. Each case then runs as before with the skill at
+\texttt{.claude/skills/<lang>/SKILL.md} in its directory, the \texttt{Skill} tool enabled and Claude
+Code's bundled skills turned off, so the agent is offered its language's skill and nothing else (checked
+on every run). Prompt, model, effort, toolchains and Claude Code version (2.1.331) are the baseline's; the
+harness refuses to start if any of them differ. A change in cost counts only when it falls outside the
+baseline's own spread between repetitions (the sums over tasks of the per-task minimum and maximum).
+
 \section{Results}
 
 We rank the back ends twice. By cost to write, Table~\ref{tab:main} and Figure~\ref{fig:cost}; costs are
@@ -205,6 +252,36 @@ comparable within a track, not with Table~\ref{tab:main}.}
 \FrontTable
 \end{table}
 
+\subsection{With a language skill}
+
+The agent loaded its skill in every run (Table~\ref{tab:skills}). Correctness did not change:
+\SkillWorksArm{} runs worked with the skill and \SkillWorksBase{} without; \NSkillFailed{} runs failed
+verification, including the same Odin \texttt{calc} case as in the baseline, and the first repair fixed
+\NSkillFixed{} of them. Cost rose: \NSkillCostlier{} of \NSkillLangs{} languages cost more beyond the
+baseline's spread, \NSkillCheaper{} cost less, and the median change over the main languages was
+\SkillMedianChange. Over \NSkillPairs{} runs paired by case, the median run went from
+US\$\,\SkillRunCostBase{} to \SkillRunCostArm{} (\SkillRunCostPct) and from \SkillTurnsBase{} to
+\SkillTurnsArm{} turns; the context written to the cache grew \SkillCacheWritePct{} and the context
+re-read \SkillCacheReadPct, while the agent's own output grew only \SkillOutputPct.
+Figure~\ref{fig:skillslope} shows how the cost ranking moved.
+
+\begin{table}[h]
+\centering\small
+\caption{With vs without a language skill, per language, summing the per-task medians over the tasks
+both runs share. Works: runs that passed the hidden tests in round 3 or after repair. $^{\sim}$: within the
+baseline's spread between repetitions. Used: runs in which the agent invoked the skill. Pays off: cost of
+writing the skill divided by the median saving per run, only for savings outside that spread.}
+\label{tab:skills}
+\SkillTable
+\end{table}
+
+\begin{figure}[h]
+\centering\SkillSlope
+\caption{Place in the cost ranking of the main languages without (left) and with (right) the skill.
+Dark lines moved three places or more.}
+\label{fig:skillslope}
+\end{figure}
+
 \section{Discussion}
 
 \paragraph{H1 (Zig): rejected in this setting.} Zig cost US\$\,\CostZig{} against US\$\,\CostRust{} for
@@ -264,6 +341,25 @@ everywhere), the three cheapest languages for the agent produced the slowest cod
 expensive to write. Go (\SpeedGo) and Rust (\SpeedRust) were the best compromise: both in the cheaper half to write and the
 faster half to run.
 
+\paragraph{H6 (skills): rejected for cost, with one telling exception.} A skill is not free context: the
+agent spends a turn loading it, and its text then stays in the context, written to the cache once and
+re-read on every later turn. On tasks of a few turns that overhead is a large share of the bill, and the
+skill rarely replaced work that the agent would otherwise have done; in several languages it added work
+instead (more runs left test files behind, as the skills recommend). Zig shows what a skill is for.
+Without one, the agent learned the Zig~0.16 I/O API by reading the standard library's sources
+(\ZigStdBase{} reads); with one, the same knowledge came from the skill (\ZigStdArm{} reads, output
+\ZigOutPct), and the cost stayed the same (\SkillDeltaZig). A skill pays where the model's knowledge lags
+the toolchain, and it should be short, since every byte is paid again on every turn. Longer tasks, in which
+the agent would otherwise rediscover the same facts many times, may change the balance; we did not test
+them.
+
+\paragraph{Why C++ was slow.} C++ ranked below C, Rust and Go in speed (Table~\ref{tab:speed}), mostly
+because of \texttt{calc}: all three runs read standard input through \texttt{std::istreambuf\_iterator},
+which libc++ reads one character at a time. Replacing that one line with an \texttt{fread} loop made the
+same program about 20$\times$ faster with identical output. The idiom, not the language, was the
+bottleneck. In \texttt{lru} the agents chose \texttt{std::list} with \texttt{std::unordered\_map}, one
+allocation per entry, where the C solutions used a preallocated pool.
+
 \paragraph{Specialised tracks.} All \NTrackRuns{} runs passed their hidden checks on the first
 verification (Table~\ref{tab:tracks}). Within a track the languages cost about the same: Dafny,
 Lean~4 and Rocq between US\$\,\TrkProofsDafny{} and \TrkProofsRocq{}; Vyper and Solidity
@@ -301,6 +397,11 @@ widen the advantage of concise languages. Cost uses list price and includes cach
 check is a smoke test, not a full suite. Zig and Odin change their APIs often; another model with
 another training cut-off could reverse H1.
 
+The skills arm separates neither the overhead of the Skill tool from the skill's content (an arm with an
+empty skill would) nor one skill from another: each language got a single skill, capped at 8\,KB and
+written by an agent rather than by experts in the language. A human-curated skill, or a shorter one, could
+do better.
+
 \section{Conclusion}
 
 With Claude Opus 5.5 the language hardly decided whether the agent succeeded (only Odin failed a hidden
@@ -310,7 +411,10 @@ ceremony. Cost follows code size, as the series predicted for snippets,
 but also how well the model knows the language version and its standard library, and how smoothly the
 toolchain works on the machine. For people who program
 with agents the practical question is not only ``which language is most concise'' but ``which language
-does the model already know well, in the version I use''. Data, code and every solution are in the
+does the model already know well, in the version I use''. A language skill, the usual remedy when it
+does not, made the agent costlier in almost every language with no gain in correctness: it paid only
+where the model's knowledge lagged the toolchain (Zig), and there it only matched the cost of reading the
+sources. Data, code and every solution are in the
 repository. Suggestions, corrections and pull requests that improve the method are welcome, at the
 repository or by email to \texttt{abeilice@ufmg.br}.
 

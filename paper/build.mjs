@@ -194,7 +194,9 @@ function tsJsMacros(set) {
 
 // ---------- skills arm (public/data/skills/results.json, written by TKN_ARM=skills npm run aggregate) ----------
 const ARM_FILE = join(ROOT, 'public', 'data', 'skills', 'results.json')
-const V = existsSync(ARM_FILE) ? JSON.parse(readFileSync(ARM_FILE, 'utf8')).summary.vsBase : {}
+const ARM_JSON = existsSync(ARM_FILE) ? JSON.parse(readFileSync(ARM_FILE, 'utf8')) : { summary: {}, runs: [] }
+const ARM_DATA = ARM_JSON.summary
+const V = ARM_DATA.vsBase ?? {}
 const change = (a, b) => (a ? b / a - 1 : NaN)
 const pct = (v) => (Number.isFinite(v) ? `${v > 0 ? '+' : ''}${nf(0)(v * 100)}\\%` : '--')
 const dCost = (k) => change(V[k].base.costUsd, V[k].arm.costUsd)
@@ -246,6 +248,28 @@ function skillMacros(set) {
   const mid = mainSkillKeys.map(dCost).sort((a, b) => a - b)[mainSkillKeys.length >> 1]
   set('SkillMedianChange', pct(mid))
   set('SkillAuthorCost', usd(skillKeys.reduce((a, k) => a + (V[k].skill.costUsd ?? 0), 0)))
+  const sumOf = (side, key) => skillKeys.reduce((a, k) => a + V[k][side][key], 0)
+  set('NSkillFailed', ARM_JSON.runs.filter((r) => r.solved === false).length)
+  set('NSkillFixed', ARM_JSON.runs.filter((r) => r.fixed).length)
+  set('SkillWorksBase', `${sumOf('base', 'works')}/${sumOf('base', 'n')}`)
+  set('SkillWorksArm', `${sumOf('arm', 'works')}/${sumOf('arm', 'n')}`)
+  // Paired per-run medians: where the arm's extra cost comes from.
+  const none = { base: NaN, arm: NaN }
+  const e = ARM_DATA.effect ?? { pairs: 0, costUsd: none, turns: none, cacheWrite: none, cacheRead: none, output: none }
+  const effPct = (m) => pct(change(m.base, m.arm))
+  set('NSkillPairs', e.pairs)
+  set('SkillRunCostBase', nf(3)(e.costUsd.base))
+  set('SkillRunCostArm', nf(3)(e.costUsd.arm))
+  set('SkillRunCostPct', effPct(e.costUsd))
+  set('SkillTurnsBase', nf(0)(e.turns.base))
+  set('SkillTurnsArm', nf(0)(e.turns.arm))
+  set('SkillCacheWritePct', effPct(e.cacheWrite))
+  set('SkillCacheReadPct', effPct(e.cacheRead))
+  set('SkillOutputPct', effPct(e.output))
+  const z = V.zig ?? { base: {}, arm: {} }
+  set('ZigStdBase', nf(0)(z.base.stdlibReads))
+  set('ZigStdArm', nf(0)(z.arm.stdlibReads))
+  set('ZigOutPct', pct(change(z.base.output, z.arm.output)))
   for (const k of skillKeys) {
     set(`SkillDelta${macroName(k)}`, pct(dCost(k)))
     set(`SkillCost${macroName(k)}`, usd(V[k].arm.costUsd))
