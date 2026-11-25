@@ -1,7 +1,7 @@
 # TKNbenchmark
 
 How much does a coding agent spend, in tokens and dollars, to solve the **same tasks** in
-**C, C++, C#, Rust, Go, Zig, Odin, Nim, Swift, Java, Kotlin, OCaml, Haskell, JavaScript, TypeScript, Python
+**C, C++, C#, Rust, Go, Zig, Odin, Nim, Swift, Java, Kotlin, Clojure, OCaml, Haskell, JavaScript, TypeScript, Python
 and Assembly (AArch64)**?
 And on the front end, **React, Vue or Svelte**? Plus four specialised tracks: scientific computing
 (**Octave, Julia, R**), theorem proving (**Lean 4, Rocq, Dafny**), smart contracts (**Solidity, Vyper**) and

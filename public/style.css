@@ -152,6 +152,14 @@ blockquote { font-style: italic; }
 }
 
 .hero-cta { margin-top: 18px; font-weight: 600; }
+/* Paper and repository links: icon + label pills, the paper filled so it reads first. */
+.hero-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid var(--ink); border-radius: 999px; font-weight: 600; font-size: 0.9375rem; }
+.pill:hover { background: var(--tint); }
+.pill.primary { background: var(--ink); color: var(--paper); }
+.pill.primary:hover { background: var(--ink-hover); }
+.pill svg, .icon-link svg { fill: currentColor; flex: none; }
+.icon-link { display: inline-flex; align-items: center; gap: 6px; }
 
 /* Sponsor call: text on the left, a tinted card with reference amounts and the email button. */
 .sponsor { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 32px 48px; align-items: start; margin-top: 12px; }
