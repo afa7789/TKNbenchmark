@@ -90,10 +90,13 @@ export function parseTranscript(text) {
     .filter(Boolean)
     .map((l) => JSON.parse(l))
   const result = events.find((e) => e.type === 'result')
+  const init = events.find((e) => e.subtype === 'init')
   const t = tally(events)
   const first = t.checks[0]
   return {
     ...runFields(result),
+    // Skills the agent could invoke: none unless the Skill tool was given (base arm).
+    skillsOffered: init?.tools?.includes('Skill') ? (init.skills ?? []) : [],
     usage: usageFields(result?.usage ?? sumUsage(events)),
     tools: t.tools,
     toolErrors: t.toolErrors,

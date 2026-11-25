@@ -1,16 +1,32 @@
 // Agent phase: one isolated headless Claude Code run per (language, task, repeat).
 // node bench/run.mjs [--langs rust,zig] [--tasks lru] [--reps 3] [--jobs 4]
+// TKN_ARM=skills runs the skills arm into runs-skills/ (see config.mjs).
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { LANGS, FRONTENDS, TASKS, MODEL, EFFORT, RUNS, WORK, MAIN_LANGS, prompt, runDir, runId, trackLangs } from './config.mjs'
+import { LANGS, FRONTENDS, TASKS, MODEL, EFFORT, RUNS, WORK, MAIN_LANGS, ARM, BASE_RUNS, CLAUDE_BIN, SKILLS, prompt, runDir, runId, trackLangs } from './config.mjs'
 import { prepareWorkdir, runAgent } from './agent.mjs'
-import { copyFiles, firstLine, list, parseArgs, pool, readJson, solutionFiles, writeJson } from './lib.mjs'
+import { copyFiles, firstLine, list, parseArgs, pool, readJson, shortSha, solutionFiles, writeJson } from './lib.mjs'
 import { parseTranscript } from './transcript.mjs'
 
 const args = parseArgs(process.argv.slice(2), { reps: '3', jobs: '4' })
 const versions = Object.fromEntries(Object.entries(LANGS).map(([k, l]) => [k, firstLine(l.version)]))
-versions.claude = firstLine(['claude', '--version'])
+versions.claude = firstLine([CLAUDE_BIN, '--version'])
+
+// An arm differs from the baseline only by its treatment: same toolchains, same Claude Code.
+function requireBaselineToolchains(now) {
+  const base = readJson(join(BASE_RUNS, 'toolchains.json'))
+  const drift = Object.keys(base).filter((k) => base[k] !== now[k]).map((k) => `  ${k}: ${base[k]} → ${now[k]}`)
+  if (!drift.length) return
+  console.error(`✖ arm "${ARM}" must use the baseline's toolchains (TKN_CLAUDE pins Claude Code):\n${drift.join('\n')}`)
+  process.exit(1)
+}
+
+if (ARM !== 'base') requireBaselineToolchains(versions)
 writeJson(join(RUNS, 'toolchains.json'), versions)
+
+const skillSha = (lang) => (ARM === 'skills' ? shortSha(readFileSync(join(SKILLS, lang, 'SKILL.md'))) : null)
+// In the skills arm the agent must be offered its language's skill and nothing else.
+const wrongSkills = (lang, offered) => ARM === 'skills' && offered.join(',') !== lang
 
 async function runCell({ lang, task, rep }) {
   const out = runDir(lang, task, rep)
@@ -29,9 +45,13 @@ async function runCell({ lang, task, rep }) {
     console.log(`✖ ${id} API error (rate limit / billing): not recorded, rerun later. ${metrics.reply}`)
     return
   }
+  if (wrongSkills(lang, metrics.skillsOffered)) {
+    console.log(`✖ ${id} offered skills [${metrics.skillsOffered}], expected only ${lang}: not recorded`)
+    return
+  }
   const files = solutionFiles(dir)
   copyFiles(dir, join(out, 'solution'), files)
-  writeJson(join(out, 'agent.json'), { id, lang, task, rep, model: MODEL, effort: EFFORT, exitCode, wallMs: Date.now() - t0, files, ...metrics })
+  writeJson(join(out, 'agent.json'), { id, lang, task, rep, arm: ARM, model: MODEL, effort: EFFORT, skillSha: skillSha(lang), exitCode, wallMs: Date.now() - t0, files, ...metrics })
   console.log(`✔ ${id} cost=$${metrics.costUsd?.toFixed(3)} out=${metrics.usage.output} turns=${metrics.turns} check=${JSON.stringify(metrics.lastCheck)}`)
 }
 

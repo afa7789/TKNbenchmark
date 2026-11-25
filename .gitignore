@@ -8,3 +8,5 @@ paper/arxiv.tar.gz
 bench/tasks/*/reference/*/.forge-out/
 bench/tasks/*/reference/*/cache/
 bench/tasks/*/reference/*/out/
+runs-*/**/transcript.jsonl
+bench/skills/*/transcript.jsonl

@@ -7,14 +7,19 @@ import http from 'node:http'
 import { extname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright'
-import { RUNS, WORK } from './config.mjs'
+import { FRONTENDS, RUNS, WORK } from './config.mjs'
 import { copyFiles, parseArgs, readJson, solutionFiles, writeJson } from './lib.mjs'
 
+const deps = (fw) => Object.keys(FRONTENDS[fw].pins)
 const FW = {
-  react: { deps: ['react', 'react-dom', 'vite', '@vitejs/plugin-react'], plugin: ["import react from '@vitejs/plugin-react'", 'react()'], exts: ['.jsx', '.js'] },
-  vue: { deps: ['vue', 'vite', '@vitejs/plugin-vue', 'pinia'], plugin: ["import vue from '@vitejs/plugin-vue'", 'vue()'], exts: ['.vue'] },
-  svelte: { deps: ['svelte', 'vite', '@sveltejs/vite-plugin-svelte'], plugin: ["import { svelte } from '@sveltejs/vite-plugin-svelte'", 'svelte()'], exts: ['.svelte'] },
+  react: { deps: deps('react'), plugin: ["import react from '@vitejs/plugin-react'", 'react()'], exts: ['.jsx', '.js'] },
+  vue: { deps: deps('vue'), plugin: ["import vue from '@vitejs/plugin-vue'", 'vue()'], exts: ['.vue'] },
+  svelte: { deps: deps('svelte'), plugin: ["import { svelte } from '@sveltejs/vite-plugin-svelte'", 'svelte()'], exts: ['.svelte'] },
 }
+// Framework and build packages at pinned versions (every arm builds with the same ones); extra
+// packages an agent imported install at their latest.
+const PINS = Object.assign({}, ...Object.values(FRONTENDS).map((f) => f.pins))
+const pinned = (d) => (PINS[d] ? `${d}@${PINS[d]}` : d)
 
 const MOUNT = {
   react: () => "import { createElement } from 'react'\nimport { createRoot } from 'react-dom/client'\nexport const mountOne = (C, el, props) => createRoot(el).render(createElement(C, props))\n",
@@ -95,7 +100,7 @@ function ensureBase(fw, extra = []) {
   if (!want.length) return base
   mkdirSync(base, { recursive: true })
   if (!existsSync(join(base, 'package.json'))) writeFileSync(join(base, 'package.json'), '{ "private": true, "type": "module" }\n')
-  const r = spawnSync('npm', ['install', '--silent', '--no-audit', '--no-fund', ...want], { cwd: base, encoding: 'utf8' })
+  const r = spawnSync('npm', ['install', '--silent', '--no-audit', '--no-fund', ...want.map(pinned)], { cwd: base, encoding: 'utf8' })
   if (r.status !== 0) console.error(`npm install ${want.join(' ')} failed: ${r.stderr.slice(-500)}`)
   return base
 }

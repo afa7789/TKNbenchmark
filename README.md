@@ -70,6 +70,27 @@ npm run serve               # http://localhost:8080
 
 `npm run check` (lint with complexity ≤ 10 + selftest + data validation) is the CI gate.
 
+### Arm 2: with a language skill
+
+The published run is the **no-rules** arm: the agent gets no CLAUDE.md, no skills and no Skill tool. The
+skills arm repeats every round with one change: the workdir holds `.claude/skills/<lang>/SKILL.md` and the
+agent gets the `Skill` tool (bundled skills off, so it sees only its language's skill).
+
+1. **Write the skills** (`npm run skills`): one agent per language (same model and effort, web access)
+   researches what practitioners use for the installed version, checks every API and command against the
+   toolchain, and writes a body of at most 8 000 bytes. The prompt (`skillPrompt` in `bench/config.mjs`) is
+   the same for every language and never mentions the benchmark; the harness adds the same front matter to
+   every skill. Output: `bench/skills/<lang>/SKILL.md`, `SOURCES.md`, and cost in `bench/skills/meta.json`.
+2. **Run the arm** with the baseline's Claude Code (`run.mjs` refuses any toolchain drift from
+   `runs/toolchains.json`); front ends build with the baseline's pinned React, Vue, Svelte and Vite.
+
+```sh
+export TKN_ARM=skills TKN_CLAUDE=~/.local/share/claude/versions/2.1.331
+npm run skills
+npm run bench -- --reps 3 && npm run verify && npm run verify:front && npm run repair
+npm run perf && npm run count && npm run aggregate   # into runs-skills/
+```
+
 ## Layout
 
 ```
@@ -77,6 +98,7 @@ bench/
   config.mjs          model, languages, tasks, prompts
   agent.mjs           one headless claude -p per case
   run.mjs             round 1–2: write
+  skills.mjs          skills arm: one SKILL.md per language (bench/skills/<lang>/)
   transcript.mjs      stream-json transcript → metrics
   verify.mjs          round 3 (back end): isolated cold build + hidden suite
   verify-front.mjs    round 3 (front end): Vite + Chromium smoke checks
@@ -89,6 +111,7 @@ bench/
   harness/check.mjs   black-box checker (copied into every case)
   tasks/<task>/       SPEC.md, reference.mjs, cases.mjs (visible + hidden)
 runs/<lang>/<task>/r<n>/   solution/, agent.json, verify.json, perf.json, tokens.json, repair.json
+runs-skills/…               the same, for the skills arm
 paper/                paper.tex, build.mjs (→ data.tex), arxiv.mjs (→ arxiv.tar.gz)
 public/               the page (GitHub Pages) and paper.pdf
 ```

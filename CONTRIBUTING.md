@@ -19,7 +19,8 @@ don't fit an issue: **abeilice@ufmg.br**. To fund more runs, see "Sponsor the ne
 1. **Results are generated, never edited.** Don't hand-edit `runs/`, `public/data/` or `paper/data.tex`;
    change the code and regenerate (`npm run aggregate`, `npm run paper`).
 2. **Same prompt for every language.** Language-specific lines (`note` in `bench/config.mjs`) only when a
-   language cannot otherwise satisfy the contract (e.g. `./app` as a launcher script).
+   language cannot otherwise satisfy the contract (e.g. `./app` as a launcher script). An arm (`TKN_ARM`)
+   changes one treatment and nothing else: same prompt, model, toolchains and Claude Code as the baseline.
 3. **Verifiers must prove themselves first.** A new task ships with a reference implementation that its
    own visible and hidden suites accept (`npm run selftest`, `npm run selftest:front`).
 4. **Verify once, live.** Don't check agent output before the verify round; failures are part of the

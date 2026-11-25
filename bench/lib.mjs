@@ -2,6 +2,7 @@
 import { readdirSync, readFileSync, realpathSync, writeFileSync, mkdirSync, copyFileSync, existsSync, statSync } from 'node:fs'
 import { join, dirname, basename, extname } from 'node:path'
 import { spawnSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 
 const SKIP_DIRS = new Set(['target', 'zig-out', '.zig-cache', 'zig-cache', 'nimcache', 'build', 'node_modules', '.git', 'obj', 'out', '.cache', '.sandbox-home', '_build', 'dist-newstyle', '_opam'])
 // ./app is kept only when it is text: a launcher script the agent may have written by hand
@@ -13,6 +14,7 @@ const COUNTED_NAMES = new Set(['Makefile', 'dune', 'dune-project', 'package.json
 const MAX_SOURCE_BYTES = 200 * 1024
 
 export const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'))
+export const shortSha = (text) => createHash('sha256').update(text).digest('hex').slice(0, 12)
 
 export function writeJson(p, data) {
   mkdirSync(dirname(p), { recursive: true })
@@ -61,8 +63,9 @@ export function copyFiles(from, to, files) {
 }
 
 // Environment for nested `claude` runs: the logged-in Claude Code account, not a raw API key.
+// The CLI never updates itself mid-run: every agent of a round runs the same version.
 export function claudeEnv() {
-  const env = { ...process.env }
+  const env = { ...process.env, DISABLE_AUTOUPDATER: '1' }
   if (!process.env.TKN_USE_API_KEY) delete env.ANTHROPIC_API_KEY
   return env
 }

@@ -5,13 +5,31 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-export const RUNS = join(ROOT, 'runs')
-export const WORK = process.env.TKN_WORK ?? join(tmpdir(), 'tknbench')
+
+// Experimental arm. base: the published run, no rules of any kind. skills: the same run plus one
+// project Skill per language (bench/skills/<lang>/SKILL.md), offered through the Skill tool.
+export const ARM = process.env.TKN_ARM ?? 'base'
+if (!['base', 'skills'].includes(ARM)) throw new Error(`unknown TKN_ARM "${ARM}" (base, skills)`)
+const armSuffix = ARM === 'base' ? '' : `-${ARM}`
+export const BASE_RUNS = join(ROOT, 'runs')
+export const RUNS = join(ROOT, `runs${armSuffix}`)
+export const WORK = process.env.TKN_WORK ?? join(tmpdir(), `tknbench${armSuffix}`)
+export const SKILLS = join(ROOT, 'bench', 'skills')
+// Claude Code binary. Arms other than base must match the baseline's version (run.mjs checks).
+export const CLAUDE_BIN = process.env.TKN_CLAUDE ?? 'claude'
 
 export const MODEL = 'claude-opus-5-5'
 export const EFFORT = 'high'
 export const TOOLS = 'Bash,Read,Edit,Write'
 export const RUN_TIMEOUT_MS = 30 * 60 * 1000
+
+// Agent CLI per arm. skills adds the Skill tool and hides every skill but the language's own:
+// bundled skills off, plus the three that survive that switch in Claude Code 2.1.331, by name.
+const SKILL_ONLY = { skillOverrides: { design: 'off', doctor: 'off', 'plugin-authoring': 'off' } }
+export const AGENT_CLI =
+  ARM === 'skills'
+    ? { tools: `${TOOLS},Skill`, args: ['--settings', JSON.stringify(SKILL_ONLY)], env: { CLAUDE_CODE_DISABLE_BUNDLED_SKILLS: '1' } }
+    : { tools: TOOLS, args: [], env: {} }
 
 const JVM_NOTE = 'On the JVM, ./app may be a small launcher script that runs java.'
 const launcher = (bin) => `./app may be a small launcher script that runs ${bin}.`
@@ -79,10 +97,11 @@ if (existsSync(JDK)) {
   process.env.PATH = `${JDK}/bin:${process.env.PATH}`
 }
 
+// pins: the packages the front-end verifier builds with, at the versions of the published run.
 export const FRONTENDS = {
-  react: { label: 'React', name: 'React 19 (function components + hooks, .jsx files)' },
-  vue: { label: 'Vue', name: 'Vue 3 (single-file components with <script setup>, .vue files)' },
-  svelte: { label: 'Svelte', name: 'Svelte 5 (components with runes, .svelte files)' },
+  react: { label: 'React', name: 'React 19 (function components + hooks, .jsx files)', pins: { react: '19.3.1', 'react-dom': '19.3.1', vite: '8.3.8', '@vitejs/plugin-react': '6.3.0' } },
+  vue: { label: 'Vue', name: 'Vue 3 (single-file components with <script setup>, .vue files)', pins: { vue: '3.5.46', vite: '8.3.8', '@vitejs/plugin-vue': '6.0.11', pinia: '4.1.0' } },
+  svelte: { label: 'Svelte', name: 'Svelte 5 (components with runes, .svelte files)', pins: { svelte: '5.59.1', vite: '8.3.8', '@sveltejs/vite-plugin-svelte': '7.3.2' } },
 }
 
 export const TASKS = {
@@ -191,6 +210,35 @@ Fix it. Environment: macOS arm64, toolchain: ${versionText}. Work only inside th
 - build.sh must still build an optimized release binary at ./app from a clean copy of this directory.
 - \`node check.mjs\` runs the example cases; the acceptance suite has more cases than the examples.
 - Do not modify SPEC.md, check.mjs or cases.json.
+
+When finished, reply with the single word DONE.`
+}
+
+// Skills arm: one agent per language writes the skill. Same text for every language, filled with the
+// installed version; it never mentions the benchmark or its tasks.
+export const SKILL_MAX_BYTES = 8000
+
+export function skillPrompt(lang, versionText) {
+  const { label, name } = LANGS[lang] ?? FRONTENDS[lang]
+  return `Write a Claude Code skill for ${name}: the reference an expert would hand an AI coding agent so that it writes correct, idiomatic, production-quality ${label} for exactly this version on the first try.
+
+Environment: macOS arm64. Installed: ${versionText}. Web search and web fetch are available. Work only inside the current directory.
+
+Work in three phases, in this order.
+
+1. Research what is actually used, before writing anything. Find and read:
+   - the official documentation and release notes for this exact version, and the breaking changes of recent releases (APIs renamed, moved or removed);
+   - the official or most widely followed style guide;
+   - agent skills, CLAUDE.md, AGENTS.md or editor rules that experienced ${label} developers have published, and what they agree on;
+   - how experienced engineers set up, build, test and ship a small ${label} project today, and the standard-library or core APIs they use day to day in this version.
+   Record every source you used in SOURCES.md: its URL and one line on what you took from it.
+2. Verify against the installed toolchain. Do not trust memory or the web for version-specific details: check every API name, signature, import path, command and flag you plan to include, in the installed sources or by building and running a small snippet in a scratch directory. Drop or correct anything that fails.
+3. Write SKILL.md: the skill body only (no YAML front matter), in Markdown, at most ${SKILL_MAX_BYTES} bytes. Spend the space on what an agent gets wrong without it: version-specific API with short verified examples, build and release commands, project layout, idioms that are both correct and fast, and common compiler or runtime errors with their fixes. Skip generic advice any ${label} developer already knows.
+
+Rules:
+- The skill is general-purpose: it must help with any ${label} program, not one particular project.
+- Do not use or cite material about LLM benchmarks or token-cost comparisons between programming languages.
+- Delete scratch files when done; leave only SKILL.md and SOURCES.md.
 
 When finished, reply with the single word DONE.`
 }
