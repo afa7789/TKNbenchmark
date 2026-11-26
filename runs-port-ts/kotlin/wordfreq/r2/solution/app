@@ -1,0 +1,2 @@
+#!/bin/sh
+exec java -XX:+UseSerialGC -jar "$(dirname "$0")/build/wordfreq.jar" "$@"

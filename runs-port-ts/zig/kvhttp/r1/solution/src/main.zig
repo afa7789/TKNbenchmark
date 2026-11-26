@@ -1,0 +1,53 @@
+//! kvhttp: an in-memory HTTP/1.1 key-value server.
+//!
+//! Usage: app <port>   (listens on 127.0.0.1:<port> until killed)
+
+const std = @import("std");
+const Io = std.Io;
+
+const Store = @import("Store.zig");
+const server = @import("server.zig");
+
+const log = std.log.scoped(.kvhttp);
+
+pub fn main(init: std.process.Init) !u8 {
+    const io = init.io;
+
+    const args = try init.minimal.args.toSlice(init.arena.allocator());
+    const port = parsePort(args) orelse {
+        std.debug.print("usage: app <port>\n", .{});
+        return 2;
+    };
+
+    const address: Io.net.IpAddress = .{ .ip4 = .loopback(port) };
+    var listener = address.listen(io, .{ .kernel_backlog = 511, .reuse_address = true }) catch |err| {
+        log.err("cannot listen on 127.0.0.1:{d}: {t}", .{ port, err });
+        return 1;
+    };
+    defer listener.deinit(io);
+    log.info("listening on 127.0.0.1:{d}", .{port});
+
+    var store: Store = .init(init.gpa);
+    defer store.deinit();
+
+    try server.serve(.{ .io = io, .gpa = init.gpa, .store = &store }, &listener);
+    return 0;
+}
+
+fn parsePort(args: []const [:0]const u8) ?u16 {
+    if (args.len != 2) return null;
+    const port = std.fmt.parseInt(u16, args[1], 10) catch return null;
+    return if (port == 0) null else port;
+}
+
+test {
+    _ = Store;
+    _ = server;
+}
+
+test parsePort {
+    try std.testing.expectEqual(8080, parsePort(&.{ "app", "8080" }));
+    try std.testing.expectEqual(null, parsePort(&.{ "app", "0" }));
+    try std.testing.expectEqual(null, parsePort(&.{ "app", "65536" }));
+    try std.testing.expectEqual(null, parsePort(&.{"app"}));
+}

@@ -1,0 +1,51 @@
+{
+  "id": "ts-lru-r2",
+  "lang": "ts",
+  "task": "lru",
+  "rep": 2,
+  "arm": "port-clojure",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "clojure",
+  "exitCode": 0,
+  "wallMs": 73481,
+  "files": [
+    "app",
+    "build.sh",
+    "src/lru-cache.ts",
+    "src/main.ts"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2950028,
+  "durationMs": 72878,
+  "apiMs": 68599,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 14,
+    "output": 5154,
+    "thinking": 855,
+    "cacheRead": 116734,
+    "cacheWrite": 21065
+  },
+  "tools": {
+    "Bash": 6
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

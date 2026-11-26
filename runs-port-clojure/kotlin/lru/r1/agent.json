@@ -1,0 +1,50 @@
+{
+  "id": "kotlin-lru-r1",
+  "lang": "kotlin",
+  "task": "lru",
+  "rep": 1,
+  "arm": "port-clojure",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "clojure",
+  "exitCode": 0,
+  "wallMs": 38814,
+  "files": [
+    "app",
+    "build.sh",
+    "src/lru/Main.kt"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.21546640000000003,
+  "durationMs": 38185,
+  "apiMs": 29313,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 12,
+    "output": 2519,
+    "thinking": 239,
+    "cacheRead": 89232,
+    "cacheWrite": 18399
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

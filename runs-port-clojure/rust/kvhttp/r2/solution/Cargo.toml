@@ -1,0 +1,15 @@
+[package]
+name = "kvhttp"
+version = "0.1.0"
+edition = "2024"
+description = "In-memory HTTP/1.1 key-value server"
+publish = false
+
+[dependencies]
+axum = { version = "0.8", default-features = false, features = ["http1", "tokio"] }
+tokio = { version = "1", features = ["rt-multi-thread", "net", "macros"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"

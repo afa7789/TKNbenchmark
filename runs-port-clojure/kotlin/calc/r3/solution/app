@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cds=()
+[[ -f "$dir/target/app.jsa" ]] && cds=(-XX:SharedArchiveFile="$dir/target/app.jsa" -Xlog:cds=off -Xlog:cds+dynamic=off)
+exec java -XX:+UseSerialGC "${cds[@]}" -jar "$dir/target/app.jar" "$@"

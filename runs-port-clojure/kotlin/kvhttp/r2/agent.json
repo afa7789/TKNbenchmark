@@ -1,0 +1,52 @@
+{
+  "id": "kotlin-kvhttp-r2",
+  "lang": "kotlin",
+  "task": "kvhttp",
+  "rep": 2,
+  "arm": "port-clojure",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "clojure",
+  "exitCode": 0,
+  "wallMs": 157930,
+  "files": [
+    "app",
+    "build.sh",
+    "src/kvhttp/Handler.kt",
+    "src/kvhttp/Main.kt",
+    "src/kvhttp/Store.kt"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.4625456,
+  "durationMs": 157280,
+  "apiMs": 146596,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 14,
+    "output": 5301,
+    "thinking": 1170,
+    "cacheRead": 111448,
+    "cacheWrite": 35735
+  },
+  "tools": {
+    "Bash": 6
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

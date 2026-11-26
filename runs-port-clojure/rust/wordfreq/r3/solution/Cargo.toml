@@ -1,0 +1,13 @@
+[package]
+name = "wordfreq"
+version = "0.1.0"
+edition = "2024"
+description = "Prints the 10 most frequent ASCII words read from standard input."
+publish = false
+
+[dependencies]
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"

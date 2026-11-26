@@ -1,0 +1,54 @@
+{
+  "id": "rust-kvhttp-r1",
+  "lang": "rust",
+  "task": "kvhttp",
+  "rep": 1,
+  "arm": "port-clojure",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "clojure",
+  "exitCode": 0,
+  "wallMs": 74145,
+  "files": [
+    ".gitignore",
+    "Cargo.lock",
+    "Cargo.toml",
+    "build.sh",
+    "src/handler.rs",
+    "src/main.rs",
+    "src/store.rs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.3310356,
+  "durationMs": 73510,
+  "apiMs": 53096,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 14,
+    "output": 5726,
+    "thinking": 918,
+    "cacheRead": 125058,
+    "cacheWrite": 23931
+  },
+  "tools": {
+    "Bash": 6
+  },
+  "toolErrors": 0,
+  "stdlibReads": 2,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

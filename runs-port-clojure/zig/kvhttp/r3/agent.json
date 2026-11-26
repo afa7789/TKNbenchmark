@@ -1,0 +1,55 @@
+{
+  "id": "zig-kvhttp-r3",
+  "lang": "zig",
+  "task": "kvhttp",
+  "rep": 3,
+  "arm": "port-clojure",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "clojure",
+  "exitCode": 0,
+  "wallMs": 215240,
+  "files": [
+    ".gitignore",
+    "build.sh",
+    "build.zig",
+    "build.zig.zon",
+    "src/Server.zig",
+    "src/Store.zig",
+    "src/main.zig",
+    "src/route.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 1.0473995999999999,
+  "durationMs": 214605,
+  "apiMs": 194618,
+  "turns": 18,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe Zig port is finished, with no third-party packages. `node check.mjs` passes all 4 example cases, including a run from a clean copy (no `zig-out`, cache or `app` left over).\n\nIt's built on the standard library's HTTP server, and each connection runs on its own task. The store is a hash map behind a read-write lock. Reads hand back a copy of the value, so a slow client doesn't hold the lock while its response is sent.\n\nBeyond the examples, I checked these by hand:\n- A 1 MiB binary value ",
+  "skillsOffered": [],
+  "usage": {
+    "input": 34,
+    "output": 19266,
+    "thinking": 6090,
+    "cacheRead": 747078,
+    "cacheWrite": 64066
+  },
+  "tools": {
+    "Bash": 17
+  },
+  "toolErrors": 0,
+  "stdlibReads": 10,
+  "builds": 4,
+  "compileErrors": 1,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

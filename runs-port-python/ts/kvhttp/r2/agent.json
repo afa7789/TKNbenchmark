@@ -1,0 +1,68 @@
+{
+  "id": "ts-kvhttp-r2",
+  "lang": "ts",
+  "task": "kvhttp",
+  "rep": 2,
+  "arm": "port-python",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "python",
+  "exitCode": 0,
+  "wallMs": 176125,
+  "files": [
+    ".gitignore",
+    "app",
+    "build.sh",
+    "dist/app.js",
+    "dist/http.js",
+    "dist/main.js",
+    "dist/parser.js",
+    "dist/reader.js",
+    "dist/server.js",
+    "dist/store.js",
+    "package-lock.json",
+    "package.json",
+    "src/app.ts",
+    "src/http.ts",
+    "src/main.ts",
+    "src/parser.ts",
+    "src/reader.ts",
+    "src/server.ts",
+    "src/store.ts",
+    "tsconfig.json"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.6683227999999999,
+  "durationMs": 175529,
+  "apiMs": 165406,
+  "turns": 17,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 26,
+    "output": 15686,
+    "thinking": 4828,
+    "cacheRead": 337614,
+    "cacheWrite": 35872
+  },
+  "tools": {
+    "Bash": 9,
+    "Write": 7
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

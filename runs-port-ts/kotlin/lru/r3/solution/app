@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec java -XX:+UseParallelGC -Xms256m -Xmx2g -cp "$DIR/build/lru.jar" lru.MainKt "$@"

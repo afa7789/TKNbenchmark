@@ -1,0 +1,51 @@
+{
+  "id": "ts-wordfreq-r3",
+  "lang": "ts",
+  "task": "wordfreq",
+  "rep": 3,
+  "arm": "port-clojure",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "clojure",
+  "exitCode": 0,
+  "wallMs": 52314,
+  "files": [
+    "app",
+    "build.sh",
+    "src/main.ts",
+    "src/wordfreq.ts"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.24406399999999998,
+  "durationMs": 51618,
+  "apiMs": 38293,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 12,
+    "output": 3644,
+    "thinking": 685,
+    "cacheRead": 89640,
+    "cacheWrite": 19151
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

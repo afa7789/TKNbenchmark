@@ -1,0 +1,49 @@
+{
+  "id": "zig-wordfreq-r1",
+  "lang": "zig",
+  "task": "wordfreq",
+  "rep": 1,
+  "arm": "port-ts",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "ts",
+  "exitCode": 0,
+  "wallMs": 70933,
+  "files": [
+    "build.sh",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.32501680000000005,
+  "durationMs": 69999,
+  "apiMs": 60411,
+  "turns": 9,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 18,
+    "output": 5558,
+    "thinking": 1068,
+    "cacheRead": 158924,
+    "cacheWrite": 22750
+  },
+  "tools": {
+    "Bash": 8
+  },
+  "toolErrors": 0,
+  "stdlibReads": 4,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

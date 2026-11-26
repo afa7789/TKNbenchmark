@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+exec java -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xshare:auto \
+  -cp "${dir}/target/wordfreq.jar" wordfreq.WordFreqKt "$@"

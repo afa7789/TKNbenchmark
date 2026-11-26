@@ -1,0 +1,50 @@
+{
+  "id": "ts-wordfreq-r1",
+  "lang": "ts",
+  "task": "wordfreq",
+  "rep": 1,
+  "arm": "port-clojure",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "clojure",
+  "exitCode": 0,
+  "wallMs": 50849,
+  "files": [
+    "app",
+    "build.sh",
+    "src/wordfreq.ts"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.255365,
+  "durationMs": 50193,
+  "apiMs": 41844,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "I ported the program to TypeScript in `src/wordfreq.ts`. `build.sh` creates `./app`, a small launcher that runs that file with Node's built-in TypeScript support. There's no compile step, so the \"release binary\" is just this launcher plus the source. `node check.mjs` passes all 6 example cases.\n\nI also tested two extra 50 MB inputs, one of generated words and one of random bytes. Each took about 0.8 seconds. For both, the output matched an independent Python implementation exactly. Empty input p",
+  "skillsOffered": [],
+  "usage": {
+    "input": 12,
+    "output": 4137,
+    "thinking": 638,
+    "cacheRead": 89925,
+    "cacheWrite": 19324
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

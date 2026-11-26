@@ -1,0 +1,50 @@
+{
+  "id": "kotlin-wordfreq-r2",
+  "lang": "kotlin",
+  "task": "wordfreq",
+  "rep": 2,
+  "arm": "port-clojure",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "clojure",
+  "exitCode": 0,
+  "wallMs": 49075,
+  "files": [
+    "app",
+    "build.sh",
+    "src/main/kotlin/WordFreq.kt"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.24388779999999996,
+  "durationMs": 48512,
+  "apiMs": 39812,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 14,
+    "output": 3329,
+    "thinking": 653,
+    "cacheRead": 110339,
+    "cacheWrite": 19398
+  },
+  "tools": {
+    "Bash": 6
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

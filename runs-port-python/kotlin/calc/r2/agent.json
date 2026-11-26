@@ -1,0 +1,51 @@
+{
+  "id": "kotlin-calc-r2",
+  "lang": "kotlin",
+  "task": "calc",
+  "rep": 2,
+  "arm": "port-python",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "python",
+  "exitCode": 0,
+  "wallMs": 77076,
+  "files": [
+    "app",
+    "build.sh",
+    "src/Calc.kt"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.3283024,
+  "durationMs": 76395,
+  "apiMs": 71892,
+  "turns": 9,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 18,
+    "output": 5659,
+    "thinking": 1309,
+    "cacheRead": 166612,
+    "cacheWrite": 22716
+  },
+  "tools": {
+    "Bash": 7,
+    "Write": 1
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

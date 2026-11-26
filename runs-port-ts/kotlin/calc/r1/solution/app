@@ -1,0 +1,5 @@
+#!/bin/sh
+dir="$(cd "$(dirname "$0")" && pwd)"
+cds=""
+[ -f "$dir/build/calc.jsa" ] && cds="-XX:SharedArchiveFile=$dir/build/calc.jsa -Xlog:cds=off -Xlog:cds+dynamic=off"
+exec java -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xss8m $cds -jar "$dir/build/calc.jar" "$@"

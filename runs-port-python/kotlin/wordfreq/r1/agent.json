@@ -1,0 +1,50 @@
+{
+  "id": "kotlin-wordfreq-r1",
+  "lang": "kotlin",
+  "task": "wordfreq",
+  "rep": 1,
+  "arm": "port-python",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "python",
+  "exitCode": 0,
+  "wallMs": 44087,
+  "files": [
+    "app",
+    "build.sh",
+    "src/WordFreq.kt"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.22596100000000002,
+  "durationMs": 43422,
+  "apiMs": 34658,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "I've ported the program to Kotlin. The source is `src/WordFreq.kt` and uses only the standard library. `build.sh` compiles it to `build/wordfreq.jar` and writes `./app`, a small launcher script that runs `java` on that jar.\n\n`node check.mjs` builds from a clean directory and passes all 6 example cases. I also compared it with the Python original on a generated 50 MB word file and a 20 MB file of random bytes. The output was identical both times, and the 50 MB run took about 0.3 s.\n\nDONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 12,
+    "output": 3129,
+    "thinking": 668,
+    "cacheRead": 86425,
+    "cacheWrite": 18256
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

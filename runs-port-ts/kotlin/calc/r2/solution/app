@@ -1,0 +1,3 @@
+#!/bin/sh
+dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+exec java -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xss8m -cp "$dir/build/calc.jar" calc.MainKt "$@"

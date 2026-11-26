@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Launcher for the LRU cache simulator.
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec node --disable-warning=ExperimentalWarning "$here/src/main.ts" "$@"

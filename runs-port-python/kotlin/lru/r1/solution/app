@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Launcher for the LRU cache simulator.
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec java -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xshare:auto -Xss8m -jar "$here/build/lru.jar"

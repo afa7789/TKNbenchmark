@@ -1,0 +1,56 @@
+{
+  "id": "zig-kvhttp-r2",
+  "lang": "zig",
+  "task": "kvhttp",
+  "rep": 2,
+  "arm": "port-python",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "python",
+  "exitCode": 0,
+  "wallMs": 280150,
+  "files": [
+    ".gitignore",
+    "build.sh",
+    "build.zig",
+    "build.zig.zon",
+    "src/Store.zig",
+    "src/http.zig",
+    "src/main.zig",
+    "src/routes.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 1.3419168,
+  "durationMs": 279586,
+  "apiMs": 267928,
+  "turns": 27,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "I've ported the server to Zig 0.16 and `node check.mjs` passes all 4 example cases. All 11 unit tests in `zig build test` pass too.\n\nI also ran a stress script on a random port. 200 parallel PUTs of 50 KB each all returned 201, and a 1 MiB value came back byte-for-byte identical. Requests one byte over 1 MiB got 413, a 65-character key got 400, and chunked uploads, a malformed request line (400), `POST /kv` (405) and a connection closed without sending anything (no response) all behaved like the",
+  "skillsOffered": [],
+  "usage": {
+    "input": 50,
+    "output": 25357,
+    "thinking": 6879,
+    "cacheRead": 1266524,
+    "cacheWrite": 72659
+  },
+  "tools": {
+    "Bash": 20,
+    "Write": 6
+  },
+  "toolErrors": 2,
+  "stdlibReads": 8,
+  "builds": 5,
+  "compileErrors": 2,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

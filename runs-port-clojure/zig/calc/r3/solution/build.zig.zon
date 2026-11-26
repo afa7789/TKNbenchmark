@@ -1,0 +1,7 @@
+.{
+    .name = .calc,
+    .version = "1.0.0",
+    .fingerprint = 0x5c3132af2ce8a15a,
+    .minimum_zig_version = "0.16.0",
+    .paths = .{ "build.zig", "build.zig.zon", "src" },
+}

@@ -1,0 +1,9 @@
+{
+  "name": "lru",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bash build.sh",
+    "test": "node check.mjs"
+  }
+}

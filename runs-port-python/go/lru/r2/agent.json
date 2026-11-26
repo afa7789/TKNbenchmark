@@ -1,0 +1,51 @@
+{
+  "id": "go-lru-r2",
+  "lang": "go",
+  "task": "lru",
+  "rep": 2,
+  "arm": "port-python",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "python",
+  "exitCode": 0,
+  "wallMs": 57012,
+  "files": [
+    "build.sh",
+    "go.mod",
+    "lru.go",
+    "main.go"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.273112,
+  "durationMs": 56274,
+  "apiMs": 54117,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe Go port passes all 5 example cases in `node check.mjs`. On two generated inputs of 1,000,000 commands each, its output was byte-for-byte identical to the Python original, and each run took about 0.1 s.\n\n- **`lru.go`**: the cache. It's a hash map plus a doubly linked list kept in a slice, which reuses freed slots, so every operation is O(1) expected time.\n- **`main.go`**: reads the input and writes buffered output. It does what the Python does where SPEC.md says nothing: blank lines and",
+  "skillsOffered": [],
+  "usage": {
+    "input": 10,
+    "output": 5269,
+    "thinking": 1300,
+    "cacheRead": 67300,
+    "cacheWrite": 19279
+  },
+  "tools": {
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

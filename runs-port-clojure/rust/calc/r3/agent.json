@@ -1,0 +1,53 @@
+{
+  "id": "rust-calc-r3",
+  "lang": "rust",
+  "task": "calc",
+  "rep": 3,
+  "arm": "port-clojure",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "clojure",
+  "exitCode": 0,
+  "wallMs": 102417,
+  "files": [
+    ".gitignore",
+    "Cargo.lock",
+    "Cargo.toml",
+    "build.sh",
+    "src/eval.rs",
+    "src/main.rs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.4637220000000001,
+  "durationMs": 101767,
+  "apiMs": 93929,
+  "turns": 10,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 20,
+    "output": 9954,
+    "thinking": 2341,
+    "cacheRead": 217090,
+    "cacheWrite": 27643
+  },
+  "tools": {
+    "Bash": 9
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": "zig-lru-r1",
+  "lang": "zig",
+  "task": "lru",
+  "rep": 1,
+  "arm": "port-ts",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "ts",
+  "exitCode": 0,
+  "wallMs": 140942,
+  "files": [
+    "build.sh",
+    "build.zig",
+    "src/lru.zig",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.5428812000000001,
+  "durationMs": 140293,
+  "apiMs": 118620,
+  "turns": 13,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe Zig port passes all 5 example cases from a clean build, and its unit tests pass too. On four 1,000,000-command inputs its output matched the original TypeScript program byte for byte. It took 0.02–0.06 s per run, against 0.19–1.40 s for the original.\n\n- **`src/lru.zig`:** the cache itself. It's built on the standard library's array hash map, which removes entries without leaving markers behind. So lookups don't slow down after many sets and deletes, and every command stays O(1).\n- **`s",
+  "skillsOffered": [],
+  "usage": {
+    "input": 24,
+    "output": 11731,
+    "thinking": 3336,
+    "cacheRead": 282426,
+    "cacheWrite": 31460
+  },
+  "tools": {
+    "Bash": 12
+  },
+  "toolErrors": 1,
+  "stdlibReads": 5,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

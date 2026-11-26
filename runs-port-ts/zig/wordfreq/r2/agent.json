@@ -1,0 +1,50 @@
+{
+  "id": "zig-wordfreq-r2",
+  "lang": "zig",
+  "task": "wordfreq",
+  "rep": 2,
+  "arm": "port-ts",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "ts",
+  "exitCode": 0,
+  "wallMs": 59217,
+  "files": [
+    "build.sh",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.3937662,
+  "durationMs": 58727,
+  "apiMs": 49598,
+  "turns": 9,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nI ported the program to Zig in `src/main.zig`, and `build.sh` compiles it with `-O ReleaseFast` to `./app`.\n\n- **Tests:** `node check.mjs` passes all 6 example cases, and the 4 unit tests in the source file pass with `zig test`.\n- **Matches the original:** on a generated 50 MB word input and 5 MB of random bytes, the output was byte-for-byte identical to the TypeScript version's.\n- **Speed:** the 50 MB input takes about 0.1 s.\n\nIt follows the original's approach: it reads all of stdin into",
+  "skillsOffered": [],
+  "usage": {
+    "input": 16,
+    "output": 4854,
+    "thinking": 651,
+    "cacheRead": 175191,
+    "cacheWrite": 32698
+  },
+  "tools": {
+    "Bash": 7,
+    "Write": 1
+  },
+  "toolErrors": 0,
+  "stdlibReads": 3,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

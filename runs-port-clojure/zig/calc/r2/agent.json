@@ -1,0 +1,53 @@
+{
+  "id": "zig-calc-r2",
+  "lang": "zig",
+  "task": "calc",
+  "rep": 2,
+  "arm": "port-clojure",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "clojure",
+  "exitCode": 0,
+  "wallMs": 175846,
+  "files": [
+    ".gitignore",
+    "build.sh",
+    "build.zig",
+    "src/calc.zig",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.622257,
+  "durationMs": 175211,
+  "apiMs": 161880,
+  "turns": 15,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 26,
+    "output": 14319,
+    "thinking": 5861,
+    "cacheRead": 326265,
+    "cacheWrite": 33815
+  },
+  "tools": {
+    "Bash": 11,
+    "Write": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 3,
+  "builds": 4,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}
