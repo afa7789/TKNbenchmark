@@ -374,6 +374,25 @@ the port is slower). Every pair cost more than writing the program from scratch 
 \PortTable
 \end{table}
 
+\subsection{Disk over a day of rebuilds}
+
+Disk in worktrees depends not only on one build but on how build output behaves across many. With no
+agent, each language's working \texttt{kvhttp} server was rebuilt \GrowthCycles{} times with its own
+\texttt{build.sh} after a one-line edit, global caches isolated as in round 3 (Table~\ref{tab:growth}).
+\GrowthTopLang{} grew the most, \GrowthTopPerBuild\,MB per rebuild, to \GrowthTopFinal\,MB; Rust's
+\texttt{target/} stayed at \GrowthRustFinal\,MB, rewritten in place, and Go's project at
+\GrowthGoFinal\,MB while its shared build cache took the new builds. These are release builds of a small
+server; a day of debug builds and tests in a large project scales the same patterns up.
+
+\begin{table}[h]
+\centering\small
+\caption{The \texttt{kvhttp} solution rebuilt after a one-line edit, \GrowthCycles{} times. MB: the
+project's build output after the first build and after the last; per rebuild: their difference divided by
+the rebuilds; global caches: package and build caches outside the project, shared by every worktree.}
+\label{tab:growth}
+\GrowthTable
+\end{table}
+
 \subsection{A team of agents vs one}
 
 The \texttt{suite} task joins \texttt{wordfreq}, \texttt{lru} and \texttt{calc} as subcommands of one
