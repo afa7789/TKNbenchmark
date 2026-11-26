@@ -3,10 +3,12 @@
 // Usage: node check.mjs [--no-build] [--cases file.json] [--json]
 // Standalone on purpose: it is copied into every agent workdir.
 import { spawn, spawnSync } from 'node:child_process'
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { isDeepStrictEqual } from 'node:util'
 import { fileURLToPath } from 'node:url'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import http from 'node:http'
 import net from 'node:net'
 
@@ -265,20 +267,51 @@ async function waitReady(port, child, ms) {
   return `server not ready after ${ms} ms`
 }
 
+// A case's environment: c.env values with {tmp} set to a fresh directory outside the solution (for a
+// database file, say). Cases without env run with the checker's own environment, as before.
+function caseEnv(c) {
+  if (!c.env) return { env: process.env, tmp: null }
+  const tmp = mkdtempSync(join(tmpdir(), 'case-'))
+  const vars = Object.fromEntries(Object.entries(c.env).map(([k, v]) => [k, v.replaceAll('{tmp}', tmp)]))
+  return { env: { ...process.env, ...vars }, tmp }
+}
+
+function startServer(ctx) {
+  ctx.child = spawn('./app', [String(ctx.port)], { stdio: ['ignore', 'ignore', 'pipe'], env: ctx.env })
+  ctx.child.on('error', () => {})
+  return waitReady(ctx.port, ctx.child, 3000)
+}
+
+// Steps beyond a request: restart the server (same port and environment), or check that the file named by
+// an environment variable starts with given bytes (a SQLite database, say).
+async function runCaseStep(ctx, step) {
+  if (step.restart) {
+    const exited = new Promise((r) => (ctx.child.exitCode === null ? ctx.child.once('exit', r) : r()))
+    ctx.child.kill('SIGKILL')
+    await exited
+    return startServer(ctx)
+  }
+  if (step.file) {
+    const path = ctx.env[step.file]
+    const head = existsSync(path) ? readFileSync(path).subarray(0, step.startsWith.length).toString('latin1') : ''
+    return head === step.startsWith ? null : `the ${step.file} file does not start with ${JSON.stringify(step.startsWith)}`
+  }
+  return runStep(ctx.port, step)
+}
+
 async function runHttpCase(c) {
-  const port = await freePort()
-  const child = spawn('./app', [String(port)], { stdio: ['ignore', 'ignore', 'pipe'] })
-  child.on('error', () => {})
+  const ctx = { port: await freePort(), ...caseEnv(c) }
   const t0 = performance.now()
   try {
-    let why = await waitReady(port, child, 3000)
+    let why = await startServer(ctx)
     for (const step of c.steps) {
       if (why) break
-      why = await runStep(port, step)
+      why = await runCaseStep(ctx, step)
     }
     return { ok: !why, ms: Math.round(performance.now() - t0), why }
   } finally {
-    child.kill('SIGKILL')
+    ctx.child.kill('SIGKILL')
+    if (ctx.tmp) rmSync(ctx.tmp, { recursive: true, force: true })
   }
 }
 

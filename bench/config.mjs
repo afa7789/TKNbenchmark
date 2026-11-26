@@ -130,6 +130,8 @@ export const TASKS = {
   // Swarm study only (bench/swarm.mjs): wordfreq + lru + calc as subcommands of one program. Runs only
   // when named (--tasks suite) and stays out of the language rankings.
   suite: { kind: 'stdio', title: 'Three tools in one binary', topic: 'one build, three modules: solo vs a swarm of agents', swarm: true },
+  // Swarm study at work: an HTTP + JSON + SQLite service, dependencies allowed, built with a dev loop.
+  notes: { kind: 'http', title: 'Notes service', topic: 'HTTP, JSON and SQLite with dependencies: solo vs a swarm at work', swarm: true },
 }
 
 const TRACK_CONTRACT = {
