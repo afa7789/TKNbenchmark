@@ -515,6 +515,23 @@ function renderSkills(arm) {
   $('skill-table').innerHTML = table(head, rows.map((r) => `<tr><td><strong>${esc(r.label)}</strong></td>${SKILL_COLS.map(([, f]) => `<td class="num">${esc(f(r))}</td>`).join('')}</tr>`))
 }
 
+// ---------- port arms: migrating the slowest languages ----------
+// data/port-<src>/results.json per source; vsBase.<target>.port has cost per 10k source lines and speed.
+function portCell(v) {
+  if (!v) return '<td class="num">–</td>'
+  const p = v.port
+  const tip = `${fmt.usd(v.base.costUsd)} to write from scratch, ${fmt.usd(v.arm.costUsd)} to port (${signed(change(v.base.costUsd, v.arm.costUsd))}); works ${v.arm.works}/${v.arm.n}`
+  return `<td class="num" data-tip="${esc(tip)}"><strong>${fmt.usd(p.costPer10kSourceLines?.median)}</strong><span class="range">${fmt.ratio(p.speedVsSource)} faster · ${v.arm.works}/${v.arm.n}</span></td>`
+}
+
+function renderPorts(d, ports) {
+  if (!ports.length) return ($('ports').hidden = true)
+  const targets = [...new Set(ports.flatMap((a) => Object.keys(a.summary.vsBase)))].sort((a, b) => label(d, a).localeCompare(label(d, b)))
+  const head = [{ title: 'From → to' }, ...targets.map((t) => ({ title: label(d, t), num: true }))]
+  const rows = ports.map((a) => `<tr><td><strong>${esc(label(d, a.meta.arm.slice(5)))}</strong></td>${targets.map((t) => portCell(a.summary.vsBase[t])).join('')}</tr>`)
+  $('port-table').innerHTML = table(head, rows)
+}
+
 // ---------- case viewer ----------
 function caseMetrics(r) {
   const items = [
@@ -607,6 +624,7 @@ renderFindings(data, Object.keys(arm?.summary?.vsBase ?? {}).length ? arm : null
 renderKpis(data)
 renderLeaderboard(data)
 renderSkills(arm)
+renderPorts(data, (await Promise.all((data.meta.arms ?? []).filter((a) => a.startsWith('port-')).map((a) => getJson(`data/${a}/results.json`).catch(() => null)))).filter(Boolean))
 renderMultiples(data)
 renderTasks(data)
 renderBuild(data)

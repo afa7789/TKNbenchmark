@@ -364,7 +364,9 @@ function build() {
   rmSync(join(OUT, 'solutions'), { recursive: true, force: true })
   raw.forEach(exportSolution)
   const toolchains = opt(join(RUNS, 'toolchains.json'))
-  const meta = { generatedAt: new Date().toISOString(), arm: ARM, model: MODEL, effort: EFFORT, toolchains, langs: LANGS, frontends: FRONTENDS, tasks: TASKS, external: EXTERNAL }
+  // The arms whose data the page can load next to this run (runs-<arm>/ directories).
+  const arms = readdirSync(ROOT).filter((n) => n.startsWith('runs-') && existsSync(join(BASE_OUT, n.slice(5), 'results.json'))).map((n) => n.slice(5))
+  const meta = { generatedAt: new Date().toISOString(), arm: ARM, arms, model: MODEL, effort: EFFORT, toolchains, langs: LANGS, frontends: FRONTENDS, tasks: TASKS, external: EXTERNAL }
   const compare = ARM === 'base' ? {} : { vsBase: vsBase(cells, runs), effect: pairedEffect(readJson(join(BASE_OUT, 'results.json')).runs, runs) }
   // The two rankings against each other: cost to write vs speed of the code (main languages).
   const ranked = Object.keys(langs).filter((l) => Number.isFinite(langs[l].perfTotal))

@@ -16,6 +16,7 @@
       <a href="#findings">Findings</a>
       <a href="#ranking">Ranking</a>
       <a href="#skills">With a skill</a>
+      <a href="#ports">Migration</a>
       <a href="#tasks">By task</a>
       <a href="#build">Build &amp; disk</a>
       <a href="#performance">Performance</a>
@@ -115,6 +116,12 @@
       <h3>Every language</h3>
       <p class="hint">Medians per task, summed over the tasks both runs share; arrows read without → with. "~": within the no-skill run's own spread between repetitions (noise). "Code speed": final code with the skill vs without, geometric mean of time (throughput for kvhttp) over the 4 benchmarks, ×1.10 = 10% faster. "Pays off after" = cost of writing the skill ÷ median saving per run, only where the saving is outside the noise.</p>
       <div class="scroll" id="skill-table"></div>
+    </fieldset>
+
+    <fieldset id="ports">
+      <legend>Migrating the slowest languages</legend>
+      <p class="hint">A fresh agent gets a working program in one of the slowest languages here (in <code>./.source/</code>, the baseline's own solution, which passes every hidden test) and ports it to a common migration target, under the same prompt, tests and rounds. Each cell: agent cost per 10,000 lines of the source program (write + repair, median of runs), then how much faster the port runs than the source (geometric mean over the four tasks, timed in the same session) and how many runs worked. Hover for the cost of porting vs writing from scratch.</p>
+      <div class="scroll" id="port-table"></div>
     </fieldset>
 
     <fieldset id="tasks">
