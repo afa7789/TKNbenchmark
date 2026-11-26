@@ -131,7 +131,7 @@ export const TASKS = {
   // when named (--tasks suite) and stays out of the language rankings.
   suite: { kind: 'stdio', title: 'Three tools in one binary', topic: 'one build, three modules: solo vs a swarm of agents', swarm: true },
   // Swarm study at work: an HTTP + JSON + SQLite service, dependencies allowed, built with a dev loop.
-  notes: { kind: 'http', title: 'Notes service', topic: 'HTTP, JSON and SQLite with dependencies: solo vs a swarm at work', swarm: true },
+  notes: { kind: 'http', title: 'Notes service', topic: 'HTTP, JSON and SQLite with dependencies: solo vs a swarm at work', swarm: true, devLoop: true },
 }
 
 const TRACK_CONTRACT = {
@@ -173,6 +173,9 @@ When finished, reply with the single word DONE.`
 }
 
 const STDLIB_ONLY = 'Use only the standard library.'
+const SHARED_PORTS = 'Other runs share this machine: if you start the server by hand, use a random port between 20000 and 60000.'
+// The notes task asks for an ordinary development loop, in the solo and the team prompts alike.
+const DEV_LOOP = 'Work as on a real project: build in debug and run tests while you work (write unit tests where they help), and build the release binary only when you are done.'
 const DEPS_OK =
   'Third-party packages are allowed if an experienced engineer would use them in production. Do not vendor them into this directory: build.sh must fetch them on a clean machine.'
 
@@ -192,10 +195,10 @@ Environment: macOS arm64, toolchain: ${versionText}. Work only inside the curren
 
 Requirements:
 - Write idiomatic, production-quality ${LANGS[lang].label}: what an experienced ${LANGS[lang].label} engineer would write and maintain.
-- ${task === 'kvhttp' ? DEPS_OK : STDLIB_ONLY}${note ? `\n- ${note}` : ''}
+- ${TASKS[task].kind === 'http' ? DEPS_OK : STDLIB_ONLY}${note ? `\n- ${note}` : ''}${TASKS[task].devLoop ? `\n- ${DEV_LOOP}` : ''}
 - Create build.sh: a bash script that, run from a clean copy of this directory, builds an optimized release binary and places it at ./app.
 - Test with \`node check.mjs\` (runs build.sh, then the example cases in cases.json). Hidden tests check every rule in SPEC.md with more edge cases and larger inputs than the examples.
-- Do not modify SPEC.md, check.mjs or cases.json.${task === 'kvhttp' ? '\n- Other runs share this machine: if you start the server by hand, use a random port between 20000 and 60000.' : ''}
+- Do not modify SPEC.md, check.mjs or cases.json.${TASKS[task].kind === 'http' ? `\n- ${SHARED_PORTS}` : ''}
 
 When finished, reply with the single word DONE.`
 }
@@ -222,7 +225,7 @@ Failure report:
 ${report}
 
 Fix it. Environment: macOS arm64, toolchain: ${versionText}. Work only inside the current directory.
-- Keep it idiomatic, production-quality ${label}. ${task === 'kvhttp' ? DEPS_OK : STDLIB_ONLY}${note ? `\n- ${note}` : ''}
+- Keep it idiomatic, production-quality ${label}. ${TASKS[task].kind === 'http' ? DEPS_OK : STDLIB_ONLY}${note ? `\n- ${note}` : ''}
 - build.sh must still build an optimized release binary at ./app from a clean copy of this directory.
 - \`node check.mjs\` runs the example cases; the acceptance suite has more cases than the examples.
 - Do not modify SPEC.md, check.mjs or cases.json.
@@ -259,36 +262,48 @@ Rules:
 When finished, reply with the single word DONE.`
 }
 
-// Swarm study: the suite task built by a team. Same environment and quality bar as prompt(); each phase
-// says who else is working and which files are its own.
-export const SWARM_SUBS = ['wordfreq', 'lru', 'calc']
+// Swarm study: a task built by a team. Same environment and quality bar as prompt(); each phase says who else
+// is working and which part is its own. suite: three subcommands; notes: a service whose lead builds the core
+// and whose workers add one slice of endpoints each.
+const NOTES_SLICES = {
+  crud: 'PUT and DELETE /notes/{id}',
+  list: 'GET /notes with its query parameters',
+  stats: 'GET /stats and GET /tags',
+}
+export const SWARM = {
+  suite: { subs: ['wordfreq', 'lru', 'calc'] },
+  // notes: solo control and team alternate in one script, caches start cold per case, disk is sampled.
+  notes: { subs: Object.keys(NOTES_SLICES), lead: 'core', solo: true, cold: true },
+}
+export const SWARM_SUBS = SWARM.suite.subs
 
-function swarmBase(lang, versionText) {
+function swarmBase(lang, versionText, task) {
   const { label } = LANGS[lang]
+  const http = TASKS[task].kind === 'http'
   return `Environment: macOS arm64, toolchain: ${versionText}. Work only inside the current directory.
 
 Requirements:
 - Write idiomatic, production-quality ${label}: what an experienced ${label} engineer would write and maintain.
-- ${STDLIB_ONLY}
+- ${http ? DEPS_OK : STDLIB_ONLY}${TASKS[task].devLoop ? `\n- ${DEV_LOOP}` : ''}
 - build.sh, run from a clean copy of this directory, must build an optimized release binary at ./app.
-- Do not modify SPEC.md, check.mjs or the cases files.`
+- Do not modify SPEC.md, check.mjs or the cases files.${http ? `\n- ${SHARED_PORTS}` : ''}`
 }
 
-export function swarmPrompt(phase, lang, versionText) {
-  const { name } = LANGS[lang]
-  const env = swarmBase(lang, versionText)
-  const done = '\n\nWhen finished, reply with the single word DONE.'
-  if (phase === 'lead') {
-    return `You lead three engineers who will implement, in parallel, the three subcommands of the program specified in SPEC.md, in ${name}. Each will work in a separate git worktree of this repository (branches wordfreq, lru and calc) and edit only the files of their own subcommand. Set up the project so that they can: create the build and build.sh, make ./app dispatch its first argument to one entry point per subcommand, and give each subcommand its own module (a file or a directory) with a stub entry point for its engineer to replace. Do not implement the subcommands. Make sure build.sh builds.
+const SWARM_PROMPTS = {
+  suite: {
+    lead: (name) => `You lead three engineers who will implement, in parallel, the three subcommands of the program specified in SPEC.md, in ${name}. Each will work in a separate git worktree of this repository (branches wordfreq, lru and calc) and edit only the files of their own subcommand. Set up the project so that they can: create the build and build.sh, make ./app dispatch its first argument to one entry point per subcommand, and give each subcommand its own module (a file or a directory) with a stub entry point for its engineer to replace. Do not implement the subcommands. Make sure build.sh builds.`,
+    integrate: (name) => `Three engineers implemented the subcommands of the program specified in SPEC.md, in ${name}, on the git branches wordfreq, lru and calc of this repository; main holds the shared skeleton. Merge the three branches into main, resolve any conflicts and make the whole program work: \`node check.mjs\` runs the examples of all three subcommands. Hidden tests check every rule in SPEC.md with more edge cases and larger inputs. Commit the result on main.`,
+    worker: (name, sub) => `You are one of three engineers implementing the program specified in SPEC.md, in ${name}. The project skeleton is already set up in this directory, a git worktree on branch ${sub}. Implement the \`${sub}\` subcommand, and only it: the other two are being implemented right now by other engineers in their own worktrees, so edit only the files of the ${sub} module, and shared files such as the build only if you must, minimally. Test with \`node check.mjs --cases cases-${sub}.json\` (the examples of your subcommand). Hidden tests check every rule of the ${sub} section of SPEC.md with more edge cases and larger inputs.`,
+  },
+  notes: {
+    lead: (name) => `You lead three engineers who will build, in parallel, the service specified in SPEC.md, in ${name}. First set up the project and build its core yourself: the build and build.sh with the dependencies, the HTTP server with /health, the SQLite storage (schema and data access), and POST /notes and GET /notes/{id} with their validation; \`node check.mjs --cases cases-core.json\` must pass. Structure the code so that three engineers, each in a separate git worktree of this repository (branches crud, list and stats), can then add their endpoints without editing the same files: ${Object.values(NOTES_SLICES).join('; ')}. Do not implement those endpoints.`,
+    integrate: (name) => `Three engineers added endpoints to the service specified in SPEC.md, in ${name}, on the git branches crud, list and stats of this repository; main holds the core. Merge the three branches into main, resolve any conflicts and make the whole service work: \`node check.mjs\` runs all the examples. Hidden tests check every rule in SPEC.md with more edge cases, restarts and concurrent requests. Commit the result on main.`,
+    worker: (name, sub) => `You are one of three engineers building the service specified in SPEC.md, in ${name}. Its core (server, SQLite storage, POST and GET /notes/{id}) is already done in this directory, a git worktree on branch ${sub}. Implement ${NOTES_SLICES[sub]}, and only that: the other endpoints are being added right now by other engineers in their own worktrees, so add your own files where you can, and change shared files only if you must, minimally. Test with \`node check.mjs --cases cases-${sub}.json\` (the examples of your endpoints). Hidden tests check every rule in SPEC.md with more edge cases.`,
+  },
+}
 
-${env}${done}`
-  }
-  if (phase === 'integrate') {
-    return `Three engineers implemented the subcommands of the program specified in SPEC.md, in ${name}, on the git branches wordfreq, lru and calc of this repository; main holds the shared skeleton. Merge the three branches into main, resolve any conflicts and make the whole program work: \`node check.mjs\` runs the examples of all three subcommands. Hidden tests check every rule in SPEC.md with more edge cases and larger inputs. Commit the result on main.
-
-${env}${done}`
-  }
-  return `You are one of three engineers implementing the program specified in SPEC.md, in ${name}. The project skeleton is already set up in this directory, a git worktree on branch ${phase}. Implement the \`${phase}\` subcommand, and only it: the other two are being implemented right now by other engineers in their own worktrees, so edit only the files of the ${phase} module, and shared files such as the build only if you must, minimally. Test with \`node check.mjs --cases cases-${phase}.json\` (the examples of your subcommand). Hidden tests check every rule of the ${phase} section of SPEC.md with more edge cases and larger inputs.
-
-${env}${done}`
+export function swarmPrompt(phase, lang, versionText, task = 'suite') {
+  const p = SWARM_PROMPTS[task]
+  const text = phase === 'lead' || phase === 'integrate' ? p[phase](LANGS[lang].name) : p.worker(LANGS[lang].name, phase)
+  return `${text}\n\n${swarmBase(lang, versionText, task)}\n\nWhen finished, reply with the single word DONE.`
 }
