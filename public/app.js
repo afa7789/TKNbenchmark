@@ -768,10 +768,13 @@ function renderSponsor(d) {
   $('sponsor-intro').textContent = sp
     ? `Every run in this study was paid for out of pocket: ${fmt.int(sp.runs)} agent runs across all its arms, ${fmt.usd(sp.usd)} of model usage at list price (${arms}). Sponsorship buys more of it:`
     : `Every run on this page was paid for out of pocket: ${d.runs.length} agent runs, ${fmt.usd(total)} of model usage at list price. Sponsorship buys more of it:`
+  // Repetitions repeat the runs, not the one-off skill writing; another model repeats both.
+  const all = sp ? sp.usd : total
+  const runsOnly = sp ? sp.usd - (sp.byArm['skill writing'] ?? 0) : total
   const chips = [
-    ['+1 repetition of everything', total / reps],
-    ['one more language', perLang],
-    ['the whole matrix on another model', total],
+    ['+1 repetition of everything', runsOnly / reps],
+    ['one more language, every arm', (perLang * runsOnly) / total],
+    ['the whole study on another model', all],
   ]
   $('sponsor-chips').innerHTML = chips.map(([what, usd]) => `<span>${esc(what)} ≈ ${fmt.usd(usd)}</span>`).join('')
 }
