@@ -297,6 +297,19 @@ function pairedEffect(baseRuns, runs) {
   return { pairs: pairs.length, costUsd: metric((r) => r.costUsd), turns: metric((r) => r.turns), output: metric((r) => r.usage.output), cacheWrite: metric((r) => r.usage.cacheWrite), cacheRead: metric((r) => r.usage.cacheRead), extraUsd: extra, costShare }
 }
 
+// Does the arm's overhead shrink on longer work? Per case (language/task): the baseline's median turns
+// against the arm's cost change, as a rank correlation and in bins of baseline turns.
+const TURN_BINS = [[0, 5], [5, 8], [8, 12], [12, Infinity]]
+
+function lengthEffect(baseCells, cells) {
+  const rows = Object.keys(cells).filter((k) => baseCells[k]?.turns && cells[k]?.costUsd).map((k) => ({ turns: baseCells[k].turns.median, d: cells[k].costUsd.median / baseCells[k].costUsd.median - 1 }))
+  const bins = TURN_BINS.map(([lo, hi]) => {
+    const ds = rows.filter((r) => r.turns >= lo && r.turns < hi).map((r) => r.d)
+    return { lo, hi: Number.isFinite(hi) ? hi : null, n: ds.length, median: stats(ds)?.median ?? null }
+  })
+  return { cases: rows.length, rho: spearman(rows.map((r) => r.turns), rows.map((r) => r.d)), bins }
+}
+
 // This arm vs the published run, per language over the tasks both ran, plus what the skill cost to write.
 // How much faster the run's code is than a twin, from paired timings: geometric mean over the tasks of
 // the per-task median ratio (time: twin ÷ own; throughput: own ÷ twin). null without paired data.
@@ -367,7 +380,8 @@ function build() {
   // The arms whose data the page can load next to this run (runs-<arm>/ directories).
   const arms = readdirSync(ROOT).filter((n) => n.startsWith('runs-') && existsSync(join(BASE_OUT, n.slice(5), 'results.json'))).map((n) => n.slice(5))
   const meta = { generatedAt: new Date().toISOString(), arm: ARM, arms, model: MODEL, effort: EFFORT, toolchains, langs: LANGS, frontends: FRONTENDS, tasks: TASKS, external: EXTERNAL }
-  const compare = ARM === 'base' ? {} : { vsBase: vsBase(cells, runs), effect: pairedEffect(readJson(join(BASE_OUT, 'results.json')).runs, runs) }
+  const baseData = ARM === 'base' ? null : readJson(join(BASE_OUT, 'results.json'))
+  const compare = baseData ? { vsBase: vsBase(cells, runs), effect: pairedEffect(baseData.runs, runs), length: lengthEffect(baseData.summary.cells, cells) } : {}
   // The two rankings against each other: cost to write vs speed of the code (main languages).
   const ranked = Object.keys(langs).filter((l) => Number.isFinite(langs[l].perfTotal))
   const costSpeedRho = spearman(ranked.map((l) => langs[l].costUsd), ranked.map((l) => langs[l].perfTotal))

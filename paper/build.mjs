@@ -268,6 +268,11 @@ function skillMacros(set) {
   set('SkillCacheWritePct', effPct(e.cacheWrite))
   set('SkillCacheReadPct', effPct(e.cacheRead))
   set('SkillOutputPct', effPct(e.output))
+  const len = ARM_DATA.length ?? { rho: NaN, bins: [{}, {}, {}, {}] }
+  set('SkillLenRho', nf(2)(len.rho))
+  set('SkillLenShort', pct(len.bins[0].median))
+  set('SkillLenLong', pct(len.bins.at(-1).median))
+  set('SkillLenLongN', len.bins.at(-1).n ?? 0)
   const share = e.costShare ?? {}
   set('SkillShareWrite', `${nf(0)(share.cacheWrite * 100)}\\%`)
   set('SkillShareRead', `${nf(0)(share.cacheRead * 100)}\\%`)

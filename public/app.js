@@ -406,6 +406,11 @@ function skillFindings(d, arm) {
     li('A language skill made the agent costlier, not cheaper.', `With one researched SKILL.md per language, ${costlier} of ${rows.length} languages cost more beyond their run-to-run spread and ${cheaper} cost less; per run, the median went ${fmt.usd(e.costUsd.base)} → ${fmt.usd(e.costUsd.arm)} (${pctOf(e.costUsd)}). Correctness did not move (${works('arm')}/${n('arm')} runs worked with it, ${works('base')}/${n('base')} without), nor did the speed of the code (median ${fmt.ratio(speedMedian(rows))}, measured paired).`),
     li('The skill is paid as context, not as work.', `Loading and applying it takes ${nf(0).format(e.turns.arm - e.turns.base)} more turns per run (${e.turns.base} → ${e.turns.arm}); ${fmt.pct(e.costShare.cacheWrite)} of the extra spend is context written to the prompt cache (the skill's text and those turns, at twice the input price), ${fmt.pct(e.costShare.cacheRead)} context re-read and only ${fmt.pct(e.costShare.output)} the agent's own output.`),
   ]
+  const len = arm.summary.length
+  if (len) {
+    const [short, long] = [len.bins[0], len.bins.at(-1)]
+    out.push(li('The longer the task, the less the skill costs, but our tasks are short.', `Where the agent needed fewer than ${short.hi} turns without the skill, the skill added ${signed(short.median)}; where it needed ${long.lo} or more, ${signed(long.median)} (${long.n} cases; Spearman ρ = ${nf(2).format(len.rho)} between task length and the increase). The fixed price of loading it shrinks as the work grows, so a fair test of skills needs longer tasks than these.`))
+  }
   if (zig) out.push(li('Where the model is out of date, a skill replaces work instead of adding it.', `Zig 0.16 changed its I/O API: with the skill the agent read the standard library's source ${nf(0).format(zig.base.stdlibReads)} → ${nf(0).format(zig.arm.stdlibReads)} times and wrote ${signed(change(zig.base.output, zig.arm.output))} output, for the same cost (${signed(change(zig.base.costUsd, zig.arm.costUsd))}${zig.beyondNoise ? '' : ', within noise'}).`))
   return out
 }

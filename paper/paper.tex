@@ -68,6 +68,9 @@ cost (\SkillDeltaZig).
   \item \textbf{The skill is paid as context, not as work.} \SkillTurnsBase{}$\to$\SkillTurnsArm{} turns
         per run; \SkillShareWrite{} of the extra spend is context written to the prompt cache, \SkillShareRead{}
         context re-read and only \SkillShareOutput{} the agent's own output.
+  \item \textbf{The longer the task, the less the skill costs.} The increase fell from \SkillLenShort{}
+        where the agent needed fewer than five turns without it to \SkillLenLong{} where it needed twelve
+        or more ($\rho = \SkillLenRho$); our tasks are too short for a skill to pay for itself.
   \item \textbf{Where the model is out of date, a skill replaces work.} For Zig~0.16, standard-library
         reads went \ZigStdBase{}$\to$\ZigStdArm{} and output \ZigOutPct, at the same cost
         (\SkillDeltaZig).
@@ -370,9 +373,13 @@ work instead (more runs left test files behind, and every skill covers testing).
 Without one, the agent learned the Zig~0.16 I/O API by reading the standard library's sources
 (\ZigStdBase{} reads); with one, the same knowledge came from the skill (\ZigStdArm{} reads, output
 \ZigOutPct), and the cost stayed the same (\SkillDeltaZig). A skill pays where the model's knowledge lags
-the toolchain, and it should be short, since its text and every turn it adds are written into the context. Longer tasks, in which
-the agent would otherwise rediscover the same facts many times, may change the balance; we did not test
-them.
+the toolchain, and it should be short, since its text and every turn it adds are written into the context. The data point to task length: across the
+language--task cases, the longer the agent worked without the skill, the smaller the increase (Spearman
+$\rho = \SkillLenRho$ between the baseline's turns and the change in cost), from \SkillLenShort{} for
+cases under five turns to \SkillLenLong{} for the \SkillLenLongN{} cases of twelve turns or more. The cost
+of loading a skill is roughly fixed, and on tasks of a few turns it outweighs what the skill saves; on
+longer work, where the agent would otherwise rediscover the same facts many times, it should pay. Our
+tasks never reach that point, so this arm tests skills on short tasks only.
 
 \paragraph{Why C++ was slow.} C++ ranked below C, Rust and Go in speed (Table~\ref{tab:speed}), mostly
 because of \texttt{calc}: all three runs read standard input through \texttt{std::istreambuf\_iterator},
@@ -421,7 +428,8 @@ another training cut-off could reverse H1.
 The skills arm separates neither the overhead of the Skill tool from the skill's content (an arm with an
 empty skill would) nor one skill from another: each language got a single skill, capped at 8\,KB and
 written by an agent rather than by experts in the language. A human-curated skill, or a shorter one, could
-do better. The skills arm ran a day after the baseline, on the same machine, toolchains and Claude Code;
+do better. Above all, the tasks take a few turns; a fair test of skills, whose cost is mostly fixed, needs
+tasks of hours, which we leave to future work. The skills arm ran a day after the baseline, on the same machine, toolchains and Claude Code;
 Clojure, whose two arms both ran that day, moved like the others (\SkillDeltaClojure), so the gap is not a
 day-to-day effect.
 
