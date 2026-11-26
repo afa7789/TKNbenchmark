@@ -51,7 +51,8 @@ run-to-run spread and \NSkillCheaper{} cost less, correctness was unchanged, and
 US\$\,\SkillRunCostBase{} to \SkillRunCostArm{} (\SkillRunCostPct), \SkillShareWrite{} of it context
 written to the prompt cache: the skill's text and the extra turns spent loading it. Only for Zig, whose API changed after the model's
 training, did the skill replace work (standard-library reads \ZigStdBase{}$\to$\ZigStdArm), at the same
-cost (\SkillDeltaZig). Porting a working program from our three slowest languages to five common rewrite
+cost (\SkillDeltaZig). Porting a working program from seven languages (our three slowest, and C, C++, Java and JavaScript, the
+commonest sources of public rewrites) to five common rewrite
 targets also cost more than writing it from scratch, in \NPortCostlier{} of \NPortPairs{} pairs
 (\PortDeltaMin{} to \PortDeltaMax), with every port correct; Zig ports ran a median \PortSpeedZig$\times$
 faster than their source. Finally, a team of agents (a lead, three workers in parallel git worktrees and an
@@ -229,8 +230,10 @@ The performance of both arms was measured in one session, each case right before
 the baseline, alternating the order, so that changes in the machine's speed fall on both arms alike; the
 performance tables of this paper come from that session.
 
-\paragraph{Port arms (H7).} Sources are the three main languages with the slowest code in the speed ranking
-(Clojure, Python and TypeScript; JavaScript, next, runs on TypeScript's runtime). Targets are the five
+\paragraph{Port arms (H7).} Sources are, first, the three main languages with the slowest code in the speed
+ranking (Clojure, Python and TypeScript; JavaScript, next, runs on TypeScript's runtime), and then, to cover
+the moves projects actually make, the four commonest sources in the same count of public rewrites (C, C++,
+Java and JavaScript: C and C++ to Rust, Java to Kotlin, JavaScript to TypeScript). Targets are the five
 languages most often chosen for public rewrites in 2022--2026 by an informal count of projects with a
 primary source (Rust, Go, TypeScript, Kotlin, then Swift and Zig tied, broken in Zig's favour by the Stack
 Overflow 2026 survey's ``desired'' share); a language is never ported to itself. The agent gets the
@@ -345,7 +348,7 @@ Dark lines moved three places or more.}
 \label{fig:skillslope}
 \end{figure}
 
-\subsection{Migrating the slowest languages}
+\subsection{Migrating to common rewrite targets}
 
 Table~\ref{tab:ports} gives the port arms: \PortWorks{} ports passed the hidden tests. Every pair cost more
 than writing the same program from scratch in the target (\NPortCostlier{} of \NPortPairs{} beyond the

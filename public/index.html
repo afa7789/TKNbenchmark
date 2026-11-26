@@ -123,8 +123,8 @@
     </fieldset>
 
     <fieldset id="ports">
-      <legend>Migrating the slowest languages</legend>
-      <p class="hint">A fresh agent gets a working program in one of the slowest languages here (in <code>./.source/</code>, the baseline's own solution, which passes every hidden test) and ports it to a common migration target, under the same prompt, tests and rounds. Each cell: agent cost per 1,000 lines of the source program (write + repair, median of runs), then how much faster the port runs than the source (geometric mean over the four tasks, timed in the same session) and how many runs worked. Hover for the cost of porting vs writing from scratch.</p>
+      <legend>Migrating to common rewrite targets</legend>
+      <p class="hint">A fresh agent gets a working program in another language (the three slowest here, and C, C++, Java and JavaScript, the commonest sources of public rewrites) (in <code>./.source/</code>, the baseline's own solution, which passes every hidden test) and ports it to a common migration target, under the same prompt, tests and rounds. Each cell: agent cost per 1,000 lines of the source program (write + repair, median of runs), then how much faster the port runs than the source (geometric mean over the four tasks, timed in the same session) and how many runs worked. Hover for the cost of porting vs writing from scratch.</p>
       <p class="callout" id="port-note"></p>
       <div class="scroll" id="port-table"></div>
     </fieldset>
@@ -150,6 +150,14 @@
       <p>Worktrees multiply whatever lives in the project directory (Rust's <code>target/</code>, <code>.zig-cache</code>, .NET's <code>bin/</code> and <code>obj/</code>…); global caches (<code>GOCACHE</code>, the cargo registry, the cabal store) are shared. Parallel agents usually get one worktree per task.</p>
       <p class="hint" id="devloop-note"></p>
       <div class="multiples" id="build-charts"></div>
+    </fieldset>
+
+    <fieldset id="growth">
+      <legend>Disk over a day of rebuilds</legend>
+      <p class="hint">No agent here: each language's working kvhttp server is rebuilt with its own build.sh after a one-line edit, over and over, with global caches isolated as in round 3. The lines are the project's build output (target/, .zig-cache, build/, ...) after each rebuild; the table adds the global caches, shared by every worktree on the machine.</p>
+      <p class="callout" id="growth-note"></p>
+      <div class="chart" id="growth-chart"></div>
+      <div class="scroll" id="growth-table"></div>
     </fieldset>
 
     <fieldset id="performance">

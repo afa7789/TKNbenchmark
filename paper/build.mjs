@@ -376,6 +376,35 @@ function swarmMacros(set) {
   for (const [k, v] of Object.entries(SW)) set(`SwarmDisk${macroName(k)}`, mb(v.swarm.worktreeBytes?.median))
 }
 
+// ---------- disk over an edit-rebuild loop (summary.growth) ----------
+const G = d.summary.growth ?? {}
+const growthPerBuild = (g) => (g.series.at(-1).projectBytes - g.series[0].projectBytes) / g.cycles
+const byGrowth = Object.keys(G).sort((a, b) => growthPerBuild(G[b]) - growthPerBuild(G[a]))
+
+function growthTable() {
+  const rows = byGrowth.map((k) => {
+    const s = G[k].series
+    return `${tex(label(k))} & ${mb(s[0].projectBytes)} & ${mb(s.at(-1).projectBytes)} & ${nf(1)(growthPerBuild(G[k]) / 1e6)} & ${mb(s.at(-1).cacheBytes)} \\\\`
+  })
+  return `\\newcommand{\\GrowthTable}{%
+\\begin{tabular}{@{}lrrrr@{}}
+\\toprule
+Language & MB, 1st build & MB, after ${G[byGrowth[0]]?.cycles ?? 0} more & MB per rebuild & MB global caches \\\\
+\\midrule
+${rows.join('\n')}
+\\bottomrule
+\\end{tabular}}`
+}
+
+function growthMacros(set) {
+  if (!byGrowth.length) return
+  set('GrowthCycles', G[byGrowth[0]].cycles)
+  set('GrowthTopLang', tex(label(byGrowth[0])))
+  set('GrowthTopPerBuild', nf(1)(growthPerBuild(G[byGrowth[0]]) / 1e6))
+  set('GrowthTopFinal', mb(G[byGrowth[0]].series.at(-1).projectBytes))
+  for (const k of byGrowth) set(`Growth${macroName(k)}Final`, mb(G[k].series.at(-1).projectBytes))
+}
+
 function macros() {
   const out = []
   const set = (name, v) => out.push(`\\newcommand{\\${name}}{${v}}`)
@@ -401,6 +430,7 @@ function macros() {
   skillMacros(set)
   portMacros(set)
   swarmMacros(set)
+  growthMacros(set)
   set('CorrStdCost', nf(2)(pearson(keys.map((k) => L[k].stdlibReads), keys.map((k) => L[k].costUsd))))
   const dl = C['rust/kvhttp']?.devloopTargetBytes?.median
   set('DevloopRust', mb(dl))
@@ -427,7 +457,7 @@ function arxivAbstract() {
   const teams = sorted(Object.values(SW).map((v) => change(v.base.costUsd, v.arm.costUsd)))
   const speed = sorted(Object.values(SW).map((v) => v.swarm.wallSpeedup))
   const zig = sorted(portPairs.filter((p) => p.t === 'zig').map((p) => p.x.port.speedVsSource))
-  return `We measure what a coding agent spends to solve the same tasks in ${Object.keys(L).length} programming languages and three front-end frameworks, with one isolated Claude Opus 5.5 agent per case and hidden tests checked live. Across ${study.length} runs the language barely changed correctness but changed the cost: ${label(byCost[0])} was the cheapest and Assembly cost ${nf(1)(L.asm.costUsd / L[byCost[0]].costUsd)}x as much, and cost to write and speed of the code rank against each other (Spearman rho = ${nf(2)(d.summary.costSpeedRho)}). Repeating every round with one researched SKILL.md per language, ${skillKeys.filter((k) => dCost(k) > 0 && V[k].beyondNoise).length} of ${skillKeys.length} languages cost more beyond run-to-run noise and ${skillKeys.filter((k) => dCost(k) < 0 && V[k].beyondNoise).length} cost less (median run ${plain(pct(change(e.costUsd.base, e.costUsd.arm)))}), mostly context written to the prompt cache; the overhead shrinks on longer tasks, and only for Zig, whose API changed after the model's training, did the skill replace work. Porting working programs from our three slowest languages to five common rewrite targets cost more than writing them from scratch in ${portPairs.filter((p) => p.x.arm.costUsd > p.x.base.costUsd && p.x.beyondNoise).length} of ${portPairs.length} pairs (${plain(pct(ports[0]))} to ${plain(pct(ports.at(-1)))}), with every port correct and Zig ports a median ${nf(1)(zig[zig.length >> 1])}x faster than their source. A team of agents (a lead, three workers in parallel git worktrees and an integrator) built a three-part program slower than one agent in ${speed.filter((x) => x < 1).length} of ${speed.length} languages tried (${nf(2)(speed[0])}-${nf(2)(speed.at(-1))}x the solo speed) and cost ${plain(pct(teams[0]))} to ${plain(pct(teams.at(-1)))} more. Data, code and every solution are public.`
+  return `We measure what a coding agent spends to solve the same tasks in ${Object.keys(L).length} programming languages and three front-end frameworks, with one isolated Claude Opus 5.5 agent per case and hidden tests checked live. Across ${study.length} runs the language barely changed correctness but changed the cost: ${label(byCost[0])} was the cheapest and Assembly cost ${nf(1)(L.asm.costUsd / L[byCost[0]].costUsd)}x as much, and cost to write and speed of the code rank against each other (Spearman rho = ${nf(2)(d.summary.costSpeedRho)}). Repeating every round with one researched SKILL.md per language, ${skillKeys.filter((k) => dCost(k) > 0 && V[k].beyondNoise).length} of ${skillKeys.length} languages cost more beyond run-to-run noise and ${skillKeys.filter((k) => dCost(k) < 0 && V[k].beyondNoise).length} cost less (median run ${plain(pct(change(e.costUsd.base, e.costUsd.arm)))}), mostly context written to the prompt cache; the overhead shrinks on longer tasks, and only for Zig, whose API changed after the model's training, did the skill replace work. Porting working programs from seven languages (our three slowest, plus C, C++, Java and JavaScript) to five common rewrite targets cost more than writing them from scratch in ${portPairs.filter((p) => p.x.arm.costUsd > p.x.base.costUsd && p.x.beyondNoise).length} of ${portPairs.length} pairs (${plain(pct(ports[0]))} to ${plain(pct(ports.at(-1)))}), with every port correct and Zig ports a median ${nf(1)(zig[zig.length >> 1])}x faster than their source. A team of agents (a lead, three workers in parallel git worktrees and an integrator) built a three-part program slower than one agent in ${speed.filter((x) => x < 1).length} of ${speed.length} languages tried (${nf(2)(speed[0])}-${nf(2)(speed.at(-1))}x the solo speed) and cost ${plain(pct(teams[0]))} to ${plain(pct(teams.at(-1)))} more. Data, code and every solution are public.`
 }
 
 const out = [
@@ -445,6 +475,7 @@ const out = [
   skillSlope(),
   portTable(),
   swarmTable(),
+  growthTable(),
 ].join('\n\n')
 writeFileSync(join(ROOT, 'paper', 'data.tex'), out + '\n')
 console.log('paper/data.tex written')

@@ -587,7 +587,7 @@ function renderPorts(d, ports) {
   $('port-note').innerHTML = portNote(d, ports)
   // The same conclusion as a key finding and as the migration hypothesis in the summary.
   $('findings-list').insertAdjacentHTML('beforeend', `<li>${portNote(d, ports)}</li>`)
-  $('hyp-ports').innerHTML = `<strong>"Porting a working program to a faster language is cheaper than writing it from scratch":</strong> rejected here. ${portNote(d, ports).replace(/^<strong>.*?<\/strong> /, '')} See <a href="#ports">Migrating the slowest languages</a>.`
+  $('hyp-ports').innerHTML = `<strong>"Porting a working program to a faster language is cheaper than writing it from scratch":</strong> rejected here. ${portNote(d, ports).replace(/^<strong>.*?<\/strong> /, '')} See <a href="#ports">Migrating to common rewrite targets</a>.`
   $('hyp-ports').hidden = false
   const targets = [...new Set(ports.flatMap((a) => Object.keys(a.summary.vsBase)))].sort((a, b) => label(d, a).localeCompare(label(d, b)))
   const head = [{ title: 'From → to' }, ...targets.map((t) => ({ title: label(d, t), num: true }))]
@@ -626,6 +626,51 @@ function renderSwarm(d, sw) {
   $('findings-list').insertAdjacentHTML('beforeend', `<li>${swarmNote(d, sw)}</li>`)
   $('hyp-swarm').innerHTML = `<strong>"A swarm of agents in parallel worktrees finishes sooner, and Rust's target/ makes it costlier":</strong> ${swarmNote(d, sw).replace(/^<strong>.*?<\/strong> /, '')} See <a href="#swarm">Swarm</a>.`
   $('hyp-swarm').hidden = false
+}
+
+// ---------- disk over an edit-rebuild loop (summary.growth, bench/growth.mjs) ----------
+const growthOf = (g) => (g.series.at(-1).projectBytes - g.series[0].projectBytes) / g.cycles
+
+// One line per language: the project's build output after each rebuild. The three that grow most, plus
+// Rust and Go, in full ink and labelled; the rest muted, named on hover.
+function growthChart(d, G, langs) {
+  const [W, H, L, R, T, B] = [640, 300, 44, 96, 12, 30]
+  const n = Math.max(...langs.map((l) => G[l].cycles))
+  const max = Math.max(...langs.flatMap((l) => G[l].series.map((s) => s.projectBytes))) * 1.05
+  const x = (c) => L + (c / n) * (W - L - R)
+  const y = (v) => T + (1 - v / max) * (H - T - B)
+  const emph = new Set([...langs.slice(0, 3), 'rust', 'go'].filter((l) => G[l]))
+  const step = [10e6, 20e6, 50e6, 100e6, 200e6, 500e6, 1e9].find((st) => max / st <= 6)
+  const ticks = Array.from({ length: Math.floor(max / step) + 1 }, (_, i) => i * step)
+  const grid = ticks.map((t) => `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" class="grid"/>${svgText(L - 6, y(t) + 4, fmt.bytes(t), 'text-anchor="end" class="muted"')}`).join('')
+  const xAxis = [0, n / 2, n].map((c) => svgText(x(c), H - 10, `${c}`, 'text-anchor="middle" class="muted"')).join('') + svgText((L + W - R) / 2, H, 'rebuilds after an edit', 'text-anchor="middle" class="muted"')
+  const lines = [...langs].reverse().map((l) => {
+    const s = G[l].series
+    const path = s.map((p, i) => `${i ? 'L' : 'M'}${x(p.cycle).toFixed(1)},${y(p.projectBytes).toFixed(1)}`).join('')
+    const tip = `${label(d, l)}: ${fmt.bytes(s[0].projectBytes)} after the first build, ${fmt.bytes(s.at(-1).projectBytes)} after ${G[l].cycles} more (${fmt.bytes(growthOf(G[l]))} per build)`
+    const end = emph.has(l) ? svgText(x(n) + 6, y(s.at(-1).projectBytes) + 4, label(d, l), 'class="strong"') : ''
+    return `<g data-tip="${esc(tip)}" class="slope${emph.has(l) ? ' moved' : ''}"><path d="${path}" class="link" fill="none"/>${end}</g>`
+  })
+  return `<svg class="viz" viewBox="0 0 ${W} ${H + 6}" role="img" aria-label="Project build output after each rebuild, per language">${grid}${xAxis}${lines.join('')}</svg>`
+}
+
+const GROWTH_COLS = [
+  ['After 1st build', (g) => fmt.bytes(g.series[0].projectBytes)],
+  [`After rebuilds`, (g) => fmt.bytes(g.series.at(-1).projectBytes)],
+  ['Per rebuild', (g) => fmt.bytes(growthOf(g))],
+  ['Global caches', (g) => fmt.bytes(g.series.at(-1).cacheBytes)],
+  ['Rebuild time', (g) => fmt.secs(median(g.series.slice(1).map((s) => s.secs)))],
+]
+
+function renderGrowth(d) {
+  const G = d.summary.growth ?? {}
+  const langs = Object.keys(G).filter((l) => G[l].series?.length > 1).sort((a, b) => growthOf(G[b]) - growthOf(G[a]))
+  if (!langs.length) return ($('growth').hidden = true)
+  const [top, rust] = [langs[0], G.rust]
+  $('growth-note').innerHTML = `<strong>${esc(label(d, top))}'s build output grew with every rebuild; ${rust ? "Rust's did not" : 'most did not'}.</strong> After ${G[top].cycles} edit-rebuild cycles ${esc(label(d, top))}'s project held ${fmt.bytes(G[top].series.at(-1).projectBytes)}, ${fmt.bytes(growthOf(G[top]))} more per build, because its cache keeps every build${rust ? `; Rust's target/ stayed at ${fmt.bytes(G.rust.series.at(-1).projectBytes)}, rewritten in place` : ''}. In parallel worktrees each copy grows on its own.`
+  $('growth-chart').innerHTML = growthChart(d, G, langs)
+  const head = [{ title: 'Language' }, ...GROWTH_COLS.map(([title]) => ({ title, num: true }))]
+  $('growth-table').innerHTML = table(head, langs.map((l) => `<tr><td><strong>${esc(label(d, l))}</strong></td>${GROWTH_COLS.map(([, f]) => `<td class="num">${esc(f(G[l]))}</td>`).join('')}</tr>`))
 }
 
 // ---------- case viewer ----------
@@ -728,6 +773,7 @@ renderPorts(data, (await Promise.all((data.meta.arms ?? []).filter((a) => a.star
 renderMultiples(data)
 renderTasks(data)
 renderBuild(data)
+renderGrowth(data)
 renderPerf(data)
 renderFrontend(data)
 renderCombos(data)
