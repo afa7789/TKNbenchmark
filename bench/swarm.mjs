@@ -4,7 +4,7 @@
 // suite). Records one agent.json per case like run.mjs, so verify, count and aggregate work unchanged.
 // TKN_ARM=swarm node bench/swarm.mjs [--langs zig,rust] [--reps 3] [--force]
 import { spawnSync } from 'node:child_process'
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { ARM, EFFORT, MODEL, ROOT, SWARM_SUBS, TOOLS, WORK, runDir, runId, swarmPrompt } from './config.mjs'
 import { baselineToolchains, prepareWorkdir, runAgent } from './agent.mjs'
@@ -69,6 +69,19 @@ async function setUp(root, lang, rep) {
   commitAll(root, 'spec')
 }
 
+// The lead may have created the branches, or worktrees, itself: keep its skeleton on main and start each
+// worker on a fresh branch from it.
+function addWorktrees(root, trees) {
+  git(root, 'checkout', '-q', '-B', 'main')
+  const self = realpathSync(root)
+  for (const l of git(root, 'worktree', 'list', '--porcelain').split('\n')) {
+    if (l.startsWith('worktree ') && realpathSync(l.slice(9)) !== self) git(root, 'worktree', 'remove', '--force', l.slice(9))
+  }
+  const branches = git(root, 'branch', '--format=%(refname:short)').split('\n')
+  for (const s of SWARM_SUBS) if (branches.includes(s)) git(root, 'branch', '-D', s)
+  SWARM_SUBS.forEach((s, i) => git(root, 'worktree', 'add', '-q', '-b', s, trees[i]))
+}
+
 async function swarmCell(lang, rep) {
   const out = runDir(lang, 'suite', rep)
   if (existsSync(join(out, 'agent.json')) && !args.force) return
@@ -82,7 +95,7 @@ async function swarmCell(lang, rep) {
   const t0 = Date.now()
   const lead = await phase(root, 'lead', lang, out)
   commitAll(root, 'skeleton')
-  SWARM_SUBS.forEach((s, i) => git(root, 'worktree', 'add', '-q', '-b', s, trees[i]))
+  addWorktrees(root, trees)
   const workers = await Promise.all(SWARM_SUBS.map((s, i) => phase(trees[i], s, lang, out)))
   // Disk while the team works: each worktree with its own build outputs (target/, .zig-cache, ...).
   const worktreeBytes = trees.map(duBytes)
@@ -103,4 +116,7 @@ async function swarmCell(lang, rep) {
 }
 
 // One team at a time: its three workers already run in parallel.
-for (let rep = 1; rep <= Number(args.reps); rep++) for (const lang of String(args.langs).split(',')) await swarmCell(lang, rep)
+// A case that breaks is reported and left for the next pass; it does not stop the others.
+for (let rep = 1; rep <= Number(args.reps); rep++) {
+  for (const lang of String(args.langs).split(',')) await swarmCell(lang, rep).catch((e) => console.log(`✖ ${runId(lang, 'suite', rep)}: ${e.message.split('\n')[0]}`))
+}
