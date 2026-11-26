@@ -348,7 +348,7 @@ function renderTracks(d) {
 const ASKED = new Set(['rust/react', 'rust/vue', 'zig/react', 'zig/vue'])
 
 // Collapsed by default: the smallest stacks plus the ones from the original conversation; a button shows all.
-const COMBOS_SHOWN = 8
+const COMBOS_SHOWN = 5
 
 function renderCombos(d) {
   const best = d.summary.combos[0]?.totalTokens
