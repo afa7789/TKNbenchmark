@@ -345,7 +345,7 @@ const SW = (d.meta.arms ?? []).includes('swarm') ? JSON.parse(readFileSync(join(
 const secs = (s) => nf(0)(s)
 
 function swarmTable() {
-  const rows = Object.entries(SW).map(([k, v]) => `${tex(label(k))} & ${v.base.works}/${v.base.n}\\,$\\to$\\,${v.arm.works}/${v.arm.n} & ${usd(v.base.costUsd)}\\,$\\to$\\,${usd(v.arm.costUsd)} & ${secs(v.base.durationS)}\\,$\\to$\\,${secs(v.arm.durationS)} & ${nf(2)(v.swarm.wallSpeedup)} & ${mb(v.swarm.worktreeBytes?.median)} & ${int(v.swarm.conflicts)} \\\\`)
+  const rows = Object.entries(SW).map(([k, v]) => `${tex(label(k))} & ${v.base.works}/${v.base.n}\\,$\\to$\\,${v.arm.works}/${v.arm.n} & ${usd(v.base.costUsd)}\\,$\\to$\\,${usd(v.arm.costUsd)} & ${secs(v.swarm.soloWallS)}\\,$\\to$\\,${secs(v.swarm.teamWallS)} & ${nf(2)(v.swarm.wallSpeedup)} & ${mb(v.swarm.worktreeBytes?.median)} & ${int(v.swarm.conflictedFiles)} \\\\`)
   return `\\newcommand{\\SwarmTable}{%
 \\begin{tabular}{@{}lrrrrrr@{}}
 \\toprule
@@ -366,19 +366,21 @@ function swarmMacros(set) {
   set('SwarmSpeedMax', nf(2)(Math.max(...speed)))
   set('SwarmCostMin', pct(Math.min(...dc)))
   set('SwarmCostMax', pct(Math.max(...dc)))
-  set('SwarmConflicts', int(vs.reduce((a, v) => a + v.swarm.conflicts, 0)))
+  set('SwarmConflicts', int(vs.reduce((a, v) => a + v.swarm.conflictedFiles, 0)))
   for (const [k, v] of Object.entries(SW)) set(`SwarmDisk${macroName(k)}`, mb(v.swarm.worktreeBytes?.median))
 }
 
 function macros() {
   const out = []
   const set = (name, v) => out.push(`\\newcommand{\\${name}}{${v}}`)
-  const runs = d.runs.length
+  // The study's runs: the swarm study's solo suite runs are reported in their own section.
+  const study = d.runs.filter((r) => !TASKS[r.task]?.swarm)
+  const runs = study.length
   set('NRuns', runs)
   set('NLangs', Object.keys(L).length)
-  set('TotalCost', usd(d.runs.reduce((a, r) => a + (r.costUsd ?? 0), 0)))
-  set('NFailedRoundThree', d.runs.filter((r) => r.solved === false).length)
-  set('NFixed', d.runs.filter((r) => r.fixed).length)
+  set('TotalCost', usd(study.reduce((a, r) => a + (r.costUsd ?? 0), 0)))
+  set('NFailedRoundThree', study.filter((r) => r.solved === false).length)
+  set('NFixed', study.filter((r) => r.fixed).length)
   for (const k of Object.keys(L)) langMacros(set, k)
   const keys = Object.keys(L)
   set('CorrCodeCost', nf(2)(pearson(keys.map((k) => L[k].codeTokens), keys.map((k) => L[k].costUsd))))
@@ -407,6 +409,21 @@ function macros() {
   return out.join('\n')
 }
 
+// The arXiv metadata abstract (plain text, at most 1,920 characters), from the same data as the paper.
+const ARXIV_MAX = 1920
+const plain = (s) => s.replace(/\\%/g, '%')
+const sorted = (xs) => [...xs].sort((a, b) => a - b)
+
+function arxivAbstract() {
+  const study = d.runs.filter((r) => !TASKS[r.task]?.swarm)
+  const e = ARM_DATA.effect
+  const ports = sorted(portPairs.map((p) => change(p.x.base.costUsd, p.x.arm.costUsd)))
+  const teams = sorted(Object.values(SW).map((v) => change(v.base.costUsd, v.arm.costUsd)))
+  const speed = sorted(Object.values(SW).map((v) => v.swarm.wallSpeedup))
+  const zig = sorted(portPairs.filter((p) => p.t === 'zig').map((p) => p.x.port.speedVsSource))
+  return `We measure what a coding agent spends to solve the same tasks in ${Object.keys(L).length} programming languages and three front-end frameworks, with one isolated Claude Opus 5.5 agent per case and hidden tests checked live. Across ${study.length} runs the language barely changed correctness but changed the cost: ${label(byCost[0])} was the cheapest and Assembly cost ${nf(1)(L.asm.costUsd / L[byCost[0]].costUsd)}x as much, and cost to write and speed of the code rank against each other (Spearman rho = ${nf(2)(d.summary.costSpeedRho)}). Repeating every round with one researched SKILL.md per language, ${skillKeys.filter((k) => dCost(k) > 0 && V[k].beyondNoise).length} of ${skillKeys.length} languages cost more beyond run-to-run noise and ${skillKeys.filter((k) => dCost(k) < 0 && V[k].beyondNoise).length} cost less (median run ${plain(pct(change(e.costUsd.base, e.costUsd.arm)))}), mostly context written to the prompt cache; the overhead shrinks on longer tasks, and only for Zig, whose API changed after the model's training, did the skill replace work. Porting working programs from our three slowest languages to five common rewrite targets cost more than writing them from scratch in ${portPairs.filter((p) => p.x.arm.costUsd > p.x.base.costUsd && p.x.beyondNoise).length} of ${portPairs.length} pairs (${plain(pct(ports[0]))} to ${plain(pct(ports.at(-1)))}), with every port correct and Zig ports a median ${nf(1)(zig[zig.length >> 1])}x faster than their source. A team of agents (a lead, three workers in parallel git worktrees and an integrator) built a three-part program slower than one agent in ${speed.filter((x) => x < 1).length} of ${speed.length} languages tried (${nf(2)(speed[0])}-${nf(2)(speed.at(-1))}x the solo speed) and cost ${plain(pct(teams[0]))} to ${plain(pct(teams.at(-1)))} more. Data, code and every solution are public.`
+}
+
 const out = [
   `% Generated by paper/build.mjs from public/data/results.json (${d.meta.generatedAt}). Do not edit.`,
   macros(),
@@ -425,3 +442,7 @@ const out = [
 ].join('\n\n')
 writeFileSync(join(ROOT, 'paper', 'data.tex'), out + '\n')
 console.log('paper/data.tex written')
+const abstract = arxivAbstract()
+if (abstract.length > ARXIV_MAX) throw new Error(`arXiv abstract is ${abstract.length} characters (max ${ARXIV_MAX})`)
+writeFileSync(join(ROOT, 'paper', 'arxiv-abstract.txt'), abstract + '\n')
+console.log(`paper/arxiv-abstract.txt: ${abstract.length} characters`)

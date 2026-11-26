@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-26T04:49:48.645Z",
+    "generatedAt": "2026-11-26T05:00:02.896Z",
     "arm": "base",
     "arms": [
       "port-clojure",
@@ -13308,6 +13308,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 133.478,
+      "wallS": 134.32,
       "apiS": 128.001,
       "solved": true,
       "pass": 15,
@@ -13376,6 +13377,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 150.528,
+      "wallS": 151.159,
       "apiS": 146.733,
       "solved": true,
       "pass": 15,
@@ -13445,6 +13447,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 191.676,
+      "wallS": 192.253,
       "apiS": 184.655,
       "solved": true,
       "pass": 15,
@@ -13517,6 +13520,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 367.73,
+      "wallS": 368.803,
       "apiS": 364.593,
       "solved": true,
       "pass": 11,
@@ -13595,6 +13599,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 383.133,
+      "wallS": 383.706,
       "apiS": 376.629,
       "solved": true,
       "pass": 11,
@@ -13672,6 +13677,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 354.491,
+      "wallS": 355.083,
       "apiS": 352.094,
       "solved": true,
       "pass": 11,
@@ -13747,6 +13753,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 253.817,
+      "wallS": 254.766,
       "apiS": 246.39,
       "solved": true,
       "pass": 14,
@@ -13815,6 +13822,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 195.498,
+      "wallS": 196.222,
       "apiS": 175.478,
       "solved": true,
       "pass": 14,
@@ -13883,6 +13891,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 271.426,
+      "wallS": 272.306,
       "apiS": 253.828,
       "solved": true,
       "pass": 14,
@@ -13951,6 +13960,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 175.63,
+      "wallS": 176.299,
       "apiS": 156.976,
       "solved": true,
       "pass": 14,
@@ -14019,6 +14029,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 175.319,
+      "wallS": 175.992,
       "apiS": 139.319,
       "solved": true,
       "pass": 14,
@@ -14087,6 +14098,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 122.915,
+      "wallS": 123.66,
       "apiS": 112.999,
       "solved": true,
       "pass": 14,
@@ -14155,6 +14167,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 48.224,
+      "wallS": 49.436,
       "apiS": 46.221,
       "solved": true,
       "pass": 15,
@@ -14223,6 +14236,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.866,
+      "wallS": 43.476,
       "apiS": 41.765,
       "solved": true,
       "pass": 15,
@@ -14291,6 +14305,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 55.563,
+      "wallS": 56.332,
       "apiS": 52.214,
       "solved": true,
       "pass": 15,
@@ -14359,6 +14374,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 264.788,
+      "wallS": 265.651,
       "apiS": 141.079,
       "solved": true,
       "pass": 11,
@@ -14434,6 +14450,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 148.911,
+      "wallS": 149.825,
       "apiS": 146.379,
       "solved": true,
       "pass": 11,
@@ -14514,6 +14531,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 206.881,
+      "wallS": 207.438,
       "apiS": 198.711,
       "solved": true,
       "pass": 11,
@@ -14606,6 +14624,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 109.417,
+      "wallS": 110.313,
       "apiS": 89.843,
       "solved": true,
       "pass": 14,
@@ -14680,6 +14699,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 62.966,
+      "wallS": 63.667,
       "apiS": 59.314,
       "solved": true,
       "pass": 14,
@@ -14748,6 +14768,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 60.844,
+      "wallS": 61.444,
       "apiS": 59.173,
       "solved": true,
       "pass": 14,
@@ -14816,6 +14837,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 191.415,
+      "wallS": 192.07,
       "apiS": 177.352,
       "solved": true,
       "pass": 43,
@@ -14902,6 +14924,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 166.192,
+      "wallS": 166.774,
       "apiS": 158.88,
       "solved": true,
       "pass": 43,
@@ -14991,6 +15014,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 200.609,
+      "wallS": 201.199,
       "apiS": 184.345,
       "solved": true,
       "pass": 43,
@@ -15077,6 +15101,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 47.481,
+      "wallS": 48.298,
       "apiS": 39.241,
       "solved": true,
       "pass": 14,
@@ -15145,6 +15170,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 50.178,
+      "wallS": 50.841,
       "apiS": 45.694,
       "solved": true,
       "pass": 14,
@@ -15213,6 +15239,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 40.483,
+      "wallS": 41.443,
       "apiS": 38.105,
       "solved": true,
       "pass": 14,
@@ -15281,6 +15308,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 48.271,
+      "wallS": 48.982,
       "apiS": 42.487,
       "solved": true,
       "pass": 12,
@@ -15357,6 +15385,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 50.266,
+      "wallS": 50.907,
       "apiS": 45.929,
       "solved": true,
       "pass": 12,
@@ -15433,6 +15462,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.133,
+      "wallS": 42.789,
       "apiS": 38.192,
       "solved": true,
       "pass": 12,
@@ -15509,6 +15539,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 66.506,
+      "wallS": 67.251,
       "apiS": 54.527,
       "solved": true,
       "pass": 10,
@@ -15585,6 +15616,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 61.835,
+      "wallS": 62.585,
       "apiS": 59.149,
       "solved": true,
       "pass": 10,
@@ -15656,6 +15688,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.96,
+      "wallS": 43.704,
       "apiS": 41.542,
       "solved": true,
       "pass": 10,
@@ -15730,6 +15763,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 90.091,
+      "wallS": 91.047,
       "apiS": 70.434,
       "solved": true,
       "pass": 15,
@@ -15801,6 +15835,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 89.704,
+      "wallS": 90.379,
       "apiS": 73.801,
       "solved": true,
       "pass": 15,
@@ -15872,6 +15907,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 117.593,
+      "wallS": 118.349,
       "apiS": 95.253,
       "solved": true,
       "pass": 15,
@@ -15943,6 +15979,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 215.938,
+      "wallS": 216.959,
       "apiS": 74.101,
       "solved": true,
       "pass": 11,
@@ -16030,6 +16067,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 87.913,
+      "wallS": 88.625,
       "apiS": 69.853,
       "solved": true,
       "pass": 11,
@@ -16112,6 +16150,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 87.437,
+      "wallS": 88.172,
       "apiS": 68.169,
       "solved": true,
       "pass": 11,
@@ -16195,6 +16234,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 54.985,
+      "wallS": 55.966,
       "apiS": 45.698,
       "solved": true,
       "pass": 14,
@@ -16266,6 +16306,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 57.979,
+      "wallS": 58.641,
       "apiS": 44.608,
       "solved": true,
       "pass": 14,
@@ -16337,6 +16378,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.001,
+      "wallS": 51.732,
       "apiS": 39.741,
       "solved": true,
       "pass": 14,
@@ -16408,6 +16450,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 81.09,
+      "wallS": 82.063,
       "apiS": 51.901,
       "solved": true,
       "pass": 14,
@@ -16479,6 +16522,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 63.741,
+      "wallS": 64.466,
       "apiS": 50.516,
       "solved": true,
       "pass": 14,
@@ -16550,6 +16594,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 58.106,
+      "wallS": 58.893,
       "apiS": 43.735,
       "solved": true,
       "pass": 14,
@@ -16621,6 +16666,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 38.855,
+      "wallS": 39.567,
       "apiS": 36.659,
       "solved": true,
       "pass": 15,
@@ -16689,6 +16735,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 37.328,
+      "wallS": 38.015,
       "apiS": 35.815,
       "solved": true,
       "pass": 15,
@@ -16757,6 +16804,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.058,
+      "wallS": 42.778,
       "apiS": 40.197,
       "solved": true,
       "pass": 15,
@@ -16825,6 +16873,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 257.597,
+      "wallS": 258.38,
       "apiS": 103.184,
       "solved": true,
       "pass": 11,
@@ -16908,6 +16957,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 123.412,
+      "wallS": 124.147,
       "apiS": 111.93,
       "solved": true,
       "pass": 11,
@@ -17000,6 +17050,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 235.864,
+      "wallS": 236.531,
       "apiS": 103.566,
       "solved": true,
       "pass": 11,
@@ -17086,6 +17137,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 55.478,
+      "wallS": 56.109,
       "apiS": 44.165,
       "solved": true,
       "pass": 14,
@@ -17154,6 +17206,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 58.337,
+      "wallS": 58.924,
       "apiS": 47.82,
       "solved": true,
       "pass": 14,
@@ -17225,6 +17278,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 30.534,
+      "wallS": 31.145,
       "apiS": 25.122,
       "solved": true,
       "pass": 14,
@@ -17293,6 +17347,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 21.202,
+      "wallS": 21.794,
       "apiS": 18.209,
       "solved": true,
       "pass": 14,
@@ -17361,6 +17416,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 21.896,
+      "wallS": 22.49,
       "apiS": 19.145,
       "solved": true,
       "pass": 14,
@@ -17429,6 +17485,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 22.649,
+      "wallS": 23.464,
       "apiS": 19.925,
       "solved": true,
       "pass": 14,
@@ -17497,6 +17554,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 82.48,
+      "wallS": 83.095,
       "apiS": 67.73,
       "solved": true,
       "pass": 15,
@@ -17574,6 +17632,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 83.216,
+      "wallS": 83.763,
       "apiS": 73.677,
       "solved": true,
       "pass": 15,
@@ -17651,6 +17710,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 91.312,
+      "wallS": 91.825,
       "apiS": 87.928,
       "solved": true,
       "pass": 15,
@@ -17731,6 +17791,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 304.345,
+      "wallS": 372.846,
       "apiS": 107.382,
       "solved": true,
       "pass": 11,
@@ -17814,6 +17875,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 147.734,
+      "wallS": 148.274,
       "apiS": 102.241,
       "solved": true,
       "pass": 11,
@@ -17894,6 +17956,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 209.103,
+      "wallS": 709.883,
       "apiS": 80.209,
       "solved": true,
       "pass": 11,
@@ -17974,6 +18037,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 168.939,
+      "wallS": 169.556,
       "apiS": 140.778,
       "solved": true,
       "pass": 14,
@@ -18051,6 +18115,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 73.472,
+      "wallS": 74.079,
       "apiS": 57.798,
       "solved": true,
       "pass": 14,
@@ -18125,6 +18190,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 64.935,
+      "wallS": 65.619,
       "apiS": 49.676,
       "solved": true,
       "pass": 14,
@@ -18199,6 +18265,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 165.748,
+      "wallS": 166.459,
       "apiS": 146.718,
       "solved": true,
       "pass": 14,
@@ -18270,6 +18337,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 74.324,
+      "wallS": 74.913,
       "apiS": 53.932,
       "solved": true,
       "pass": 14,
@@ -18344,6 +18412,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 95.57,
+      "wallS": 96.436,
       "apiS": 72.135,
       "solved": true,
       "pass": 14,
@@ -18418,6 +18487,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 16.04,
+      "wallS": 16.737,
       "apiS": 13.257,
       "solved": true,
       "pass": 9,
@@ -18486,6 +18556,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 16.865,
+      "wallS": 17.537,
       "apiS": 14.079,
       "solved": true,
       "pass": 9,
@@ -18554,6 +18625,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 16.927,
+      "wallS": 17.598,
       "apiS": 14.178,
       "solved": true,
       "pass": 9,
@@ -18622,6 +18694,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 20.872,
+      "wallS": 21.514,
       "apiS": 17.836,
       "solved": true,
       "pass": 9,
@@ -18690,6 +18763,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 17.105,
+      "wallS": 17.819,
       "apiS": 14.189,
       "solved": true,
       "pass": 9,
@@ -18758,6 +18832,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 18.968,
+      "wallS": 19.694,
       "apiS": 15.407,
       "solved": true,
       "pass": 9,
@@ -18826,6 +18901,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.607,
+      "wallS": 43.289,
       "apiS": 38.498,
       "solved": true,
       "pass": 15,
@@ -18900,6 +18976,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 44.114,
+      "wallS": 44.767,
       "apiS": 41.544,
       "solved": true,
       "pass": 15,
@@ -18977,6 +19054,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 43.651,
+      "wallS": 44.409,
       "apiS": 40.657,
       "solved": true,
       "pass": 15,
@@ -19054,6 +19132,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 76.772,
+      "wallS": 77.411,
       "apiS": 68.209,
       "solved": true,
       "pass": 11,
@@ -19134,6 +19213,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 190.169,
+      "wallS": 190.922,
       "apiS": 65.874,
       "solved": true,
       "pass": 11,
@@ -19214,6 +19294,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 58.325,
+      "wallS": 58.945,
       "apiS": 52.951,
       "solved": true,
       "pass": 11,
@@ -19294,6 +19375,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 40.212,
+      "wallS": 40.821,
       "apiS": 37.241,
       "solved": true,
       "pass": 14,
@@ -19371,6 +19453,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 37.495,
+      "wallS": 38.28,
       "apiS": 34.093,
       "solved": true,
       "pass": 14,
@@ -19445,6 +19528,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 46.826,
+      "wallS": 47.761,
       "apiS": 43.212,
       "solved": true,
       "pass": 14,
@@ -19522,6 +19606,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 90.806,
+      "wallS": 91.504,
       "apiS": 85.909,
       "solved": true,
       "pass": 43,
@@ -19602,6 +19687,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 134.173,
+      "wallS": 134.872,
       "apiS": 127.699,
       "solved": true,
       "pass": 43,
@@ -19685,6 +19771,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 98.545,
+      "wallS": 99.166,
       "apiS": 93.888,
       "solved": true,
       "pass": 43,
@@ -19774,6 +19861,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 24.604,
+      "wallS": 25.181,
       "apiS": 22.831,
       "solved": true,
       "pass": 14,
@@ -19845,6 +19933,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 27.497,
+      "wallS": 28.212,
       "apiS": 24.539,
       "solved": true,
       "pass": 14,
@@ -19916,6 +20005,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 28.452,
+      "wallS": 29.149,
       "apiS": 21.087,
       "solved": true,
       "pass": 14,
@@ -19990,6 +20080,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 40.928,
+      "wallS": 41.62,
       "apiS": 37.823,
       "solved": true,
       "pass": 15,
@@ -20058,6 +20149,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 40.925,
+      "wallS": 41.553,
       "apiS": 38.469,
       "solved": true,
       "pass": 15,
@@ -20126,6 +20218,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 45.978,
+      "wallS": 46.674,
       "apiS": 43.811,
       "solved": true,
       "pass": 15,
@@ -20195,6 +20288,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 462.105,
+      "wallS": 462.813,
       "apiS": 81.646,
       "solved": true,
       "pass": 11,
@@ -20272,6 +20366,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 202.902,
+      "wallS": 203.577,
       "apiS": 72.791,
       "solved": true,
       "pass": 11,
@@ -20350,6 +20445,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 231.047,
+      "wallS": 231.49,
       "apiS": 89.763,
       "solved": true,
       "pass": 11,
@@ -20428,6 +20524,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 111.069,
+      "wallS": 111.627,
       "apiS": 105.105,
       "solved": true,
       "pass": 14,
@@ -20499,6 +20596,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 83.683,
+      "wallS": 84.297,
       "apiS": 75.436,
       "solved": true,
       "pass": 14,
@@ -20571,6 +20669,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 132.528,
+      "wallS": 132.979,
       "apiS": 124.96,
       "solved": true,
       "pass": 14,
@@ -20642,6 +20741,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 41.66,
+      "wallS": 42.346,
       "apiS": 34.858,
       "solved": true,
       "pass": 14,
@@ -20710,6 +20810,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 64.771,
+      "wallS": 65.466,
       "apiS": 56.013,
       "solved": true,
       "pass": 14,
@@ -20778,6 +20879,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 46.222,
+      "wallS": 46.91,
       "apiS": 38.476,
       "solved": true,
       "pass": 14,
@@ -20846,6 +20948,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 47.687,
+      "wallS": 48.618,
       "apiS": 43.627,
       "solved": true,
       "pass": 15,
@@ -20917,6 +21020,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 70.827,
+      "wallS": 71.49,
       "apiS": 59,
       "solved": true,
       "pass": 15,
@@ -20991,6 +21095,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 65.634,
+      "wallS": 66.441,
       "apiS": 60.179,
       "solved": true,
       "pass": 15,
@@ -21065,6 +21170,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 187.465,
+      "wallS": 188.46,
       "apiS": 61.921,
       "solved": true,
       "pass": 11,
@@ -21139,6 +21245,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 170.007,
+      "wallS": 170.752,
       "apiS": 46.624,
       "solved": true,
       "pass": 11,
@@ -21213,6 +21320,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 60.136,
+      "wallS": 60.818,
       "apiS": 49.285,
       "solved": true,
       "pass": 11,
@@ -21281,6 +21389,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 41.902,
+      "wallS": 42.859,
       "apiS": 34.666,
       "solved": true,
       "pass": 14,
@@ -21352,6 +21461,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.561,
+      "wallS": 33.195,
       "apiS": 29.311,
       "solved": true,
       "pass": 14,
@@ -21423,6 +21533,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 47.824,
+      "wallS": 48.442,
       "apiS": 42.115,
       "solved": true,
       "pass": 14,
@@ -21494,6 +21605,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 72.943,
+      "wallS": 73.944,
       "apiS": 42.742,
       "solved": true,
       "pass": 14,
@@ -21565,6 +21677,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 52.839,
+      "wallS": 53.606,
       "apiS": 42.284,
       "solved": true,
       "pass": 14,
@@ -21636,6 +21749,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 58.948,
+      "wallS": 59.559,
       "apiS": 46.901,
       "solved": true,
       "pass": 14,
@@ -21707,6 +21821,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 66.61,
+      "wallS": 67.395,
       "apiS": 65.316,
       "solved": true,
       "pass": 15,
@@ -21778,6 +21893,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.302,
+      "wallS": 39.871,
       "apiS": 37.977,
       "solved": true,
       "pass": 15,
@@ -21849,6 +21965,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 34.615,
+      "wallS": 35.256,
       "apiS": 32.155,
       "solved": true,
       "pass": 15,
@@ -21917,6 +22034,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 119.971,
+      "wallS": 120.753,
       "apiS": 45.965,
       "solved": true,
       "pass": 11,
@@ -21988,6 +22106,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.899,
+      "wallS": 33.58,
       "apiS": 31.087,
       "solved": true,
       "pass": 11,
@@ -22059,6 +22178,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.02,
+      "wallS": 51.722,
       "apiS": 48.861,
       "solved": true,
       "pass": 11,
@@ -22133,6 +22253,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 37.11,
+      "wallS": 37.837,
       "apiS": 34.337,
       "solved": true,
       "pass": 14,
@@ -22204,6 +22325,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 38.697,
+      "wallS": 39.31,
       "apiS": 35.858,
       "solved": true,
       "pass": 14,
@@ -22272,6 +22394,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 36.88,
+      "wallS": 37.677,
       "apiS": 34.8,
       "solved": true,
       "pass": 14,
@@ -22343,6 +22466,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.564,
+      "wallS": 52.219,
       "apiS": 43.126,
       "solved": true,
       "pass": 14,
@@ -22411,6 +22535,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 44.644,
+      "wallS": 45.34,
       "apiS": 41.508,
       "solved": true,
       "pass": 14,
@@ -22479,6 +22604,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.563,
+      "wallS": 43.232,
       "apiS": 34.893,
       "solved": true,
       "pass": 14,
@@ -22547,6 +22673,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 52.402,
+      "wallS": 53.046,
       "apiS": 36.096,
       "solved": true,
       "pass": 8,
@@ -22618,6 +22745,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 41.684,
+      "wallS": 42.405,
       "apiS": 30.729,
       "solved": true,
       "pass": 8,
@@ -22686,6 +22814,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 38.833,
+      "wallS": 39.417,
       "apiS": 32.308,
       "solved": true,
       "pass": 8,
@@ -22757,6 +22886,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 162.627,
+      "wallS": 163.261,
       "apiS": 107.922,
       "solved": true,
       "pass": 8,
@@ -22828,6 +22958,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 117.099,
+      "wallS": 117.845,
       "apiS": 69.076,
       "solved": true,
       "pass": 8,
@@ -22902,6 +23033,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 67.34,
+      "wallS": 68.032,
       "apiS": 53.632,
       "solved": true,
       "pass": 8,
@@ -22973,6 +23105,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 62.497,
+      "wallS": 63.202,
       "apiS": 44.706,
       "solved": true,
       "pass": 15,
@@ -23041,6 +23174,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 58.047,
+      "wallS": 58.602,
       "apiS": 39.843,
       "solved": true,
       "pass": 15,
@@ -23109,6 +23243,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 53.737,
+      "wallS": 54.311,
       "apiS": 47.565,
       "solved": true,
       "pass": 15,
@@ -23177,6 +23312,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 189.772,
+      "wallS": 190.347,
       "apiS": 58.289,
       "solved": true,
       "pass": 11,
@@ -23245,6 +23381,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 177.575,
+      "wallS": 178.539,
       "apiS": 45.954,
       "solved": true,
       "pass": 11,
@@ -23313,6 +23450,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 185.269,
+      "wallS": 186.03,
       "apiS": 56.217,
       "solved": true,
       "pass": 11,
@@ -23381,6 +23519,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 38.133,
+      "wallS": 39.203,
       "apiS": 22.575,
       "solved": true,
       "pass": 14,
@@ -23449,6 +23588,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 38.988,
+      "wallS": 39.52,
       "apiS": 30.232,
       "solved": true,
       "pass": 14,
@@ -23517,6 +23657,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 43.553,
+      "wallS": 44.433,
       "apiS": 30.269,
       "solved": true,
       "pass": 14,
@@ -23585,6 +23726,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 53.877,
+      "wallS": 54.613,
       "apiS": 30.99,
       "solved": true,
       "pass": 14,
@@ -23653,6 +23795,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.246,
+      "wallS": 32.838,
       "apiS": 21.561,
       "solved": true,
       "pass": 14,
@@ -23721,6 +23864,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 56.104,
+      "wallS": 56.675,
       "apiS": 36.723,
       "solved": true,
       "pass": 14,
@@ -23789,6 +23933,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 35.054,
+      "wallS": 35.724,
       "apiS": 30.466,
       "solved": true,
       "pass": 10,
@@ -23857,6 +24002,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 21.12,
+      "wallS": 21.868,
       "apiS": 19.541,
       "solved": true,
       "pass": 10,
@@ -23925,6 +24071,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 23.897,
+      "wallS": 24.541,
       "apiS": 21.724,
       "solved": true,
       "pass": 10,
@@ -23993,6 +24140,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 16.841,
+      "wallS": 17.504,
       "apiS": 15.134,
       "solved": true,
       "pass": 10,
@@ -24061,6 +24209,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 15.672,
+      "wallS": 16.441,
       "apiS": 14.035,
       "solved": true,
       "pass": 10,
@@ -24129,6 +24278,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 16.552,
+      "wallS": 17.259,
       "apiS": 15.078,
       "solved": true,
       "pass": 10,
@@ -24197,6 +24347,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 38.958,
+      "wallS": 39.643,
       "apiS": 37.503,
       "solved": true,
       "pass": 15,
@@ -24265,6 +24416,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.689,
+      "wallS": 40.498,
       "apiS": 37.093,
       "solved": true,
       "pass": 15,
@@ -24333,6 +24485,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 59.625,
+      "wallS": 60.545,
       "apiS": 48.359,
       "solved": true,
       "pass": 15,
@@ -24401,6 +24554,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 297.542,
+      "wallS": 298.172,
       "apiS": 82.39,
       "solved": true,
       "pass": 11,
@@ -24479,6 +24633,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 98.329,
+      "wallS": 98.961,
       "apiS": 92.69,
       "solved": true,
       "pass": 11,
@@ -24553,6 +24708,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 237.318,
+      "wallS": 238.078,
       "apiS": 66.072,
       "solved": true,
       "pass": 11,
@@ -24621,6 +24777,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 30.068,
+      "wallS": 30.655,
       "apiS": 26.956,
       "solved": true,
       "pass": 14,
@@ -24689,6 +24846,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 35.549,
+      "wallS": 36.253,
       "apiS": 28.262,
       "solved": true,
       "pass": 14,
@@ -24757,6 +24915,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 40.932,
+      "wallS": 41.832,
       "apiS": 34.678,
       "solved": true,
       "pass": 14,
@@ -24825,6 +24984,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 29.825,
+      "wallS": 30.602,
       "apiS": 25.613,
       "solved": true,
       "pass": 14,
@@ -24893,6 +25053,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 25.286,
+      "wallS": 25.955,
       "apiS": 22.097,
       "solved": true,
       "pass": 14,
@@ -24961,6 +25122,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 18.951,
+      "wallS": 19.528,
       "apiS": 15.841,
       "solved": true,
       "pass": 14,
@@ -25029,6 +25191,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 44.55,
+      "wallS": 45.246,
       "apiS": 36.345,
       "solved": true,
       "pass": 12,
@@ -25103,6 +25266,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.863,
+      "wallS": 40.553,
       "apiS": 33.855,
       "solved": true,
       "pass": 12,
@@ -25177,6 +25341,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 36.782,
+      "wallS": 37.556,
       "apiS": 31.308,
       "solved": true,
       "pass": 12,
@@ -25251,6 +25416,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.269,
+      "wallS": 52.022,
       "apiS": 47.83,
       "solved": true,
       "pass": 10,
@@ -25325,6 +25491,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 58.257,
+      "wallS": 59.013,
       "apiS": 53.549,
       "solved": true,
       "pass": 10,
@@ -25399,6 +25566,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 44.527,
+      "wallS": 45.315,
       "apiS": 41.709,
       "solved": true,
       "pass": 10,
@@ -25473,6 +25641,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 44.169,
+      "wallS": 44.891,
       "apiS": 41.655,
       "solved": true,
       "pass": 15,
@@ -25541,6 +25710,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 52.964,
+      "wallS": 53.666,
       "apiS": 51.252,
       "solved": true,
       "pass": 15,
@@ -25609,6 +25779,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 55.507,
+      "wallS": 56.117,
       "apiS": 52.686,
       "solved": true,
       "pass": 15,
@@ -25680,6 +25851,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 139.645,
+      "wallS": 140.321,
       "apiS": 134.807,
       "solved": true,
       "pass": 11,
@@ -25781,6 +25953,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 107.363,
+      "wallS": 108.048,
       "apiS": 104.037,
       "solved": true,
       "pass": 11,
@@ -25870,6 +26043,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 88.937,
+      "wallS": 89.471,
       "apiS": 86.847,
       "solved": true,
       "pass": 11,
@@ -25953,6 +26127,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 62.919,
+      "wallS": 63.604,
       "apiS": 57.983,
       "solved": true,
       "pass": 14,
@@ -26027,6 +26202,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 40.626,
+      "wallS": 41.268,
       "apiS": 38.245,
       "solved": true,
       "pass": 14,
@@ -26101,6 +26277,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 38.146,
+      "wallS": 38.716,
       "apiS": 36.292,
       "solved": true,
       "pass": 14,
@@ -26175,6 +26352,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.873,
+      "wallS": 40.593,
       "apiS": 37.367,
       "solved": true,
       "pass": 14,
@@ -26243,6 +26421,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 22.601,
+      "wallS": 23.19,
       "apiS": 19.727,
       "solved": true,
       "pass": 14,
@@ -26311,6 +26490,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 30.561,
+      "wallS": 31.224,
       "apiS": 27.327,
       "solved": true,
       "pass": 14,
@@ -26379,6 +26559,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 27.672,
+      "wallS": 28.394,
       "apiS": 24.504,
       "solved": true,
       "pass": 8,
@@ -26447,6 +26628,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 22.128,
+      "wallS": 22.758,
       "apiS": 19.894,
       "solved": true,
       "pass": 8,
@@ -26515,6 +26697,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 27.406,
+      "wallS": 28.102,
       "apiS": 25.084,
       "solved": true,
       "pass": 8,
@@ -26583,6 +26766,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 105.981,
+      "wallS": 106.588,
       "apiS": 55.472,
       "solved": true,
       "pass": 8,
@@ -26651,6 +26835,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 162.893,
+      "wallS": 163.497,
       "apiS": 85.598,
       "solved": true,
       "pass": 8,
@@ -26719,6 +26904,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 264.354,
+      "wallS": 265.032,
       "apiS": 123.415,
       "solved": true,
       "pass": 8,
@@ -26787,6 +26973,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 60.318,
+      "wallS": 60.949,
       "apiS": 56.74,
       "solved": false,
       "pass": 14,
@@ -26870,6 +27057,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 65.976,
+      "wallS": 66.56,
       "apiS": 64.146,
       "solved": false,
       "pass": 14,
@@ -26953,6 +27141,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 63.598,
+      "wallS": 64.137,
       "apiS": 62.02,
       "solved": false,
       "pass": 14,
@@ -27036,6 +27225,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 110.08,
+      "wallS": 110.779,
       "apiS": 104.409,
       "solved": true,
       "pass": 11,
@@ -27113,6 +27303,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 238.27,
+      "wallS": 238.819,
       "apiS": 108.425,
       "solved": true,
       "pass": 11,
@@ -27183,6 +27374,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 179.964,
+      "wallS": 180.376,
       "apiS": 169.281,
       "solved": true,
       "pass": 11,
@@ -27260,6 +27452,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 177.472,
+      "wallS": 177.998,
       "apiS": 165.211,
       "solved": true,
       "pass": 14,
@@ -27328,6 +27521,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 56.715,
+      "wallS": 57.432,
       "apiS": 52.816,
       "solved": true,
       "pass": 14,
@@ -27396,6 +27590,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 65.526,
+      "wallS": 66.053,
       "apiS": 62.134,
       "solved": true,
       "pass": 14,
@@ -27464,6 +27659,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 151.294,
+      "wallS": 152.004,
       "apiS": 129.25,
       "solved": true,
       "pass": 43,
@@ -27541,6 +27737,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 133.405,
+      "wallS": 133.989,
       "apiS": 124.969,
       "solved": true,
       "pass": 43,
@@ -27618,6 +27815,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 149.549,
+      "wallS": 150.153,
       "apiS": 134.276,
       "solved": true,
       "pass": 43,
@@ -27695,6 +27893,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 62.859,
+      "wallS": 63.448,
       "apiS": 55.939,
       "solved": true,
       "pass": 14,
@@ -27763,6 +27962,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 53.299,
+      "wallS": 53.809,
       "apiS": 46.128,
       "solved": true,
       "pass": 14,
@@ -27831,6 +28031,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 46.846,
+      "wallS": 47.398,
       "apiS": 39.219,
       "solved": true,
       "pass": 14,
@@ -27899,6 +28100,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.435,
+      "wallS": 52.108,
       "apiS": 49.52,
       "solved": true,
       "pass": 15,
@@ -27967,6 +28169,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 53.913,
+      "wallS": 54.539,
       "apiS": 49.616,
       "solved": true,
       "pass": 15,
@@ -28035,6 +28238,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 43.862,
+      "wallS": 44.6,
       "apiS": 41.574,
       "solved": true,
       "pass": 15,
@@ -28103,6 +28307,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 174.419,
+      "wallS": 175.24,
       "apiS": 52.492,
       "solved": true,
       "pass": 11,
@@ -28178,6 +28383,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 61.565,
+      "wallS": 62.245,
       "apiS": 58.543,
       "solved": true,
       "pass": 11,
@@ -28246,6 +28452,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 54.831,
+      "wallS": 55.43,
       "apiS": 52.167,
       "solved": true,
       "pass": 11,
@@ -28320,6 +28527,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 28.948,
+      "wallS": 29.759,
       "apiS": 27.145,
       "solved": true,
       "pass": 14,
@@ -28391,6 +28599,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 30.536,
+      "wallS": 31.304,
       "apiS": 27.859,
       "solved": true,
       "pass": 14,
@@ -28459,6 +28668,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 23.285,
+      "wallS": 23.992,
       "apiS": 21.434,
       "solved": true,
       "pass": 14,
@@ -28527,6 +28737,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 26.398,
+      "wallS": 27.152,
       "apiS": 23.406,
       "solved": true,
       "pass": 14,
@@ -28595,6 +28806,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 20.537,
+      "wallS": 21.174,
       "apiS": 17.835,
       "solved": true,
       "pass": 14,
@@ -28663,6 +28875,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 26.193,
+      "wallS": 26.85,
       "apiS": 21.933,
       "solved": true,
       "pass": 14,
@@ -28731,6 +28944,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 20.631,
+      "wallS": 21.301,
       "apiS": 19.267,
       "solved": true,
       "pass": 8,
@@ -28799,6 +29013,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 24.019,
+      "wallS": 24.712,
       "apiS": 21.855,
       "solved": true,
       "pass": 8,
@@ -28867,6 +29082,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.013,
+      "wallS": 32.635,
       "apiS": 28.764,
       "solved": true,
       "pass": 8,
@@ -28935,6 +29151,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 46.712,
+      "wallS": 47.444,
       "apiS": 31.312,
       "solved": true,
       "pass": 8,
@@ -29003,6 +29220,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 35.04,
+      "wallS": 35.687,
       "apiS": 28.168,
       "solved": true,
       "pass": 8,
@@ -29071,6 +29289,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 55.388,
+      "wallS": 56.085,
       "apiS": 42.129,
       "solved": true,
       "pass": 8,
@@ -29139,6 +29358,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 37.365,
+      "wallS": 38.23,
       "apiS": 36.469,
       "solved": true,
       "pass": 5,
@@ -29272,6 +29492,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 60.078,
+      "wallS": 61.137,
       "apiS": 48.444,
       "solved": true,
       "pass": 5,
@@ -29405,6 +29626,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 40.184,
+      "wallS": 40.845,
       "apiS": 39.634,
       "solved": true,
       "pass": 5,
@@ -29538,6 +29760,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 31.611,
+      "wallS": 32.163,
       "apiS": 31.044,
       "solved": true,
       "pass": 8,
@@ -29642,6 +29865,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.94,
+      "wallS": 33.728,
       "apiS": 32.118,
       "solved": true,
       "pass": 8,
@@ -29746,6 +29970,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 25.125,
+      "wallS": 26.059,
       "apiS": 24.37,
       "solved": true,
       "pass": 8,
@@ -29850,6 +30075,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 25.636,
+      "wallS": 26.377,
       "apiS": 24.325,
       "solved": true,
       "pass": 8,
@@ -29918,6 +30144,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 24.17,
+      "wallS": 24.92,
       "apiS": 23.149,
       "solved": true,
       "pass": 8,
@@ -29986,6 +30213,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 22.182,
+      "wallS": 22.872,
       "apiS": 21.132,
       "solved": true,
       "pass": 8,
@@ -30054,6 +30282,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 15.911,
+      "wallS": 16.655,
       "apiS": 15.321,
       "solved": true,
       "pass": 8,
@@ -30122,6 +30351,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 16.939,
+      "wallS": 17.636,
       "apiS": 16.224,
       "solved": true,
       "pass": 8,
@@ -30190,6 +30420,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 15.891,
+      "wallS": 16.523,
       "apiS": 15.177,
       "solved": true,
       "pass": 8,
@@ -30258,6 +30489,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 50.786,
+      "wallS": 51.389,
       "apiS": 44.166,
       "solved": true,
       "pass": 15,
@@ -30329,6 +30561,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 53.893,
+      "wallS": 54.496,
       "apiS": 49.332,
       "solved": true,
       "pass": 15,
@@ -30404,6 +30637,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 83.219,
+      "wallS": 83.864,
       "apiS": 62.733,
       "solved": true,
       "pass": 15,
@@ -30478,6 +30712,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 175.725,
+      "wallS": 176.505,
       "apiS": 65.503,
       "solved": true,
       "pass": 11,
@@ -30558,6 +30793,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 264.857,
+      "wallS": 265.598,
       "apiS": 45.171,
       "solved": true,
       "pass": 11,
@@ -30634,6 +30870,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 97.924,
+      "wallS": 98.61,
       "apiS": 48.464,
       "solved": true,
       "pass": 11,
@@ -30712,6 +30949,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 43.755,
+      "wallS": 44.341,
       "apiS": 37.124,
       "solved": true,
       "pass": 14,
@@ -30786,6 +31024,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.529,
+      "wallS": 40.252,
       "apiS": 34.458,
       "solved": true,
       "pass": 14,
@@ -30860,6 +31099,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.716,
+      "wallS": 40.473,
       "apiS": 34.866,
       "solved": true,
       "pass": 14,
@@ -30935,6 +31175,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 113.731,
+      "wallS": 114.349,
       "apiS": 98.579,
       "solved": true,
       "pass": 43,
@@ -31015,6 +31256,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 114.36,
+      "wallS": 115.008,
       "apiS": 105.331,
       "solved": true,
       "pass": 43,
@@ -31095,6 +31337,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 141.522,
+      "wallS": 142.163,
       "apiS": 125.259,
       "solved": true,
       "pass": 43,
@@ -31178,6 +31421,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.726,
+      "wallS": 43.276,
       "apiS": 35.965,
       "solved": true,
       "pass": 14,
@@ -31249,6 +31493,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.717,
+      "wallS": 33.807,
       "apiS": 22.738,
       "solved": true,
       "pass": 14,
@@ -31320,6 +31565,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 37.213,
+      "wallS": 38.245,
       "apiS": 23.311,
       "solved": true,
       "pass": 14,
@@ -31391,6 +31637,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.981,
+      "wallS": 52.861,
       "apiS": 35.887,
       "solved": true,
       "pass": 11,
@@ -31465,6 +31712,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 44.163,
+      "wallS": 44.912,
       "apiS": 35.09,
       "solved": true,
       "pass": 11,
@@ -31539,6 +31787,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 29.598,
+      "wallS": 30.288,
       "apiS": 23.466,
       "solved": true,
       "pass": 11,
@@ -31610,6 +31859,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 30.463,
+      "wallS": 31.307,
       "apiS": 28.405,
       "solved": true,
       "pass": 11,
@@ -31681,6 +31931,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 23.668,
+      "wallS": 24.684,
       "apiS": 22.546,
       "solved": true,
       "pass": 11,
@@ -31752,6 +32003,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 31.391,
+      "wallS": 32.129,
       "apiS": 29.498,
       "solved": true,
       "pass": 11,
@@ -31823,6 +32075,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 40.993,
+      "wallS": 41.966,
       "apiS": 36.496,
       "solved": true,
       "pass": 5,
@@ -31956,6 +32209,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.83,
+      "wallS": 41.602,
       "apiS": 38.682,
       "solved": true,
       "pass": 5,
@@ -32089,6 +32343,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.702,
+      "wallS": 33.304,
       "apiS": 32.159,
       "solved": true,
       "pass": 5,
@@ -32222,6 +32477,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 29.573,
+      "wallS": 30.21,
       "apiS": 25.971,
       "solved": true,
       "pass": 8,
@@ -32326,6 +32582,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 23.697,
+      "wallS": 24.315,
       "apiS": 23.137,
       "solved": true,
       "pass": 8,
@@ -32430,6 +32687,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 30.089,
+      "wallS": 30.611,
       "apiS": 28.579,
       "solved": true,
       "pass": 8,
@@ -32534,6 +32792,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 109.401,
+      "wallS": 110.26,
       "apiS": 63.304,
       "solved": true,
       "pass": 15,
@@ -32605,6 +32864,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 103.945,
+      "wallS": 104.6,
       "apiS": 65.054,
       "solved": true,
       "pass": 15,
@@ -32676,6 +32936,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 95.034,
+      "wallS": 95.684,
       "apiS": 66.216,
       "solved": true,
       "pass": 15,
@@ -32747,6 +33008,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 317.632,
+      "wallS": 318.773,
       "apiS": 190.742,
       "solved": true,
       "pass": 11,
@@ -32833,6 +33095,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 368.289,
+      "wallS": 368.945,
       "apiS": 225.632,
       "solved": true,
       "pass": 11,
@@ -32923,6 +33186,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 219.035,
+      "wallS": 219.673,
       "apiS": 179.158,
       "solved": true,
       "pass": 11,
@@ -33006,6 +33270,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 69.312,
+      "wallS": 69.936,
       "apiS": 45.26,
       "solved": true,
       "pass": 14,
@@ -33077,6 +33342,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 160.962,
+      "wallS": 161.487,
       "apiS": 73.454,
       "solved": true,
       "pass": 14,
@@ -33148,6 +33414,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 83.935,
+      "wallS": 84.497,
       "apiS": 51.571,
       "solved": true,
       "pass": 14,
@@ -33219,6 +33486,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 242.86,
+      "wallS": 243.94,
       "apiS": 69.144,
       "solved": true,
       "pass": 14,
@@ -33287,6 +33555,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 175.103,
+      "wallS": 175.665,
       "apiS": 71.102,
       "solved": true,
       "pass": 14,
@@ -33355,6 +33624,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 86.326,
+      "wallS": 86.935,
       "apiS": 56.035,
       "solved": true,
       "pass": 14,
@@ -33423,6 +33693,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 46.708,
+      "wallS": 47.537,
       "apiS": 44.707,
       "solved": true,
       "pass": 15,
@@ -33497,6 +33768,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 50.701,
+      "wallS": 51.295,
       "apiS": 48.459,
       "solved": true,
       "pass": 15,
@@ -33571,6 +33843,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 65.657,
+      "wallS": 66.726,
       "apiS": 64.054,
       "solved": true,
       "pass": 15,
@@ -33642,6 +33915,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 45.393,
+      "wallS": 46.144,
       "apiS": 43.513,
       "solved": true,
       "pass": 11,
@@ -33722,6 +33996,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 40.508,
+      "wallS": 41.207,
       "apiS": 38.601,
       "solved": true,
       "pass": 11,
@@ -33802,6 +34077,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 49.676,
+      "wallS": 50.329,
       "apiS": 46.516,
       "solved": true,
       "pass": 11,
@@ -33882,6 +34158,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 34.109,
+      "wallS": 34.916,
       "apiS": 32.099,
       "solved": true,
       "pass": 14,
@@ -33956,6 +34233,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 45.938,
+      "wallS": 46.722,
       "apiS": 43.94,
       "solved": true,
       "pass": 14,
@@ -34027,6 +34305,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 35.248,
+      "wallS": 35.808,
       "apiS": 32.928,
       "solved": true,
       "pass": 14,
@@ -34098,6 +34377,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 34.909,
+      "wallS": 35.517,
       "apiS": 30.905,
       "solved": true,
       "pass": 14,
@@ -34166,6 +34446,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 28.115,
+      "wallS": 28.893,
       "apiS": 25.613,
       "solved": true,
       "pass": 14,
@@ -34234,6 +34515,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.163,
+      "wallS": 32.818,
       "apiS": 28.49,
       "solved": true,
       "pass": 14,
@@ -34305,6 +34587,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 33.576,
+      "wallS": 34.486,
       "apiS": 32.969,
       "solved": true,
       "pass": 5,
@@ -34431,6 +34714,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.443,
+      "wallS": 40.765,
       "apiS": 38.208,
       "solved": true,
       "pass": 5,
@@ -34564,6 +34848,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.315,
+      "wallS": 39.887,
       "apiS": 38.816,
       "solved": true,
       "pass": 5,
@@ -34690,6 +34975,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 31.516,
+      "wallS": 32.13,
       "apiS": 31.068,
       "solved": true,
       "pass": 8,
@@ -34794,6 +35080,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 24.065,
+      "wallS": 24.729,
       "apiS": 23.444,
       "solved": true,
       "pass": 8,
@@ -34898,6 +35185,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 24.2,
+      "wallS": 24.99,
       "apiS": 23.544,
       "solved": true,
       "pass": 8,
@@ -35002,6 +35290,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.307,
+      "wallS": 33.081,
       "apiS": 29.58,
       "solved": true,
       "pass": 11,
@@ -35070,6 +35359,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 31.374,
+      "wallS": 32.097,
       "apiS": 29.174,
       "solved": true,
       "pass": 11,
@@ -35138,6 +35428,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 33.495,
+      "wallS": 34.249,
       "apiS": 31.407,
       "solved": true,
       "pass": 11,
@@ -35206,6 +35497,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 28.382,
+      "wallS": 29.231,
       "apiS": 26.025,
       "solved": true,
       "pass": 11,
@@ -35274,6 +35566,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 37.758,
+      "wallS": 38.636,
       "apiS": 35.248,
       "solved": true,
       "pass": 11,
@@ -35342,6 +35635,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.907,
+      "wallS": 33.663,
       "apiS": 30.412,
       "solved": true,
       "pass": 11,
@@ -35410,6 +35704,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 75.165,
+      "wallS": 75.758,
       "apiS": 63.989,
       "solved": true,
       "pass": 15,
@@ -35478,6 +35773,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 140.368,
+      "wallS": 141.068,
       "apiS": 109.993,
       "solved": true,
       "pass": 15,
@@ -35552,6 +35848,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 79.889,
+      "wallS": 80.822,
       "apiS": 57.729,
       "solved": true,
       "pass": 15,
@@ -35622,6 +35919,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 296.922,
+      "wallS": 297.482,
       "apiS": 241.78,
       "solved": true,
       "pass": 11,
@@ -35703,6 +36001,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 238.327,
+      "wallS": 238.999,
       "apiS": 204.596,
       "solved": true,
       "pass": 11,
@@ -35780,6 +36079,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 375.391,
+      "wallS": 376.236,
       "apiS": 189.287,
       "solved": true,
       "pass": 11,
@@ -35858,6 +36158,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 142.721,
+      "wallS": 143.403,
       "apiS": 113.624,
       "solved": true,
       "pass": 14,
@@ -35926,6 +36227,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 150.091,
+      "wallS": 150.71,
       "apiS": 88.211,
       "solved": true,
       "pass": 14,
@@ -35994,6 +36296,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 76.527,
+      "wallS": 77.235,
       "apiS": 58.618,
       "solved": true,
       "pass": 14,
@@ -36062,6 +36365,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 217.591,
+      "wallS": 218.251,
       "apiS": 191.423,
       "solved": false,
       "pass": 42,
@@ -36157,6 +36461,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 199.439,
+      "wallS": 200.101,
       "apiS": 158.906,
       "solved": true,
       "pass": 43,
@@ -36237,6 +36542,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 161.02,
+      "wallS": 161.622,
       "apiS": 152.469,
       "solved": true,
       "pass": 43,
@@ -36314,6 +36620,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 71.293,
+      "wallS": 71.951,
       "apiS": 57.483,
       "solved": true,
       "pass": 14,
@@ -36382,6 +36689,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 61.1,
+      "wallS": 61.747,
       "apiS": 45.165,
       "solved": true,
       "pass": 14,
@@ -36450,6 +36758,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 44.927,
+      "wallS": 45.68,
       "apiS": 37.113,
       "solved": true,
       "pass": 14,

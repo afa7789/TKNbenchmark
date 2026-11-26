@@ -597,11 +597,11 @@ const SWARM_COLS = [
   ['Works', (v) => `${v.base.works}/${v.base.n} → ${v.arm.works}/${v.arm.n}`],
   ['Cost', (v) => arrow(v.base.costUsd, v.arm.costUsd, fmt.usd)],
   ['Δ cost', (v) => `${signed(change(v.base.costUsd, v.arm.costUsd))}${v.beyondNoise ? '' : ' ~'}`],
-  ['Time (solo → team wall-clock)', (v) => arrow(v.base.durationS, v.arm.durationS, fmt.secs)],
+  ['Wall-clock (solo → team)', (v) => arrow(v.swarm.soloWallS, v.swarm.teamWallS, fmt.secs)],
   ['Sooner', (v) => fmt.ratio(v.swarm.wallSpeedup)],
   ['Agent time, summed', (v) => fmt.secs(v.swarm.agentS?.median)],
   ['3 worktrees on disk', (v) => fmt.bytes(v.swarm.worktreeBytes?.median)],
-  ['Merge conflicts', (v) => fmt.int(v.swarm.conflicts)],
+  ['Conflicted files', (v) => fmt.int(v.swarm.conflictedFiles)],
 ]
 
 function swarmNote(d, sw) {
@@ -708,6 +708,9 @@ function renderMeta(d) {
 }
 
 const data = await getJson('data/results.json')
+// The solo runs of the swarm study's suite task belong to the swarm section (which has its own data), not to
+// this page's counts, costs, repairs or cases.
+data.runs = data.runs.filter((r) => !data.meta.tasks[r.task]?.swarm)
 initTooltip()
 initCopy()
 renderMeta(data)

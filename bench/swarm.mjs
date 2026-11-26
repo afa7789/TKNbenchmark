@@ -2,7 +2,8 @@
 // up the skeleton, three workers implement wordfreq, lru and calc in parallel, each in its own git worktree,
 // and an integrator merges the branches. The solo control is the base arm's suite run (run.mjs --tasks
 // suite). Records one agent.json per case like run.mjs, so verify, count and aggregate work unchanged.
-// TKN_ARM=swarm node bench/swarm.mjs [--langs zig,rust] [--reps 3] [--force]
+// TKN_ARM=swarm node bench/swarm.mjs [--langs zig,rust] [--reps 3] [--force] [--merges]
+// --merges: (re)write merge.json for recorded cases whose repository is still in WORK.
 import { spawnSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
@@ -26,6 +27,20 @@ function git(dir, ...argv) {
 function commitAll(dir, msg) {
   git(dir, 'add', '-A')
   git(dir, 'commit', '-q', '--allow-empty', '-m', msg)
+}
+
+// Merge conflicts measured by the harness, not read from an agent's output: merge the workers' branches
+// one by one in git's object store (merge-tree; no working tree is touched) and count conflicted files.
+function trialMerge(root) {
+  const files = []
+  let head = SWARM_SUBS[0]
+  for (const s of SWARM_SUBS.slice(1)) {
+    const r = spawnSync('git', ['merge-tree', '--write-tree', '--name-only', head, s], { cwd: root, encoding: 'utf8' })
+    const [tree, ...rest] = r.stdout.split('\n')
+    if (r.status === 1) files.push(...rest.slice(0, rest.indexOf('')).map((f) => `${s}:${f}`))
+    head = git(root, 'commit-tree', tree, '-p', head, '-p', s, '-m', `trial ${s}`).trim()
+  }
+  return { conflictedFiles: files.length, files }
 }
 
 async function phase(dir, name, lang, out) {
@@ -100,6 +115,7 @@ async function swarmCell(lang, rep) {
   // Disk while the team works: each worktree with its own build outputs (target/, .zig-cache, ...).
   const worktreeBytes = trees.map(duBytes)
   SWARM_SUBS.forEach((s, i) => commitAll(trees[i], s))
+  const merge = trialMerge(root)
   const integrate = await phase(root, 'integrate', lang, out)
   commitAll(root, 'integrated')
   const wallMs = Date.now() - t0
@@ -110,9 +126,24 @@ async function swarmCell(lang, rep) {
   const files = solutionFiles(root)
   copyFiles(root, join(out, 'solution'), files)
   const summary = phases.map((p) => ({ name: p.name, ms: p.ms, costUsd: p.costUsd, turns: p.turns, output: p.usage.output }))
-  const swarm = { phases: summary, agentMs: total(phases, (p) => p.ms), worktreeBytes, mainBytes: duBytes(root), conflicts: (integrate.text.match(/CONFLICT \(/g) ?? []).length }
+  const swarm = { phases: summary, agentMs: total(phases, (p) => p.ms), worktreeBytes, mainBytes: duBytes(root) }
+  writeJson(join(out, 'merge.json'), merge)
   writeJson(join(out, 'agent.json'), { id, lang, task: 'suite', rep, arm: ARM, model: MODEL, effort: EFFORT, files, ...combine(phases, integrate), durationMs: wallMs, wallMs, swarm })
-  console.log(`✔ ${id} cost=$${swarm.phases.reduce((s, p) => s + p.costUsd, 0).toFixed(2)} wall=${Math.round(wallMs / 1000)}s conflicts=${swarm.conflicts} worktrees=${worktreeBytes.map((b) => `${Math.round(b / 1e6)}MB`).join('/')}`)
+  console.log(`✔ ${id} cost=$${swarm.phases.reduce((s, p) => s + p.costUsd, 0).toFixed(2)} wall=${Math.round(wallMs / 1000)}s conflicted files=${merge.conflictedFiles} worktrees=${worktreeBytes.map((b) => `${Math.round(b / 1e6)}MB`).join('/')}`)
+}
+
+// Backfill: measure the merges of cases already recorded, from their repositories still in WORK.
+if (args.merges) {
+  for (let rep = 1; rep <= Number(args.reps); rep++) {
+    for (const lang of String(args.langs).split(',')) {
+      const root = join(WORK, 'swarm', runId(lang, 'suite', rep))
+      if (!existsSync(join(root, '.git'))) continue
+      const merge = trialMerge(root)
+      writeJson(join(runDir(lang, 'suite', rep), 'merge.json'), merge)
+      console.log(`${runId(lang, 'suite', rep)}: ${JSON.stringify(merge)}`)
+    }
+  }
+  process.exit(0)
 }
 
 // One team at a time: its three workers already run in parallel.

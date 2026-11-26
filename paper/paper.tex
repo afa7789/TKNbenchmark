@@ -226,6 +226,16 @@ The performance of both arms was measured in one session, each case right before
 the baseline, alternating the order, so that changes in the machine's speed fall on both arms alike; the
 performance tables of this paper come from that session.
 
+\paragraph{Port arms (H7).} Sources are the three main languages with the slowest code in the speed ranking
+(Clojure, Python and TypeScript; JavaScript, next, runs on TypeScript's runtime). Targets are the five
+languages most often chosen for public rewrites in 2022--2026 by an informal count of projects with a
+primary source (Rust, Go, TypeScript, Kotlin, then Swift and Zig tied, broken in Zig's favour by the Stack
+Overflow 2026 survey's ``desired'' share); a language is never ported to itself. The agent gets the
+baseline's own working solution of the same case in \texttt{./.source/}, plus the specification, examples and
+checker it had before; the prompt's only change is its first sentence (``Port the program in ./.source/ from
+\ldots''). Performance is timed for the source, the program written from scratch in the target and the port,
+interleaved in one session.
+
 \section{Results}
 
 We rank the back ends twice. By cost to write, Table~\ref{tab:main} and Figure~\ref{fig:cost}; costs are
