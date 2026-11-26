@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-26T17:23:16.532Z",
+    "generatedAt": "2026-11-26T17:32:25.787Z",
     "arm": "base",
     "arms": [
       "port-c",
@@ -16389,7 +16389,9 @@
       "debug": 131702784,
       "debugDeps": 109727744,
       "debugIncremental": 23261184,
-      "release": 74629120
+      "release": 74629120,
+      "releaseDeps": 65581056,
+      "crates": 32
     }
   },
   "runs": [

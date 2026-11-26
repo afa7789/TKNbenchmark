@@ -282,7 +282,8 @@ final code. ``Stdlib'': reads of the toolchain's own sources/docs.}
 \centering
 \begin{minipage}{0.49\linewidth}\centering\CostPlot\end{minipage}\hfill
 \begin{minipage}{0.49\linewidth}\centering\CodePlot\end{minipage}
-\caption{Agent cost (left) and final code size (right), per language.}
+\caption{Agent cost in US\$ (left) and final code size in Opus~5.5 tokens (right), per language, each the sum
+over the 4 tasks of the median of three runs.}
 \label{fig:cost}
 \end{figure}
 
@@ -400,7 +401,10 @@ server; a day of debug builds and tests in a large project scales the same patte
 repeats is its build output: Rust's \texttt{target/} after a debug, a release and a test build of the
 \texttt{kvhttp} server held \RustTargetDebug\,MB for the debug build, \RustTargetDepsShare{} of it compiled
 dependencies with their debug information and \RustTargetIncremental\,MB incremental data, plus
-\RustTargetRelease\,MB for the release build. With hundreds of crates that is gigabytes per worktree; turning
+\RustTargetRelease\,MB for the release build. That server has about \RustTargetCrates{} crates, some
+\RustPerCrate\,MB of compiled dependencies each; by a straight-line estimate (real crates vary widely in
+size), a project with 300 crates would hold about \RustThreeHundred\,GB per worktree, or
+\RustThreeHundredFour\,GB across four; turning
 off debug information for dependencies, or sharing one target directory or a compiler cache across
 worktrees, cuts it, and in Zig so does a cache directory shared by the worktrees (we did not measure these).
 
@@ -427,7 +431,8 @@ Rust and \SwarmDiskGo\,MB for Go.
 
 \begin{table}[h]
 \centering\small
-\caption{Solo agent vs team on the \texttt{suite} task (medians of three). Works: runs that passed the
+\caption{Solo agent vs team on the \texttt{suite} task (medians of three). US\$: one solo run vs the whole
+team (lead, three workers and integrator together). Works: runs that passed the
 hidden tests in round 3 or after repair. s: the solo agent's time vs the team's wall-clock time from the
 lead's start to the integrator's end. $\times$sooner: solo time divided by team time (above 1, the team
 finished first). MB 3 trees: disk held by the three workers' worktrees with their build output.}
@@ -451,7 +456,8 @@ Go \NotesPeakSoloGo{} $\to$ \NotesPeakTeamGo\,MB.
 
 \begin{table}[h]
 \centering\small
-\caption{The \texttt{notes} service, solo agent vs team (medians of three). s: wall-clock time; the team's
+\caption{The \texttt{notes} service, solo agent vs team (medians of three). US\$: one solo run vs the whole
+team. s: wall-clock time; the team's
 split into the lead, the slowest worker and the integrator. MB peak: the largest total of the working copies
 (one for the solo agent, the main tree and three worktrees for the team) seen while the agents worked; package
 and build caches are not included (in Go they hold the dependencies, shared by all copies).}

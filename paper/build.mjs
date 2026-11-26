@@ -471,6 +471,11 @@ function growthMacros(set) {
     set('RustTargetDepsShare', `${nf(0)((t.debugDeps / t.debug) * 100)}\\%`)
     set('RustTargetIncremental', mb(t.debugIncremental))
     set('RustTargetRelease', mb(t.release))
+    const perCrate = (t.debugDeps + t.releaseDeps) / t.crates
+    set('RustTargetCrates', int(t.crates))
+    set('RustPerCrate', nf(1)(perCrate / 1e6))
+    set('RustThreeHundred', nf(1)((perCrate * 300) / 1e9))
+    set('RustThreeHundredFour', nf(1)((perCrate * 300 * 4) / 1e9))
   }
   if (!byGrowth.length) return
   set('GrowthCycles', G[byGrowth[0]].cycles)

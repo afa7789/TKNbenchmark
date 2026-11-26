@@ -469,9 +469,13 @@ function build() {
   // The two rankings against each other: cost to write vs speed of the code (main languages).
   const ranked = Object.keys(langs).filter((l) => Number.isFinite(langs[l].perfTotal))
   // What fills Rust's target/ after a debug, a release and a test build (bench/devloop.mjs), medians.
-  const parts = raw.map((r) => r.devloop?.parts).filter(Boolean)
-  const part = (p, k) => stats(parts.map((x) => x[p][k]))?.median ?? null
-  const rustTarget = parts.length ? { debug: part('debug', 'total'), debugDeps: part('debug', 'deps'), debugIncremental: part('debug', 'incremental'), release: part('release', 'total') } : null
+  const withParts = raw.filter((r) => r.devloop?.parts)
+  const part = (p, k) => stats(withParts.map((r) => r.devloop.parts[p][k]))?.median ?? null
+  // Crates in each solution's Cargo.lock, for a per-crate figure (and a rough estimate for bigger projects).
+  const crates = (r) => (readFileSync(join(r.dir, 'solution', 'Cargo.lock'), 'utf8').match(/^\[\[package\]\]/gm) ?? []).length
+  const rustTarget = withParts.length
+    ? { debug: part('debug', 'total'), debugDeps: part('debug', 'deps'), debugIncremental: part('debug', 'incremental'), release: part('release', 'total'), releaseDeps: part('release', 'deps'), crates: stats(withParts.map(crates)).median }
+    : null
   // Disk over an edit-rebuild loop (bench/growth.mjs), one series per language.
   const growth = Object.fromEntries(raw.filter((r) => r.growth).map((r) => [r.agent.lang, r.growth]))
   const costSpeedRho = spearman(ranked.map((l) => langs[l].costUsd), ranked.map((l) => langs[l].perfTotal))
