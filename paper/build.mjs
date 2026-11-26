@@ -368,7 +368,9 @@ function portMacros(set) {
 }
 
 // ---------- swarm arm (public/data/swarm/results.json): a team of agents vs one ----------
-const SW = (d.meta.arms ?? []).includes('swarm') ? JSON.parse(readFileSync(join(ROOT, 'public', 'data', 'swarm', 'results.json'), 'utf8')).summary.vsBase : {}
+const SW_DATA = (d.meta.arms ?? []).includes('swarm') ? JSON.parse(readFileSync(join(ROOT, 'public', 'data', 'swarm', 'results.json'), 'utf8')).summary : {}
+const SW = SW_DATA.vsBase ?? {}
+const SW_EFFECT = SW_DATA.effect
 const secs = (s) => nf(0)(s)
 
 function swarmTable() {
@@ -394,6 +396,10 @@ function swarmMacros(set) {
   set('SwarmCostMin', pct(Math.min(...dc)))
   set('SwarmCostMax', pct(Math.max(...dc)))
   set('SwarmConflicts', int(vs.reduce((a, v) => a + v.swarm.conflictedFiles, 0)))
+  const sw = SW_EFFECT ?? { costShare: { cacheWrite: NaN, cacheRead: NaN }, cacheWrite: { base: NaN, arm: NaN } }
+  set('SwarmShareContext', `${nf(0)((sw.costShare.cacheWrite + sw.costShare.cacheRead) * 100)}\\%`)
+  set('SwarmCacheWriteBase', int(sw.cacheWrite.base))
+  set('SwarmCacheWriteArm', int(sw.cacheWrite.arm))
   for (const [k, m] of [['leadS', 'Lead'], ['slowestWorkerS', 'Worker'], ['integrateS', 'Integrate']]) {
     set(`Swarm${m}Min`, secs(Math.min(...vs.map((v) => v.swarm[k]))))
     set(`Swarm${m}Max`, secs(Math.max(...vs.map((v) => v.swarm[k]))))

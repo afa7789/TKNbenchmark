@@ -95,7 +95,9 @@ integrator) built a three-part program slower than one agent alone in all \NSwar
         \SwarmCostMin{} to \SwarmCostMax{} more, with no merge conflicts (\SwarmConflicts) in any run. The
         agents never talk; the time went to handoffs in series: lead \SwarmLeadMin--\SwarmLeadMax\,s, the
         slowest worker \SwarmWorkerMin--\SwarmWorkerMax\,s, the integrator
-        \SwarmIntegrateMin--\SwarmIntegrateMax\,s.
+        \SwarmIntegrateMin--\SwarmIntegrateMax\,s. \SwarmShareContext{} of the extra spend is replicated
+        context: each agent builds its own (\SwarmCacheWriteBase{} $\to$ \SwarmCacheWriteArm{} tokens written
+        to the cache per run).
   \item \textbf{Check the I/O idiom before blaming the language.} C++'s slow \texttt{calc} read standard
         input one character at a time; with \texttt{fread} the same program ran about 20$\times$ faster.
 \end{enumerate}
