@@ -347,6 +347,19 @@ function renderTracks(d) {
 
 const ASKED = new Set(['rust/react', 'rust/vue', 'zig/react', 'zig/vue'])
 
+// The conclusion above the table: which stack is smallest, and which half of the stack decides its size.
+function comboNote(d) {
+  const C = d.summary.combos
+  const spread = (key) => {
+    const v = [...new Set(C.map((c) => c[key]))]
+    return Math.max(...v) / Math.min(...v)
+  }
+  const stack = (c) => `${d.meta.langs[c.lang].label} + ${d.meta.frontends[c.fw].label}`
+  const asked = C.filter((c) => ASKED.has(`${c.lang}/${c.fw}`))
+  const [small, large] = [asked[0], asked.at(-1)]
+  return `<strong>The back-end language decides the size of the stack.</strong> The smallest full feature is ${esc(stack(C[0]))} (${fmt.int(C[0].totalTokens)} tokens). Swapping the framework changes the front end by at most ${fmt.ratio(spread('frontendTokens'))}; swapping the back-end language changes the back end by up to ${fmt.ratio(spread('backendTokens'))}. Of the four stacks from the original conversation, ${esc(stack(small))} is the smallest (${fmt.ratio(small.totalTokens / C[0].totalTokens)} the smallest overall) and ${esc(stack(large))} the largest (${fmt.ratio(large.totalTokens / C[0].totalTokens)}).`
+}
+
 // Collapsed by default: the smallest stacks plus the ones from the original conversation; a button shows all.
 const COMBOS_SHOWN = 5
 
@@ -361,6 +374,7 @@ function renderCombos(d) {
     [{ title: 'Stack' }, { title: 'kvhttp back end', num: true }, { title: 'KvBrowser', num: true }, { title: 'Total (tokens)', num: true }, { title: 'vs. smallest', num: true }, { title: 'Back-end agent cost', num: true }],
     rows,
   )
+  $('combo-note').innerHTML = comboNote(d)
   const all = `Show all ${rows.length} stacks`
   $('combo-toggle').textContent = all
   $('combo-toggle').onclick = () => {
