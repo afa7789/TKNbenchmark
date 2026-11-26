@@ -638,6 +638,8 @@ function renderSwarm(d, sw) {
 
 // ---------- disk over an edit-rebuild loop (summary.growth, bench/growth.mjs) ----------
 const growthOf = (g) => (g.series.at(-1).projectBytes - g.series[0].projectBytes) / g.cycles
+// Why a language's build output grows, where the toolchain documents it.
+const GROWTH_CAUSE = { zig: 'Zig adds each build to .zig-cache and never removes old entries' }
 
 // One line per language: the project's build output after each rebuild. The three that grow most, plus
 // Rust and Go, in full ink and labelled; the rest muted, named on hover.
@@ -674,8 +676,10 @@ function renderGrowth(d) {
   const G = d.summary.growth ?? {}
   const langs = Object.keys(G).filter((l) => G[l].series?.length > 1).sort((a, b) => growthOf(G[b]) - growthOf(G[a]))
   if (!langs.length) return ($('growth').hidden = true)
-  const [top, rust] = [langs[0], G.rust]
-  $('growth-note').innerHTML = `<strong>${esc(label(d, top))}'s build output grew with every rebuild; ${rust ? "Rust's did not" : 'most did not'}.</strong> After ${G[top].cycles} edit-rebuild cycles ${esc(label(d, top))}'s project held ${fmt.bytes(G[top].series.at(-1).projectBytes)}, ${fmt.bytes(growthOf(G[top]))} more per build, because its cache keeps every build${rust ? `; Rust's target/ stayed at ${fmt.bytes(G.rust.series.at(-1).projectBytes)}, rewritten in place` : ''}. In parallel worktrees each copy grows on its own.`
+  const top = langs[0]
+  const flat = langs.filter((l) => growthOf(G[l]) < 0.1e6)
+  const rust = G.rust && growthOf(G.rust) < 0.1e6 ? `; Rust's target/ stayed at ${fmt.bytes(G.rust.series.at(-1).projectBytes)}, rewritten in place` : ''
+  $('growth-note').innerHTML = `<strong>${esc(label(d, top))}'s build output grew with every rebuild; ${flat.length} of ${langs.length} languages stayed flat.</strong> After ${G[top].cycles} edit-rebuild cycles ${esc(label(d, top))}'s project held ${fmt.bytes(G[top].series.at(-1).projectBytes)}, ${fmt.bytes(growthOf(G[top]))} more per build${GROWTH_CAUSE[top] ? `: ${GROWTH_CAUSE[top]}` : ''}${rust}. In parallel worktrees each copy grows on its own.`
   $('growth-chart').innerHTML = growthChart(d, G, langs)
   const head = [{ title: 'Language' }, ...GROWTH_COLS.map(([title]) => ({ title, num: true }))]
   $('growth-table').innerHTML = table(head, langs.map((l) => `<tr><td><strong>${esc(label(d, l))}</strong></td>${GROWTH_COLS.map(([, f]) => `<td class="num">${esc(f(G[l]))}</td>`).join('')}</tr>`))
