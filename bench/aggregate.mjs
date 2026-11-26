@@ -406,6 +406,22 @@ function vsBase(cells, runs) {
   )
 }
 
+// What the whole project spent at list price: every agent run of every arm (write + repair, a swarm team's
+// phases included) plus writing the skills. Read straight from runs*/ so it counts arms not aggregated yet.
+function projectSpend() {
+  const byArm = {}
+  let runs = 0
+  for (const root of readdirSync(ROOT).filter((n) => n === 'runs' || n.startsWith('runs-'))) {
+    const arm = { runs: 'baseline', 'runs-skills': 'skills', 'runs-swarm': 'swarm teams' }[root] ?? 'migration'
+    for (const f of readdirSync(join(ROOT, root), { recursive: true }).filter((p) => /(^|\/)(agent|repair)\.json$/.test(p) && !p.includes('repair/'))) {
+      if (f.endsWith('agent.json')) runs++
+      byArm[arm] = (byArm[arm] ?? 0) + (readJson(join(ROOT, root, f)).costUsd ?? 0)
+    }
+  }
+  byArm['skill writing'] = sum(Object.values(opt(join(SKILLS, 'meta.json')) ?? {}).map((s) => s.costUsd))
+  return { runs, usd: sum(Object.values(byArm)), byArm }
+}
+
 function build() {
   const raw = collect()
   const runs = raw.map((r) => {
@@ -430,7 +446,8 @@ function build() {
   const toolchains = opt(join(RUNS, 'toolchains.json'))
   // The arms whose data the page can load next to this run (runs-<arm>/ directories).
   const arms = readdirSync(ROOT).filter((n) => n.startsWith('runs-') && existsSync(join(BASE_OUT, n.slice(5), 'results.json'))).map((n) => n.slice(5))
-  const meta = { generatedAt: new Date().toISOString(), arm: ARM, arms, model: MODEL, effort: EFFORT, toolchains, langs: LANGS, frontends: FRONTENDS, tasks: TASKS, external: EXTERNAL }
+  const spend = ARM === 'base' ? projectSpend() : undefined
+  const meta = { generatedAt: new Date().toISOString(), arm: ARM, arms, spend, model: MODEL, effort: EFFORT, toolchains, langs: LANGS, frontends: FRONTENDS, tasks: TASKS, external: EXTERNAL }
   const baseData = ARM === 'base' ? null : readJson(join(BASE_OUT, 'results.json'))
   const compare = baseData ? { vsBase: vsBase(cells, runs), effect: pairedEffect(baseData.runs, runs), length: lengthEffect(baseData.summary.cells, cells) } : {}
   // The two rankings against each other: cost to write vs speed of the code (main languages).

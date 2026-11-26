@@ -763,7 +763,11 @@ function renderSponsor(d) {
   const reps = new Set(d.runs.map((r) => r.rep)).size
   const langs = Object.keys(d.summary.langs)
   const perLang = cost(d.runs.filter((r) => langs.includes(r.lang))) / langs.length
-  $('sponsor-intro').textContent = `Every run on this page was paid for out of pocket: ${d.runs.length} agent runs, ${fmt.usd(total)} of model usage at list price. Sponsorship buys more of it:`
+  const sp = d.meta.spend
+  const arms = sp ? Object.entries(sp.byArm).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${fmt.usd(v)}`).join(', ') : ''
+  $('sponsor-intro').textContent = sp
+    ? `Every run in this study was paid for out of pocket: ${fmt.int(sp.runs)} agent runs across all its arms, ${fmt.usd(sp.usd)} of model usage at list price (${arms}). Sponsorship buys more of it:`
+    : `Every run on this page was paid for out of pocket: ${d.runs.length} agent runs, ${fmt.usd(total)} of model usage at list price. Sponsorship buys more of it:`
   const chips = [
     ['+1 repetition of everything', total / reps],
     ['one more language', perLang],
