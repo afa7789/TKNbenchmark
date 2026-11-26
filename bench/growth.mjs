@@ -8,7 +8,7 @@ import { appendFileSync, existsSync, rmSync, statSync } from 'node:fs'
 import { extname, join } from 'node:path'
 import { MAIN_LANGS, WORK, runDir } from './config.mjs'
 import { workingSolution } from './agent.mjs'
-import { copyFiles, duBytes, isCounted, killStragglers, list, parseArgs, solutionFiles, writeJson } from './lib.mjs'
+import { copyFiles, duBytes, isCounted, killStragglers, list, parseArgs, removeTree, solutionFiles, writeJson } from './lib.mjs'
 import { sandboxEnv } from './verify.mjs'
 
 const args = parseArgs(process.argv.slice(2), { cycles: '20' })
@@ -42,7 +42,7 @@ function measure(lang) {
   const dir = join(WORK, 'growth', lang)
   const home = `${dir}.home`
   rmSync(dir, { recursive: true, force: true })
-  rmSync(home, { recursive: true, force: true })
+  removeTree(home)
   const src = workingSolution(lang, TASK, 1)
   copyFiles(src, dir, solutionFiles(src))
   const file = mainSource(dir)
@@ -57,7 +57,7 @@ function measure(lang) {
   const [first, last] = [series[0], series.at(-1)]
   console.log(`${lang}: project ${(first.projectBytes / 1e6).toFixed(1)} → ${(last.projectBytes / 1e6).toFixed(1)} MB, caches ${(first.cacheBytes / 1e6).toFixed(1)} → ${(last.cacheBytes / 1e6).toFixed(1)} MB, ok ${series.filter((s) => s.ok).length}/${series.length}`)
   rmSync(dir, { recursive: true, force: true })
-  rmSync(home, { recursive: true, force: true })
+  removeTree(home)
 }
 
 for (const lang of list(args.langs, Object.fromEntries(MAIN_LANGS.map((l) => [l, true])))) measure(lang)

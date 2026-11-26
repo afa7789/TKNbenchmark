@@ -6,7 +6,7 @@ import { homedir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { ROOT, RUNS, WORK, TASKS } from './config.mjs'
-import { copyFiles, duBytes, killStragglers, parseArgs, readJson, solutionFiles, writeJson } from './lib.mjs'
+import { copyFiles, duBytes, killStragglers, parseArgs, readJson, removeTree, solutionFiles, writeJson } from './lib.mjs'
 
 export const builtDir = (id) => join(WORK, 'built', id)
 
@@ -22,6 +22,8 @@ export function sandboxEnv(home) {
     GOCACHE: join(home, 'go-build'),
     GOMODCACHE: join(home, 'go', 'pkg', 'mod'),
     GOTOOLCHAIN: 'local',
+    // A module cache Go leaves writable, so the sandbox can be removed after the build.
+    GOFLAGS: '-modcacherw',
     ZIG_GLOBAL_CACHE_DIR: join(home, 'zig'),
     NIMBLE_DIR: join(home, '.nimble'),
     GRADLE_USER_HOME: join(home, '.gradle'),
@@ -84,7 +86,7 @@ export async function verifySolution(solDir, task, id, lang) {
   const dir = join(WORK, 'verify', id)
   const home = `${dir}.home`
   rmSync(dir, { recursive: true, force: true })
-  rmSync(home, { recursive: true, force: true })
+  removeTree(home)
   copyFiles(solDir, dir, solutionFiles(solDir))
   copyFileSync(join(ROOT, 'bench', 'harness', 'check.mjs'), join(dir, 'check.mjs'))
   const { hidden } = await import(join(ROOT, 'bench', 'tasks', task, 'cases.mjs'))
@@ -113,7 +115,7 @@ export async function verifySolution(solDir, task, id, lang) {
     solved: buildOk && tests.total > 0 && tests.pass === tests.total,
     cases: tests.results.map(({ name, ok, ms, why }) => ({ name, ok, ms, why: why ? String(why).slice(0, 400) : undefined })),
   }
-  rmSync(home, { recursive: true, force: true })
+  removeTree(home)
   rmSync(builtDir(id), { recursive: true, force: true })
   if (buildOk) {
     mkdirSync(join(WORK, 'built'), { recursive: true })

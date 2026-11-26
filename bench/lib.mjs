@@ -1,5 +1,5 @@
 // Filesystem and process helpers shared by run / verify / count.
-import { readdirSync, readFileSync, realpathSync, writeFileSync, mkdirSync, copyFileSync, existsSync, statSync } from 'node:fs'
+import { readdirSync, readFileSync, realpathSync, rmSync, writeFileSync, mkdirSync, copyFileSync, existsSync, statSync } from 'node:fs'
 import { join, dirname, basename, extname } from 'node:path'
 import { spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
@@ -108,6 +108,14 @@ export function killStragglers(dir) {
       }
     }
   }
+}
+
+// Removes a harness-made tree. Go marks its module cache read-only, which a plain recursive remove cannot
+// delete; make the tree writable first.
+export function removeTree(path) {
+  if (!existsSync(path)) return
+  spawnSync('chmod', ['-R', 'u+w', path])
+  rmSync(path, { recursive: true, force: true })
 }
 
 export function duBytes(path) {

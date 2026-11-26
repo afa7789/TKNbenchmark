@@ -12,7 +12,7 @@ import { existsSync, mkdirSync, readFileSync, realpathSync, rmSync, writeFileSyn
 import { dirname, join } from 'node:path'
 import { ARM, BASE_RUNS, EFFORT, MODEL, ROOT, SWARM, TOOLS, WORK, prompt, runDir, runId, swarmPrompt } from './config.mjs'
 import { baselineToolchains, prepareWorkdir, runAgent } from './agent.mjs'
-import { SKIP_DIRS, copyFiles, duBytes, parseArgs, solutionFiles, writeJson } from './lib.mjs'
+import { SKIP_DIRS, copyFiles, duBytes, parseArgs, removeTree, solutionFiles, writeJson } from './lib.mjs'
 import { parseTranscript } from './transcript.mjs'
 
 if (ARM !== 'swarm') throw new Error('run with TKN_ARM=swarm')
@@ -127,7 +127,7 @@ function addWorktrees(root, trees) {
 }
 
 function fresh(...dirs) {
-  for (const d of dirs) rmSync(d, { recursive: true, force: true })
+  for (const d of dirs) removeTree(d)
 }
 
 async function teamCell(lang, rep) {
