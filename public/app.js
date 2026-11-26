@@ -565,8 +565,26 @@ function portCell(v) {
   return `<td class="num" data-tip="${esc(tip)}"><strong>${fmt.usd(p.costPer1kSourceLines?.median)}</strong><span class="range">${fmt.ratio(p.speedVsSource)} faster · ${v.arm.works}/${v.arm.n}</span></td>`
 }
 
+// The migration conclusion: port vs scratch cost, cost per 1,000 source lines, and speed gained per target.
+function portNote(d, ports) {
+  const pairs = ports.flatMap((a) => Object.entries(a.summary.vsBase).map(([t, v]) => ({ t, src: a.meta.arm.slice(5), v, dc: change(v.base.costUsd, v.arm.costUsd) })))
+  const costlier = pairs.filter((p) => p.dc > 0 && p.v.beyondNoise).length
+  const dcs = pairs.map((p) => p.dc)
+  const perK = pairs.map((p) => p.v.port.costPer1kSourceLines?.median).filter(isNum)
+  const byTarget = Object.groupBy(pairs, (p) => p.t)
+  const speed = Object.entries(byTarget).map(([t, ps]) => [t, median(ps.map((p) => p.v.port.speedVsSource))]).sort((a, b) => b[1] - a[1])
+  const works = pairs.reduce((s, p) => s + p.v.arm.works, 0)
+  const n = pairs.reduce((s, p) => s + p.v.arm.n, 0)
+  return `<strong>Porting cost more than writing from scratch.</strong> In ${costlier} of ${pairs.length} pairs the port cost more beyond run-to-run noise (${signed(Math.min(...dcs))} to ${signed(Math.max(...dcs))}), though ${works}/${n} ports worked: the agent read the source on top of the specification and tests it also had. Per 1,000 lines of source it cost ${fmt.usd(Math.min(...perK))}–${fmt.usd(Math.max(...perK))}. The target sets the price and the gain: ${speed.map(([t, x]) => `${esc(label(d, t))} ${fmt.ratio(x)}`).join(', ')} faster than the source (median over sources), and as fast as the same program written from scratch in the target.`
+}
+
 function renderPorts(d, ports) {
   if (!ports.length) return ($('ports').hidden = true)
+  $('port-note').innerHTML = portNote(d, ports)
+  // The same conclusion as a key finding and as the migration hypothesis in the summary.
+  $('findings-list').insertAdjacentHTML('beforeend', `<li>${portNote(d, ports)}</li>`)
+  $('hyp-ports').innerHTML = `<strong>"Porting a working program to a faster language is cheaper than writing it from scratch":</strong> rejected here. ${portNote(d, ports).replace(/^<strong>.*?<\/strong> /, '')} See <a href="#ports">Migrating the slowest languages</a>.`
+  $('hyp-ports').hidden = false
   const targets = [...new Set(ports.flatMap((a) => Object.keys(a.summary.vsBase)))].sort((a, b) => label(d, a).localeCompare(label(d, b)))
   const head = [{ title: 'From → to' }, ...targets.map((t) => ({ title: label(d, t), num: true }))]
   const rows = ports.map((a) => `<tr><td><strong>${esc(label(d, a.meta.arm.slice(5)))}</strong></td>${targets.map((t) => portCell(a.summary.vsBase[t])).join('')}</tr>`)

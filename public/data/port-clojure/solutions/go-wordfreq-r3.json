@@ -1,0 +1,25 @@
+{
+  "id": "go-wordfreq-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds an optimized, stripped release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nCGO_ENABLED=0 go build -trimpath -ldflags='-s -w' -o app .\n"
+    },
+    {
+      "path": "go.mod",
+      "text": "module wordfreq\n\ngo 1.26\n"
+    },
+    {
+      "path": "main.go",
+      "text": "// Command wordfreq prints the 10 most frequent ASCII words read from standard input.\npackage main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n)\n\nconst topN = 10\n\nfunc main() {\n\tcounts, err := CountWords(os.Stdin)\n\tif err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t\tos.Exit(1)\n\t}\n\n\tout := bufio.NewWriter(os.Stdout)\n\tfor _, wc := range TopWords(counts, topN) {\n\t\tfmt.Fprintf(out, \"%d %s\\n\", wc.Count, wc.Word)\n\t}\n\tif err := out.Flush(); err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t\tos.Exit(1)\n\t}\n}\n"
+    },
+    {
+      "path": "wordfreq.go",
+      "text": "package main\n\nimport (\n\t\"cmp\"\n\t\"errors\"\n\t\"io\"\n\t\"slices\"\n)\n\nconst bufferSize = 64 * 1024\n\n// WordCount pairs a lowercase word with its number of occurrences.\ntype WordCount struct {\n\tWord  string\n\tCount int\n}\n\n// lowerASCII reports whether b is an ASCII letter and returns its lowercase form.\nfunc lowerASCII(b byte) (byte, bool) {\n\tswitch {\n\tcase 'a' <= b && b <= 'z':\n\t\treturn b, true\n\tcase 'A' <= b && b <= 'Z':\n\t\treturn b + ('a' - 'A'), true\n\tdefault:\n\t\treturn 0, false\n\t}\n}\n\n// CountWords streams r and returns the number of occurrences of each word,\n// where a word is a maximal run of ASCII letters folded to lowercase.\nfunc CountWords(r io.Reader) (map[string]int, error) {\n\tcounts := make(map[string]int)\n\tbuf := make([]byte, bufferSize)\n\tword := make([]byte, 0, 64)\n\n\tfor {\n\t\tn, err := r.Read(buf)\n\t\tfor _, b := range buf[:n] {\n\t\t\tif c, ok := lowerASCII(b); ok {\n\t\t\t\tword = append(word, c)\n\t\t\t} else if len(word) > 0 {\n\t\t\t\tcounts[string(word)]++ // the conversion does not allocate for existing keys\n\t\t\t\tword = word[:0]\n\t\t\t}\n\t\t}\n\t\tif errors.Is(err, io.EOF) {\n\t\t\tbreak\n\t\t}\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\tif len(word) > 0 {\n\t\tcounts[string(word)]++\n\t}\n\treturn counts, nil\n}\n\n// compareWordCounts orders by count descending, then word ascending.\nfunc compareWordCounts(a, b WordCount) int {\n\tif c := cmp.Compare(b.Count, a.Count); c != 0 {\n\t\treturn c\n\t}\n\treturn cmp.Compare(a.Word, b.Word)\n}\n\n// TopWords returns up to n entries of counts, most frequent first,\n// with ties broken by word in ascending byte order.\nfunc TopWords(counts map[string]int, n int) []WordCount {\n\tif n <= 0 {\n\t\treturn nil\n\t}\n\t// Keep a small sorted slice of the best n entries seen so far.\n\ttop := make([]WordCount, 0, n+1)\n\tfor w, c := range counts {\n\t\twc := WordCount{Word: w, Count: c}\n\t\tif len(top) == n && compareWordCounts(wc, top[n-1]) >= 0 {\n\t\t\tcontinue\n\t\t}\n\t\ti, _ := slices.BinarySearchFunc(top, wc, compareWordCounts)\n\t\ttop = slices.Insert(top, i, wc)\n\t\tif len(top) > n {\n\t\t\ttop = top[:n]\n\t\t}\n\t}\n\treturn top\n}\n"
+    },
+    {
+      "path": "wordfreq_test.go",
+      "text": "package main\n\nimport (\n\t\"slices\"\n\t\"strings\"\n\t\"testing\"\n)\n\nfunc TestCountWordsAndTop(t *testing.T) {\n\ttests := []struct {\n\t\tname string\n\t\tin   string\n\t\twant []WordCount\n\t}{\n\t\t{\"simple\", \"The cat and the hat.\", []WordCount{{\"the\", 2}, {\"and\", 1}, {\"cat\", 1}, {\"hat\", 1}}},\n\t\t{\"empty\", \"\", nil},\n\t\t{\"separators\", \"don't stop_me 4now, now-NOW\\xff\\xc3(x\", []WordCount{\n\t\t\t{\"now\", 3}, {\"don\", 1}, {\"me\", 1}, {\"stop\", 1}, {\"t\", 1}, {\"x\", 1},\n\t\t}},\n\t\t{\"limit\", \"k j i h g f e d c b a a\", []WordCount{\n\t\t\t{\"a\", 2}, {\"b\", 1}, {\"c\", 1}, {\"d\", 1}, {\"e\", 1}, {\"f\", 1}, {\"g\", 1}, {\"h\", 1}, {\"i\", 1}, {\"j\", 1},\n\t\t}},\n\t}\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tcounts, err := CountWords(strings.NewReader(tt.in))\n\t\t\tif err != nil {\n\t\t\t\tt.Fatal(err)\n\t\t\t}\n\t\t\tgot := TopWords(counts, topN)\n\t\t\tif !slices.Equal(got, tt.want) && !(len(got) == 0 && len(tt.want) == 0) {\n\t\t\t\tt.Errorf(\"got %v, want %v\", got, tt.want)\n\t\t\t}\n\t\t})\n\t}\n}\n"
+    }
+  ]
+}

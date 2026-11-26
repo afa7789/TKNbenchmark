@@ -1,0 +1,25 @@
+{
+  "id": "go-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build an optimized release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nexport CGO_ENABLED=0\ngo build -trimpath -ldflags='-s -w' -o app .\n"
+    },
+    {
+      "path": "go.mod",
+      "text": "module wordfreq\n\ngo 1.26\n"
+    },
+    {
+      "path": "main.go",
+      "text": "// Command wordfreq prints the 10 most frequent ASCII words read from standard input.\npackage main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n)\n\n// topN is the maximum number of words printed.\nconst topN = 10\n\nfunc main() {\n\tcounts, err := countWords(os.Stdin)\n\tif err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t\tos.Exit(1)\n\t}\n\n\tw := bufio.NewWriter(os.Stdout)\n\tfor _, e := range topWords(counts, topN) {\n\t\tfmt.Fprintf(w, \"%d %s\\n\", e.count, e.word)\n\t}\n\tif err := w.Flush(); err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t\tos.Exit(1)\n\t}\n}\n"
+    },
+    {
+      "path": "wordfreq.go",
+      "text": "package main\n\nimport (\n\t\"cmp\"\n\t\"errors\"\n\t\"io\"\n\t\"slices\"\n)\n\n// entry is a word together with its number of occurrences.\ntype entry struct {\n\tword  string\n\tcount int\n}\n\n// lowerTable maps ASCII letters to their lowercase form and every other byte\n// to 0, which marks a separator.\nvar lowerTable = func() (t [256]byte) {\n\tfor c := 'a'; c <= 'z'; c++ {\n\t\tt[c] = byte(c)\n\t\tt[c-'a'+'A'] = byte(c)\n\t}\n\treturn t\n}()\n\n// countWords reads r to EOF and returns how often each lowercased word\n// (maximal run of ASCII letters) occurs.\nfunc countWords(r io.Reader) (map[string]int, error) {\n\tcounts := make(map[string]int)\n\tbuf := make([]byte, 64*1024)\n\tword := make([]byte, 0, 64) // current word; may span reads\n\n\tfor {\n\t\tn, err := r.Read(buf)\n\t\tfor _, b := range buf[:n] {\n\t\t\tif c := lowerTable[b]; c != 0 {\n\t\t\t\tword = append(word, c)\n\t\t\t} else if len(word) > 0 {\n\t\t\t\tcounts[string(word)]++ // no allocation when the key exists\n\t\t\t\tword = word[:0]\n\t\t\t}\n\t\t}\n\t\tif errors.Is(err, io.EOF) {\n\t\t\tbreak\n\t\t}\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\tif len(word) > 0 {\n\t\tcounts[string(word)]++\n\t}\n\treturn counts, nil\n}\n\n// compareEntries orders entries by count descending, then by word ascending.\nfunc compareEntries(a, b entry) int {\n\tif c := cmp.Compare(b.count, a.count); c != 0 {\n\t\treturn c\n\t}\n\treturn cmp.Compare(a.word, b.word)\n}\n\n// topWords returns up to n entries from counts, ordered by count descending\n// and then by word ascending.\nfunc topWords(counts map[string]int, n int) []entry {\n\tif n <= 0 {\n\t\treturn nil\n\t}\n\ttop := make([]entry, 0, n+1)\n\tfor word, count := range counts {\n\t\te := entry{word, count}\n\t\tif len(top) == n && compareEntries(e, top[n-1]) >= 0 {\n\t\t\tcontinue\n\t\t}\n\t\ti, _ := slices.BinarySearchFunc(top, e, compareEntries)\n\t\ttop = slices.Insert(top, i, e)\n\t\tif len(top) > n {\n\t\t\ttop = top[:n]\n\t\t}\n\t}\n\treturn top\n}\n"
+    },
+    {
+      "path": "wordfreq_test.go",
+      "text": "package main\n\nimport (\n\t\"slices\"\n\t\"strings\"\n\t\"testing\"\n\t\"testing/iotest\"\n)\n\nfunc TestTopWords(t *testing.T) {\n\ttests := []struct {\n\t\tname, in string\n\t\twant     []entry\n\t}{\n\t\t{\"empty\", \"\", nil},\n\t\t{\"simple\", \"The cat and the hat.\", []entry{{\"the\", 2}, {\"and\", 1}, {\"cat\", 1}, {\"hat\", 1}}},\n\t\t{\"separators\", \"don't stop_me 4now, now-NOW\\xff\\xc3(\", []entry{{\"now\", 3}, {\"don\", 1}, {\"me\", 1}, {\"stop\", 1}, {\"t\", 1}}},\n\t\t{\"limit\", \"k j i h g f e d c b a a\", []entry{{\"a\", 2}, {\"b\", 1}, {\"c\", 1}, {\"d\", 1}, {\"e\", 1}, {\"f\", 1}, {\"g\", 1}, {\"h\", 1}, {\"i\", 1}, {\"j\", 1}}},\n\t}\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\t// OneByteReader forces words to span read boundaries.\n\t\t\tcounts, err := countWords(iotest.OneByteReader(strings.NewReader(tt.in)))\n\t\t\tif err != nil {\n\t\t\t\tt.Fatal(err)\n\t\t\t}\n\t\t\tif got := topWords(counts, topN); !slices.Equal(got, tt.want) {\n\t\t\t\tt.Errorf(\"got %v, want %v\", got, tt.want)\n\t\t\t}\n\t\t})\n\t}\n}\n"
+    }
+  ]
+}

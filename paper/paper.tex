@@ -51,7 +51,10 @@ run-to-run spread and \NSkillCheaper{} cost less, correctness was unchanged, and
 US\$\,\SkillRunCostBase{} to \SkillRunCostArm{} (\SkillRunCostPct), \SkillShareWrite{} of it context
 written to the prompt cache: the skill's text and the extra turns spent loading it. Only for Zig, whose API changed after the model's
 training, did the skill replace work (standard-library reads \ZigStdBase{}$\to$\ZigStdArm), at the same
-cost (\SkillDeltaZig).
+cost (\SkillDeltaZig). Porting a working program from our three slowest languages to five common rewrite
+targets also cost more than writing it from scratch, in \NPortCostlier{} of \NPortPairs{} pairs
+(\PortDeltaMin{} to \PortDeltaMax), with every port correct; Zig ports ran a median \PortSpeedZig$\times$
+faster than their source.
 \end{abstract}
 
 \paragraph{Key findings.}
@@ -74,6 +77,10 @@ cost (\SkillDeltaZig).
   \item \textbf{Where the model is out of date, a skill replaces work.} For Zig~0.16, standard-library
         reads went \ZigStdBase{}$\to$\ZigStdArm{} and output \ZigOutPct, at the same cost
         (\SkillDeltaZig).
+  \item \textbf{Porting cost more than writing from scratch.} In \NPortCostlier{} of \NPortPairs{}
+        source--target pairs (\PortDeltaMin{} to \PortDeltaMax), US\$\,\PortPerKMin--\PortPerKMax{} per
+        1,000 source lines; the target set both the price and the speed gained (Zig \PortSpeedZig$\times$,
+        Rust \PortSpeedRust$\times$, Go \PortSpeedGo$\times$ faster than the source).
   \item \textbf{Check the I/O idiom before blaming the language.} C++'s slow \texttt{calc} read standard
         input one character at a time; with \texttt{fread} the same program ran about 20$\times$ faster.
 \end{enumerate}
@@ -311,6 +318,28 @@ Dark lines moved three places or more.}
 \label{fig:skillslope}
 \end{figure}
 
+\subsection{Migrating the slowest languages}
+
+Table~\ref{tab:ports} gives the port arms: \PortWorks{} ports passed the hidden tests. Every pair cost more
+than writing the same program from scratch in the target (\NPortCostlier{} of \NPortPairs{} beyond the
+baseline's spread, from \PortDeltaMin{} to \PortDeltaMax). Per 1,000 lines of the source program a port
+cost US\$\,\PortPerKMin{} (\PortPerKMinPair) to US\$\,\PortPerKMax{} (\PortPerKMaxPair). The speed
+gained depends on the target: median over the sources, Zig ran \PortSpeedZig$\times$ faster than the
+source, Rust \PortSpeedRust$\times$, Go \PortSpeedGo$\times$, Kotlin \PortSpeedKotlin$\times$ and
+TypeScript \PortSpeedTs$\times$, and each port ran as fast as the same program written from scratch in its
+target.
+
+\begin{table}[h]
+\centering\small
+\caption{Port arms: the agent ports the baseline's working solution. US\$: sum of per-task medians,
+writing from scratch in the target (the baseline) vs porting. $^{\sim}$: within the baseline's spread.
+US\$ / 1k lines: write + repair cost per 1,000 lines of the source program (median of runs).
+$\times$faster: the port's speed relative to the source, geometric mean over the four tasks, timed in one
+session.}
+\label{tab:ports}
+\PortTable
+\end{table}
+
 \section{Discussion}
 
 \paragraph{H1 (Zig): rejected in this setting.} Zig cost US\$\,\CostZig{} against US\$\,\CostRust{} for
@@ -388,6 +417,16 @@ cases under five turns to \SkillLenLong{} for the \SkillLenLongN{} cases of twel
 of loading a skill is roughly fixed, and on tasks of a few turns it outweighs what the skill saves; on
 longer work, where the agent would otherwise rediscover the same facts many times, it should pay. Our
 tasks never reach that point, so this arm tests skills on short tasks only.
+
+\paragraph{H7 (migration): rejected for cost, confirmed for speed.} Porting was more expensive than
+writing from scratch in every pair, by \PortDeltaMin{} to \PortDeltaMax. The agent had the specification,
+the examples and the checker as in the baseline, plus the source to read and follow, so the source added
+reading and cross-checking rather than replacing work; a real migration rarely has a specification, and
+there the source is the only description of the behaviour, so this result applies to migrations with a
+specification and a test suite. The target, not the source, set the price: porting to Zig cost about the same
+from any source, and Zig ports were the dearest, as Zig was to write from scratch. The speed gained was large
+for the native targets and small for TypeScript, and every port ran as fast as code written from scratch in
+the target, so a port carried over no slowness from its source.
 
 \paragraph{Why C++ was slow.} C++ ranked below C, Rust and Go in speed (Table~\ref{tab:speed}), mostly
 because of \texttt{calc}: all three runs read standard input through \texttt{std::istreambuf\_iterator},

@@ -1,8 +1,11 @@
 {
   "meta": {
-    "generatedAt": "2026-11-26T00:24:50.962Z",
+    "generatedAt": "2026-11-26T02:55:38.541Z",
     "arm": "base",
     "arms": [
+      "port-clojure",
+      "port-python",
+      "port-ts",
       "skills"
     ],
     "model": "claude-opus-5-5",
@@ -407,6 +410,12 @@
         "title": "4x4 Sudoku",
         "topic": "permutation constraints",
         "track": "zk"
+      },
+      "suite": {
+        "kind": "stdio",
+        "title": "Three tools in one binary",
+        "topic": "one build, three modules: solo vs a swarm of agents",
+        "swarm": true
       }
     },
     "external": {

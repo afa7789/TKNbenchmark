@@ -82,6 +82,7 @@
         <li><strong>"Svelte &lt; Vue &lt; React":</strong> confirmed, with ratios close to the article's, measured with a different tokenizer.</li>
         <li><strong>Cheap to write is not fast to run:</strong> the three cheapest languages for the agent (Python, TypeScript, JavaScript) produced some of the slowest code, about 5.8–6.4× the fastest on the speed index, behind only Clojure (JVM start-up on every run); Assembly, Zig and C were the fastest and among the most expensive to write. Rust, Go, Nim and OCaml were the compromise: all four in the cheaper half to write and the faster half to run, Rust and Go closest to the fastest.</li>
         <li id="hyp-skills" hidden></li>
+        <li id="hyp-ports" hidden></li>
         <li><strong>"Rust + React":</strong> defensible. Rust was among the cheapest back ends for the agent; React was the most expensive front end.</li>
       </ul>
       <p>Details in the <a href="paper.pdf">paper (PDF)</a>.</p>
@@ -122,6 +123,7 @@
     <fieldset id="ports">
       <legend>Migrating the slowest languages</legend>
       <p class="hint">A fresh agent gets a working program in one of the slowest languages here (in <code>./.source/</code>, the baseline's own solution, which passes every hidden test) and ports it to a common migration target, under the same prompt, tests and rounds. Each cell: agent cost per 1,000 lines of the source program (write + repair, median of runs), then how much faster the port runs than the source (geometric mean over the four tasks, timed in the same session) and how many runs worked. Hover for the cost of porting vs writing from scratch.</p>
+      <p class="callout" id="port-note"></p>
       <div class="scroll" id="port-table"></div>
     </fieldset>
 

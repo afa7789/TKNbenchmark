@@ -1,0 +1,17 @@
+{
+  "id": "go-wordfreq-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds an optimized release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nCGO_ENABLED=0 go build -trimpath -ldflags='-s -w' -o app .\n"
+    },
+    {
+      "path": "go.mod",
+      "text": "module wordfreq\n\ngo 1.26\n"
+    },
+    {
+      "path": "main.go",
+      "text": "// Command wordfreq prints the 10 most frequent ASCII words read from standard input.\n//\n// A word is a maximal run of ASCII letters; every other byte is a separator.\n// Words are folded to lowercase and ranked by count descending, then by word\n// ascending (byte order).\npackage main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"io\"\n\t\"os\"\n\t\"strconv\"\n)\n\nconst topN = 10\n\n// wordCount is a word together with its number of occurrences.\ntype wordCount struct {\n\tword  string\n\tcount int\n}\n\n// ranksBefore reports whether a should be listed before b.\nfunc ranksBefore(a, b wordCount) bool {\n\tif a.count != b.count {\n\t\treturn a.count > b.count\n\t}\n\treturn a.word < b.word\n}\n\n// countWords lowercases ASCII letters in buf in place and counts each word.\nfunc countWords(buf []byte) map[string]int {\n\tcounts := make(map[string]int)\n\tstart := -1\n\tfor i, b := range buf {\n\t\tswitch {\n\t\tcase b >= 'a' && b <= 'z':\n\t\tcase b >= 'A' && b <= 'Z':\n\t\t\tbuf[i] = b | 0x20\n\t\tdefault:\n\t\t\tif start >= 0 {\n\t\t\t\tcounts[string(buf[start:i])]++\n\t\t\t\tstart = -1\n\t\t\t}\n\t\t\tcontinue\n\t\t}\n\t\tif start < 0 {\n\t\t\tstart = i\n\t\t}\n\t}\n\tif start >= 0 {\n\t\tcounts[string(buf[start:])]++\n\t}\n\treturn counts\n}\n\n// topWords selects the n highest-ranked entries without sorting the whole map.\nfunc topWords(counts map[string]int, n int) []wordCount {\n\ttop := make([]wordCount, 0, n+1)\n\tfor word, count := range counts {\n\t\te := wordCount{word, count}\n\t\tif len(top) == n && !ranksBefore(e, top[n-1]) {\n\t\t\tcontinue\n\t\t}\n\t\tif len(top) < n {\n\t\t\ttop = append(top, e)\n\t\t}\n\t\tpos := len(top) - 1\n\t\tfor pos > 0 && ranksBefore(e, top[pos-1]) {\n\t\t\ttop[pos] = top[pos-1]\n\t\t\tpos--\n\t\t}\n\t\ttop[pos] = e\n\t}\n\treturn top\n}\n\nfunc run(r io.Reader, w io.Writer) error {\n\tinput, err := io.ReadAll(r)\n\tif err != nil {\n\t\treturn fmt.Errorf(\"read stdin: %w\", err)\n\t}\n\tbw := bufio.NewWriter(w)\n\tfor _, e := range topWords(countWords(input), topN) {\n\t\tbw.WriteString(strconv.Itoa(e.count))\n\t\tbw.WriteByte(' ')\n\t\tbw.WriteString(e.word)\n\t\tbw.WriteByte('\\n')\n\t}\n\treturn bw.Flush()\n}\n\nfunc main() {\n\tif err := run(os.Stdin, os.Stdout); err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t\tos.Exit(1)\n\t}\n}\n"
+    }
+  ]
+}

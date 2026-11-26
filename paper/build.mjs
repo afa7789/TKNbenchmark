@@ -317,6 +317,14 @@ function portMacros(set) {
   const deltas = portPairs.map((p) => change(p.x.base.costUsd, p.x.arm.costUsd)).sort((a, b) => a - b)
   set('PortDeltaMedian', pct(deltas[deltas.length >> 1]))
   set('NPortCheaper', portPairs.filter((p) => p.x.arm.costUsd < p.x.base.costUsd && p.x.beyondNoise).length)
+  set('NPortCostlier', portPairs.filter((p) => p.x.arm.costUsd > p.x.base.costUsd && p.x.beyondNoise).length)
+  set('PortDeltaMin', pct(deltas[0]))
+  set('PortDeltaMax', pct(deltas.at(-1)))
+  // Speed gained per target: median over the sources of the port's speed relative to the source.
+  for (const [t, ps] of Object.entries(Object.groupBy(portPairs, (p) => p.t))) {
+    const xs = ps.map((p) => p.x.port.speedVsSource).sort((a, b) => a - b)
+    set(`PortSpeed${macroName(t)}`, nf(1)(xs[xs.length >> 1]))
+  }
   const byCost = [...portPairs].filter((p) => Number.isFinite(perK(p))).sort((a, b) => perK(a) - perK(b))
   const name = (p) => `${tex(label(p.src))}$\\to$${tex(label(p.t))}`
   if (byCost.length) {

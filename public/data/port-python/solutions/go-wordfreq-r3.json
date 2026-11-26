@@ -1,0 +1,25 @@
+{
+  "id": "go-wordfreq-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Build an optimized release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nCGO_ENABLED=0 go build -trimpath -ldflags=\"-s -w\" -o app .\n"
+    },
+    {
+      "path": "go.mod",
+      "text": "module wordfreq\n\ngo 1.26\n"
+    },
+    {
+      "path": "main.go",
+      "text": "// Command app prints the 10 most frequent ASCII words read from standard input.\npackage main\n\nimport (\n\t\"fmt\"\n\t\"os\"\n)\n\nconst topN = 10\n\nfunc main() {\n\tif err := run(); err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t\tos.Exit(1)\n\t}\n}\n\nfunc run() error {\n\tc := NewCounter()\n\tif _, err := c.ReadFrom(os.Stdin); err != nil {\n\t\treturn fmt.Errorf(\"reading input: %w\", err)\n\t}\n\treturn WriteEntries(os.Stdout, c.Top(topN))\n}\n"
+    },
+    {
+      "path": "wordfreq.go",
+      "text": "package main\n\nimport (\n\t\"bufio\"\n\t\"cmp\"\n\t\"errors\"\n\t\"fmt\"\n\t\"io\"\n\t\"slices\"\n)\n\nconst chunkSize = 1 << 20\n\n// Entry is a word together with the number of times it occurred.\ntype Entry struct {\n\tWord  string\n\tCount int\n}\n\n// Counter tallies case-folded ASCII words.\ntype Counter struct {\n\tcounts map[string]*int\n}\n\n// NewCounter returns an empty Counter.\nfunc NewCounter() *Counter {\n\treturn &Counter{counts: make(map[string]*int)}\n}\n\n// add records one occurrence of word. The word bytes are copied only the\n// first time a distinct word is seen.\nfunc (c *Counter) add(word []byte) {\n\tif n, ok := c.counts[string(word)]; ok {\n\t\t*n++\n\t\treturn\n\t}\n\tn := 1\n\tc.counts[string(word)] = &n\n}\n\n// ReadFrom counts every word in r. A word is a maximal run of ASCII letters;\n// every other byte is a separator. Words are folded to lowercase.\nfunc (c *Counter) ReadFrom(r io.Reader) (int64, error) {\n\tbuf := make([]byte, chunkSize)\n\tvar word []byte\n\tvar total int64\n\tfor {\n\t\tn, err := r.Read(buf)\n\t\ttotal += int64(n)\n\t\tfor _, b := range buf[:n] {\n\t\t\tswitch {\n\t\t\tcase 'a' <= b && b <= 'z':\n\t\t\t\tword = append(word, b)\n\t\t\tcase 'A' <= b && b <= 'Z':\n\t\t\t\tword = append(word, b+('a'-'A'))\n\t\t\tcase len(word) > 0:\n\t\t\t\tc.add(word)\n\t\t\t\tword = word[:0]\n\t\t\t}\n\t\t}\n\t\tif errors.Is(err, io.EOF) {\n\t\t\tbreak\n\t\t}\n\t\tif err != nil {\n\t\t\treturn total, err\n\t\t}\n\t}\n\tif len(word) > 0 {\n\t\tc.add(word)\n\t}\n\treturn total, nil\n}\n\n// Top returns at most n entries ordered by count descending, then by word\n// ascending in byte order.\nfunc (c *Counter) Top(n int) []Entry {\n\tentries := make([]Entry, 0, len(c.counts))\n\tfor w, cnt := range c.counts {\n\t\tentries = append(entries, Entry{Word: w, Count: *cnt})\n\t}\n\tslices.SortFunc(entries, func(a, b Entry) int {\n\t\tif a.Count != b.Count {\n\t\t\treturn cmp.Compare(b.Count, a.Count)\n\t\t}\n\t\treturn cmp.Compare(a.Word, b.Word)\n\t})\n\tif len(entries) > n {\n\t\tentries = entries[:n]\n\t}\n\treturn entries\n}\n\n// WriteEntries prints entries as \"<count> <word>\" lines.\nfunc WriteEntries(w io.Writer, entries []Entry) error {\n\tbw := bufio.NewWriter(w)\n\tfor _, e := range entries {\n\t\tif _, err := fmt.Fprintf(bw, \"%d %s\\n\", e.Count, e.Word); err != nil {\n\t\t\treturn err\n\t\t}\n\t}\n\treturn bw.Flush()\n}\n"
+    },
+    {
+      "path": "wordfreq_test.go",
+      "text": "package main\n\nimport (\n\t\"bytes\"\n\t\"strings\"\n\t\"testing\"\n\t\"testing/iotest\"\n)\n\nfunc TestCounter(t *testing.T) {\n\ttests := []struct {\n\t\tname, in, want string\n\t}{\n\t\t{\"simple\", \"The cat and the hat.\", \"2 the\\n1 and\\n1 cat\\n1 hat\\n\"},\n\t\t{\"folding\", \"Hello, hello! HELLO? world.\\n\", \"3 hello\\n1 world\\n\"},\n\t\t{\"separators\", \"don't stop_me 4now, now-NOW\", \"3 now\\n1 don\\n1 me\\n1 stop\\n1 t\\n\"},\n\t\t{\"high bytes\", \"ab\\xffcd\\xc3(ab\", \"2 ab\\n1 cd\\n\"},\n\t\t{\"empty\", \"\", \"\"},\n\t\t{\"no words\", \"123 _-'\\x80\", \"\"},\n\t\t{\"top10\", \"zeta eta theta iota kappa lambda mu nu xi omicron pi rho alpha beta alpha\",\n\t\t\t\"2 alpha\\n1 beta\\n1 eta\\n1 iota\\n1 kappa\\n1 lambda\\n1 mu\\n1 nu\\n1 omicron\\n1 pi\\n\"},\n\t}\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tc := NewCounter()\n\t\t\t// OneByteReader exercises words spanning read boundaries.\n\t\t\tif _, err := c.ReadFrom(iotest.OneByteReader(strings.NewReader(tt.in))); err != nil {\n\t\t\t\tt.Fatal(err)\n\t\t\t}\n\t\t\tvar out bytes.Buffer\n\t\t\tif err := WriteEntries(&out, c.Top(topN)); err != nil {\n\t\t\t\tt.Fatal(err)\n\t\t\t}\n\t\t\tif got := out.String(); got != tt.want {\n\t\t\t\tt.Errorf(\"got %q, want %q\", got, tt.want)\n\t\t\t}\n\t\t})\n\t}\n}\n"
+    }
+  ]
+}

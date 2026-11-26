@@ -1,0 +1,17 @@
+{
+  "id": "go-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds an optimized release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\nCGO_ENABLED=0 go build -trimpath -ldflags='-s -w' -o app .\n"
+    },
+    {
+      "path": "go.mod",
+      "text": "module wordfreq\n\ngo 1.26\n"
+    },
+    {
+      "path": "main.go",
+      "text": "// Command wordfreq prints the 10 most frequent ASCII words read from standard input.\npackage main\n\nimport (\n\t\"bufio\"\n\t\"cmp\"\n\t\"fmt\"\n\t\"io\"\n\t\"os\"\n\t\"slices\"\n\t\"strconv\"\n)\n\nconst topN = 10\n\n// wordCount is a lowercase word together with its number of occurrences.\ntype wordCount struct {\n\tword  string\n\tcount int\n}\n\n// lower returns the lowercase form of an ASCII letter and true,\n// or 0 and false for any separator byte.\nfunc lower(b byte) (byte, bool) {\n\tswitch {\n\tcase 'a' <= b && b <= 'z':\n\t\treturn b, true\n\tcase 'A' <= b && b <= 'Z':\n\t\treturn b + ('a' - 'A'), true\n\tdefault:\n\t\treturn 0, false\n\t}\n}\n\n// countWords reads r to exhaustion and returns lowercase word -> count.\nfunc countWords(r io.Reader) (map[string]int, error) {\n\tcounts := make(map[string]int)\n\tbuf := make([]byte, 1<<16)\n\tword := make([]byte, 0, 64)\n\n\tflush := func() {\n\t\tif len(word) > 0 {\n\t\t\t// The compiler avoids allocating for the string(word) lookup key.\n\t\t\tcounts[string(word)]++\n\t\t\tword = word[:0]\n\t\t}\n\t}\n\n\tfor {\n\t\tn, err := r.Read(buf)\n\t\tfor _, b := range buf[:n] {\n\t\t\tif lc, ok := lower(b); ok {\n\t\t\t\tword = append(word, lc)\n\t\t\t} else {\n\t\t\t\tflush()\n\t\t\t}\n\t\t}\n\t\tif err == io.EOF {\n\t\t\tbreak\n\t\t}\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\tflush()\n\treturn counts, nil\n}\n\n// topWords returns up to n entries ordered by count descending, then word ascending.\nfunc topWords(counts map[string]int, n int) []wordCount {\n\tentries := make([]wordCount, 0, len(counts))\n\tfor w, c := range counts {\n\t\tentries = append(entries, wordCount{w, c})\n\t}\n\tslices.SortFunc(entries, func(a, b wordCount) int {\n\t\tif c := cmp.Compare(b.count, a.count); c != 0 {\n\t\t\treturn c\n\t\t}\n\t\treturn cmp.Compare(a.word, b.word)\n\t})\n\treturn entries[:min(n, len(entries))]\n}\n\nfunc run() error {\n\tcounts, err := countWords(os.Stdin)\n\tif err != nil {\n\t\treturn fmt.Errorf(\"reading input: %w\", err)\n\t}\n\tout := bufio.NewWriter(os.Stdout)\n\tfor _, e := range topWords(counts, topN) {\n\t\tout.WriteString(strconv.Itoa(e.count))\n\t\tout.WriteByte(' ')\n\t\tout.WriteString(e.word)\n\t\tout.WriteByte('\\n')\n\t}\n\treturn out.Flush()\n}\n\nfunc main() {\n\tif err := run(); err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t}\n}\n"
+    }
+  ]
+}
