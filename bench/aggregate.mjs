@@ -322,12 +322,12 @@ function pairedSpeed(rs, role) {
   return ratios.length ? geomean(ratios) : null
 }
 
-// Port arm: what migrating cost per 10 000 lines of the source program (write + repair, so a run that
+// Port arm: what migrating cost per 1,000 lines of the source program (write + repair, so a run that
 // needed repair is not cheaper than one that did not), and how much faster the port runs than the source.
 function portFields(rs, base) {
   const lines = new Map(base.runs.filter((r) => r.lang === PORT_FROM).map((r) => [`${r.task}/${r.rep}`, r.codeLines]))
-  const per10k = rs.filter((r) => r.works && lines.get(`${r.task}/${r.rep}`)).map((r) => (r.costToGreenUsd / lines.get(`${r.task}/${r.rep}`)) * 1e4)
-  return { from: PORT_FROM, costPer10kSourceLines: stats(per10k), speedVsSource: pairedSpeed(rs, 'source') }
+  const perK = rs.filter((r) => r.works && lines.get(`${r.task}/${r.rep}`)).map((r) => (r.costToGreenUsd / lines.get(`${r.task}/${r.rep}`)) * 1e3)
+  return { from: PORT_FROM, costPer1kSourceLines: stats(perK), speedVsSource: pairedSpeed(rs, 'source') }
 }
 
 // Skills arm: what the skill cost to write, how often it was used, and runs until it pays for itself.

@@ -121,7 +121,7 @@
 
     <fieldset id="ports">
       <legend>Migrating the slowest languages</legend>
-      <p class="hint">A fresh agent gets a working program in one of the slowest languages here (in <code>./.source/</code>, the baseline's own solution, which passes every hidden test) and ports it to a common migration target, under the same prompt, tests and rounds. Each cell: agent cost per 10,000 lines of the source program (write + repair, median of runs), then how much faster the port runs than the source (geometric mean over the four tasks, timed in the same session) and how many runs worked. Hover for the cost of porting vs writing from scratch.</p>
+      <p class="hint">A fresh agent gets a working program in one of the slowest languages here (in <code>./.source/</code>, the baseline's own solution, which passes every hidden test) and ports it to a common migration target, under the same prompt, tests and rounds. Each cell: agent cost per 1,000 lines of the source program (write + repair, median of runs), then how much faster the port runs than the source (geometric mean over the four tasks, timed in the same session) and how many runs worked. Hover for the cost of porting vs writing from scratch.</p>
       <div class="scroll" id="port-table"></div>
     </fieldset>
 

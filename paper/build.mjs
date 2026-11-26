@@ -292,17 +292,17 @@ const PORTS = (d.meta.arms ?? [])
   .filter((a) => a.startsWith('port-'))
   .map((a) => ({ src: a.slice(5), v: JSON.parse(readFileSync(join(ROOT, 'public', 'data', a, 'results.json'), 'utf8')).summary.vsBase }))
 const portPairs = PORTS.flatMap(({ src, v }) => Object.keys(v).sort((a, b) => label(a).localeCompare(label(b))).map((t) => ({ src, t, x: v[t] })))
-const per10k = (p) => p.x.port.costPer10kSourceLines?.median
+const perK = (p) => p.x.port.costPer1kSourceLines?.median
 
 function portTable() {
   const rows = portPairs.map(({ src, t, x }) => {
     const d = change(x.base.costUsd, x.arm.costUsd)
-    return `${tex(label(src))} $\\to$ ${tex(label(t))} & ${x.arm.works}/${x.arm.n} & ${usd(x.base.costUsd)}\\,$\\to$\\,${usd(x.arm.costUsd)} & ${pct(d)}${x.beyondNoise ? '' : '$^{\\sim}$'} & ${usd(per10k({ x }))} & ${nf(1)(x.port.speedVsSource)} \\\\`
+    return `${tex(label(src))} $\\to$ ${tex(label(t))} & ${x.arm.works}/${x.arm.n} & ${usd(x.base.costUsd)}\\,$\\to$\\,${usd(x.arm.costUsd)} & ${pct(d)}${x.beyondNoise ? '' : '$^{\\sim}$'} & ${usd(perK({ x }))} & ${nf(1)(x.port.speedVsSource)} \\\\`
   })
   return `\\newcommand{\\PortTable}{%
 \\begin{tabular}{@{}lrrrrr@{}}
 \\toprule
-From $\\to$ to & Works & US\\$ scratch $\\to$ port & $\\Delta$US\\$ & US\\$ / 10k lines & $\\times$faster \\\\
+From $\\to$ to & Works & US\\$ scratch $\\to$ port & $\\Delta$US\\$ & US\\$ / 1k lines & $\\times$faster \\\\
 \\midrule
 ${rows.join('\n')}
 \\bottomrule
@@ -317,17 +317,17 @@ function portMacros(set) {
   const deltas = portPairs.map((p) => change(p.x.base.costUsd, p.x.arm.costUsd)).sort((a, b) => a - b)
   set('PortDeltaMedian', pct(deltas[deltas.length >> 1]))
   set('NPortCheaper', portPairs.filter((p) => p.x.arm.costUsd < p.x.base.costUsd && p.x.beyondNoise).length)
-  const byCost = [...portPairs].filter((p) => Number.isFinite(per10k(p))).sort((a, b) => per10k(a) - per10k(b))
+  const byCost = [...portPairs].filter((p) => Number.isFinite(perK(p))).sort((a, b) => perK(a) - perK(b))
   const name = (p) => `${tex(label(p.src))}$\\to$${tex(label(p.t))}`
   if (byCost.length) {
-    set('PortPerTenKMin', usd(per10k(byCost[0])))
-    set('PortPerTenKMinPair', name(byCost[0]))
-    set('PortPerTenKMax', usd(per10k(byCost.at(-1))))
-    set('PortPerTenKMaxPair', name(byCost.at(-1)))
+    set('PortPerKMin', usd(perK(byCost[0])))
+    set('PortPerKMinPair', name(byCost[0]))
+    set('PortPerKMax', usd(perK(byCost.at(-1))))
+    set('PortPerKMaxPair', name(byCost.at(-1)))
   }
   for (const p of portPairs) {
     const m = `${macroName(p.src)}${macroName(p.t)}`
-    set(`Port${m}PerTenK`, usd(per10k(p)))
+    set(`Port${m}PerK`, usd(perK(p)))
     set(`Port${m}Speed`, nf(1)(p.x.port.speedVsSource))
   }
 }

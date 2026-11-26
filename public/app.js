@@ -557,12 +557,12 @@ function renderSkills(arm) {
 }
 
 // ---------- port arms: migrating the slowest languages ----------
-// data/port-<src>/results.json per source; vsBase.<target>.port has cost per 10k source lines and speed.
+// data/port-<src>/results.json per source; vsBase.<target>.port has cost per 1,000 source lines and speed.
 function portCell(v) {
   if (!v) return '<td class="num">–</td>'
   const p = v.port
   const tip = `${fmt.usd(v.base.costUsd)} to write from scratch, ${fmt.usd(v.arm.costUsd)} to port (${signed(change(v.base.costUsd, v.arm.costUsd))}); works ${v.arm.works}/${v.arm.n}`
-  return `<td class="num" data-tip="${esc(tip)}"><strong>${fmt.usd(p.costPer10kSourceLines?.median)}</strong><span class="range">${fmt.ratio(p.speedVsSource)} faster · ${v.arm.works}/${v.arm.n}</span></td>`
+  return `<td class="num" data-tip="${esc(tip)}"><strong>${fmt.usd(p.costPer1kSourceLines?.median)}</strong><span class="range">${fmt.ratio(p.speedVsSource)} faster · ${v.arm.works}/${v.arm.n}</span></td>`
 }
 
 function renderPorts(d, ports) {
