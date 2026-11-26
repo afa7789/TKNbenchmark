@@ -635,6 +635,8 @@ function renderSwarm(d, sw) {
   const rows = Object.entries(sw.summary.vsBase).map(([k, v]) => `<tr><td><strong>${esc(label(d, k))}</strong></td>${SWARM_COLS.map(([, f]) => `<td class="num">${esc(f(v))}</td>`).join('')}</tr>`)
   $('swarm-table').innerHTML = table(head, rows)
   $('findings-list').insertAdjacentHTML('beforeend', `<li>${swarmNote(d, sw)}</li>`)
+  const dc = Object.values(sw.summary.vsBase).map((v) => change(v.base.costUsd, v.arm.costUsd))
+  $('howto-list').insertAdjacentHTML('beforeend', `<li><strong>Do not reach for a swarm of agents by default.</strong> Here a team cost ${signed(Math.min(...dc))} to ${signed(Math.max(...dc))} more than one agent and finished later. If the work does need several agents, a cheaper design (one we did not measure) is to split it by field (front end, back end, the rest), give each agent the whole prompt with the full task list, and have one review check the result against that list, instead of a lead, workers and an integrator handing work on in series.</li>`)
   $('hyp-swarm').innerHTML = `<strong>"A swarm of agents in parallel worktrees finishes sooner, and Rust's target/ makes it costlier":</strong> ${swarmNote(d, sw).replace(/^<strong>.*?<\/strong> /, '')} See <a href="#swarm">Swarm</a>.`
   $('hyp-swarm').hidden = false
 }

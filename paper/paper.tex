@@ -523,7 +523,10 @@ build output lives: Zig compiles its standard library into each worktree's cache
 the most; Rust's \texttt{target/} stayed small because this program has no dependencies, so the per-worktree
 cost that H8c expected for Rust appears with dependencies, as in \texttt{kvhttp} (H2 above), not with the
 standard library alone. Teams should pay off on work large enough for the parallel part to outweigh the setup
-and the merge, which these tasks are not.
+and the merge, which these tasks are not. A design we did not measure, but which follows from where the time
+and the tokens went, is to split work by field (front end, back end, the rest), give each agent the whole
+task list, and have one reviewer check the result against that list: no skeleton to wait for, no integrator,
+and one reading of the specification per agent rather than a chain of handoffs.
 
 \paragraph{Why C++ was slow.} C++ ranked below C, Rust and Go in speed (Table~\ref{tab:speed}), mostly
 because of \texttt{calc}: all three runs read standard input through \texttt{std::istreambuf\_iterator},
@@ -589,7 +592,9 @@ with agents the practical question is not only ``which language is most concise'
 does the model already know well, in the version I use''. A language skill, the usual remedy when it
 does not, made the agent costlier in almost every language with no gain in correctness: it paid only
 where the model's knowledge lagged the toolchain (Zig), and there it only matched the cost of reading the
-sources. Data, code and every solution are in the
+sources. Porting a working program cost more than writing it from scratch, and a team of agents cost more and
+finished later than one agent. With a model this capable and a good test suite as the oracle, the cheapest
+setup we found was the plainest one: one agent, no rules, the tests. Data, code and every solution are in the
 repository. Suggestions, corrections and pull requests that improve the method are welcome, at the
 repository or by email to \texttt{abeilice@ufmg.br}.
 
