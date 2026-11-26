@@ -22,3 +22,5 @@
   recursive remove. Build with GOFLAGS=-modcacherw and remove trees with lib's removeTree.
 - Agents leave background servers and .NET build daemons holding the CLI's stdout; wait on the
   final event + kill stragglers by cwd, and disable MSBuild node reuse / shared compilation.
+
+- Every number on the page and in the paper says what it covers (per run, sum over N tasks, per 1k lines, solo run vs whole team) in its header, legend or caption; a bare "Cost" was read as ambiguous twice.
