@@ -1,0 +1,1195 @@
+{
+  "meta": {
+    "generatedAt": "2026-11-26T03:49:21.239Z",
+    "arm": "swarm",
+    "arms": [
+      "port-clojure",
+      "port-python",
+      "port-ts",
+      "skills",
+      "swarm"
+    ],
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "toolchains": {
+      "c": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+      "cpp": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+      "rust": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+      "go": "go version go1.26.4 darwin/arm64",
+      "nim": "Nim Compiler Version 2.4.2 [MacOSX: arm64]",
+      "zig": "0.16.0",
+      "swift": "swift-driver version: 1.120.5 Apple Swift version 6.1.2 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)",
+      "java": "openjdk version \"27.0.1.1\" 2026-11-17",
+      "kotlin": "info: kotlinc-jvm 2.4.21 (JRE 27.0.1.1)",
+      "clojure": "Clojure CLI version 1.12.7.1681",
+      "csharp": ".NET SDK 11.0.100",
+      "odin": "Odin dev-2026-11:9a6991685",
+      "ocaml": "The OCaml toplevel, version 5.5.2",
+      "haskell": "The Glorious Glasgow Haskell Compilation System, version 9.14.1",
+      "js": "Node.js v26.13.1",
+      "ts": "Node.js v26.13.1, which runs .ts files natively",
+      "python": "Python 3.15.2",
+      "asm": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+      "octave": "GNU Octave (aarch64-apple-darwin24.6.0) version 11.3.0",
+      "julia": "julia version 1.13.4",
+      "r": "R version 4.6.2 (2026-10-29) -- \"Diversified Portfolio\"",
+      "lean": "Lean (version 4.36.0, arm64-apple-darwin24.6.0, commit 611c117bfaf7b7ae1cfcf246ce6fba31e8f509e9, Release)",
+      "rocq": "The Rocq Prover, version 9.3.0",
+      "dafny": "Dafny 4.11.0",
+      "solidity": "forge Version: 1.7.1",
+      "vyper": "Vyper 0.4.3+commit.bff19ea2",
+      "circom": "circom compiler 2.2.3",
+      "noir": "nargo version = 1.0.0",
+      "claude": "2.1.331 (Claude Code)"
+    },
+    "langs": {
+      "c": {
+        "label": "C",
+        "name": "C (C17)",
+        "version": [
+          "clang",
+          "--version"
+        ]
+      },
+      "cpp": {
+        "label": "C++",
+        "name": "C++ (C++20)",
+        "version": [
+          "clang++",
+          "--version"
+        ]
+      },
+      "rust": {
+        "label": "Rust",
+        "name": "Rust (edition 2024)",
+        "version": [
+          "rustc",
+          "--version"
+        ]
+      },
+      "go": {
+        "label": "Go",
+        "name": "Go",
+        "version": [
+          "go",
+          "version"
+        ]
+      },
+      "nim": {
+        "label": "Nim",
+        "name": "Nim",
+        "version": [
+          "nim",
+          "--version"
+        ]
+      },
+      "zig": {
+        "label": "Zig",
+        "name": "Zig",
+        "version": [
+          "zig",
+          "version"
+        ]
+      },
+      "swift": {
+        "label": "Swift",
+        "name": "Swift",
+        "version": [
+          "sh",
+          "-c",
+          "swift --version 2>&1 | grep \"Swift version\""
+        ]
+      },
+      "java": {
+        "label": "Java",
+        "name": "Java",
+        "version": [
+          "java",
+          "-version"
+        ],
+        "note": "On the JVM, ./app may be a small launcher script that runs java."
+      },
+      "kotlin": {
+        "label": "Kotlin",
+        "name": "Kotlin (JVM)",
+        "version": [
+          "kotlinc",
+          "-version"
+        ],
+        "note": "On the JVM, ./app may be a small launcher script that runs java."
+      },
+      "clojure": {
+        "label": "Clojure",
+        "name": "Clojure (JVM)",
+        "version": [
+          "clojure",
+          "--version"
+        ],
+        "note": "On the JVM, ./app may be a small launcher script that runs java."
+      },
+      "csharp": {
+        "label": "C#",
+        "name": "C# (.NET)",
+        "version": [
+          "sh",
+          "-c",
+          "echo \".NET SDK $(dotnet --version)\""
+        ]
+      },
+      "odin": {
+        "label": "Odin",
+        "name": "Odin",
+        "version": [
+          "sh",
+          "-c",
+          "odin version | sed \"s|.*odin version|Odin|\""
+        ]
+      },
+      "ocaml": {
+        "label": "OCaml",
+        "name": "OCaml",
+        "version": [
+          "ocaml",
+          "-version"
+        ]
+      },
+      "haskell": {
+        "label": "Haskell",
+        "name": "Haskell (GHC)",
+        "version": [
+          "ghc",
+          "--version"
+        ]
+      },
+      "js": {
+        "label": "JavaScript",
+        "name": "JavaScript (Node.js)",
+        "version": [
+          "sh",
+          "-c",
+          "echo \"Node.js $(node --version)\""
+        ],
+        "note": "./app may be a small launcher script that runs node."
+      },
+      "ts": {
+        "label": "TypeScript",
+        "name": "TypeScript (Node.js)",
+        "version": [
+          "sh",
+          "-c",
+          "echo \"Node.js $(node --version), which runs .ts files natively\""
+        ],
+        "note": "./app may be a small launcher script that runs node."
+      },
+      "python": {
+        "label": "Python",
+        "name": "Python 3",
+        "version": [
+          "python3",
+          "--version"
+        ],
+        "note": "./app may be a small launcher script that runs python3."
+      },
+      "asm": {
+        "label": "Assembly",
+        "name": "AArch64 assembly for macOS",
+        "version": [
+          "as",
+          "--version"
+        ],
+        "note": "Write all program logic in AArch64 assembly (.s files) assembled with clang. You may call libc / libSystem functions (malloc, read, write, socket, pthread…), but no C, C++ or other high-level source files."
+      },
+      "octave": {
+        "label": "Octave",
+        "name": "GNU Octave (the MATLAB language)",
+        "version": [
+          "sh",
+          "-c",
+          "octave --version | head -1"
+        ],
+        "note": "./app may be a small launcher script that runs octave.",
+        "track": "numeric"
+      },
+      "julia": {
+        "label": "Julia",
+        "name": "Julia",
+        "version": [
+          "julia",
+          "--version"
+        ],
+        "note": "./app may be a small launcher script that runs julia.",
+        "track": "numeric"
+      },
+      "r": {
+        "label": "R",
+        "name": "R",
+        "version": [
+          "sh",
+          "-c",
+          "R --version | head -1"
+        ],
+        "note": "./app may be a small launcher script that runs Rscript.",
+        "track": "numeric"
+      },
+      "lean": {
+        "label": "Lean 4",
+        "name": "Lean 4",
+        "version": [
+          "lean",
+          "--version"
+        ],
+        "track": "proofs"
+      },
+      "rocq": {
+        "label": "Rocq",
+        "name": "Rocq (Coq)",
+        "version": [
+          "sh",
+          "-c",
+          "coqc --version | head -1"
+        ],
+        "track": "proofs"
+      },
+      "dafny": {
+        "label": "Dafny",
+        "name": "Dafny",
+        "version": [
+          "sh",
+          "-c",
+          "echo \"Dafny $(dafny --version)\""
+        ],
+        "track": "proofs"
+      },
+      "solidity": {
+        "label": "Solidity",
+        "name": "Solidity (Foundry is installed)",
+        "version": [
+          "sh",
+          "-c",
+          "forge --version | head -1"
+        ],
+        "track": "evm"
+      },
+      "vyper": {
+        "label": "Vyper",
+        "name": "Vyper",
+        "version": [
+          "sh",
+          "-c",
+          "echo \"Vyper $(vyper --version)\""
+        ],
+        "track": "evm"
+      },
+      "circom": {
+        "label": "Circom",
+        "name": "Circom 2",
+        "version": [
+          "circom",
+          "--version"
+        ],
+        "track": "zk"
+      },
+      "noir": {
+        "label": "Noir",
+        "name": "Noir (nargo)",
+        "version": [
+          "sh",
+          "-c",
+          "nargo --version | head -1"
+        ],
+        "track": "zk"
+      }
+    },
+    "frontends": {
+      "react": {
+        "label": "React",
+        "name": "React 19 (function components + hooks, .jsx files)",
+        "pins": {
+          "react": "19.3.1",
+          "react-dom": "19.3.1",
+          "vite": "8.3.8",
+          "@vitejs/plugin-react": "6.3.0"
+        }
+      },
+      "vue": {
+        "label": "Vue",
+        "name": "Vue 3 (single-file components with <script setup>, .vue files)",
+        "pins": {
+          "vue": "3.5.46",
+          "vite": "8.3.8",
+          "@vitejs/plugin-vue": "6.0.11",
+          "pinia": "4.1.0"
+        }
+      },
+      "svelte": {
+        "label": "Svelte",
+        "name": "Svelte 5 (components with runes, .svelte files)",
+        "pins": {
+          "svelte": "5.59.1",
+          "vite": "8.3.8",
+          "@sveltejs/vite-plugin-svelte": "7.3.2"
+        }
+      }
+    },
+    "tasks": {
+      "wordfreq": {
+        "kind": "stdio",
+        "title": "Word frequency",
+        "topic": "bytes, hash maps, sorting"
+      },
+      "lru": {
+        "kind": "stdio",
+        "title": "LRU cache",
+        "topic": "linked structures, O(1) ops"
+      },
+      "calc": {
+        "kind": "stdio",
+        "title": "Expression evaluator",
+        "topic": "parsing, recursion, overflow"
+      },
+      "kvhttp": {
+        "kind": "http",
+        "title": "HTTP key-value server",
+        "topic": "networking, concurrency, deps"
+      },
+      "ui": {
+        "kind": "static",
+        "title": "Six UI components",
+        "topic": "front end (React, Vue, Svelte)",
+        "frontend": true
+      },
+      "shop": {
+        "kind": "static",
+        "title": "Shopping mini-app",
+        "topic": "parent/child events, global store, derived state, forms, effects, context, slots",
+        "frontend": true
+      },
+      "linreg": {
+        "kind": "stdio",
+        "title": "Least-squares regression",
+        "topic": "numerics, matrices",
+        "track": "numeric"
+      },
+      "linalg": {
+        "kind": "stdio",
+        "title": "Linear algebra",
+        "topic": "log-determinant, solve, eigenvalues",
+        "track": "numeric"
+      },
+      "lists": {
+        "kind": "proof",
+        "title": "List lemmas",
+        "topic": "induction, rewriting",
+        "track": "proofs"
+      },
+      "isort": {
+        "kind": "proof",
+        "title": "Insertion sort is correct",
+        "topic": "sortedness, permutation",
+        "track": "proofs"
+      },
+      "token": {
+        "kind": "evm",
+        "title": "Token with allowances",
+        "topic": "storage, events, reverts",
+        "track": "evm"
+      },
+      "vesting": {
+        "kind": "evm",
+        "title": "Linear vesting",
+        "topic": "time, ether transfers",
+        "track": "evm"
+      },
+      "range": {
+        "kind": "zk",
+        "title": "Private range check",
+        "topic": "bit decomposition, comparisons",
+        "track": "zk"
+      },
+      "sudoku": {
+        "kind": "zk",
+        "title": "4x4 Sudoku",
+        "topic": "permutation constraints",
+        "track": "zk"
+      },
+      "suite": {
+        "kind": "stdio",
+        "title": "Three tools in one binary",
+        "topic": "one build, three modules: solo vs a swarm of agents",
+        "swarm": true
+      }
+    },
+    "external": {
+      "title": "We Measured the LLM Token Cost of 5 Frontend Frameworks: Angular Costs 38% More Than Svelte",
+      "author": "Andrey Kucherenko (HackerNoon, \"The Tokenomics of Web Development\", part 1)",
+      "url": "https://hackernoon.com/we-measured-the-llm-token-cost-of-5-frontend-frameworks-angular-costs-38percent-more-than-svelte",
+      "tokenizer": "cl100k_base (tiktoken)",
+      "quote": "Svelte ×1.000 · Vue ×1.115 · SolidJS ×1.196 · React ×1.254 · Angular ×1.381.",
+      "svelteTokens": 598,
+      "multipliers": {
+        "Svelte": 1,
+        "Vue": 1.115,
+        "SolidJS": 1.196,
+        "React": 1.254,
+        "Angular": 1.381
+      }
+    }
+  },
+  "summary": {
+    "langs": {},
+    "tracks": {
+      "numeric": {
+        "title": "Scientific computing",
+        "tasks": [
+          "linreg",
+          "linalg"
+        ],
+        "langs": {}
+      },
+      "proofs": {
+        "title": "Theorem proving",
+        "tasks": [
+          "lists",
+          "isort"
+        ],
+        "langs": {}
+      },
+      "evm": {
+        "title": "Smart contracts",
+        "tasks": [
+          "token",
+          "vesting"
+        ],
+        "langs": {}
+      },
+      "zk": {
+        "title": "Zero-knowledge circuits",
+        "tasks": [
+          "range",
+          "sudoku"
+        ],
+        "langs": {}
+      }
+    },
+    "cells": {
+      "go/suite": {
+        "n": 1,
+        "solved": 0,
+        "works": 0,
+        "firstTry": 1,
+        "costToGreenUsd": null,
+        "deps": {
+          "": 1
+        },
+        "costUsd": {
+          "median": 1.1527034,
+          "min": 1.1527034,
+          "max": 1.1527034,
+          "n": 1
+        },
+        "output": {
+          "median": 25512,
+          "min": 25512,
+          "max": 25512,
+          "n": 1
+        },
+        "turns": {
+          "median": 41,
+          "min": 41,
+          "max": 41,
+          "n": 1
+        },
+        "durationS": {
+          "median": 200.927,
+          "min": 200.927,
+          "max": 200.927,
+          "n": 1
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 1
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 1
+        },
+        "codeTokens": null,
+        "codeTokensCl100k": null,
+        "buildSecs": null,
+        "footprintBytes": null,
+        "projectBytes": null,
+        "cacheBytes": null,
+        "worktrees4Bytes": null,
+        "devloopTargetBytes": null,
+        "binaryBytes": null,
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "rust/suite": {
+        "n": 1,
+        "solved": 0,
+        "works": 0,
+        "firstTry": 1,
+        "costToGreenUsd": null,
+        "deps": {
+          "": 1
+        },
+        "costUsd": {
+          "median": 1.1749778,
+          "min": 1.1749778,
+          "max": 1.1749778,
+          "n": 1
+        },
+        "output": {
+          "median": 24634,
+          "min": 24634,
+          "max": 24634,
+          "n": 1
+        },
+        "turns": {
+          "median": 40,
+          "min": 40,
+          "max": 40,
+          "n": 1
+        },
+        "durationS": {
+          "median": 190.734,
+          "min": 190.734,
+          "max": 190.734,
+          "n": 1
+        },
+        "compileErrors": {
+          "median": 1,
+          "min": 1,
+          "max": 1,
+          "n": 1
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 1
+        },
+        "codeTokens": null,
+        "codeTokensCl100k": null,
+        "buildSecs": null,
+        "footprintBytes": null,
+        "projectBytes": null,
+        "cacheBytes": null,
+        "worktrees4Bytes": null,
+        "devloopTargetBytes": null,
+        "binaryBytes": null,
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      },
+      "zig/suite": {
+        "n": 1,
+        "solved": 0,
+        "works": 0,
+        "firstTry": 1,
+        "costToGreenUsd": null,
+        "deps": {
+          "": 1
+        },
+        "costUsd": {
+          "median": 2.0858578,
+          "min": 2.0858578,
+          "max": 2.0858578,
+          "n": 1
+        },
+        "output": {
+          "median": 44824,
+          "min": 44824,
+          "max": 44824,
+          "n": 1
+        },
+        "turns": {
+          "median": 69,
+          "min": 69,
+          "max": 69,
+          "n": 1
+        },
+        "durationS": {
+          "median": 429.369,
+          "min": 429.369,
+          "max": 429.369,
+          "n": 1
+        },
+        "compileErrors": {
+          "median": 2,
+          "min": 2,
+          "max": 2,
+          "n": 1
+        },
+        "stdlibReads": {
+          "median": 19,
+          "min": 19,
+          "max": 19,
+          "n": 1
+        },
+        "codeTokens": null,
+        "codeTokensCl100k": null,
+        "buildSecs": null,
+        "footprintBytes": null,
+        "projectBytes": null,
+        "cacheBytes": null,
+        "worktrees4Bytes": null,
+        "devloopTargetBytes": null,
+        "binaryBytes": null,
+        "perfMs": null,
+        "perfRps": null,
+        "perfRssBytes": null
+      }
+    },
+    "frontends": {},
+    "shop": {},
+    "combos": [],
+    "costSpeedRho": null,
+    "vsBase": {
+      "go": {
+        "tasks": [
+          "suite"
+        ],
+        "base": {
+          "n": 3,
+          "works": 0,
+          "firstTry": 3,
+          "costPerWorkingUsd": null,
+          "costUsd": 0.45988380000000006,
+          "output": 10897,
+          "turns": 7,
+          "durationS": 98.545,
+          "compileErrors": 0,
+          "stdlibReads": 0,
+          "codeTokens": 0,
+          "costMin": 0.4165566,
+          "costMax": 0.5900736000000001,
+          "perf": {}
+        },
+        "arm": {
+          "n": 1,
+          "works": 0,
+          "firstTry": 1,
+          "costPerWorkingUsd": null,
+          "costUsd": 1.1527034,
+          "output": 25512,
+          "turns": 41,
+          "durationS": 200.927,
+          "compileErrors": 0,
+          "stdlibReads": 0,
+          "codeTokens": 0,
+          "costMin": 1.1527034,
+          "costMax": 1.1527034,
+          "perf": {}
+        },
+        "beyondNoise": true,
+        "speedChange": null,
+        "swarm": {
+          "wallSpeedup": 0.4904517561104282,
+          "agentS": {
+            "median": 302.382,
+            "min": 302.382,
+            "max": 302.382,
+            "n": 1
+          },
+          "worktreeBytes": {
+            "median": 5390336,
+            "min": 5390336,
+            "max": 5390336,
+            "n": 1
+          },
+          "conflicts": 0
+        }
+      },
+      "rust": {
+        "tasks": [
+          "suite"
+        ],
+        "base": {
+          "n": 3,
+          "works": 0,
+          "firstTry": 2,
+          "costPerWorkingUsd": null,
+          "costUsd": 0.5115527999999999,
+          "output": 12363,
+          "turns": 9,
+          "durationS": 114.36,
+          "compileErrors": 0,
+          "stdlibReads": 0,
+          "codeTokens": 0,
+          "costMin": 0.4860802,
+          "costMax": 0.5903559999999999,
+          "perf": {}
+        },
+        "arm": {
+          "n": 1,
+          "works": 0,
+          "firstTry": 1,
+          "costPerWorkingUsd": null,
+          "costUsd": 1.1749778,
+          "output": 24634,
+          "turns": 40,
+          "durationS": 190.734,
+          "compileErrors": 1,
+          "stdlibReads": 0,
+          "codeTokens": 0,
+          "costMin": 1.1749778,
+          "costMax": 1.1749778,
+          "perf": {}
+        },
+        "beyondNoise": true,
+        "speedChange": null,
+        "swarm": {
+          "wallSpeedup": 0.5995784705401239,
+          "agentS": {
+            "median": 307.531,
+            "min": 307.531,
+            "max": 307.531,
+            "n": 1
+          },
+          "worktreeBytes": {
+            "median": 6746112,
+            "min": 6746112,
+            "max": 6746112,
+            "n": 1
+          },
+          "conflicts": 0
+        }
+      },
+      "zig": {
+        "tasks": [
+          "suite"
+        ],
+        "base": {
+          "n": 3,
+          "works": 0,
+          "firstTry": 3,
+          "costPerWorkingUsd": null,
+          "costUsd": 0.7125734000000001,
+          "output": 17483,
+          "turns": 14,
+          "durationS": 199.439,
+          "compileErrors": 0,
+          "stdlibReads": 5,
+          "codeTokens": 0,
+          "costMin": 0.6614137999999999,
+          "costMax": 0.8017993999999999,
+          "perf": {}
+        },
+        "arm": {
+          "n": 1,
+          "works": 0,
+          "firstTry": 1,
+          "costPerWorkingUsd": null,
+          "costUsd": 2.0858578,
+          "output": 44824,
+          "turns": 69,
+          "durationS": 429.369,
+          "compileErrors": 2,
+          "stdlibReads": 19,
+          "codeTokens": 0,
+          "costMin": 2.0858578,
+          "costMax": 2.0858578,
+          "perf": {}
+        },
+        "beyondNoise": true,
+        "speedChange": null,
+        "swarm": {
+          "wallSpeedup": 0.4644932447382088,
+          "agentS": {
+            "median": 608.127,
+            "min": 608.127,
+            "max": 608.127,
+            "n": 1
+          },
+          "worktreeBytes": {
+            "median": 91234304,
+            "min": 91234304,
+            "max": 91234304,
+            "n": 1
+          },
+          "conflicts": 0
+        }
+      }
+    },
+    "effect": {
+      "pairs": 3,
+      "costUsd": {
+        "base": 0.4860802,
+        "arm": 1.1749778
+      },
+      "turns": {
+        "base": 9,
+        "arm": 41
+      },
+      "output": {
+        "base": 11100,
+        "arm": 25512
+      },
+      "cacheWrite": {
+        "base": 28000,
+        "arm": 72704
+      },
+      "cacheRead": {
+        "base": 200041,
+        "arm": 562517
+      },
+      "extraUsd": {
+        "input": 0.000904,
+        "output": 1.10216,
+        "cacheWrite": 1.264808,
+        "cacheRead": 0.34123080000000006
+      },
+      "costShare": {
+        "input": 0.0003336898105158652,
+        "output": 0.406835798183812,
+        "cacheWrite": 0.46687338701211334,
+        "cacheRead": 0.12595712499355877
+      }
+    },
+    "length": {
+      "cases": 3,
+      "rho": 0.4999999999999999,
+      "bins": [
+        {
+          "lo": 0,
+          "hi": 5,
+          "n": 0,
+          "median": null
+        },
+        {
+          "lo": 5,
+          "hi": 8,
+          "n": 1,
+          "median": 1.506510122774492
+        },
+        {
+          "lo": 8,
+          "hi": 12,
+          "n": 1,
+          "median": 1.296884700855904
+        },
+        {
+          "lo": 12,
+          "hi": null,
+          "n": 1,
+          "median": 1.9272181644725994
+        }
+      ]
+    }
+  },
+  "runs": [
+    {
+      "id": "go-suite-r1",
+      "lang": "go",
+      "task": "suite",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 1.1527034,
+      "turns": 41,
+      "usage": {
+        "input": 80,
+        "output": 25512,
+        "cacheRead": 562517,
+        "cacheWrite": 66205
+      },
+      "tools": {
+        "Bash": 36
+      },
+      "builds": 10,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 7,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 200.927,
+      "apiS": null,
+      "solved": null,
+      "pass": null,
+      "total": null,
+      "buildOk": null,
+      "buildSecs": null,
+      "footprintBytes": null,
+      "projectBytes": null,
+      "cacheBytes": null,
+      "binaryBytes": null,
+      "failures": [],
+      "codeTokens": null,
+      "codeTokensCl100k": null,
+      "codeChars": null,
+      "codeLines": null,
+      "fileTokens": [],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": null,
+      "costToGreenUsd": null,
+      "worktrees4Bytes": null,
+      "devloopTargetBytes": null,
+      "swarm": {
+        "agentS": 302.382,
+        "worktreeBytes": 5390336,
+        "conflicts": 0,
+        "phases": [
+          {
+            "name": "lead",
+            "ms": 29970,
+            "costUsd": 0.12418440000000001,
+            "turns": 5,
+            "output": 2221
+          },
+          {
+            "name": "wordfreq",
+            "ms": 56944,
+            "costUsd": 0.19906240000000003,
+            "turns": 7,
+            "output": 4843
+          },
+          {
+            "name": "lru",
+            "ms": 44732,
+            "costUsd": 0.16348880000000002,
+            "turns": 7,
+            "output": 3554
+          },
+          {
+            "name": "calc",
+            "ms": 69454,
+            "costUsd": 0.2528066,
+            "turns": 5,
+            "output": 7005
+          },
+          {
+            "name": "integrate",
+            "ms": 101282,
+            "costUsd": 0.4131612,
+            "turns": 17,
+            "output": 7889
+          }
+        ]
+      },
+      "twinPerf": null,
+      "deps": []
+    },
+    {
+      "id": "rust-suite-r1",
+      "lang": "rust",
+      "task": "suite",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 1.1749778,
+      "turns": 40,
+      "usage": {
+        "input": 74,
+        "output": 24634,
+        "cacheRead": 501849,
+        "cacheWrite": 72704
+      },
+      "tools": {
+        "Bash": 31,
+        "Write": 3,
+        "Edit": 1
+      },
+      "builds": 7,
+      "compileErrors": 1,
+      "stdlibReads": 0,
+      "checkRuns": 5,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 190.734,
+      "apiS": null,
+      "solved": null,
+      "pass": null,
+      "total": null,
+      "buildOk": null,
+      "buildSecs": null,
+      "footprintBytes": null,
+      "projectBytes": null,
+      "cacheBytes": null,
+      "binaryBytes": null,
+      "failures": [],
+      "codeTokens": null,
+      "codeTokensCl100k": null,
+      "codeChars": null,
+      "codeLines": null,
+      "fileTokens": [],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": null,
+      "costToGreenUsd": null,
+      "worktrees4Bytes": null,
+      "devloopTargetBytes": null,
+      "swarm": {
+        "agentS": 307.531,
+        "worktreeBytes": 6746112,
+        "conflicts": 0,
+        "phases": [
+          {
+            "name": "lead",
+            "ms": 49488,
+            "costUsd": 0.16919739999999997,
+            "turns": 6,
+            "output": 4085
+          },
+          {
+            "name": "wordfreq",
+            "ms": 42986,
+            "costUsd": 0.14689600000000003,
+            "turns": 6,
+            "output": 2905
+          },
+          {
+            "name": "lru",
+            "ms": 83164,
+            "costUsd": 0.3182694,
+            "turns": 9,
+            "output": 7727
+          },
+          {
+            "name": "calc",
+            "ms": 74070,
+            "costUsd": 0.26539619999999997,
+            "turns": 8,
+            "output": 6619
+          },
+          {
+            "name": "integrate",
+            "ms": 57823,
+            "costUsd": 0.27521880000000004,
+            "turns": 11,
+            "output": 3298
+          }
+        ]
+      },
+      "twinPerf": null,
+      "deps": []
+    },
+    {
+      "id": "zig-suite-r1",
+      "lang": "zig",
+      "task": "suite",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 2.0858578,
+      "turns": 69,
+      "usage": {
+        "input": 134,
+        "output": 44824,
+        "cacheRead": 1400569,
+        "cacheWrite": 113591
+      },
+      "tools": {
+        "Bash": 59,
+        "Write": 5
+      },
+      "builds": 11,
+      "compileErrors": 2,
+      "stdlibReads": 19,
+      "checkRuns": 6,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 429.369,
+      "apiS": null,
+      "solved": null,
+      "pass": null,
+      "total": null,
+      "buildOk": null,
+      "buildSecs": null,
+      "footprintBytes": null,
+      "projectBytes": null,
+      "cacheBytes": null,
+      "binaryBytes": null,
+      "failures": [],
+      "codeTokens": null,
+      "codeTokensCl100k": null,
+      "codeChars": null,
+      "codeLines": null,
+      "fileTokens": [],
+      "perfMs": null,
+      "perfRps": null,
+      "perfRssBytes": null,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": null,
+      "costToGreenUsd": null,
+      "worktrees4Bytes": null,
+      "devloopTargetBytes": null,
+      "swarm": {
+        "agentS": 608.127,
+        "worktreeBytes": 91234304,
+        "conflicts": 0,
+        "phases": [
+          {
+            "name": "lead",
+            "ms": 65704,
+            "costUsd": 0.1952486,
+            "turns": 9,
+            "output": 3963
+          },
+          {
+            "name": "wordfreq",
+            "ms": 80383,
+            "costUsd": 0.27230360000000003,
+            "turns": 10,
+            "output": 5674
+          },
+          {
+            "name": "lru",
+            "ms": 264372,
+            "costUsd": 0.8597544,
+            "turns": 26,
+            "output": 19831
+          },
+          {
+            "name": "calc",
+            "ms": 98575,
+            "costUsd": 0.3575118,
+            "turns": 11,
+            "output": 8752
+          },
+          {
+            "name": "integrate",
+            "ms": 99093,
+            "costUsd": 0.40103940000000005,
+            "turns": 13,
+            "output": 6604
+          }
+        ]
+      },
+      "twinPerf": null,
+      "deps": []
+    }
+  ]
+}

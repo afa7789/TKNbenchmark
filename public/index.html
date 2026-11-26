@@ -17,6 +17,7 @@
       <a href="#ranking">Ranking</a>
       <a href="#skills">With a skill</a>
       <a href="#ports">Migration</a>
+      <a href="#swarm">Swarm</a>
       <a href="#tasks">By task</a>
       <a href="#build">Build &amp; disk</a>
       <a href="#performance">Performance</a>
@@ -83,6 +84,7 @@
         <li><strong>Cheap to write is not fast to run:</strong> the three cheapest languages for the agent (Python, TypeScript, JavaScript) produced some of the slowest code, about 5.8–6.4× the fastest on the speed index, behind only Clojure (JVM start-up on every run); Assembly, Zig and C were the fastest and among the most expensive to write. Rust, Go, Nim and OCaml were the compromise: all four in the cheaper half to write and the faster half to run, Rust and Go closest to the fastest.</li>
         <li id="hyp-skills" hidden></li>
         <li id="hyp-ports" hidden></li>
+        <li id="hyp-swarm" hidden></li>
         <li><strong>"Rust + React":</strong> defensible. Rust was among the cheapest back ends for the agent; React was the most expensive front end.</li>
       </ul>
       <p>Details in the <a href="paper.pdf">paper (PDF)</a>.</p>
@@ -125,6 +127,13 @@
       <p class="hint">A fresh agent gets a working program in one of the slowest languages here (in <code>./.source/</code>, the baseline's own solution, which passes every hidden test) and ports it to a common migration target, under the same prompt, tests and rounds. Each cell: agent cost per 1,000 lines of the source program (write + repair, median of runs), then how much faster the port runs than the source (geometric mean over the four tasks, timed in the same session) and how many runs worked. Hover for the cost of porting vs writing from scratch.</p>
       <p class="callout" id="port-note"></p>
       <div class="scroll" id="port-table"></div>
+    </fieldset>
+
+    <fieldset id="swarm">
+      <legend>Swarm: a team of agents vs one</legend>
+      <p class="hint">One program with three subcommands (wordfreq, lru and calc, checked by their own hidden suites). Solo: one agent writes it all. Team: a lead sets up the build and one module per subcommand, three workers implement them at the same time, each in its own git worktree, and an integrator merges the branches. Same prompt rules, model and checks; teams run one at a time.</p>
+      <p class="callout" id="swarm-note"></p>
+      <div class="scroll" id="swarm-table"></div>
     </fieldset>
 
     <fieldset id="tasks">

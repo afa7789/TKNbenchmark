@@ -340,6 +340,36 @@ function portMacros(set) {
   }
 }
 
+// ---------- swarm arm (public/data/swarm/results.json): a team of agents vs one ----------
+const SW = (d.meta.arms ?? []).includes('swarm') ? JSON.parse(readFileSync(join(ROOT, 'public', 'data', 'swarm', 'results.json'), 'utf8')).summary.vsBase : {}
+const secs = (s) => nf(0)(s)
+
+function swarmTable() {
+  const rows = Object.entries(SW).map(([k, v]) => `${tex(label(k))} & ${v.base.works}/${v.base.n}\\,$\\to$\\,${v.arm.works}/${v.arm.n} & ${usd(v.base.costUsd)}\\,$\\to$\\,${usd(v.arm.costUsd)} & ${secs(v.base.durationS)}\\,$\\to$\\,${secs(v.arm.durationS)} & ${nf(2)(v.swarm.wallSpeedup)} & ${mb(v.swarm.worktreeBytes?.median)} & ${int(v.swarm.conflicts)} \\\\`)
+  return `\\newcommand{\\SwarmTable}{%
+\\begin{tabular}{@{}lrrrrrr@{}}
+\\toprule
+Language & Works & US\\$ solo $\\to$ team & s solo $\\to$ team & $\\times$sooner & MB 3 trees & Conflicts \\\\
+\\midrule
+${rows.join('\n')}
+\\bottomrule
+\\end{tabular}}`
+}
+
+function swarmMacros(set) {
+  const vs = Object.values(SW)
+  const speed = vs.map((v) => v.swarm.wallSpeedup)
+  const dc = vs.map((v) => change(v.base.costUsd, v.arm.costUsd))
+  set('NSwarmLangs', vs.length)
+  set('NSwarmSooner', vs.filter((v) => v.swarm.wallSpeedup > 1).length)
+  set('SwarmSpeedMin', nf(2)(Math.min(...speed)))
+  set('SwarmSpeedMax', nf(2)(Math.max(...speed)))
+  set('SwarmCostMin', pct(Math.min(...dc)))
+  set('SwarmCostMax', pct(Math.max(...dc)))
+  set('SwarmConflicts', int(vs.reduce((a, v) => a + v.swarm.conflicts, 0)))
+  for (const [k, v] of Object.entries(SW)) set(`SwarmDisk${macroName(k)}`, mb(v.swarm.worktreeBytes?.median))
+}
+
 function macros() {
   const out = []
   const set = (name, v) => out.push(`\\newcommand{\\${name}}{${v}}`)
@@ -362,6 +392,7 @@ function macros() {
   trackMacros(set)
   skillMacros(set)
   portMacros(set)
+  swarmMacros(set)
   set('CorrStdCost', nf(2)(pearson(keys.map((k) => L[k].stdlibReads), keys.map((k) => L[k].costUsd))))
   const dl = C['rust/kvhttp']?.devloopTargetBytes?.median
   set('DevloopRust', mb(dl))
@@ -390,6 +421,7 @@ const out = [
   skillTable(),
   skillSlope(),
   portTable(),
+  swarmTable(),
 ].join('\n\n')
 writeFileSync(join(ROOT, 'paper', 'data.tex'), out + '\n')
 console.log('paper/data.tex written')

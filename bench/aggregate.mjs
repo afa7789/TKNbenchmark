@@ -84,6 +84,8 @@ function publicRun({ agent: a, verify: v, tokens: t, perf: p, repair: rp, devloo
     ...repairFields(a, v, rp),
     worktrees4Bytes: worktrees(v, 4),
     devloopTargetBytes: dl?.targetBytes ?? null,
+    // Swarm arm: wall-clock vs summed agent time, disk of the workers' worktrees, merge conflicts.
+    swarm: a.swarm ? { agentS: a.swarm.agentMs / 1000, worktreeBytes: sum(a.swarm.worktreeBytes), conflicts: a.swarm.conflicts, phases: a.swarm.phases } : null,
     // Paired perf (arms): the same session's timings of the baseline cases this run is compared with.
     twinPerf: tw ? Object.fromEntries(Object.entries(tw).map(([role, x]) => [role, perfValue(x)])) : null,
   }
@@ -330,6 +332,19 @@ function portFields(rs, base) {
   return { from: PORT_FROM, costPer1kSourceLines: stats(perK), speedVsSource: pairedSpeed(rs, 'source') }
 }
 
+// Swarm arm: how much sooner the team finished than one agent (solo time ÷ team wall-clock, medians), the
+// disk its three worktrees held, and the merge conflicts the integrator met.
+function swarmFields(rs, base) {
+  return {
+    swarm: {
+      wallSpeedup: base.durationS / sum(Object.values(Object.groupBy(rs, (r) => r.task)).map((xs) => stats(xs.map((r) => r.durationS)).median)),
+      agentS: stats(rs.map((r) => r.swarm?.agentS)),
+      worktreeBytes: stats(rs.map((r) => r.swarm?.worktreeBytes)),
+      conflicts: sum(rs.map((r) => r.swarm?.conflicts)),
+    },
+  }
+}
+
 // Skills arm: what the skill cost to write, how often it was used, and runs until it pays for itself.
 function skillFields(lang, rs, sides, nTasks, beyondNoise, skills) {
   const skill = { costUsd: skills[lang]?.costUsd ?? null, bodyBytes: skills[lang]?.bodyBytes ?? null, usedRate: rs.filter((r) => r.tools?.Skill).length / rs.length }
@@ -349,7 +364,7 @@ function vsBase(cells, runs) {
       const beyondNoise = sides.arm.costUsd < sides.base.costMin || sides.arm.costUsd > sides.base.costMax
       // Speed vs the same case written from scratch: paired timings when present, else both arms' medians.
       const speed = pairedSpeed(rs, 'scratch') ?? speedChange(sides.base, sides.arm)
-      const extra = ARM === 'skills' ? skillFields(lang, rs, sides, tasks.length, beyondNoise, skills) : { port: portFields(rs, base) }
+      const extra = { skills: () => skillFields(lang, rs, sides, tasks.length, beyondNoise, skills), swarm: () => swarmFields(rs, sides.base) }[ARM]?.() ?? { port: portFields(rs, base) }
       return [lang, { tasks, ...sides, beyondNoise, speedChange: speed, ...extra }]
     }),
   )

@@ -591,6 +591,39 @@ function renderPorts(d, ports) {
   $('port-table').innerHTML = table(head, rows)
 }
 
+// ---------- swarm arm: a team of agents vs one ----------
+// data/swarm/results.json; vsBase.<lang> pairs the team with the base arm's solo run of the suite task.
+const SWARM_COLS = [
+  ['Works', (v) => `${v.base.works}/${v.base.n} → ${v.arm.works}/${v.arm.n}`],
+  ['Cost', (v) => arrow(v.base.costUsd, v.arm.costUsd, fmt.usd)],
+  ['Δ cost', (v) => `${signed(change(v.base.costUsd, v.arm.costUsd))}${v.beyondNoise ? '' : ' ~'}`],
+  ['Time (solo → team wall-clock)', (v) => arrow(v.base.durationS, v.arm.durationS, fmt.secs)],
+  ['Sooner', (v) => fmt.ratio(v.swarm.wallSpeedup)],
+  ['Agent time, summed', (v) => fmt.secs(v.swarm.agentS?.median)],
+  ['3 worktrees on disk', (v) => fmt.bytes(v.swarm.worktreeBytes?.median)],
+  ['Merge conflicts', (v) => fmt.int(v.swarm.conflicts)],
+]
+
+function swarmNote(d, sw) {
+  const rows = Object.entries(sw.summary.vsBase)
+  const speed = rows.map(([, v]) => v.swarm.wallSpeedup)
+  const dc = rows.map(([, v]) => change(v.base.costUsd, v.arm.costUsd))
+  const disk = [...rows].sort((a, b) => b[1].swarm.worktreeBytes.median - a[1].swarm.worktreeBytes.median)
+  const sooner = rows.filter(([, v]) => v.swarm.wallSpeedup > 1).length
+  return `<strong>${sooner ? `The team finished sooner in ${sooner} of ${rows.length} languages` : 'One agent beat the team'}.</strong> On this three-part program the team's wall-clock was ${fmt.ratio(Math.min(...speed))}–${fmt.ratio(Math.max(...speed))} the solo agent's speed (above ×1 = sooner) and it cost ${signed(Math.min(...dc))} to ${signed(Math.max(...dc))} more: the lead, the three parallel workers and the integrator run one after another, and each starts by reading the specification. The three worktrees held the most for ${esc(label(d, disk[0][0]))} (${fmt.bytes(disk[0][1].swarm.worktreeBytes.median)}) and the least for ${esc(label(d, disk.at(-1)[0]))} (${fmt.bytes(disk.at(-1)[1].swarm.worktreeBytes.median)})${sw.summary.vsBase.rust ? `; Rust's held ${fmt.bytes(sw.summary.vsBase.rust.swarm.worktreeBytes.median)}, since this program has no dependencies for target/ to fill` : ''}.`
+}
+
+function renderSwarm(d, sw) {
+  if (!Object.keys(sw?.summary?.vsBase ?? {}).length) return ($('swarm').hidden = true)
+  $('swarm-note').innerHTML = swarmNote(d, sw)
+  const head = [{ title: 'Language' }, ...SWARM_COLS.map(([title]) => ({ title, num: true }))]
+  const rows = Object.entries(sw.summary.vsBase).map(([k, v]) => `<tr><td><strong>${esc(label(d, k))}</strong></td>${SWARM_COLS.map(([, f]) => `<td class="num">${esc(f(v))}</td>`).join('')}</tr>`)
+  $('swarm-table').innerHTML = table(head, rows)
+  $('findings-list').insertAdjacentHTML('beforeend', `<li>${swarmNote(d, sw)}</li>`)
+  $('hyp-swarm').innerHTML = `<strong>"A swarm of agents in parallel worktrees finishes sooner, and Rust's target/ makes it costlier":</strong> ${swarmNote(d, sw).replace(/^<strong>.*?<\/strong> /, '')} See <a href="#swarm">Swarm</a>.`
+  $('hyp-swarm').hidden = false
+}
+
 // ---------- case viewer ----------
 function caseMetrics(r) {
   const items = [
@@ -683,6 +716,7 @@ renderFindings(data, Object.keys(arm?.summary?.vsBase ?? {}).length ? arm : null
 renderKpis(data)
 renderLeaderboard(data)
 renderSkills(arm)
+renderSwarm(data, (data.meta.arms ?? []).includes('swarm') ? await getJson('data/swarm/results.json').catch(() => null) : null)
 renderPorts(data, (await Promise.all((data.meta.arms ?? []).filter((a) => a.startsWith('port-')).map((a) => getJson(`data/${a}/results.json`).catch(() => null)))).filter(Boolean))
 renderMultiples(data)
 renderTasks(data)
