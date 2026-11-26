@@ -369,8 +369,12 @@ function portMacros(set) {
 
 // ---------- swarm arm (public/data/swarm/results.json): a team of agents vs one ----------
 const SW_DATA = (d.meta.arms ?? []).includes('swarm') ? JSON.parse(readFileSync(join(ROOT, 'public', 'data', 'swarm', 'results.json'), 'utf8')).summary : {}
-const SW = SW_DATA.vsBase ?? {}
-const SW_EFFECT = SW_DATA.effect
+// The swarm arm's comparisons for one task, keyed by language.
+const swarmOf = (task) => Object.fromEntries(Object.entries(SW_DATA.vsBase ?? {}).filter(([k]) => k.endsWith(`/${task}`)).map(([k, v]) => [k.split('/')[0], v]))
+const SW = swarmOf('suite')
+const SW_EFFECT = SW_DATA.effectByTask?.suite ?? SW_DATA.effect
+const NOTES = Object.fromEntries(Object.entries(swarmOf('notes')).filter(([, v]) => Number.isFinite(v.swarm.teamPeakBytes)))
+const NOTES_EFFECT = SW_DATA.effectByTask?.notes
 const secs = (s) => nf(0)(s)
 
 function swarmTable() {
@@ -383,6 +387,39 @@ Language & Works & US\\$ solo $\\to$ team & s solo $\\to$ team & s lead + worker
 ${rows.join('\n')}
 \\bottomrule
 \\end{tabular}}`
+}
+
+function notesTable() {
+  const rows = Object.entries(NOTES).map(([k, v]) => `${tex(label(k))} & ${v.base.works}/${v.base.n}\\,$\\to$\\,${v.arm.works}/${v.arm.n} & ${usd(v.base.costUsd)}\\,$\\to$\\,${usd(v.arm.costUsd)} & ${secs(v.swarm.soloWallS)}\\,$\\to$\\,${secs(v.swarm.teamWallS)} & ${secs(v.swarm.leadS)} + ${secs(v.swarm.slowestWorkerS)} + ${secs(v.swarm.integrateS)} & ${mb(v.swarm.soloPeakBytes)}\\,$\\to$\\,${mb(v.swarm.teamPeakBytes)} & ${int(v.swarm.conflictedFiles)} \\\\`)
+  return `\\newcommand{\\NotesTable}{%
+\\begin{tabular}{@{}lrrrrrr@{}}
+\\toprule
+Language & Works & US\\$ solo $\\to$ team & s solo $\\to$ team & s lead + worker + integr. & MB peak solo $\\to$ team & Conflicts \\\\
+\\midrule
+${rows.join('\n')}
+\\bottomrule
+\\end{tabular}}`
+}
+
+function notesMacros(set) {
+  const vs = Object.entries(NOTES)
+  if (!vs.length) return
+  const dc = vs.map(([, v]) => change(v.base.costUsd, v.arm.costUsd))
+  const speed = vs.map(([, v]) => v.swarm.wallSpeedup)
+  const disk = vs.map(([, v]) => v.swarm.teamPeakBytes / v.swarm.soloPeakBytes)
+  set('NNotesLangs', vs.length)
+  set('NNotesSooner', speed.filter((x) => x > 1).length)
+  set('NotesCostMin', pct(Math.min(...dc)))
+  set('NotesCostMax', pct(Math.max(...dc)))
+  set('NotesSpeedMin', nf(2)(Math.min(...speed)))
+  set('NotesSpeedMax', nf(2)(Math.max(...speed)))
+  set('NotesDiskMin', nf(1)(Math.min(...disk)))
+  set('NotesDiskMax', nf(1)(Math.max(...disk)))
+  set('NotesShareContext', NOTES_EFFECT ? `${nf(0)((NOTES_EFFECT.costShare.cacheWrite + NOTES_EFFECT.costShare.cacheRead) * 100)}\\%` : '--')
+  for (const [k, v] of vs) {
+    set(`NotesPeakSolo${macroName(k)}`, mb(v.swarm.soloPeakBytes))
+    set(`NotesPeakTeam${macroName(k)}`, mb(v.swarm.teamPeakBytes))
+  }
 }
 
 function swarmMacros(set) {
@@ -461,6 +498,7 @@ function macros() {
   skillMacros(set)
   portMacros(set)
   swarmMacros(set)
+  notesMacros(set)
   growthMacros(set)
   set('CorrStdCost', nf(2)(pearson(keys.map((k) => L[k].stdlibReads), keys.map((k) => L[k].costUsd))))
   const dl = C['rust/kvhttp']?.devloopTargetBytes?.median
@@ -506,6 +544,7 @@ const out = [
   skillSlope(),
   portTable(),
   swarmTable(),
+  notesTable(),
   growthTable(),
 ].join('\n\n')
 writeFileSync(join(ROOT, 'paper', 'data.tex'), out + '\n')

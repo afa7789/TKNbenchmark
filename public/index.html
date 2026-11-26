@@ -136,6 +136,13 @@
       <div class="scroll" id="swarm-table"></div>
     </fieldset>
 
+    <fieldset id="notes">
+      <legend>Swarm at work: a service with dependencies</legend>
+      <p class="hint">The same comparison on a realistic job: an HTTP + JSON + SQLite notes service, third-party packages allowed, built with debug builds and tests along the way and a release build at the end. The lead builds the core (server, storage, create and read); three workers add the other endpoints in parallel worktrees; an integrator merges. Solo and team alternate, one case at a time, with package and build caches starting cold in every case; disk is sampled every 15 s.</p>
+      <p class="callout" id="notes-note"></p>
+      <div class="scroll" id="notes-table"></div>
+    </fieldset>
+
     <fieldset id="tasks">
       <legend>By task</legend>
       <div class="segmented" id="task-tabs" role="tablist"></div>

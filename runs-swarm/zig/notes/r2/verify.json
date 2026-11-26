@@ -1,0 +1,114 @@
+{
+  "buildOk": true,
+  "buildSecs": 31.34,
+  "buildLog": "",
+  "binaryBytes": 1827008,
+  "projectBytes": 54792192,
+  "cacheBytes": 68960256,
+  "footprintBytes": 123752448,
+  "pass": 20,
+  "total": 20,
+  "solved": true,
+  "cases": [
+    {
+      "name": "health",
+      "ok": true,
+      "ms": 56
+    },
+    {
+      "name": "create-and-get",
+      "ok": true,
+      "ms": 56
+    },
+    {
+      "name": "create-errors",
+      "ok": true,
+      "ms": 56
+    },
+    {
+      "name": "not-found",
+      "ok": true,
+      "ms": 55
+    },
+    {
+      "name": "update",
+      "ok": true,
+      "ms": 64
+    },
+    {
+      "name": "delete",
+      "ok": true,
+      "ms": 64
+    },
+    {
+      "name": "list-all",
+      "ok": true,
+      "ms": 64
+    },
+    {
+      "name": "filter",
+      "ok": true,
+      "ms": 66
+    },
+    {
+      "name": "paging",
+      "ok": true,
+      "ms": 63
+    },
+    {
+      "name": "stats",
+      "ok": true,
+      "ms": 60
+    },
+    {
+      "name": "stats-empty",
+      "ok": true,
+      "ms": 58
+    },
+    {
+      "name": "persistence",
+      "ok": true,
+      "ms": 172
+    },
+    {
+      "name": "sqlite-file",
+      "ok": true,
+      "ms": 53
+    },
+    {
+      "name": "concurrent-writes",
+      "ok": true,
+      "ms": 57
+    },
+    {
+      "name": "title-limits",
+      "ok": true,
+      "ms": 54
+    },
+    {
+      "name": "tag-rules",
+      "ok": true,
+      "ms": 55
+    },
+    {
+      "name": "put-replaces",
+      "ok": true,
+      "ms": 54
+    },
+    {
+      "name": "stats-after-delete",
+      "ok": true,
+      "ms": 60
+    },
+    {
+      "name": "list-edges",
+      "ok": true,
+      "ms": 64
+    },
+    {
+      "name": "methods",
+      "ok": true,
+      "ms": 61
+    }
+  ]
+}

@@ -58,7 +58,9 @@ targets also cost more than writing it from scratch, in \NPortCostlier{} of \NPo
 \PortSpeedMax$\times$ faster than the source (\PortSpeedMaxPair), while from C the best port was
 \PortBestC{} and the worst \PortWorstC{} (\PortWorstTargetC). Finally, a team of agents (a lead, three workers in parallel git worktrees and an
 integrator) built a three-part program slower than one agent alone in all \NSwarmLangs{} languages tried
-(\SwarmSpeedMin--\SwarmSpeedMax$\times$ the solo speed) and cost \SwarmCostMin{} to \SwarmCostMax{} more.
+(\SwarmSpeedMin--\SwarmSpeedMax$\times$ the solo speed) and cost \SwarmCostMin{} to \SwarmCostMax{} more;
+on a service with dependencies built with a development loop it still did, and its working copies held up
+to \NotesDiskMax$\times$ the solo agent's disk at peak.
 \end{abstract}
 
 \paragraph{Key findings.}
@@ -98,6 +100,11 @@ integrator) built a three-part program slower than one agent alone in all \NSwar
         \SwarmIntegrateMin--\SwarmIntegrateMax\,s. \SwarmShareContext{} of the extra spend is replicated
         context: each agent builds its own (\SwarmCacheWriteBase{} $\to$ \SwarmCacheWriteArm{} tokens written
         to the cache per run).
+  \item \textbf{At work, the team's disk multiplied.} On an HTTP + JSON + SQLite service with dependencies,
+        built with debug builds and tests along the way, the team still cost \NotesCostMin{} to
+        \NotesCostMax{} more and ran at \NotesSpeedMin--\NotesSpeedMax$\times$ the solo speed; at peak its
+        four working copies held \NotesDiskMin--\NotesDiskMax$\times$ the solo agent's disk (Rust
+        \NotesPeakSoloRust\,MB $\to$ \NotesPeakTeamRust\,MB).
   \item \textbf{Check the I/O idiom before blaming the language.} C++'s slow \texttt{calc} read standard
         input one character at a time; with \texttt{fread} the same program ran about 20$\times$ faster.
 \end{enumerate}
@@ -422,6 +429,30 @@ finished first). MB 3 trees: disk held by the three workers' worktrees with thei
 \SwarmTable
 \end{table}
 
+\subsection{A team at work: a service with dependencies}
+
+The \texttt{notes} task is a small HTTP service with JSON and a SQLite database, third-party packages
+allowed, built with debug builds and tests along the way and a release build at the end (the same sentence in
+the solo and the team prompts). The lead builds the core (server, storage, create and read); three workers add
+the other endpoints in parallel worktrees; an integrator merges. Solo and team cases alternated, one at a
+time, with package and build caches starting cold in every case and disk sampled every 15\,s.
+Table~\ref{tab:notes} gives the results: every run worked after verification. The team cost
+\NotesCostMin{} to \NotesCostMax{} more and ran at \NotesSpeedMin--\NotesSpeedMax$\times$ the solo
+speed, with no merge conflict; \NotesShareContext{} of its extra spend was replicated context. At peak, its
+four working copies held \NotesDiskMin--\NotesDiskMax$\times$ the solo agent's disk: Rust
+\NotesPeakSoloRust{} $\to$ \NotesPeakTeamRust\,MB, Zig \NotesPeakSoloZig{} $\to$ \NotesPeakTeamZig\,MB and
+Go \NotesPeakSoloGo{} $\to$ \NotesPeakTeamGo\,MB.
+
+\begin{table}[h]
+\centering\small
+\caption{The \texttt{notes} service, solo agent vs team (medians of three). s: wall-clock time; the team's
+split into the lead, the slowest worker and the integrator. MB peak: the largest total of the working copies
+(one for the solo agent, the main tree and three worktrees for the team) seen while the agents worked; package
+and build caches are not included (in Go they hold the dependencies, shared by all copies).}
+\label{tab:notes}
+\NotesTable
+\end{table}
+
 \section{Discussion}
 
 \paragraph{H1 (Zig): rejected in this setting.} Zig cost US\$\,\CostZig{} against US\$\,\CostRust{} for
@@ -530,6 +561,16 @@ and the tokens went, is to split work by field (front end, back end, the rest), 
 task list, and have one reviewer check the result against that list: no skeleton to wait for, no integrator,
 and one reading of the specification per agent rather than a chain of handoffs.
 
+\paragraph{H9 (swarm at work): confirmed.} With dependencies and a development loop the team still finished
+later and cost more, and the lead alone took about as long as a whole solo run: before any worker can start,
+someone has to choose the libraries, fetch and build them and lay out the core. Disk followed where each
+toolchain keeps dependencies. Rust compiles its crates into each worktree's \texttt{target/}, and the team
+held \NotesPeakTeamRust\,MB against \NotesPeakSoloRust\,MB; Zig fetched SQLite into each worktree's
+\texttt{zig-pkg/} and compiled it there; Go keeps modules and build artefacts in caches shared by every
+worktree, so its copies stayed small while one cache held the dependencies once. This matches what people
+running parallel agents on large Rust projects report, and on a Tauri application with 629 crates the
+per-worktree cost would be far larger than here.
+
 \paragraph{Why C++ was slow.} C++ ranked below C, Rust and Go in speed (Table~\ref{tab:speed}), mostly
 because of \texttt{calc}: all three runs read standard input through \texttt{std::istreambuf\_iterator},
 which libc++ reads one character at a time. Replacing that one line with an \texttt{fread} loop made the
@@ -573,6 +614,13 @@ arm64). Tasks take minutes, not days; in large projects reading existing code we
 widen the advantage of concise languages. Cost uses list price and includes cache reads. The front-end
 check is a smoke test, not a full suite. Zig and Odin change their APIs often; another model with
 another training cut-off could reverse H1.
+
+The verification of the \texttt{notes} task met two harness failures, both fixed before any repair and the
+cases re-verified: a DNS failure while fetching crates (two Rust solo runs), and Zig~0.16's per-project
+package directory \texttt{zig-pkg/}, which the copy of the solution kept only in part (three Zig team runs;
+it is now treated as fetched output, like \texttt{node\_modules}). The solo controls of the first swarm study
+(\texttt{suite}) ran three at a time, an hour before the teams; those of \texttt{notes} alternated with the
+teams, one case at a time.
 
 The skills arm separates neither the overhead of the Skill tool from the skill's content (an arm with an
 empty skill would) nor one skill from another: each language got a single skill, capped at 8\,KB and

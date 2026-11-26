@@ -618,24 +618,68 @@ const SWARM_COLS = [
   ['Conflicted files', (v) => fmt.int(v.swarm.conflictedFiles)],
 ]
 
+// The swarm arm's comparisons for one task, keyed by language.
+const swarmRows = (sw, task) => Object.entries(sw.summary.vsBase).filter(([k]) => k.endsWith(`/${task}`)).map(([k, v]) => [k.split('/')[0], v])
+
 function swarmNote(d, sw) {
-  const rows = Object.entries(sw.summary.vsBase)
+  const rows = swarmRows(sw, 'suite')
+  const effect = sw.summary.effectByTask?.suite ?? sw.summary.effect
   const speed = rows.map(([, v]) => v.swarm.wallSpeedup)
   const dc = rows.map(([, v]) => change(v.base.costUsd, v.arm.costUsd))
   const disk = [...rows].sort((a, b) => b[1].swarm.worktreeBytes.median - a[1].swarm.worktreeBytes.median)
   const sooner = rows.filter(([, v]) => v.swarm.wallSpeedup > 1).length
   const range = (k) => `${fmt.secs(Math.min(...rows.map(([, v]) => v.swarm[k])))}–${fmt.secs(Math.max(...rows.map(([, v]) => v.swarm[k])))}`
-  return `<strong>${sooner ? `The team finished sooner in ${sooner} of ${rows.length} languages` : 'One agent beat the team'}.</strong> On this three-part program the team's wall-clock was ${fmt.ratio(Math.min(...speed))}–${fmt.ratio(Math.max(...speed))} the solo agent's speed (above ×1 = sooner) and it cost ${signed(Math.min(...dc))} to ${signed(Math.max(...dc))} more. The agents never talk to each other; the time went to handoffs in series: the lead (${range('leadS')}), then the slowest of the three parallel workers (${range('slowestWorkerS')}), then the integrator (${range('integrateS')}), and each of the five starts by reading the specification and the code again.${sw.summary.effect ? ` That replicated context is most of the bill: ${fmt.pct(sw.summary.effect.costShare.cacheWrite + sw.summary.effect.costShare.cacheRead)} of the team's extra spend is context (written to the cache ${fmt.int(sw.summary.effect.cacheWrite.base)} → ${fmt.int(sw.summary.effect.cacheWrite.arm)} tokens per run), the rest output.` : ''} The three worktrees held the most for ${esc(label(d, disk[0][0]))} (${fmt.bytes(disk[0][1].swarm.worktreeBytes.median)}) and the least for ${esc(label(d, disk.at(-1)[0]))} (${fmt.bytes(disk.at(-1)[1].swarm.worktreeBytes.median)})${sw.summary.vsBase.rust ? `; Rust's held ${fmt.bytes(sw.summary.vsBase.rust.swarm.worktreeBytes.median)}, since this program has no dependencies for target/ to fill` : ''}.`
+  return `<strong>${sooner ? `The team finished sooner in ${sooner} of ${rows.length} languages` : 'One agent beat the team'}.</strong> On this three-part program the team's wall-clock was ${fmt.ratio(Math.min(...speed))}–${fmt.ratio(Math.max(...speed))} the solo agent's speed (above ×1 = sooner) and it cost ${signed(Math.min(...dc))} to ${signed(Math.max(...dc))} more. The agents never talk to each other; the time went to handoffs in series: the lead (${range('leadS')}), then the slowest of the three parallel workers (${range('slowestWorkerS')}), then the integrator (${range('integrateS')}), and each of the five starts by reading the specification and the code again.${effect ? ` That replicated context is most of the bill: ${fmt.pct(effect.costShare.cacheWrite + effect.costShare.cacheRead)} of the team's extra spend is context (written to the cache ${fmt.int(effect.cacheWrite.base)} → ${fmt.int(effect.cacheWrite.arm)} tokens per run), the rest output.` : ''} The three worktrees held the most for ${esc(label(d, disk[0][0]))} (${fmt.bytes(disk[0][1].swarm.worktreeBytes.median)}) and the least for ${esc(label(d, disk.at(-1)[0]))} (${fmt.bytes(disk.at(-1)[1].swarm.worktreeBytes.median)})${sw.summary.vsBase['rust/suite'] ? `; Rust's held ${fmt.bytes(sw.summary.vsBase['rust/suite'].swarm.worktreeBytes.median)}, since this program has no dependencies for target/ to fill` : ''}.`
+}
+
+// Toolchains whose dependencies live in a cache shared by every worktree rather than in each project.
+const SHARED_DEP_CACHE = new Set(['go'])
+
+// The dev-loop study (notes): a service with dependencies, peak disk sampled while the agents worked.
+const NOTES_COLS = [
+  ['Works', (v) => `${v.base.works}/${v.base.n} → ${v.arm.works}/${v.arm.n}`],
+  ['Cost', (v) => arrow(v.base.costUsd, v.arm.costUsd, fmt.usd)],
+  ['Wall-clock (solo → team)', (v) => arrow(v.swarm.soloWallS, v.swarm.teamWallS, fmt.secs)],
+  ['Team: lead + slowest worker + integrator', (v) => [v.swarm.leadS, v.swarm.slowestWorkerS, v.swarm.integrateS].map(fmt.secs).join(' + ')],
+  ['Peak disk (solo → team)', (v) => arrow(v.swarm.soloPeakBytes, v.swarm.teamPeakBytes, fmt.bytes)],
+  ['Peak caches (solo → team)', (v) => arrow(v.swarm.soloCachePeakBytes, v.swarm.teamCachePeakBytes, fmt.bytes)],
+  ['Conflicted files', (v) => fmt.int(v.swarm.conflictedFiles)],
+]
+
+function notesNote(d, rows, effect) {
+  const by = (f) => [...rows].sort((a, b) => f(b[1]) - f(a[1]))
+  const disk = by((v) => v.swarm.teamPeakBytes / v.swarm.soloPeakBytes)
+  const dc = rows.map(([, v]) => change(v.base.costUsd, v.arm.costUsd))
+  const speed = rows.map(([, v]) => v.swarm.wallSpeedup)
+  const sooner = speed.filter((x) => x > 1).length
+  const ctx = effect ? ` ${fmt.pct(effect.costShare.cacheWrite + effect.costShare.cacheRead)} of the extra spend was replicated context.` : ''
+  const verdict = sooner === rows.length ? 'the team finished sooner' : sooner ? `the team lost in ${rows.length - sooner} of ${rows.length} languages` : 'one agent still beat the team'
+  const head = `<strong>At work, with dependencies, ${verdict}, and its disk multiplied.</strong> On the notes service (HTTP, JSON, SQLite) built with debug builds and tests along the way, the team cost ${signed(Math.min(...dc))} to ${signed(Math.max(...dc))} more and ran at ${fmt.ratio(Math.min(...speed))}–${fmt.ratio(Math.max(...speed))} the solo agent's speed.${ctx}`
+  const [hi, lo] = [disk[0], disk.at(-1)]
+  const biggest = by((v) => v.swarm.teamPeakBytes)[0]
+  const shared = SHARED_DEP_CACHE.has(lo[0]) ? `, where the dependencies live in caches every worktree shares` : ''
+  return `${head} Its four working copies held up to ${fmt.ratio(hi[1].swarm.teamPeakBytes / hi[1].swarm.soloPeakBytes)} the solo agent's disk at peak in ${esc(label(d, hi[0]))} (${fmt.bytes(hi[1].swarm.soloPeakBytes)} → ${fmt.bytes(hi[1].swarm.teamPeakBytes)}) and ${fmt.ratio(lo[1].swarm.teamPeakBytes / lo[1].swarm.soloPeakBytes)} in ${esc(label(d, lo[0]))}${shared}; the most in absolute terms was ${esc(label(d, biggest[0]))}'s ${fmt.bytes(biggest[1].swarm.teamPeakBytes)}, each worktree building its dependencies again.`
+}
+
+function renderNotes(d, sw) {
+  const rows = swarmRows(sw, 'notes').filter(([, v]) => isNum(v.swarm.teamPeakBytes))
+  if (!rows.length) return ($('notes').hidden = true)
+  const note = notesNote(d, rows, sw.summary.effectByTask?.notes)
+  $('notes-note').innerHTML = note
+  const head = [{ title: 'Language' }, ...NOTES_COLS.map(([title]) => ({ title, num: true }))]
+  $('notes-table').innerHTML = table(head, rows.map(([k, v]) => `<tr><td><strong>${esc(label(d, k))}</strong></td>${NOTES_COLS.map(([, f]) => `<td class="num">${esc(f(v))}</td>`).join('')}</tr>`))
+  $('findings-list').insertAdjacentHTML('beforeend', `<li>${note}</li>`)
 }
 
 function renderSwarm(d, sw) {
   if (!Object.keys(sw?.summary?.vsBase ?? {}).length) return ($('swarm').hidden = true)
   $('swarm-note').innerHTML = swarmNote(d, sw)
   const head = [{ title: 'Language' }, ...SWARM_COLS.map(([title]) => ({ title, num: true }))]
-  const rows = Object.entries(sw.summary.vsBase).map(([k, v]) => `<tr><td><strong>${esc(label(d, k))}</strong></td>${SWARM_COLS.map(([, f]) => `<td class="num">${esc(f(v))}</td>`).join('')}</tr>`)
+  const rows = swarmRows(sw, 'suite').map(([k, v]) => `<tr><td><strong>${esc(label(d, k))}</strong></td>${SWARM_COLS.map(([, f]) => `<td class="num">${esc(f(v))}</td>`).join('')}</tr>`)
   $('swarm-table').innerHTML = table(head, rows)
   $('findings-list').insertAdjacentHTML('beforeend', `<li>${swarmNote(d, sw)}</li>`)
-  const dc = Object.values(sw.summary.vsBase).map((v) => change(v.base.costUsd, v.arm.costUsd))
+  renderNotes(d, sw)
+  const dc = swarmRows(sw, 'suite').map(([, v]) => change(v.base.costUsd, v.arm.costUsd))
   $('howto-list').insertAdjacentHTML('beforeend', `<li><strong>Do not reach for a swarm of agents by default.</strong> Here a team cost ${signed(Math.min(...dc))} to ${signed(Math.max(...dc))} more than one agent and finished later. If the work does need several agents, a cheaper design (one we did not measure) is to split it by field (front end, back end, the rest), give each agent the whole prompt with the full task list, and have one review check the result against that list, instead of a lead, workers and an integrator handing work on in series.</li>`)
   $('hyp-swarm').innerHTML = `<strong>"A swarm of agents in parallel worktrees finishes sooner, and Rust's target/ makes it costlier":</strong> ${swarmNote(d, sw).replace(/^<strong>.*?<\/strong> /, '')} See <a href="#swarm">Swarm</a>.`
   $('hyp-swarm').hidden = false

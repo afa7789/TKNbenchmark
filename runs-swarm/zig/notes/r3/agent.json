@@ -1,0 +1,849 @@
+{
+  "id": "zig-notes-r3",
+  "lang": "zig",
+  "task": "notes",
+  "rep": 3,
+  "arm": "swarm",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "files": [
+    ".gitignore",
+    "README.md",
+    "build.sh",
+    "build.zig",
+    "build.zig.zon",
+    "src/Server.zig",
+    "src/api/crud.zig",
+    "src/api/health.zig",
+    "src/api/list.zig",
+    "src/api/notes.zig",
+    "src/api/stats.zig",
+    "src/db/Store.zig",
+    "src/db/crud.zig",
+    "src/db/list.zig",
+    "src/db/notes.zig",
+    "src/db/schema.zig",
+    "src/db/sqlite.zig",
+    "src/db/stats.zig",
+    "src/http/Context.zig",
+    "src/http/query.zig",
+    "src/main.zig",
+    "src/note.zig",
+    "src/router.zig",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/Makefile.fallback",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/Makefile.in",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/Makefile.msc",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/README.txt",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/Replace.cs",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/VERSION",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/auto.def",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/LICENSE",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/README.autosetup",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/README.md",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/autosetup",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/autosetup-config.guess",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/autosetup-config.sub",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/autosetup-find-tclsh",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/autosetup-test-tclsh",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/cc-db.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/cc-lib.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/cc-shared.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/cc.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/find_tclconfig.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/jimsh0.c",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/pkg-config.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/proj.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/sqlite-config.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/system.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/teaish/README.txt",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/teaish/core.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/teaish/feature.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/autosetup/teaish/tester.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/configure",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/shell.c",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/sqlite3.1",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/sqlite3.h",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/sqlite3.pc.in",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/sqlite3.rc",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/sqlite3ext.h",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/sqlite3rc.h",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/tea/Makefile.in",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/tea/README.txt",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/tea/_teaish.tester.tcl.in",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/tea/auto.def",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/tea/configure",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/tea/doc/sqlite3.n",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/tea/generic/tclsqlite3.c",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/tea/license.terms",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/tea/pkgIndex.tcl.in",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/tea/teaish.tcl",
+    "zig-pkg/N-V-__8AAObrvAAql0nED8vt3M3ylfTXBlNK9-cqUt5WCtPw/tea/teaish.test.tcl"
+  ],
+  "turns": 103,
+  "builds": 25,
+  "compileErrors": 3,
+  "stdlibReads": 21,
+  "checkRuns": 10,
+  "toolErrors": 3,
+  "usage": {
+    "input": 190,
+    "output": 77423,
+    "cacheRead": 4011712,
+    "cacheWrite": 247099
+  },
+  "costUsd": 4.328354400000001,
+  "tools": {
+    "Bash": 88,
+    "Write": 7,
+    "Edit": 3
+  },
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 11,
+    "total": 11
+  },
+  "reply": "DONE",
+  "skillsOffered": [],
+  "durationMs": 1177781,
+  "wallMs": 1177781,
+  "swarm": {
+    "phases": [
+      {
+        "name": "lead",
+        "ms": 580374,
+        "costUsd": 2.1373266000000006,
+        "turns": 47,
+        "output": 48732
+      },
+      {
+        "name": "crud",
+        "ms": 83188,
+        "costUsd": 0.3405392000000001,
+        "turns": 10,
+        "output": 4764
+      },
+      {
+        "name": "list",
+        "ms": 126574,
+        "costUsd": 0.6028890000000001,
+        "turns": 13,
+        "output": 9159
+      },
+      {
+        "name": "stats",
+        "ms": 82768,
+        "costUsd": 0.3785315999999999,
+        "turns": 12,
+        "output": 4631
+      },
+      {
+        "name": "integrate",
+        "ms": 470498,
+        "costUsd": 0.8690680000000001,
+        "turns": 21,
+        "output": 10137
+      }
+    ],
+    "agentMs": 1343402,
+    "worktreeBytes": [
+      122793984,
+      123875328,
+      122908672
+    ],
+    "mainBytes": 167862272,
+    "disk": {
+      "series": [
+        {
+          "s": 0,
+          "dirs": [
+            221184
+          ],
+          "cacheBytes": 0
+        },
+        {
+          "s": 15,
+          "dirs": [
+            221184
+          ],
+          "cacheBytes": 0
+        },
+        {
+          "s": 30,
+          "dirs": [
+            221184
+          ],
+          "cacheBytes": 0
+        },
+        {
+          "s": 45,
+          "dirs": [
+            221184
+          ],
+          "cacheBytes": 0
+        },
+        {
+          "s": 60,
+          "dirs": [
+            221184
+          ],
+          "cacheBytes": 0
+        },
+        {
+          "s": 75,
+          "dirs": [
+            221184
+          ],
+          "cacheBytes": 0
+        },
+        {
+          "s": 90,
+          "dirs": [
+            229376
+          ],
+          "cacheBytes": 0
+        },
+        {
+          "s": 105,
+          "dirs": [
+            12738560
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 120,
+          "dirs": [
+            12738560
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 135,
+          "dirs": [
+            12738560
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 150,
+          "dirs": [
+            12738560
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 165,
+          "dirs": [
+            12738560
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 180,
+          "dirs": [
+            12738560
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 195,
+          "dirs": [
+            12738560
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 210,
+          "dirs": [
+            12742656
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 225,
+          "dirs": [
+            12742656
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 240,
+          "dirs": [
+            12750848
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 255,
+          "dirs": [
+            12750848
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 270,
+          "dirs": [
+            12750848
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 285,
+          "dirs": [
+            12759040
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 300,
+          "dirs": [
+            12759040
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 315,
+          "dirs": [
+            12759040
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 330,
+          "dirs": [
+            12767232
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 345,
+          "dirs": [
+            12775424
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 360,
+          "dirs": [
+            12775424
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 375,
+          "dirs": [
+            12783616
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 390,
+          "dirs": [
+            12783616
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 405,
+          "dirs": [
+            12812288
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 420,
+          "dirs": [
+            12812288
+          ],
+          "cacheBytes": 3158016
+        },
+        {
+          "s": 435,
+          "dirs": [
+            68055040
+          ],
+          "cacheBytes": 61661184
+        },
+        {
+          "s": 450,
+          "dirs": [
+            68718592
+          ],
+          "cacheBytes": 68861952
+        },
+        {
+          "s": 465,
+          "dirs": [
+            113397760
+          ],
+          "cacheBytes": 68935680
+        },
+        {
+          "s": 480,
+          "dirs": [
+            125104128
+          ],
+          "cacheBytes": 68935680
+        },
+        {
+          "s": 495,
+          "dirs": [
+            125104128
+          ],
+          "cacheBytes": 68935680
+        },
+        {
+          "s": 510,
+          "dirs": [
+            125108224
+          ],
+          "cacheBytes": 68935680
+        },
+        {
+          "s": 525,
+          "dirs": [
+            31023104
+          ],
+          "cacheBytes": 68939776
+        },
+        {
+          "s": 540,
+          "dirs": [
+            52240384
+          ],
+          "cacheBytes": 68943872
+        },
+        {
+          "s": 555,
+          "dirs": [
+            144805888
+          ],
+          "cacheBytes": 68943872
+        },
+        {
+          "s": 570,
+          "dirs": [
+            164655104
+          ],
+          "cacheBytes": 68943872
+        },
+        {
+          "s": 585,
+          "dirs": [
+            52449280,
+            167936,
+            167936,
+            167936
+          ],
+          "cacheBytes": 68943872
+        },
+        {
+          "s": 600,
+          "dirs": [
+            52449280,
+            167936,
+            167936,
+            167936
+          ],
+          "cacheBytes": 68943872
+        },
+        {
+          "s": 615,
+          "dirs": [
+            52449280,
+            12697600,
+            167936,
+            176128
+          ],
+          "cacheBytes": 68947968
+        },
+        {
+          "s": 630,
+          "dirs": [
+            52449280,
+            113467392,
+            167936,
+            73367552
+          ],
+          "cacheBytes": 68964352
+        },
+        {
+          "s": 645,
+          "dirs": [
+            52449280,
+            122793984,
+            176128,
+            125927424
+          ],
+          "cacheBytes": 68976640
+        },
+        {
+          "s": 660,
+          "dirs": [
+            52449280,
+            122793984,
+            176128,
+            122908672
+          ],
+          "cacheBytes": 68976640
+        },
+        {
+          "s": 675,
+          "dirs": [
+            52449280,
+            122793984,
+            114405376,
+            122908672
+          ],
+          "cacheBytes": 68988928
+        },
+        {
+          "s": 690,
+          "dirs": [
+            52449280,
+            122793984,
+            126865408,
+            122908672
+          ],
+          "cacheBytes": 68993024
+        },
+        {
+          "s": 705,
+          "dirs": [
+            52449280,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 68993024
+        },
+        {
+          "s": 720,
+          "dirs": [
+            52588544,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 68993024
+        },
+        {
+          "s": 735,
+          "dirs": [
+            133836800,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69001216
+        },
+        {
+          "s": 750,
+          "dirs": [
+            128942080,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 765,
+          "dirs": [
+            128942080,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 780,
+          "dirs": [
+            128942080,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 795,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 810,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 825,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 840,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 855,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 871,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 886,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 901,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 916,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 931,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 946,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 961,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 976,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 991,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 1006,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 1021,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 1036,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 1051,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 1066,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 1081,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 1096,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 1111,
+          "dirs": [
+            138919936,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 1126,
+          "dirs": [
+            138924032,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69005312
+        },
+        {
+          "s": 1141,
+          "dirs": [
+            161087488,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69013504
+        },
+        {
+          "s": 1156,
+          "dirs": [
+            172855296,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69013504
+        },
+        {
+          "s": 1171,
+          "dirs": [
+            167940096,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69017600
+        },
+        {
+          "s": 1178,
+          "dirs": [
+            167968768,
+            122793984,
+            123875328,
+            122908672
+          ],
+          "cacheBytes": 69017600
+        }
+      ],
+      "peakBytes": 542433280,
+      "peakCacheBytes": 69017600
+    }
+  }
+}

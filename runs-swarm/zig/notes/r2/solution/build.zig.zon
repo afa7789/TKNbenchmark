@@ -1,0 +1,13 @@
+.{
+    .name = .notes,
+    .version = "0.0.1",
+    .dependencies = .{
+        .sqlite = .{
+            .url = "https://sqlite.org/2026/sqlite-autoconf-3540100.tar.gz",
+            .hash = "N-V-__8AAIAUxgDw-ekdWkSyn-UlfnooAhAFgfPfuwjTrMp-",
+        },
+    },
+    .minimum_zig_version = "0.16.0",
+    .paths = .{""},
+    .fingerprint = 0x11ba68c18ccee9d,
+}

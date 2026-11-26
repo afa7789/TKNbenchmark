@@ -68,6 +68,12 @@ function repairFields(a, v, found) {
 // Disk for N parallel worktrees: per-project artifacts are duplicated, global caches are shared.
 const worktrees = (v, n) => (v ? n * v.projectBytes + v.cacheBytes : null)
 
+// Peak disk sampled while the agent(s) worked: the solo control's own, or a swarm team's.
+function diskFields(a) {
+  const d = a.swarm?.disk ?? a.disk
+  return { diskPeakBytes: d?.peakBytes ?? null, cachePeakBytes: d?.peakCacheBytes ?? null }
+}
+
 // One perf record's headline number: throughput for kvhttp, else wall time.
 const perfValue = (p) => p?.rps ?? p?.wallMs ?? null
 
@@ -77,6 +83,7 @@ function publicRun({ agent: a, verify: v, tokens: t, perf: p, repair: rp, devloo
     durationS: a.durationMs / 1000,
     // The harness's own clock around the agent(s): the one clock both solo runs and swarm teams have.
     wallS: a.wallMs / 1000,
+    ...diskFields(a),
     apiS: a.apiMs / 1000,
     ...fields(v, same('solved', 'pass', 'total', 'buildOk', 'buildSecs', 'footprintBytes', 'projectBytes', 'cacheBytes', 'binaryBytes')),
     failures: (v?.cases ?? []).filter((c) => !c.ok).map((c) => ({ name: c.name, why: c.why })),
@@ -374,6 +381,11 @@ function swarmFields(rs, soloRuns) {
       soloWallS: wall(soloRuns),
       teamWallS: wall(rs),
       wallSpeedup: wall(soloRuns) / wall(rs),
+      // Peak disk while working (the dev-loop study samples it; earlier runs have none).
+      soloPeakBytes: stats(soloRuns.map((r) => r.diskPeakBytes))?.median ?? null,
+      teamPeakBytes: stats(rs.map((r) => r.diskPeakBytes))?.median ?? null,
+      soloCachePeakBytes: stats(soloRuns.map((r) => r.cachePeakBytes))?.median ?? null,
+      teamCachePeakBytes: stats(rs.map((r) => r.cachePeakBytes))?.median ?? null,
       agentS: stats(rs.map((r) => r.swarm?.agentS)),
       worktreeBytes: stats(rs.map((r) => r.swarm?.worktreeBytes)),
       conflictedFiles: sum(rs.map((r) => r.swarm?.conflictedFiles)),
@@ -388,12 +400,14 @@ function skillFields(lang, rs, sides, nTasks, beyondNoise, skills) {
   return { skill, breakEvenRuns: beyondNoise ? breakEven(skill.costUsd, sides, nTasks) : null }
 }
 
+// Per language; the swarm arm has two tasks (suite, notes), compared one at a time as "lang/task".
 function vsBase(cells, runs) {
   const base = readJson(join(BASE_OUT, 'results.json'))
   const skills = opt(join(SKILLS, 'meta.json')) ?? {}
-  const byLang = Object.groupBy(runs, (r) => r.lang)
+  const byKey = Object.groupBy(runs, (r) => (ARM === 'swarm' ? `${r.lang}/${r.task}` : r.lang))
   return Object.fromEntries(
-    Object.entries(byLang).map(([lang, rs]) => {
+    Object.entries(byKey).map(([key, rs]) => {
+      const lang = rs[0].lang
       const tasks = [...new Set(rs.map((r) => r.task))].filter((t) => base.summary.cells[`${lang}/${t}`]).sort()
       const sides = { base: armSide(base.summary.cells, base.runs, lang, tasks), arm: armSide(cells, runs, lang, tasks) }
       // A cost change counts only outside the baseline's own spread between repetitions.
@@ -401,7 +415,7 @@ function vsBase(cells, runs) {
       // Speed vs the same case written from scratch: paired timings when present, else both arms' medians.
       const speed = pairedSpeed(rs, 'scratch') ?? speedChange(sides.base, sides.arm)
       const extra = { skills: () => skillFields(lang, rs, sides, tasks.length, beyondNoise, skills), swarm: () => swarmFields(rs, base.runs.filter((r) => r.lang === lang && tasks.includes(r.task))) }[ARM]?.() ?? { port: portFields(rs, base) }
-      return [lang, { tasks, ...sides, beyondNoise, speedChange: speed, ...extra }]
+      return [key, { tasks, ...sides, beyondNoise, speedChange: speed, ...extra }]
     }),
   )
 }
@@ -450,6 +464,8 @@ function build() {
   const meta = { generatedAt: new Date().toISOString(), arm: ARM, arms, spend, model: MODEL, effort: EFFORT, toolchains, langs: LANGS, frontends: FRONTENDS, tasks: TASKS, external: EXTERNAL }
   const baseData = ARM === 'base' ? null : readJson(join(BASE_OUT, 'results.json'))
   const compare = baseData ? { vsBase: vsBase(cells, runs), effect: pairedEffect(baseData.runs, runs), length: lengthEffect(baseData.summary.cells, cells) } : {}
+  // The swarm arm's two tasks are compared separately.
+  if (ARM === 'swarm') compare.effectByTask = Object.fromEntries([...new Set(runs.map((r) => r.task))].map((t) => [t, pairedEffect(baseData.runs.filter((r) => r.task === t), runs.filter((r) => r.task === t))]))
   // The two rankings against each other: cost to write vs speed of the code (main languages).
   const ranked = Object.keys(langs).filter((l) => Number.isFinite(langs[l].perfTotal))
   // Disk over an edit-rebuild loop (bench/growth.mjs), one series per language.

@@ -1,0 +1,188 @@
+{
+  "id": "go-notes-r2",
+  "lang": "go",
+  "task": "notes",
+  "rep": 2,
+  "arm": "base",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "exitCode": 0,
+  "wallMs": 245384,
+  "files": [
+    "build.sh",
+    "go.mod",
+    "go.sum",
+    "internal/notes/note.go",
+    "internal/notes/note_test.go",
+    "internal/notes/store.go",
+    "internal/notes/store_test.go",
+    "internal/server/server.go",
+    "internal/server/server_test.go",
+    "main.go"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.8401410000000002,
+  "durationMs": 244693,
+  "apiMs": 202976,
+  "turns": 15,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 30,
+    "output": 21471,
+    "thinking": 3814,
+    "cacheRead": 429965,
+    "cacheWrite": 40576
+  },
+  "tools": {
+    "Bash": 11,
+    "Write": 3
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 5,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 11,
+    "total": 11
+  },
+  "disk": {
+    "series": [
+      {
+        "s": 0,
+        "dirs": [
+          45056
+        ],
+        "cacheBytes": 0
+      },
+      {
+        "s": 15,
+        "dirs": [
+          45056
+        ],
+        "cacheBytes": 0
+      },
+      {
+        "s": 30,
+        "dirs": [
+          45056
+        ],
+        "cacheBytes": 0
+      },
+      {
+        "s": 45,
+        "dirs": [
+          45056
+        ],
+        "cacheBytes": 0
+      },
+      {
+        "s": 60,
+        "dirs": [
+          53248
+        ],
+        "cacheBytes": 0
+      },
+      {
+        "s": 75,
+        "dirs": [
+          57344
+        ],
+        "cacheBytes": 0
+      },
+      {
+        "s": 90,
+        "dirs": [
+          57344
+        ],
+        "cacheBytes": 0
+      },
+      {
+        "s": 105,
+        "dirs": [
+          69632
+        ],
+        "cacheBytes": 0
+      },
+      {
+        "s": 120,
+        "dirs": [
+          69632
+        ],
+        "cacheBytes": 0
+      },
+      {
+        "s": 135,
+        "dirs": [
+          77824
+        ],
+        "cacheBytes": 0
+      },
+      {
+        "s": 150,
+        "dirs": [
+          81920
+        ],
+        "cacheBytes": 322756608
+      },
+      {
+        "s": 165,
+        "dirs": [
+          15142912
+        ],
+        "cacheBytes": 545492992
+      },
+      {
+        "s": 180,
+        "dirs": [
+          10141696
+        ],
+        "cacheBytes": 700563456
+      },
+      {
+        "s": 195,
+        "dirs": [
+          10149888
+        ],
+        "cacheBytes": 700870656
+      },
+      {
+        "s": 210,
+        "dirs": [
+          10149888
+        ],
+        "cacheBytes": 715784192
+      },
+      {
+        "s": 225,
+        "dirs": [
+          10153984
+        ],
+        "cacheBytes": 779755520
+      },
+      {
+        "s": 240,
+        "dirs": [
+          10153984
+        ],
+        "cacheBytes": 920203264
+      },
+      {
+        "s": 245,
+        "dirs": [
+          10153984
+        ],
+        "cacheBytes": 920932352
+      }
+    ],
+    "peakBytes": 15142912,
+    "peakCacheBytes": 920932352
+  }
+}

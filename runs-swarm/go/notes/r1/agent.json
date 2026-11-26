@@ -1,0 +1,390 @@
+{
+  "id": "go-notes-r1",
+  "lang": "go",
+  "task": "notes",
+  "rep": 1,
+  "arm": "swarm",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "files": [
+    ".gitignore",
+    "README.md",
+    "build.sh",
+    "cmd/notes/main.go",
+    "go.mod",
+    "go.sum",
+    "internal/api/crud.go",
+    "internal/api/crud_test.go",
+    "internal/api/input.go",
+    "internal/api/input_test.go",
+    "internal/api/list.go",
+    "internal/api/list_test.go",
+    "internal/api/notes.go",
+    "internal/api/respond.go",
+    "internal/api/server.go",
+    "internal/api/server_test.go",
+    "internal/api/stats.go",
+    "internal/store/crud.go",
+    "internal/store/crud_test.go",
+    "internal/store/list.go",
+    "internal/store/list_test.go",
+    "internal/store/notes.go",
+    "internal/store/stats.go",
+    "internal/store/stats_test.go",
+    "internal/store/store.go",
+    "internal/store/store_test.go"
+  ],
+  "turns": 58,
+  "builds": 21,
+  "compileErrors": 0,
+  "stdlibReads": 0,
+  "checkRuns": 10,
+  "toolErrors": 1,
+  "usage": {
+    "input": 116,
+    "output": 45116,
+    "cacheRead": 1328133,
+    "cacheWrite": 135421
+  },
+  "costUsd": 2.2517786,
+  "tools": {
+    "Bash": 53
+  },
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 11,
+    "total": 11
+  },
+  "reply": "DONE",
+  "skillsOffered": [],
+  "durationMs": 449157,
+  "wallMs": 449157,
+  "swarm": {
+    "phases": [
+      {
+        "name": "lead",
+        "ms": 193045,
+        "costUsd": 0.6127430000000001,
+        "turns": 14,
+        "output": 16106
+      },
+      {
+        "name": "crud",
+        "ms": 54491,
+        "costUsd": 0.27877779999999996,
+        "turns": 7,
+        "output": 4563
+      },
+      {
+        "name": "list",
+        "ms": 110047,
+        "costUsd": 0.4551976,
+        "turns": 14,
+        "output": 9614
+      },
+      {
+        "name": "stats",
+        "ms": 47397,
+        "costUsd": 0.21721,
+        "turns": 7,
+        "output": 3650
+      },
+      {
+        "name": "integrate",
+        "ms": 145752,
+        "costUsd": 0.6878502000000001,
+        "turns": 16,
+        "output": 11183
+      }
+    ],
+    "agentMs": 550732,
+    "worktreeBytes": [
+      10207232,
+      10207232,
+      10203136
+    ],
+    "mainBytes": 10706944,
+    "disk": {
+      "series": [
+        {
+          "s": 0,
+          "dirs": [
+            221184
+          ],
+          "cacheBytes": 0
+        },
+        {
+          "s": 15,
+          "dirs": [
+            221184
+          ],
+          "cacheBytes": 0
+        },
+        {
+          "s": 30,
+          "dirs": [
+            221184
+          ],
+          "cacheBytes": 0
+        },
+        {
+          "s": 45,
+          "dirs": [
+            225280
+          ],
+          "cacheBytes": 313454592
+        },
+        {
+          "s": 60,
+          "dirs": [
+            229376
+          ],
+          "cacheBytes": 317427712
+        },
+        {
+          "s": 75,
+          "dirs": [
+            237568
+          ],
+          "cacheBytes": 317427712
+        },
+        {
+          "s": 90,
+          "dirs": [
+            237568
+          ],
+          "cacheBytes": 317427712
+        },
+        {
+          "s": 105,
+          "dirs": [
+            237568
+          ],
+          "cacheBytes": 317427712
+        },
+        {
+          "s": 120,
+          "dirs": [
+            274432
+          ],
+          "cacheBytes": 322494464
+        },
+        {
+          "s": 135,
+          "dirs": [
+            278528
+          ],
+          "cacheBytes": 530329600
+        },
+        {
+          "s": 150,
+          "dirs": [
+            286720
+          ],
+          "cacheBytes": 650047488
+        },
+        {
+          "s": 165,
+          "dirs": [
+            286720
+          ],
+          "cacheBytes": 838520832
+        },
+        {
+          "s": 180,
+          "dirs": [
+            10338304
+          ],
+          "cacheBytes": 887009280
+        },
+        {
+          "s": 195,
+          "dirs": [
+            10539008,
+            143360,
+            143360,
+            143360
+          ],
+          "cacheBytes": 887373824
+        },
+        {
+          "s": 210,
+          "dirs": [
+            10539008,
+            143360,
+            143360,
+            143360
+          ],
+          "cacheBytes": 887373824
+        },
+        {
+          "s": 225,
+          "dirs": [
+            10539008,
+            151552,
+            147456,
+            147456
+          ],
+          "cacheBytes": 896008192
+        },
+        {
+          "s": 240,
+          "dirs": [
+            10539008,
+            155648,
+            147456,
+            10203136
+          ],
+          "cacheBytes": 905256960
+        },
+        {
+          "s": 255,
+          "dirs": [
+            10539008,
+            10207232,
+            147456,
+            10203136
+          ],
+          "cacheBytes": 906743808
+        },
+        {
+          "s": 270,
+          "dirs": [
+            10539008,
+            10207232,
+            147456,
+            10203136
+          ],
+          "cacheBytes": 907968512
+        },
+        {
+          "s": 285,
+          "dirs": [
+            10539008,
+            10207232,
+            10207232,
+            10203136
+          ],
+          "cacheBytes": 913297408
+        },
+        {
+          "s": 300,
+          "dirs": [
+            10579968,
+            10207232,
+            10207232,
+            10203136
+          ],
+          "cacheBytes": 913297408
+        },
+        {
+          "s": 315,
+          "dirs": [
+            10702848,
+            10207232,
+            10207232,
+            10203136
+          ],
+          "cacheBytes": 913297408
+        },
+        {
+          "s": 330,
+          "dirs": [
+            10743808,
+            10207232,
+            10207232,
+            10203136
+          ],
+          "cacheBytes": 914579456
+        },
+        {
+          "s": 345,
+          "dirs": [
+            10760192,
+            10207232,
+            10207232,
+            10203136
+          ],
+          "cacheBytes": 919797760
+        },
+        {
+          "s": 360,
+          "dirs": [
+            10760192,
+            10207232,
+            10207232,
+            10203136
+          ],
+          "cacheBytes": 919797760
+        },
+        {
+          "s": 375,
+          "dirs": [
+            10760192,
+            10207232,
+            10207232,
+            10203136
+          ],
+          "cacheBytes": 924696576
+        },
+        {
+          "s": 390,
+          "dirs": [
+            10760192,
+            10207232,
+            10207232,
+            10203136
+          ],
+          "cacheBytes": 924733440
+        },
+        {
+          "s": 405,
+          "dirs": [
+            10760192,
+            10207232,
+            10207232,
+            10203136
+          ],
+          "cacheBytes": 925106176
+        },
+        {
+          "s": 420,
+          "dirs": [
+            10760192,
+            10207232,
+            10207232,
+            10203136
+          ],
+          "cacheBytes": 925106176
+        },
+        {
+          "s": 435,
+          "dirs": [
+            10764288,
+            10207232,
+            10207232,
+            10203136
+          ],
+          "cacheBytes": 928325632
+        },
+        {
+          "s": 449,
+          "dirs": [
+            10813440,
+            10207232,
+            10207232,
+            10203136
+          ],
+          "cacheBytes": 929927168
+        }
+      ],
+      "peakBytes": 41431040,
+      "peakCacheBytes": 929927168
+    }
+  }
+}
