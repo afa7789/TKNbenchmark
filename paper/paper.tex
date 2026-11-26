@@ -54,7 +54,9 @@ training, did the skill replace work (standard-library reads \ZigStdBase{}$\to$\
 cost (\SkillDeltaZig). Porting a working program from our three slowest languages to five common rewrite
 targets also cost more than writing it from scratch, in \NPortCostlier{} of \NPortPairs{} pairs
 (\PortDeltaMin{} to \PortDeltaMax), with every port correct; Zig ports ran a median \PortSpeedZig$\times$
-faster than their source.
+faster than their source. Finally, a team of agents (a lead, three workers in parallel git worktrees and an
+integrator) built a three-part program slower than one agent alone in all \NSwarmLangs{} languages tried
+(\SwarmSpeedMin--\SwarmSpeedMax$\times$ the solo speed) and cost \SwarmCostMin{} to \SwarmCostMax{} more.
 \end{abstract}
 
 \paragraph{Key findings.}
@@ -81,6 +83,9 @@ faster than their source.
         source--target pairs (\PortDeltaMin{} to \PortDeltaMax), US\$\,\PortPerKMin--\PortPerKMax{} per
         1,000 source lines; the target set both the price and the speed gained (Zig \PortSpeedZig$\times$,
         Rust \PortSpeedRust$\times$, Go \PortSpeedGo$\times$ faster than the source).
+  \item \textbf{One agent beat a team of agents.} On a three-part program, a lead + three parallel workers
+        + an integrator finished at \SwarmSpeedMin--\SwarmSpeedMax$\times$ the solo agent's speed and cost
+        \SwarmCostMin{} to \SwarmCostMax{} more, with no merge conflicts (\SwarmConflicts) in any run.
   \item \textbf{Check the I/O idiom before blaming the language.} C++'s slow \texttt{calc} read standard
         input one character at a time; with \texttt{fread} the same program ran about 20$\times$ faster.
 \end{enumerate}
@@ -340,6 +345,28 @@ session.}
 \PortTable
 \end{table}
 
+\subsection{A team of agents vs one}
+
+The \texttt{suite} task joins \texttt{wordfreq}, \texttt{lru} and \texttt{calc} as subcommands of one
+program, checked by their own hidden suites. The solo control is one agent with the usual prompt. A team is
+a lead that sets up the build and one module per subcommand, three workers that implement them at the same
+time, each in its own git worktree, and an integrator that merges the branches; teams ran one at a time.
+Table~\ref{tab:swarm} compares them. Every solo and every team run worked after repair. The team was slower
+in wall-clock time in all \NSwarmLangs{} languages (\SwarmSpeedMin--\SwarmSpeedMax$\times$ the solo
+speed) and cost \SwarmCostMin{} to \SwarmCostMax{} more. No integrator met a merge conflict
+(\SwarmConflicts{} in all). The three worktrees held \SwarmDiskZig\,MB for Zig, \SwarmDiskRust\,MB for
+Rust and \SwarmDiskGo\,MB for Go.
+
+\begin{table}[h]
+\centering\small
+\caption{Solo agent vs team on the \texttt{suite} task (medians of three). Works: runs that passed the
+hidden tests in round 3 or after repair. s: the solo agent's time vs the team's wall-clock time from the
+lead's start to the integrator's end. $\times$sooner: solo time divided by team time (above 1, the team
+finished first). MB 3 trees: disk held by the three workers' worktrees with their build output.}
+\label{tab:swarm}
+\SwarmTable
+\end{table}
+
 \section{Discussion}
 
 \paragraph{H1 (Zig): rejected in this setting.} Zig cost US\$\,\CostZig{} against US\$\,\CostRust{} for
@@ -427,6 +454,18 @@ specification and a test suite. The target, not the source, set the price: porti
 from any source, and Zig ports were the dearest, as Zig was to write from scratch. The speed gained was large
 for the native targets and small for TypeScript, and every port ran as fast as code written from scratch in
 the target, so a port carried over no slowness from its source.
+
+\paragraph{H8 (swarm): H8a rejected, H8b confirmed, H8c only for Zig here.} Parallel workers did not make
+the work finish sooner, because the phases are sequential: the lead must set up the skeleton before anyone
+can start, the slowest worker sets the pace, and the integrator merges and tests at the end; each of the five
+agents also starts by reading the specification and the code. One agent writing a few hundred lines in
+two or three minutes beat that critical path in every language, and paid for one context instead of five.
+The lead's split into one module per subcommand worked: no integrator met a conflict. Disk followed where
+build output lives: Zig compiles its standard library into each worktree's cache and its three worktrees held
+the most; Rust's \texttt{target/} stayed small because this program has no dependencies, so the per-worktree
+cost that H8c expected for Rust appears with dependencies, as in \texttt{kvhttp} (H2 above), not with the
+standard library alone. Teams should pay off on work large enough for the parallel part to outweigh the setup
+and the merge, which these tasks are not.
 
 \paragraph{Why C++ was slow.} C++ ranked below C, Rust and Go in speed (Table~\ref{tab:speed}), mostly
 because of \texttt{calc}: all three runs read standard input through \texttt{std::istreambuf\_iterator},

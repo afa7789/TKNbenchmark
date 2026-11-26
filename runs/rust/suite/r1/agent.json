@@ -1,0 +1,55 @@
+{
+  "id": "rust-suite-r1",
+  "lang": "rust",
+  "task": "suite",
+  "rep": 1,
+  "arm": "base",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": null,
+  "exitCode": 0,
+  "wallMs": 114349,
+  "files": [
+    "Cargo.lock",
+    "Cargo.toml",
+    "build.sh",
+    "src/calc.rs",
+    "src/lru.rs",
+    "src/main.rs",
+    "src/wordfreq.rs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.4860802,
+  "durationMs": 113731,
+  "apiMs": 98579,
+  "turns": 9,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 18,
+    "output": 11100,
+    "thinking": 2028,
+    "cacheRead": 200041,
+    "cacheWrite": 28000
+  },
+  "tools": {
+    "Bash": 7,
+    "Edit": 1
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 17,
+    "total": 17
+  }
+}

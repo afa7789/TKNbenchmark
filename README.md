@@ -91,6 +91,22 @@ npm run bench -- --reps 3 && npm run verify && npm run verify:front && npm run r
 npm run perf -- --paired && npm run count && npm run aggregate   # into runs-skills/; perf of both arms, interleaved
 ```
 
+### Migration and swarm
+
+- **Port arms** (`TKN_ARM=port-<lang>`): the agent gets the baseline's working `<lang>` solution in
+  `./.source/` and ports it to a target; `perf --paired` times source, scratch-written and ported binaries
+  in one session. The page reports cost per 1,000 source lines and the speed gained.
+- **Swarm** (`TKN_ARM=swarm`, `bench/swarm.mjs`): the `suite` task (wordfreq + lru + calc as subcommands of
+  one program) built by a lead, three workers in parallel git worktrees and an integrator; the solo control
+  is `run.mjs --tasks suite` in the base arm. Records wall-clock, summed agent time, worktree disk and merge
+  conflicts.
+
+```sh
+TKN_ARM=port-python npm run bench -- --langs rust,go,ts,kotlin,zig --tasks wordfreq,lru,calc,kvhttp
+TKN_ARM=base npm run bench -- --tasks suite --langs zig,rust,go,c,odin --jobs 3
+TKN_ARM=swarm npm run swarm
+```
+
 ## Layout
 
 ```

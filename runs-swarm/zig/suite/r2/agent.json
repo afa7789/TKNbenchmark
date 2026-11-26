@@ -1,0 +1,100 @@
+{
+  "id": "zig-suite-r2",
+  "lang": "zig",
+  "task": "suite",
+  "rep": 2,
+  "arm": "swarm",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "files": [
+    ".gitignore",
+    "build.sh",
+    "build.zig",
+    "build.zig.zon",
+    "src/calc/Evaluator.zig",
+    "src/calc/calc.zig",
+    "src/lru/Cache.zig",
+    "src/lru/lru.zig",
+    "src/main.zig",
+    "src/wordfreq/wordfreq.zig"
+  ],
+  "turns": 59,
+  "builds": 13,
+  "compileErrors": 3,
+  "stdlibReads": 10,
+  "checkRuns": 7,
+  "toolErrors": 0,
+  "usage": {
+    "input": 110,
+    "output": 42046,
+    "cacheRead": 1028111,
+    "cacheWrite": 111502
+  },
+  "costUsd": 1.9389982000000001,
+  "tools": {
+    "Bash": 48,
+    "Write": 5,
+    "Edit": 1
+  },
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 17,
+    "total": 17
+  },
+  "reply": "DONE",
+  "skillsOffered": [],
+  "durationMs": 376913,
+  "wallMs": 376913,
+  "swarm": {
+    "phases": [
+      {
+        "name": "lead",
+        "ms": 97848,
+        "costUsd": 0.3201214,
+        "turns": 12,
+        "output": 6809
+      },
+      {
+        "name": "wordfreq",
+        "ms": 70248,
+        "costUsd": 0.2163798,
+        "turns": 9,
+        "output": 5020
+      },
+      {
+        "name": "lru",
+        "ms": 108056,
+        "costUsd": 0.400093,
+        "turns": 10,
+        "output": 9535
+      },
+      {
+        "name": "calc",
+        "ms": 103790,
+        "costUsd": 0.38314679999999995,
+        "turns": 10,
+        "output": 9519
+      },
+      {
+        "name": "integrate",
+        "ms": 170781,
+        "costUsd": 0.6192572000000001,
+        "turns": 18,
+        "output": 11163
+      }
+    ],
+    "agentMs": 550723,
+    "worktreeBytes": [
+      45260800,
+      60149760,
+      45309952
+    ],
+    "mainBytes": 61763584,
+    "conflicts": 0
+  }
+}

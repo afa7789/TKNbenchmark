@@ -1,0 +1,229 @@
+{
+  "buildOk": true,
+  "buildSecs": 0.1,
+  "buildLog": "",
+  "binaryBytes": 35312,
+  "projectBytes": 90112,
+  "cacheBytes": 0,
+  "footprintBytes": 90112,
+  "pass": 43,
+  "total": 43,
+  "solved": true,
+  "cases": [
+    {
+      "name": "wordfreq/simple",
+      "ok": true,
+      "ms": 3
+    },
+    {
+      "name": "wordfreq/case-folding",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "wordfreq/top-10-and-ties",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "wordfreq/empty",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "wordfreq/separators",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "wordfreq/medium-200kb",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "wordfreq/utf8-letters-are-separators",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "wordfreq/invalid-utf8",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "wordfreq/no-words",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "wordfreq/single-word-no-newline",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "wordfreq/all-ties",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "wordfreq/long-word",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "wordfreq/crlf",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "wordfreq/large-30mb",
+      "ok": true,
+      "ms": 81
+    },
+    {
+      "name": "lru/spec-example",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "lru/overwrite-refreshes",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "lru/del-and-size",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "lru/capacity-one",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "lru/medium-50k-ops",
+      "ok": true,
+      "ms": 4
+    },
+    {
+      "name": "lru/get-refreshes",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "lru/overwrite-keeps-size",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "lru/del-then-set",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "lru/no-trailing-newline",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "lru/only-capacity",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "lru/long-tokens",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "lru/punctuation-keys",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "lru/large-1m-ops",
+      "ok": true,
+      "ms": 69
+    },
+    {
+      "name": "lru/large-tiny-cap",
+      "ok": true,
+      "ms": 16
+    },
+    {
+      "name": "calc/spec-example",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/precedence",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/division-and-remainder",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/unary-minus",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/syntax-errors",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/blank-lines",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/literal-overflow",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/int64-min",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/mul-overflow",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/sub-overflow",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/parens",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/whitespace",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/operators-misused",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/other-chars",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "calc/random-20k-lines",
+      "ok": true,
+      "ms": 4
+    }
+  ]
+}

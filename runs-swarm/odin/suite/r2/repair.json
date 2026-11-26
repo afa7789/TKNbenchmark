@@ -1,0 +1,25 @@
+{
+  "fixed": true,
+  "attempts": [
+    {
+      "n": 1,
+      "costUsd": 0.3197786,
+      "durationS": 93.059,
+      "turns": 12,
+      "usage": {
+        "input": 24,
+        "output": 6210,
+        "thinking": 2116,
+        "cacheRead": 184213,
+        "cacheWrite": 19830
+      },
+      "compileErrors": 0,
+      "pass": 43,
+      "total": 43,
+      "solved": true
+    }
+  ],
+  "costUsd": 0.3197786,
+  "durationS": 93.059,
+  "output": 6210
+}

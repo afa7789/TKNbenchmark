@@ -1,0 +1,99 @@
+{
+  "id": "go-suite-r2",
+  "lang": "go",
+  "task": "suite",
+  "rep": 2,
+  "arm": "swarm",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "files": [
+    ".gitignore",
+    "build.sh",
+    "go.mod",
+    "internal/calc/calc.go",
+    "internal/calc/calc_test.go",
+    "internal/lru/lru.go",
+    "internal/lru/lru_test.go",
+    "internal/wordfreq/wordfreq.go",
+    "internal/wordfreq/wordfreq_test.go",
+    "main.go"
+  ],
+  "turns": 38,
+  "builds": 9,
+  "compileErrors": 0,
+  "stdlibReads": 0,
+  "checkRuns": 4,
+  "toolErrors": 1,
+  "usage": {
+    "input": 74,
+    "output": 24867,
+    "cacheRead": 441843,
+    "cacheWrite": 66109
+  },
+  "costUsd": 1.1148765999999999,
+  "tools": {
+    "Bash": 30,
+    "Write": 3
+  },
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 17,
+    "total": 17
+  },
+  "reply": "DONE",
+  "skillsOffered": [],
+  "durationMs": 193872,
+  "wallMs": 193872,
+  "swarm": {
+    "phases": [
+      {
+        "name": "lead",
+        "ms": 39756,
+        "costUsd": 0.1527404,
+        "turns": 6,
+        "output": 2645
+      },
+      {
+        "name": "wordfreq",
+        "ms": 62545,
+        "costUsd": 0.17816920000000003,
+        "turns": 8,
+        "output": 4116
+      },
+      {
+        "name": "lru",
+        "ms": 61512,
+        "costUsd": 0.2207572,
+        "turns": 7,
+        "output": 5266
+      },
+      {
+        "name": "calc",
+        "ms": 89092,
+        "costUsd": 0.32102639999999993,
+        "turns": 8,
+        "output": 8613
+      },
+      {
+        "name": "integrate",
+        "ms": 64794,
+        "costUsd": 0.2421834,
+        "turns": 9,
+        "output": 4227
+      }
+    ],
+    "agentMs": 317699,
+    "worktreeBytes": [
+      1773568,
+      1810432,
+      1777664
+    ],
+    "mainBytes": 2170880,
+    "conflicts": 0
+  }
+}

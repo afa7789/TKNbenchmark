@@ -1,0 +1,104 @@
+{
+  "id": "c-suite-r3",
+  "lang": "c",
+  "task": "suite",
+  "rep": 3,
+  "arm": "swarm",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "files": [
+    ".gitignore",
+    "Makefile",
+    "README.md",
+    "build.sh",
+    "src/calc/calc.c",
+    "src/calc/calc.h",
+    "src/calc/eval.c",
+    "src/calc/eval.h",
+    "src/lru/cache.c",
+    "src/lru/cache.h",
+    "src/lru/lru.c",
+    "src/lru/lru.h",
+    "src/main.c",
+    "src/wordfreq/wordfreq.c",
+    "src/wordfreq/wordfreq.h"
+  ],
+  "turns": 46,
+  "builds": 10,
+  "compileErrors": 0,
+  "stdlibReads": 0,
+  "checkRuns": 6,
+  "toolErrors": 0,
+  "usage": {
+    "input": 86,
+    "output": 36683,
+    "cacheRead": 670787,
+    "cacheWrite": 94455
+  },
+  "costUsd": 1.6238014,
+  "tools": {
+    "Bash": 37,
+    "Write": 4
+  },
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 17,
+    "total": 17
+  },
+  "reply": "DONE",
+  "skillsOffered": [],
+  "durationMs": 245173,
+  "wallMs": 245173,
+  "swarm": {
+    "phases": [
+      {
+        "name": "lead",
+        "ms": 45084,
+        "costUsd": 0.1874878,
+        "turns": 6,
+        "output": 4043
+      },
+      {
+        "name": "wordfreq",
+        "ms": 69602,
+        "costUsd": 0.229964,
+        "turns": 7,
+        "output": 5307
+      },
+      {
+        "name": "lru",
+        "ms": 122654,
+        "costUsd": 0.45547100000000007,
+        "turns": 13,
+        "output": 11987
+      },
+      {
+        "name": "calc",
+        "ms": 95041,
+        "costUsd": 0.34048179999999995,
+        "turns": 8,
+        "output": 9141
+      },
+      {
+        "name": "integrate",
+        "ms": 77214,
+        "costUsd": 0.4103968,
+        "turns": 12,
+        "output": 6205
+      }
+    ],
+    "agentMs": 409595,
+    "worktreeBytes": [
+      286720,
+      188416,
+      180224
+    ],
+    "mainBytes": 569344,
+    "conflicts": 0
+  }
+}

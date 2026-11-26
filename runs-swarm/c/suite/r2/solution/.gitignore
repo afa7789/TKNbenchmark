@@ -1,0 +1,17 @@
+target/
+zig-out/
+.zig-cache/
+zig-cache/
+nimcache/
+build/
+node_modules/
+.git/
+obj/
+out/
+.cache/
+.sandbox-home/
+_build/
+dist-newstyle/
+_opam/
+/app
+*.o

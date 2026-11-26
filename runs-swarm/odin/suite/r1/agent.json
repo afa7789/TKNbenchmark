@@ -1,0 +1,99 @@
+{
+  "id": "odin-suite-r1",
+  "lang": "odin",
+  "task": "suite",
+  "rep": 1,
+  "arm": "swarm",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "files": [
+    ".gitignore",
+    "README.md",
+    "build.sh",
+    "src/calc/calc.odin",
+    "src/calc/eval.odin",
+    "src/ioutil/read_all.odin",
+    "src/lru/cache.odin",
+    "src/lru/lru.odin",
+    "src/main.odin",
+    "src/wordfreq/wordfreq.odin"
+  ],
+  "turns": 61,
+  "builds": 8,
+  "compileErrors": 0,
+  "stdlibReads": 1,
+  "checkRuns": 8,
+  "toolErrors": 1,
+  "usage": {
+    "input": 116,
+    "output": 32596,
+    "cacheRead": 949732,
+    "cacheWrite": 93307
+  },
+  "costUsd": 1.5887864,
+  "tools": {
+    "Bash": 51,
+    "Write": 5
+  },
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 17,
+    "total": 17
+  },
+  "reply": "DONE",
+  "skillsOffered": [],
+  "durationMs": 275346,
+  "wallMs": 275346,
+  "swarm": {
+    "phases": [
+      {
+        "name": "lead",
+        "ms": 52317,
+        "costUsd": 0.1951262,
+        "turns": 7,
+        "output": 3872
+      },
+      {
+        "name": "wordfreq",
+        "ms": 81999,
+        "costUsd": 0.23342340000000003,
+        "turns": 10,
+        "output": 4466
+      },
+      {
+        "name": "lru",
+        "ms": 125902,
+        "costUsd": 0.4807914,
+        "turns": 19,
+        "output": 10481
+      },
+      {
+        "name": "calc",
+        "ms": 77416,
+        "costUsd": 0.30166339999999997,
+        "turns": 11,
+        "output": 6762
+      },
+      {
+        "name": "integrate",
+        "ms": 96879,
+        "costUsd": 0.377782,
+        "turns": 14,
+        "output": 7015
+      }
+    ],
+    "agentMs": 434513,
+    "worktreeBytes": [
+      335872,
+      360448,
+      344064
+    ],
+    "mainBytes": 737280,
+    "conflicts": 0
+  }
+}

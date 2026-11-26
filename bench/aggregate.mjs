@@ -426,7 +426,9 @@ function check() {
   const d = readJson(file)
   const problems = d.runs.flatMap(runProblems)
   if (!d.runs.length) problems.push('no runs')
-  if (!Object.keys(d.summary.langs).length) problems.push('no language summary')
+  // A ranked task's runs must reach the language summary (the swarm arm has only the unranked suite task).
+  const ranked = d.runs.some((r) => !TASKS[r.task].frontend && !TASKS[r.task].track && !TASKS[r.task].swarm)
+  if (ranked && !Object.keys(d.summary.langs).length) problems.push('no language summary')
   if (ARM !== 'base') problems.push(...armProblems(d))
   if (problems.length) {
     console.error(problems.join('\n'))
