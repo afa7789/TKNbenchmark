@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Produces ./app: a launcher that runs the TypeScript sources with Node.js,
+# which executes .ts files natively (type stripping); no compile step needed.
+set -euo pipefail
+cd "$(dirname "$0")"
+cat > app <<'LAUNCHER'
+#!/usr/bin/env bash
+exec node --disable-warning=ExperimentalWarning "$(dirname "$0")/src/main.ts" "$@"
+LAUNCHER
+chmod +x app

@@ -1,0 +1,154 @@
+{
+  "task": "kvhttp",
+  "file": "Sources/KVHTTP/Connection.swift",
+  "cycles": 20,
+  "series": [
+    {
+      "cycle": 0,
+      "ok": true,
+      "secs": 10.38,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 1,
+      "ok": true,
+      "secs": 9.83,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 2,
+      "ok": true,
+      "secs": 9.77,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 3,
+      "ok": true,
+      "secs": 9.83,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 4,
+      "ok": true,
+      "secs": 9.78,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 5,
+      "ok": true,
+      "secs": 10.1,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 6,
+      "ok": true,
+      "secs": 10.38,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 7,
+      "ok": true,
+      "secs": 10.16,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 8,
+      "ok": true,
+      "secs": 10.18,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 9,
+      "ok": true,
+      "secs": 9.89,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 10,
+      "ok": true,
+      "secs": 9.95,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 11,
+      "ok": true,
+      "secs": 10.16,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 12,
+      "ok": true,
+      "secs": 10.22,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 13,
+      "ok": true,
+      "secs": 10.17,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 14,
+      "ok": true,
+      "secs": 9.99,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 15,
+      "ok": true,
+      "secs": 10.11,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 16,
+      "ok": true,
+      "secs": 9.99,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 17,
+      "ok": true,
+      "secs": 10.01,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 18,
+      "ok": true,
+      "secs": 10.05,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 19,
+      "ok": true,
+      "secs": 10.04,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 20,
+      "ok": true,
+      "secs": 9.83,
+      "projectBytes": 114688,
+      "cacheBytes": 0
+    }
+  ]
+}

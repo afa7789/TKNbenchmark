@@ -1,0 +1,52 @@
+{
+  "id": "ts-wordfreq-r1",
+  "lang": "ts",
+  "task": "wordfreq",
+  "rep": 1,
+  "arm": "port-js",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "js",
+  "exitCode": 0,
+  "wallMs": 61668,
+  "files": [
+    "app",
+    "build.sh",
+    "package.json",
+    "src/wordfreq.ts",
+    "tsconfig.json"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.19437980000000002,
+  "durationMs": 60957,
+  "apiMs": 46919,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 14,
+    "output": 3462,
+    "thinking": 602,
+    "cacheRead": 80179,
+    "cacheWrite": 13631
+  },
+  "tools": {
+    "Bash": 6
+  },
+  "toolErrors": 3,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 1,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

@@ -1,0 +1,2 @@
+#!/bin/sh
+exec java -XX:+UseSerialGC -Xshare:auto -cp "$(dirname "$0")/build/wordfreq.jar" wordfreq.WordFreqKt "$@"

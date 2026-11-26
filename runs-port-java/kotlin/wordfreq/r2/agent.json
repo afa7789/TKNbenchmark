@@ -1,0 +1,51 @@
+{
+  "id": "kotlin-wordfreq-r2",
+  "lang": "kotlin",
+  "task": "wordfreq",
+  "rep": 2,
+  "arm": "port-java",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "java",
+  "exitCode": 0,
+  "wallMs": 67028,
+  "files": [
+    "app",
+    "build.sh",
+    "src/main/kotlin/wordfreq/Main.kt",
+    "src/main/kotlin/wordfreq/WordCounter.kt"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.29809840000000004,
+  "durationMs": 66427,
+  "apiMs": 55527,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe Kotlin port passes all 6 cases in `node check.mjs`. On two 50 MB inputs (generated word text and random bytes) its output was byte-for-byte the same as the Java original's, in about 0.2 seconds.\n\n- **Source:** `src/main/kotlin/wordfreq/Main.kt` and `WordCounter.kt`. They keep the original's hash table and storage layout. One change: to find the top 10, it keeps a running list of the 10 best words instead of sorting every distinct word.\n- **Build:** `build.sh` compiles with `kotlinc` in",
+  "skillsOffered": [],
+  "usage": {
+    "input": 14,
+    "output": 4987,
+    "thinking": 568,
+    "cacheRead": 119592,
+    "cacheWrite": 21798
+  },
+  "tools": {
+    "Bash": 6
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

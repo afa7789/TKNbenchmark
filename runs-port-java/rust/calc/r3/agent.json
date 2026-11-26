@@ -1,0 +1,54 @@
+{
+  "id": "rust-calc-r3",
+  "lang": "rust",
+  "task": "calc",
+  "rep": 3,
+  "arm": "port-java",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "java",
+  "exitCode": 0,
+  "wallMs": 89913,
+  "files": [
+    ".gitignore",
+    "Cargo.lock",
+    "Cargo.toml",
+    "build.sh",
+    "src/error.rs",
+    "src/main.rs",
+    "src/parser.rs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.37664580000000003,
+  "durationMs": 89111,
+  "apiMs": 77949,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 16,
+    "output": 7424,
+    "thinking": 1568,
+    "cacheRead": 150949,
+    "cacheWrite": 24739
+  },
+  "tools": {
+    "Bash": 7
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": "zig-wordfreq-r3",
+  "lang": "zig",
+  "task": "wordfreq",
+  "rep": 3,
+  "arm": "port-java",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "java",
+  "exitCode": 0,
+  "wallMs": 94162,
+  "files": [
+    "build.sh",
+    "build.zig",
+    "src/WordCounter.zig",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.4595264000000001,
+  "durationMs": 93586,
+  "apiMs": 71789,
+  "turns": 10,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 18,
+    "output": 6166,
+    "thinking": 1599,
+    "cacheRead": 227192,
+    "cacheWrite": 36337
+  },
+  "tools": {
+    "Bash": 9
+  },
+  "toolErrors": 1,
+  "stdlibReads": 3,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

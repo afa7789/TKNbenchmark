@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+cds=()
+[[ -f "$dir/build/wordfreq.jsa" ]] && cds=(-XX:SharedArchiveFile="$dir/build/wordfreq.jsa" -Xshare:auto)
+exec java -XX:+UseSerialGC "${cds[@]}" -cp "$dir/build/wordfreq.jar" wordfreq.WordFreqKt "$@"

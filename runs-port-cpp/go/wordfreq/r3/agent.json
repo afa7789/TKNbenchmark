@@ -1,0 +1,51 @@
+{
+  "id": "go-wordfreq-r3",
+  "lang": "go",
+  "task": "wordfreq",
+  "rep": 3,
+  "arm": "port-cpp",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "cpp",
+  "exitCode": 0,
+  "wallMs": 37904,
+  "files": [
+    "build.sh",
+    "go.mod",
+    "main.go",
+    "main_test.go"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.21366500000000002,
+  "durationMs": 37289,
+  "apiMs": 33727,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 10,
+    "output": 2957,
+    "thinking": 305,
+    "cacheRead": 66225,
+    "cacheWrite": 17655
+  },
+  "tools": {
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

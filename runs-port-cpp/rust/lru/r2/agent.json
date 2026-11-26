@@ -1,0 +1,52 @@
+{
+  "id": "rust-lru-r2",
+  "lang": "rust",
+  "task": "lru",
+  "rep": 2,
+  "arm": "port-cpp",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "cpp",
+  "exitCode": 0,
+  "wallMs": 73303,
+  "files": [
+    "Cargo.lock",
+    "Cargo.toml",
+    "build.sh",
+    "src/lru_cache.rs",
+    "src/main.rs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.35482299999999994,
+  "durationMs": 72683,
+  "apiMs": 66682,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 14,
+    "output": 6952,
+    "thinking": 1180,
+    "cacheRead": 124955,
+    "cacheWrite": 23842
+  },
+  "tools": {
+    "Bash": 6
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 1,
+  "checkRuns": 3,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "zig-wordfreq-r2",
+  "lang": "zig",
+  "task": "wordfreq",
+  "rep": 2,
+  "arm": "port-js",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "js",
+  "exitCode": 0,
+  "wallMs": 80941,
+  "files": [
+    "build.sh",
+    "build.zig",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.3182968,
+  "durationMs": 80335,
+  "apiMs": 62187,
+  "turns": 9,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "I've ported the program to Zig, and it passes all 6 cases in `node check.mjs`. On a 50 MB generated input, 20 MB of random bytes and 300,000 distinct words, its output matches the original JavaScript byte for byte. The 50 MB input takes about 0.11 s. I didn't run the hidden tests.\n\nThe code is in `src/main.zig` with a small `build.zig`, and it uses only the standard library. It lower-cases words in place in the input buffer and counts them in a hash map that points into that buffer, so it doesn'",
+  "skillsOffered": [],
+  "usage": {
+    "input": 18,
+    "output": 4984,
+    "thinking": 636,
+    "cacheRead": 163924,
+    "cacheWrite": 23220
+  },
+  "tools": {
+    "Bash": 8
+  },
+  "toolErrors": 0,
+  "stdlibReads": 3,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

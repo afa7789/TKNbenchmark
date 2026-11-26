@@ -1,0 +1,19 @@
+{
+  "name": "kvhttp",
+  "version": "1.0.0",
+  "description": "In-memory HTTP/1.1 key-value server",
+  "type": "module",
+  "main": "dist/server.js",
+  "private": true,
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/server.js",
+    "test": "node check.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.11",
+    "typescript": "^7.0.2"
+  }
+}

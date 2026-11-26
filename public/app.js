@@ -420,6 +420,7 @@ function skillFindings(d, arm) {
     li('A language skill made the agent costlier, not cheaper.', `With one researched SKILL.md per language, ${costlier} of ${rows.length} languages cost more beyond their run-to-run spread and ${cheaper} cost less; per run, the median went ${fmt.usd(e.costUsd.base)} → ${fmt.usd(e.costUsd.arm)} (${pctOf(e.costUsd)}). Correctness did not move (${works('arm')}/${n('arm')} runs worked with it, ${works('base')}/${n('base')} without), nor did the speed of the code (median ${fmt.ratio(speedMedian(rows))}, measured paired).`),
     li('The skill is paid as context, not as work.', `Loading and applying it takes ${nf(0).format(e.turns.arm - e.turns.base)} more turns per run (${e.turns.base} → ${e.turns.arm}); ${fmt.pct(e.costShare.cacheWrite)} of the extra spend is context written to the prompt cache (the skill's text and those turns, at twice the input price), ${fmt.pct(e.costShare.cacheRead)} context re-read and only ${fmt.pct(e.costShare.output)} the agent's own output.`),
   ]
+  if (e.durationS) out.push(li('Nor did it save time.', `The median run took ${fmt.secs(e.durationS.base)} without the skill and ${fmt.secs(e.durationS.arm)} with it (${signed(change(e.durationS.base, e.durationS.arm))}); only ${e.fasterRuns} of ${e.pairs} runs finished sooner with it.`))
   const c = e.code
   if (c) {
     out.push(li('The code was not better, only more tested.', `With the skill, ${c.solved.arm} of ${e.pairs} runs passed the hidden tests in round 3 (${c.solved.base} without), the examples passed on the first check in ${c.firstTry.arm} (${c.firstTry.base}), and the code ran as fast (median ${fmt.ratio(speedMedian(rows))}) at about the same size (${fmt.int(c.codeTokens.base)} → ${fmt.int(c.codeTokens.arm)} tokens, median run). What changed was the process: ${c.withTests.arm} runs left tests behind (${c.withTests.base} without), in more files (${c.files.base} → ${c.files.arm}), and met more compiler errors on the way (${c.compileErrors.base} → ${c.compileErrors.arm}). The model already knows these languages; the hidden tests, not the skill, kept the code correct.`))
@@ -623,7 +624,8 @@ function swarmNote(d, sw) {
   const dc = rows.map(([, v]) => change(v.base.costUsd, v.arm.costUsd))
   const disk = [...rows].sort((a, b) => b[1].swarm.worktreeBytes.median - a[1].swarm.worktreeBytes.median)
   const sooner = rows.filter(([, v]) => v.swarm.wallSpeedup > 1).length
-  return `<strong>${sooner ? `The team finished sooner in ${sooner} of ${rows.length} languages` : 'One agent beat the team'}.</strong> On this three-part program the team's wall-clock was ${fmt.ratio(Math.min(...speed))}–${fmt.ratio(Math.max(...speed))} the solo agent's speed (above ×1 = sooner) and it cost ${signed(Math.min(...dc))} to ${signed(Math.max(...dc))} more: the lead, the three parallel workers and the integrator run one after another, and each starts by reading the specification. The three worktrees held the most for ${esc(label(d, disk[0][0]))} (${fmt.bytes(disk[0][1].swarm.worktreeBytes.median)}) and the least for ${esc(label(d, disk.at(-1)[0]))} (${fmt.bytes(disk.at(-1)[1].swarm.worktreeBytes.median)})${sw.summary.vsBase.rust ? `; Rust's held ${fmt.bytes(sw.summary.vsBase.rust.swarm.worktreeBytes.median)}, since this program has no dependencies for target/ to fill` : ''}.`
+  const range = (k) => `${fmt.secs(Math.min(...rows.map(([, v]) => v.swarm[k])))}–${fmt.secs(Math.max(...rows.map(([, v]) => v.swarm[k])))}`
+  return `<strong>${sooner ? `The team finished sooner in ${sooner} of ${rows.length} languages` : 'One agent beat the team'}.</strong> On this three-part program the team's wall-clock was ${fmt.ratio(Math.min(...speed))}–${fmt.ratio(Math.max(...speed))} the solo agent's speed (above ×1 = sooner) and it cost ${signed(Math.min(...dc))} to ${signed(Math.max(...dc))} more. The agents never talk to each other; the time went to handoffs in series: the lead (${range('leadS')}), then the slowest of the three parallel workers (${range('slowestWorkerS')}), then the integrator (${range('integrateS')}), and each of the five starts by reading the specification and the code again. The three worktrees held the most for ${esc(label(d, disk[0][0]))} (${fmt.bytes(disk[0][1].swarm.worktreeBytes.median)}) and the least for ${esc(label(d, disk.at(-1)[0]))} (${fmt.bytes(disk.at(-1)[1].swarm.worktreeBytes.median)})${sw.summary.vsBase.rust ? `; Rust's held ${fmt.bytes(sw.summary.vsBase.rust.swarm.worktreeBytes.median)}, since this program has no dependencies for target/ to fill` : ''}.`
 }
 
 function renderSwarm(d, sw) {
@@ -642,15 +644,24 @@ const growthOf = (g) => (g.series.at(-1).projectBytes - g.series[0].projectBytes
 // Why a language's build output grows, where the toolchain documents it.
 const GROWTH_CAUSE = { zig: 'Zig adds each build to .zig-cache and never removes old entries' }
 
-// One line per language: the project's build output after each rebuild. The three that grow most, plus
-// Rust and Go, in full ink and labelled; the rest muted, named on hover.
+// One line per language: the project's build output after each rebuild. Those that grow, the two largest,
+// Rust and Go in full ink and labelled (a label too close to the one below is left to the hover); the rest
+// muted, named on hover.
 function growthChart(d, G, langs) {
-  const [W, H, L, R, T, B] = [640, 300, 44, 96, 12, 30]
+  const [W, H, L, R, T, B] = [640, 300, 72, 96, 12, 30]
   const n = Math.max(...langs.map((l) => G[l].cycles))
   const max = Math.max(...langs.flatMap((l) => G[l].series.map((s) => s.projectBytes))) * 1.05
   const x = (c) => L + (c / n) * (W - L - R)
   const y = (v) => T + (1 - v / max) * (H - T - B)
-  const emph = new Set([...langs.slice(0, 3), 'rust', 'go'].filter((l) => G[l]))
+  const final = (l) => G[l].series.at(-1).projectBytes
+  const largest = [...langs].sort((a, b) => final(b) - final(a)).slice(0, 2)
+  const emph = new Set([...langs.filter((l) => growthOf(G[l]) > 0.1e6), ...largest, 'rust', 'go'].filter((l) => G[l]))
+  const labelled = new Set()
+  let lastY = Infinity
+  for (const l of [...emph].sort((a, b) => final(a) - final(b))) {
+    if (lastY - y(final(l)) >= 13) labelled.add(l)
+    if (labelled.has(l)) lastY = y(final(l))
+  }
   const step = [10e6, 20e6, 50e6, 100e6, 200e6, 500e6, 1e9].find((st) => max / st <= 6)
   const ticks = Array.from({ length: Math.floor(max / step) + 1 }, (_, i) => i * step)
   const grid = ticks.map((t) => `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" class="grid"/>${svgText(L - 6, y(t) + 4, fmt.bytes(t), 'text-anchor="end" class="muted"')}`).join('')
@@ -659,7 +670,7 @@ function growthChart(d, G, langs) {
     const s = G[l].series
     const path = s.map((p, i) => `${i ? 'L' : 'M'}${x(p.cycle).toFixed(1)},${y(p.projectBytes).toFixed(1)}`).join('')
     const tip = `${label(d, l)}: ${fmt.bytes(s[0].projectBytes)} after the first build, ${fmt.bytes(s.at(-1).projectBytes)} after ${G[l].cycles} more (${fmt.bytes(growthOf(G[l]))} per build)`
-    const end = emph.has(l) ? svgText(x(n) + 6, y(s.at(-1).projectBytes) + 4, label(d, l), 'class="strong"') : ''
+    const end = labelled.has(l) ? svgText(x(n) + 6, y(s.at(-1).projectBytes) + 4, label(d, l), 'class="strong"') : ''
     return `<g data-tip="${esc(tip)}" class="slope${emph.has(l) ? ' moved' : ''}"><path d="${path}" class="link" fill="none"/>${end}</g>`
   })
   return `<svg class="viz" viewBox="0 0 ${W} ${H + 6}" role="img" aria-label="Project build output after each rebuild, per language">${grid}${xAxis}${lines.join('')}</svg>`
@@ -668,7 +679,7 @@ function growthChart(d, G, langs) {
 const GROWTH_COLS = [
   ['After 1st build', (g) => fmt.bytes(g.series[0].projectBytes)],
   [`After rebuilds`, (g) => fmt.bytes(g.series.at(-1).projectBytes)],
-  ['Per rebuild', (g) => fmt.bytes(growthOf(g))],
+  ['Per rebuild', (g) => fmt.bytes(Math.max(0, growthOf(g)))],
   ['Global caches', (g) => fmt.bytes(g.series.at(-1).cacheBytes)],
   ['Rebuild time', (g) => fmt.secs(median(g.series.slice(1).map((s) => s.secs)))],
 ]

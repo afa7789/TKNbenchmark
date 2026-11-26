@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-26T13:19:39.334Z",
+    "generatedAt": "2026-11-26T13:35:52.930Z",
     "arm": "base",
     "arms": [
       "port-c",
@@ -426,7 +426,8 @@
         "kind": "http",
         "title": "Notes service",
         "topic": "HTTP, JSON and SQLite with dependencies: solo vs a swarm at work",
-        "swarm": true
+        "swarm": true,
+        "devLoop": true
       }
     },
     "external": {
@@ -13289,59 +13290,2775 @@
     ],
     "costSpeedRho": 0.5748194014447884,
     "growth": {
-      "rust": {
+      "asm": {
         "task": "kvhttp",
-        "file": "src/routes.rs",
-        "cycles": 2,
+        "file": "src/http.s",
+        "cycles": 20,
         "series": [
           {
             "cycle": 0,
             "ok": true,
-            "secs": 13.36,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 0.16,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 0.16,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 0.16,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 0.16,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 0.18,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 0.17,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          }
+        ]
+      },
+      "c": {
+        "task": "kvhttp",
+        "file": "src/main.c",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 0.58,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 0.21,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          }
+        ]
+      },
+      "clojure": {
+        "task": "kvhttp",
+        "file": "src/kvhttp/handler.clj",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 5.05,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 2.75,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 2.76,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 2.77,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 2.91,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 2.75,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 2.8,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 2.79,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 2.77,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 2.81,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 2.66,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 2.69,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 2.78,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 2.72,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 2.76,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 2.69,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 2.68,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 2.66,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 2.69,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 2.66,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 2.74,
+            "projectBytes": 6488064,
+            "cacheBytes": 11702272
+          }
+        ]
+      },
+      "cpp": {
+        "task": "kvhttp",
+        "file": "src/http.cpp",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 1.24,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 1.13,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 1.17,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 1.15,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 1.13,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 1.14,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 1.24,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 1.22,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 1.23,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 1.22,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 1.23,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 1.2,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 1.21,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 1.21,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 1.21,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 1.17,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 1.15,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 1.16,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 1.14,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 1.14,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 1.17,
+            "projectBytes": 65536,
+            "cacheBytes": 0
+          }
+        ]
+      },
+      "csharp": {
+        "task": "kvhttp",
+        "file": "src/KvHttp/KvHandler.cs",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 5.56,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 1.97,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 1.97,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 1.99,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 2,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 2,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 2.04,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 1.79,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 2.03,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 1.97,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 2.03,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 2.01,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 1.94,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 1.97,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 2.01,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 2.02,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 2.03,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 2.04,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 2,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 2.06,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 2.02,
+            "projectBytes": 219926528,
+            "cacheBytes": 56483840
+          }
+        ]
+      },
+      "go": {
+        "task": "kvhttp",
+        "file": "internal/kv/handler.go",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 3.19,
+            "projectBytes": 5632000,
+            "cacheBytes": 109187072
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 5632000,
+            "cacheBytes": 109502464
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 0.21,
+            "projectBytes": 5632000,
+            "cacheBytes": 109817856
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 0.23,
+            "projectBytes": 5632000,
+            "cacheBytes": 110133248
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 0.23,
+            "projectBytes": 5632000,
+            "cacheBytes": 110448640
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 0.24,
+            "projectBytes": 5632000,
+            "cacheBytes": 110764032
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 0.23,
+            "projectBytes": 5632000,
+            "cacheBytes": 111079424
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 0.23,
+            "projectBytes": 5632000,
+            "cacheBytes": 111394816
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 0.22,
+            "projectBytes": 5632000,
+            "cacheBytes": 111710208
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 0.21,
+            "projectBytes": 5632000,
+            "cacheBytes": 112025600
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 0.22,
+            "projectBytes": 5632000,
+            "cacheBytes": 112340992
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 0.21,
+            "projectBytes": 5632000,
+            "cacheBytes": 112656384
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 0.21,
+            "projectBytes": 5632000,
+            "cacheBytes": 112971776
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 0.21,
+            "projectBytes": 5632000,
+            "cacheBytes": 113287168
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 0.21,
+            "projectBytes": 5632000,
+            "cacheBytes": 113602560
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 0.22,
+            "projectBytes": 5632000,
+            "cacheBytes": 113917952
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 0.22,
+            "projectBytes": 5632000,
+            "cacheBytes": 114233344
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 0.21,
+            "projectBytes": 5632000,
+            "cacheBytes": 114548736
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 0.22,
+            "projectBytes": 5632000,
+            "cacheBytes": 114864128
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 0.21,
+            "projectBytes": 5632000,
+            "cacheBytes": 115179520
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 0.21,
+            "projectBytes": 5632000,
+            "cacheBytes": 115494912
+          }
+        ]
+      },
+      "haskell": {
+        "task": "kvhttp",
+        "file": "src/Main.hs",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 116.18,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372135424
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 1.74,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372135424
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 1.51,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372135424
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 1.55,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372135424
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 1.59,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372135424
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 1.8,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372135424
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 1.55,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372135424
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 1.56,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372135424
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 1.56,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372135424
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 1.54,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372139520
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 1.58,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372139520
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 1.58,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372139520
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 1.57,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372139520
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 1.51,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372139520
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 1.53,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372139520
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 1.75,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372139520
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 1.51,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372139520
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 1.5,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372139520
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 1.51,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372139520
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 1.52,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372139520
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 1.5,
+            "projectBytes": 102461440,
+            "cacheBytes": 1372143616
+          }
+        ]
+      },
+      "java": {
+        "task": "kvhttp",
+        "file": "src/main/java/kvhttp/KvHandler.java",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 0.58,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 0.47,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 0.47,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 0.46,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 0.46,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 0.46,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 0.51,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 0.5,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 0.5,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 0.5,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 0.48,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 0.49,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 0.54,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 0.51,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 0.5,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 0.53,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 0.5,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 0.49,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 0.54,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 0.52,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 0.49,
+            "projectBytes": 36864,
+            "cacheBytes": 0
+          }
+        ]
+      },
+      "js": {
+        "task": "kvhttp",
+        "file": "src/server.js",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 0.14,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 0.14,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          }
+        ]
+      },
+      "kotlin": {
+        "task": "kvhttp",
+        "file": "src/main/kotlin/Main.kt",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 2.64,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 2.48,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 2.39,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 2.39,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 2.42,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 2.51,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 2.46,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 2.57,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 2.38,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 2.35,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 2.38,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 2.34,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 2.33,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 2.33,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 2.32,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 2.32,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 2.32,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 2.32,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 2.35,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 2.36,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 2.33,
+            "projectBytes": 5754880,
+            "cacheBytes": 0
+          }
+        ]
+      },
+      "nim": {
+        "task": "kvhttp",
+        "file": "src/kvhttp.nim",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 1.39,
+            "projectBytes": 2703360,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 0.94,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 0.89,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 0.93,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 0.95,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 0.98,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 0.95,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 0.89,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 0.9,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 0.96,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 0.91,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 0.9,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 0.91,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 0.9,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 0.9,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 0.96,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 0.93,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 0.92,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 0.93,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 0.96,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 0.92,
+            "projectBytes": 2682880,
+            "cacheBytes": 0
+          }
+        ]
+      },
+      "ocaml": {
+        "task": "kvhttp",
+        "file": "src/http.ml",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 0.69,
+            "projectBytes": 3481600,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 3493888,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 0.21,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 0.21,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 0.18,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 0.2,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 0.18,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 0.18,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 0.18,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 0.18,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 0.18,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 0.19,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 0.18,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 0.18,
+            "projectBytes": 3469312,
+            "cacheBytes": 0
+          }
+        ]
+      },
+      "odin": {
+        "task": "kvhttp",
+        "file": "src/http.odin",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 2.08,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 1.76,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 1.75,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 1.74,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 1.77,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 1.77,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 1.76,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 1.76,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 1.76,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 1.77,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 1.76,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 1.75,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 1.74,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 1.74,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 1.75,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 1.77,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 1.75,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 1.78,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 1.74,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 1.77,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 1.97,
+            "projectBytes": 331776,
+            "cacheBytes": 0
+          }
+        ]
+      },
+      "python": {
+        "task": "kvhttp",
+        "file": "kvhttp/server.py",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 0.14,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 0.11,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 0.13,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 0.12,
+            "projectBytes": 28672,
+            "cacheBytes": 0
+          }
+        ]
+      },
+      "rust": {
+        "task": "kvhttp",
+        "file": "src/routes.rs",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 10.61,
             "projectBytes": 55648256,
             "cacheBytes": 28336128
           },
           {
             "cycle": 1,
             "ok": true,
-            "secs": 5.13,
+            "secs": 4.47,
             "projectBytes": 55648256,
             "cacheBytes": 28336128
           },
           {
             "cycle": 2,
             "ok": true,
-            "secs": 5.02,
+            "secs": 4.47,
             "projectBytes": 55648256,
             "cacheBytes": 28336128
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 4.61,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 4.6,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 4.65,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 4.44,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 4.43,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 4.46,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 4.51,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 4.43,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 4.38,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 4.56,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 4.76,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 4.9,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 4.53,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 4.51,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 4.57,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 4.68,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 4.5,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 4.79,
+            "projectBytes": 55648256,
+            "cacheBytes": 28336128
+          }
+        ]
+      },
+      "swift": {
+        "task": "kvhttp",
+        "file": "Sources/KVHTTP/Connection.swift",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 10.38,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 9.83,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 9.77,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 9.83,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 9.78,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 10.1,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 10.38,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 10.16,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 10.18,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 9.89,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 9.95,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 10.16,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 10.22,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 10.17,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 9.99,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 10.11,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 9.99,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 10.01,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 10.05,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 10.04,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 9.83,
+            "projectBytes": 114688,
+            "cacheBytes": 0
+          }
+        ]
+      },
+      "ts": {
+        "task": "kvhttp",
+        "file": "src/server.ts",
+        "cycles": 20,
+        "series": [
+          {
+            "cycle": 0,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 1,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 2,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 0.1,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 0.1,
+            "projectBytes": 0,
+            "cacheBytes": 0
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 0.09,
+            "projectBytes": 0,
+            "cacheBytes": 0
           }
         ]
       },
       "zig": {
         "task": "kvhttp",
         "file": "src/main.zig",
-        "cycles": 2,
+        "cycles": 20,
         "series": [
           {
             "cycle": 0,
             "ok": true,
-            "secs": 9.67,
+            "secs": 9.78,
             "projectBytes": 21946368,
-            "cacheBytes": 45383680
+            "cacheBytes": 46424064
           },
           {
             "cycle": 1,
             "ok": true,
-            "secs": 5.38,
+            "secs": 4.79,
             "projectBytes": 24825856,
-            "cacheBytes": 45387776
+            "cacheBytes": 46428160
           },
           {
             "cycle": 2,
             "ok": true,
-            "secs": 4.99,
+            "secs": 4.84,
             "projectBytes": 27705344,
-            "cacheBytes": 45391872
+            "cacheBytes": 46432256
+          },
+          {
+            "cycle": 3,
+            "ok": true,
+            "secs": 4.87,
+            "projectBytes": 30584832,
+            "cacheBytes": 46436352
+          },
+          {
+            "cycle": 4,
+            "ok": true,
+            "secs": 4.92,
+            "projectBytes": 33464320,
+            "cacheBytes": 46440448
+          },
+          {
+            "cycle": 5,
+            "ok": true,
+            "secs": 4.95,
+            "projectBytes": 36343808,
+            "cacheBytes": 46444544
+          },
+          {
+            "cycle": 6,
+            "ok": true,
+            "secs": 4.78,
+            "projectBytes": 39223296,
+            "cacheBytes": 46448640
+          },
+          {
+            "cycle": 7,
+            "ok": true,
+            "secs": 4.72,
+            "projectBytes": 42102784,
+            "cacheBytes": 46452736
+          },
+          {
+            "cycle": 8,
+            "ok": true,
+            "secs": 4.82,
+            "projectBytes": 44982272,
+            "cacheBytes": 46456832
+          },
+          {
+            "cycle": 9,
+            "ok": true,
+            "secs": 4.77,
+            "projectBytes": 47861760,
+            "cacheBytes": 46460928
+          },
+          {
+            "cycle": 10,
+            "ok": true,
+            "secs": 4.88,
+            "projectBytes": 50741248,
+            "cacheBytes": 46465024
+          },
+          {
+            "cycle": 11,
+            "ok": true,
+            "secs": 4.86,
+            "projectBytes": 53620736,
+            "cacheBytes": 46469120
+          },
+          {
+            "cycle": 12,
+            "ok": true,
+            "secs": 4.72,
+            "projectBytes": 56500224,
+            "cacheBytes": 46473216
+          },
+          {
+            "cycle": 13,
+            "ok": true,
+            "secs": 4.73,
+            "projectBytes": 59379712,
+            "cacheBytes": 46477312
+          },
+          {
+            "cycle": 14,
+            "ok": true,
+            "secs": 4.77,
+            "projectBytes": 62259200,
+            "cacheBytes": 46481408
+          },
+          {
+            "cycle": 15,
+            "ok": true,
+            "secs": 4.92,
+            "projectBytes": 65138688,
+            "cacheBytes": 46485504
+          },
+          {
+            "cycle": 16,
+            "ok": true,
+            "secs": 5.08,
+            "projectBytes": 68018176,
+            "cacheBytes": 46489600
+          },
+          {
+            "cycle": 17,
+            "ok": true,
+            "secs": 4.86,
+            "projectBytes": 70897664,
+            "cacheBytes": 46493696
+          },
+          {
+            "cycle": 18,
+            "ok": true,
+            "secs": 4.78,
+            "projectBytes": 73777152,
+            "cacheBytes": 46497792
+          },
+          {
+            "cycle": 19,
+            "ok": true,
+            "secs": 4.69,
+            "projectBytes": 76656640,
+            "cacheBytes": 46501888
+          },
+          {
+            "cycle": 20,
+            "ok": true,
+            "secs": 4.76,
+            "projectBytes": 79536128,
+            "cacheBytes": 46505984
           }
         ]
       }

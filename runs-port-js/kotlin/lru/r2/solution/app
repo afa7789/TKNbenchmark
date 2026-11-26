@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+cds=()
+[[ -f "$dir/build/lru.jsa" ]] && cds=(-XX:SharedArchiveFile="$dir/build/lru.jsa" -Xshare:auto)
+exec java -XX:+UseSerialGC -XX:+TieredCompilation -Xss16m "${cds[@]}" -jar "$dir/build/lru.jar" "$@"

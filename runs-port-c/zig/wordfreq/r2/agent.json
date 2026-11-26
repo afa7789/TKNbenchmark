@@ -1,0 +1,49 @@
+{
+  "id": "zig-wordfreq-r2",
+  "lang": "zig",
+  "task": "wordfreq",
+  "rep": 2,
+  "arm": "port-c",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "c",
+  "exitCode": 0,
+  "wallMs": 58391,
+  "files": [
+    "build.sh",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2807212,
+  "durationMs": 57807,
+  "apiMs": 51870,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nI ported the C program to Zig in `src/main.zig`. `build.sh` builds an optimized binary at `./app`, and `node check.mjs` passes all 6 example cases.\n\n- **Matches the C version:** on a 50 MB generated word input and a 5 MB random-byte input, `./app` printed exactly the same output as the original C build. The 50 MB run took about 0.12 s. Empty input prints nothing and exits with status 0.\n- **Design change:** the C version reads stdin in 64 KB chunks and copies each word into its own hash ta",
+  "skillsOffered": [],
+  "usage": {
+    "input": 14,
+    "output": 4166,
+    "thinking": 436,
+    "cacheRead": 115566,
+    "cacheWrite": 21779
+  },
+  "tools": {
+    "Bash": 6
+  },
+  "toolErrors": 0,
+  "stdlibReads": 2,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

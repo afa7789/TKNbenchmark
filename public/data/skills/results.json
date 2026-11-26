@@ -1,9 +1,13 @@
 {
   "meta": {
-    "generatedAt": "2026-11-26T11:41:57.917Z",
+    "generatedAt": "2026-11-26T13:35:52.378Z",
     "arm": "skills",
     "arms": [
+      "port-c",
       "port-clojure",
+      "port-cpp",
+      "port-java",
+      "port-js",
       "port-python",
       "port-ts",
       "skills",
@@ -417,6 +421,13 @@
         "title": "Three tools in one binary",
         "topic": "one build, three modules: solo vs a swarm of agents",
         "swarm": true
+      },
+      "notes": {
+        "kind": "http",
+        "title": "Notes service",
+        "topic": "HTTP, JSON and SQLite with dependencies: solo vs a swarm at work",
+        "swarm": true,
+        "devLoop": true
       }
     },
     "external": {
@@ -14462,7 +14473,12 @@
           "base": 3,
           "arm": 4
         }
-      }
+      },
+      "durationS": {
+        "base": 50.8935,
+        "arm": 56.8675
+      },
+      "fasterRuns": 100
     },
     "length": {
       "cases": 98,

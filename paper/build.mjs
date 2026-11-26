@@ -255,7 +255,7 @@ function skillMacros(set) {
   set('SkillWorksArm', `${sumOf('arm', 'works')}/${sumOf('arm', 'n')}`)
   // Paired per-run medians: where the arm's extra cost comes from.
   const none = { base: NaN, arm: NaN }
-  const e = ARM_DATA.effect ?? { pairs: 0, costUsd: none, turns: none, cacheWrite: none, cacheRead: none, output: none }
+  const e = ARM_DATA.effect ?? { pairs: 0, costUsd: none, turns: none, cacheWrite: none, cacheRead: none, output: none, durationS: none, fasterRuns: 0 }
   const effPct = (m) => pct(change(m.base, m.arm))
   set('NSkillPairs', e.pairs)
   const speeds = mainSkillKeys.map((k) => V[k].speedChange).filter(Number.isFinite).sort((a, b) => a - b)
@@ -268,6 +268,9 @@ function skillMacros(set) {
   set('SkillCacheWritePct', effPct(e.cacheWrite))
   set('SkillCacheReadPct', effPct(e.cacheRead))
   set('SkillOutputPct', effPct(e.output))
+  set('SkillTimeBase', nf(0)(e.durationS.base))
+  set('SkillTimeArm', nf(0)(e.durationS.arm))
+  set('NSkillFaster', e.fasterRuns)
   const len = ARM_DATA.length ?? { rho: NaN, bins: [{}, {}, {}, {}] }
   set('SkillLenRho', nf(2)(len.rho))
   set('SkillLenShort', pct(len.bins[0].median))
@@ -391,6 +394,10 @@ function swarmMacros(set) {
   set('SwarmCostMin', pct(Math.min(...dc)))
   set('SwarmCostMax', pct(Math.max(...dc)))
   set('SwarmConflicts', int(vs.reduce((a, v) => a + v.swarm.conflictedFiles, 0)))
+  for (const [k, m] of [['leadS', 'Lead'], ['slowestWorkerS', 'Worker'], ['integrateS', 'Integrate']]) {
+    set(`Swarm${m}Min`, secs(Math.min(...vs.map((v) => v.swarm[k]))))
+    set(`Swarm${m}Max`, secs(Math.max(...vs.map((v) => v.swarm[k]))))
+  }
   for (const [k, v] of Object.entries(SW)) set(`SwarmDisk${macroName(k)}`, mb(v.swarm.worktreeBytes?.median))
 }
 

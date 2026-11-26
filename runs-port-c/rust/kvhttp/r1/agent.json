@@ -1,0 +1,55 @@
+{
+  "id": "rust-kvhttp-r1",
+  "lang": "rust",
+  "task": "kvhttp",
+  "rep": 1,
+  "arm": "port-c",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "c",
+  "exitCode": 0,
+  "wallMs": 153368,
+  "files": [
+    ".gitignore",
+    "Cargo.lock",
+    "Cargo.toml",
+    "build.sh",
+    "src/http.rs",
+    "src/main.rs",
+    "src/server.rs",
+    "src/store.rs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.6657746000000002,
+  "durationMs": 152729,
+  "apiMs": 142012,
+  "turns": 12,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nI ported the server to Rust using only the standard library, so `build.sh` has nothing to download. It runs `cargo build --release --locked` and copies the binary to `./app`.\n\n- **Tests:** `node check.mjs` passes 4 of 4 cases, and the 7 unit tests pass.\n- **Manual checks on a random port:** a 1 MiB binary value came back byte-for-byte identical, and a value one byte over the limit got 413. An empty value and invalid keys (empty, 65 characters, `/`, `.`) gave the expected codes. 100 paralle",
+  "skillsOffered": [],
+  "usage": {
+    "input": 22,
+    "output": 14300,
+    "thinking": 2567,
+    "cacheRead": 307073,
+    "cacheWrite": 39784
+  },
+  "tools": {
+    "Bash": 11
+  },
+  "toolErrors": 1,
+  "stdlibReads": 1,
+  "builds": 5,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

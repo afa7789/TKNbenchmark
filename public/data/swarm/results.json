@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-26T13:31:51.102Z",
+    "generatedAt": "2026-11-26T13:35:52.475Z",
     "arm": "swarm",
     "arms": [
       "port-c",
@@ -1365,7 +1365,12 @@
           "base": 6,
           "arm": 9
         }
-      }
+      },
+      "durationS": {
+        "base": 149.549,
+        "arm": 236.761
+      },
+      "fasterRuns": 0
     },
     "length": {
       "cases": 5,

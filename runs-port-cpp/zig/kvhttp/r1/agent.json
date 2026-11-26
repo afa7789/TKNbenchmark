@@ -1,0 +1,56 @@
+{
+  "id": "zig-kvhttp-r1",
+  "lang": "zig",
+  "task": "kvhttp",
+  "rep": 1,
+  "arm": "port-cpp",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "cpp",
+  "exitCode": 0,
+  "wallMs": 330866,
+  "files": [
+    ".gitignore",
+    "build.sh",
+    "build.zig",
+    "build.zig.zon",
+    "src/KvStore.zig",
+    "src/Router.zig",
+    "src/http.zig",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 1.4937474000000002,
+  "durationMs": 330272,
+  "apiMs": 308037,
+  "turns": 29,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 54,
+    "output": 30503,
+    "thinking": 10735,
+    "cacheRead": 1314157,
+    "cacheWrite": 77580
+  },
+  "tools": {
+    "Bash": 24,
+    "Write": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 14,
+  "builds": 4,
+  "compileErrors": 2,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

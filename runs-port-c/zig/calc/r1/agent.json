@@ -1,0 +1,51 @@
+{
+  "id": "zig-calc-r1",
+  "lang": "zig",
+  "task": "calc",
+  "rep": 1,
+  "arm": "port-c",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "c",
+  "exitCode": 0,
+  "wallMs": 106833,
+  "files": [
+    "build.sh",
+    "build.zig",
+    "src/Evaluator.zig",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.4460680000000001,
+  "durationMs": 106276,
+  "apiMs": 88381,
+  "turns": 10,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 18,
+    "output": 8145,
+    "thinking": 1549,
+    "cacheRead": 188800,
+    "cacheWrite": 30667
+  },
+  "tools": {
+    "Bash": 9
+  },
+  "toolErrors": 1,
+  "stdlibReads": 3,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

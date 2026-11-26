@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+cds=()
+[[ -f "$dir/build/kvhttp.jsa" ]] && cds=(-XX:SharedArchiveFile="$dir/build/kvhttp.jsa" -Xshare:auto)
+exec java "${cds[@]}" -XX:+UseSerialGC -Xss512k -jar "$dir/build/kvhttp.jar" "$@"

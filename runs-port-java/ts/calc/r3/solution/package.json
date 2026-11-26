@@ -1,0 +1,7 @@
+{
+  "name": "calc",
+  "private": true,
+  "type": "module",
+  "description": "64-bit signed integer expression evaluator",
+  "main": "src/main.ts"
+}

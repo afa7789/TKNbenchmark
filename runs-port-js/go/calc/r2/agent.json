@@ -1,0 +1,52 @@
+{
+  "id": "go-calc-r2",
+  "lang": "go",
+  "task": "calc",
+  "rep": 2,
+  "arm": "port-js",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "js",
+  "exitCode": 0,
+  "wallMs": 66105,
+  "files": [
+    "build.sh",
+    "calc/calc.go",
+    "calc/calc_test.go",
+    "go.mod",
+    "main.go"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.3313386,
+  "durationMs": 65512,
+  "apiMs": 63149,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 12,
+    "output": 6503,
+    "thinking": 1164,
+    "cacheRead": 96073,
+    "cacheWrite": 22752
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

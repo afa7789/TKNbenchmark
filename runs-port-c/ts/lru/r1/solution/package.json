@@ -1,0 +1,11 @@
+{
+  "name": "lru",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "LRU cache simulator driven by standard input",
+  "scripts": {
+    "build": "bash build.sh",
+    "test": "node check.mjs"
+  }
+}

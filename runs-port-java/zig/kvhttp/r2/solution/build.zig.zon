@@ -1,0 +1,7 @@
+.{
+    .name = .kvhttp,
+    .version = "1.0.0",
+    .fingerprint = 0x135f99fbc301591a,
+    .minimum_zig_version = "0.16.0",
+    .paths = .{ "build.zig", "build.zig.zon", "src" },
+}

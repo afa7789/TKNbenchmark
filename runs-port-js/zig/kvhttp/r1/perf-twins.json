@@ -1,0 +1,14 @@
+{
+  "scratch": {
+    "ok": true,
+    "rps": 25150,
+    "rssBytes": 20971520,
+    "errors": 0
+  },
+  "source": {
+    "ok": true,
+    "rps": 25831,
+    "rssBytes": 86605824,
+    "errors": 0
+  }
+}

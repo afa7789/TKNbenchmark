@@ -78,6 +78,8 @@ integrator) built a three-part program slower than one agent alone in all \NSwar
   \item \textbf{The code was not better, only more tested.} With the skill, \SkillCodeSolvedArm{} runs
         passed the hidden tests in round 3 (\SkillCodeSolvedBase{} without) and the code was as fast and as
         long; \SkillCodeTestsArm{} runs left tests behind (\SkillCodeTestsBase{} without).
+  \item \textbf{Nor did the skill save time.} The median run took \SkillTimeBase\,s without it and
+        \SkillTimeArm\,s with it; only \NSkillFaster{} of \NSkillPairs{} runs finished sooner.
   \item \textbf{The longer the task, the less the skill costs.} The increase fell from \SkillLenShort{}
         where the agent needed fewer than five turns without it to \SkillLenLong{} where it needed twelve
         or more ($\rho = \SkillLenRho$); our tasks are too short for a skill to pay for itself.
@@ -90,7 +92,10 @@ integrator) built a three-part program slower than one agent alone in all \NSwar
         (\PortSpeedMaxPair), but from C at best \PortBestC{} and at worst \PortWorstC{} (\PortWorstTargetC).
   \item \textbf{One agent beat a team of agents.} On a three-part program, a lead + three parallel workers
         + an integrator finished at \SwarmSpeedMin--\SwarmSpeedMax$\times$ the solo agent's speed and cost
-        \SwarmCostMin{} to \SwarmCostMax{} more, with no merge conflicts (\SwarmConflicts) in any run.
+        \SwarmCostMin{} to \SwarmCostMax{} more, with no merge conflicts (\SwarmConflicts) in any run. The
+        agents never talk; the time went to handoffs in series: lead \SwarmLeadMin--\SwarmLeadMax\,s, the
+        slowest worker \SwarmWorkerMin--\SwarmWorkerMax\,s, the integrator
+        \SwarmIntegrateMin--\SwarmIntegrateMax\,s.
   \item \textbf{Check the I/O idiom before blaming the language.} C++'s slow \texttt{calc} read standard
         input one character at a time; with \texttt{fread} the same program ran about 20$\times$ faster.
 \end{enumerate}

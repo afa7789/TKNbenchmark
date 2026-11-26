@@ -1,0 +1,51 @@
+{
+  "id": "go-lru-r2",
+  "lang": "go",
+  "task": "lru",
+  "rep": 2,
+  "arm": "port-cpp",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "cpp",
+  "exitCode": 0,
+  "wallMs": 73138,
+  "files": [
+    "build.sh",
+    "go.mod",
+    "lru/lru.go",
+    "main.go"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2998482,
+  "durationMs": 72608,
+  "apiMs": 68715,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe Go port passes all 5 cases in `node check.mjs`. I also compared it with the original C++ build on four generated inputs of 1,000,000 commands each, using capacities from 1 up to 1,000,000. The output was byte-for-byte identical, and each run took about 0.05–0.13s. Odd inputs gave the same output as the original too: a capacity of 0, extra spaces, missing arguments, blank lines and unknown commands, plus Windows-style `\\r\\n` line endings.\n\n- **`lru/lru.go`** holds the cache. It keeps a ",
+  "skillsOffered": [],
+  "usage": {
+    "input": 12,
+    "output": 5352,
+    "thinking": 612,
+    "cacheRead": 94881,
+    "cacheWrite": 21723
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 3,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

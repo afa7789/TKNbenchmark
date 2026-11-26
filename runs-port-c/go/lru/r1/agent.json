@@ -1,0 +1,52 @@
+{
+  "id": "go-lru-r1",
+  "lang": "go",
+  "task": "lru",
+  "rep": 1,
+  "arm": "port-c",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "c",
+  "exitCode": 0,
+  "wallMs": 162323,
+  "files": [
+    "build.sh",
+    "go.mod",
+    "internal/lru/lru.go",
+    "internal/lru/lru_test.go",
+    "main.go"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.45554400000000006,
+  "durationMs": 163262,
+  "apiMs": 160231,
+  "turns": 7,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe Go port is finished and passes all 5 example cases in `node check.mjs`.\n\nBeyond the examples, I compared it with the original C program, built from `.source/`. On four generated inputs of up to 1,000,000 commands, with capacities from 1 to 1,000,000, the output was byte-for-byte identical. It also matched the C version on odd input: `\\r\\n` line endings, extra spaces, extra tokens, unknown commands and missing arguments. When the first line isn't a valid capacity (empty input, `0`, `abc",
+  "skillsOffered": [],
+  "usage": {
+    "input": 14,
+    "output": 6255,
+    "thinking": 707,
+    "cacheRead": 124960,
+    "cacheWrite": 31962
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 5,
+    "total": 5
+  }
+}

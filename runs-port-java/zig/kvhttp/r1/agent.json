@@ -1,0 +1,57 @@
+{
+  "id": "zig-kvhttp-r1",
+  "lang": "zig",
+  "task": "kvhttp",
+  "rep": 1,
+  "arm": "port-java",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "java",
+  "exitCode": 0,
+  "wallMs": 392969,
+  "files": [
+    ".gitignore",
+    "build.sh",
+    "build.zig",
+    "build.zig.zon",
+    "src/Server.zig",
+    "src/Store.zig",
+    "src/http.zig",
+    "src/main.zig",
+    "src/router.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 1.6406374000000004,
+  "durationMs": 390165,
+  "apiMs": 367620,
+  "turns": 36,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe Zig port builds and passes all 4 cases in `node check.mjs`. It also passes my own stress test against both release and debug builds:\n- 1 MiB binary values round-trip, and anything larger gets `413`.\n- 200 requests at once, plus 200 simultaneous writes to the same key.\n- Empty values, 64- and 65-character keys, `HEAD`, `PURGE`, an unknown method, malformed requests, and the sorted key list.\n\nThat script reported one failure, but the mistake was mine: it expected 205 keys when 204 is rig",
+  "skillsOffered": [],
+  "usage": {
+    "input": 68,
+    "output": 30446,
+    "thinking": 9996,
+    "cacheRead": 1847507,
+    "cacheWrite": 82743
+  },
+  "tools": {
+    "Bash": 30,
+    "Write": 5
+  },
+  "toolErrors": 1,
+  "stdlibReads": 18,
+  "builds": 5,
+  "compileErrors": 1,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

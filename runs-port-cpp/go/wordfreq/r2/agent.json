@@ -1,0 +1,51 @@
+{
+  "id": "go-wordfreq-r2",
+  "lang": "go",
+  "task": "wordfreq",
+  "rep": 2,
+  "arm": "port-cpp",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "cpp",
+  "exitCode": 0,
+  "wallMs": 37721,
+  "files": [
+    "build.sh",
+    "go.mod",
+    "main.go",
+    "main_test.go"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.22043840000000003,
+  "durationMs": 37078,
+  "apiMs": 33862,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe Go port is in `main.go`. `build.sh` builds it to `./app`, and `node check.mjs` passes 6 of 6 example cases. Unit tests are in `main_test.go`, and `go vet` and the unit tests pass. On generated 50 MB inputs (both word text and random bytes), it ran in about 0.25 s.",
+  "skillsOffered": [],
+  "usage": {
+    "input": 12,
+    "output": 3017,
+    "thinking": 298,
+    "cacheRead": 87252,
+    "cacheWrite": 17825
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "kvhttp",
+  "version": "1.0.0",
+  "description": "Minimal HTTP/1.1 in-memory key-value server",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=23.6"
+  },
+  "scripts": {
+    "build": "bash build.sh",
+    "start": "node src/main.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.0"
+  }
+}

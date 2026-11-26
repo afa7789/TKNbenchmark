@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec java -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xshare:auto -jar "$(dirname "$0")/build/lru.jar" "$@"

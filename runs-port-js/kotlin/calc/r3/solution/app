@@ -1,0 +1,3 @@
+#!/bin/sh
+DIR="$(cd "$(dirname "$0")" && pwd)"
+exec java -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -XX:SharedArchiveFile="$DIR/build/app.jsa" -Xlog:cds=off -Xlog:cds+dynamic=off -jar "$DIR/build/app.jar"

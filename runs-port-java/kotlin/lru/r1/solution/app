@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+opts=(-XX:+UseSerialGC)
+if [[ -f "$dir/build/lru.jsa" ]]; then
+  opts+=(-XX:SharedArchiveFile="$dir/build/lru.jsa" -Xlog:cds=off -Xlog:cds+dynamic=off)
+fi
+exec java "${opts[@]}" -jar "$dir/build/lru.jar" "$@"

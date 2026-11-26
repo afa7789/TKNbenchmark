@@ -1,0 +1,57 @@
+{
+  "id": "ts-kvhttp-r3",
+  "lang": "ts",
+  "task": "kvhttp",
+  "rep": 3,
+  "arm": "port-js",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "js",
+  "exitCode": 0,
+  "wallMs": 63072,
+  "files": [
+    ".gitignore",
+    "app",
+    "build.sh",
+    "dist/main.js",
+    "dist/server.js",
+    "package-lock.json",
+    "package.json",
+    "src/main.ts",
+    "src/server.ts",
+    "tsconfig.json"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.2996246,
+  "durationMs": 62415,
+  "apiMs": 56974,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 16,
+    "output": 4883,
+    "thinking": 659,
+    "cacheRead": 138543,
+    "cacheWrite": 21774
+  },
+  "tools": {
+    "Bash": 7
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

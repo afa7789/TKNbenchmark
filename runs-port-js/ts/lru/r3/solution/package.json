@@ -1,0 +1,10 @@
+{
+  "name": "lru",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "LRU cache simulator (see SPEC.md)",
+  "engines": {
+    "node": ">=23.6"
+  }
+}

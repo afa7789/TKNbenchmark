@@ -1,0 +1,14 @@
+{
+  "source": {
+    "ok": true,
+    "wallMs": 194,
+    "minMs": 193,
+    "rssBytes": 45465600
+  },
+  "scratch": {
+    "ok": true,
+    "wallMs": 75,
+    "minMs": 75,
+    "rssBytes": 20103168
+  }
+}

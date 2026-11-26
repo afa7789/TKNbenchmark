@@ -1,0 +1,52 @@
+{
+  "id": "ts-calc-r3",
+  "lang": "ts",
+  "task": "calc",
+  "rep": 3,
+  "arm": "port-js",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "js",
+  "exitCode": 0,
+  "wallMs": 39422,
+  "files": [
+    "app",
+    "build.sh",
+    "package.json",
+    "src/calc.ts",
+    "tsconfig.json"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.24691519999999995,
+  "durationMs": 38779,
+  "apiMs": 37115,
+  "turns": 5,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 10,
+    "output": 3795,
+    "thinking": 731,
+    "cacheRead": 69756,
+    "cacheWrite": 19628
+  },
+  "tools": {
+    "Bash": 4
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 1,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

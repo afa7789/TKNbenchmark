@@ -298,7 +298,7 @@ function pairedEffect(baseRuns, runs) {
   const extra = Object.fromEntries(Object.entries(PRICE).map(([k, usd]) => [k, (usd / 1e6) * sum(pairs.map(([b, a]) => a.usage[k] - b.usage[k]))]))
   const total = sum(Object.values(extra))
   const costShare = Object.fromEntries(Object.entries(extra).map(([k, v]) => [k, v / total]))
-  return { pairs: pairs.length, costUsd: metric((r) => r.costUsd), turns: metric((r) => r.turns), output: metric((r) => r.usage.output), cacheWrite: metric((r) => r.usage.cacheWrite), cacheRead: metric((r) => r.usage.cacheRead), extraUsd: extra, costShare, code: codeEffect(pairs, metric) }
+  return { pairs: pairs.length, costUsd: metric((r) => r.costUsd), turns: metric((r) => r.turns), output: metric((r) => r.usage.output), cacheWrite: metric((r) => r.usage.cacheWrite), cacheRead: metric((r) => r.usage.cacheRead), extraUsd: extra, costShare, code: codeEffect(pairs, metric), durationS: metric((r) => r.durationS), fasterRuns: pairs.filter(([b, a]) => a.durationS < b.durationS).length }
 }
 
 // Did the code itself change? Over the same pairs: hidden tests passed in round 3, examples passed on the

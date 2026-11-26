@@ -1,0 +1,52 @@
+{
+  "id": "ts-calc-r2",
+  "lang": "ts",
+  "task": "calc",
+  "rep": 2,
+  "arm": "port-java",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "java",
+  "exitCode": 0,
+  "wallMs": 116360,
+  "files": [
+    "app",
+    "build.sh",
+    "src/evaluator.ts",
+    "src/main.ts",
+    "tsconfig.json"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.462156,
+  "durationMs": 115775,
+  "apiMs": 107371,
+  "turns": 8,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe port is in `src/evaluator.ts` and `src/main.ts`. `node check.mjs` passes all 6 example cases. I also ran the original Java program next to the port on the same inputs, and the outputs matched exactly:\n- **Edge cases:** the 64-bit limits, `(-9223372036854775807 - 1) % -1`, literals with too many digits, leading zeros, `\\r` at line ends, a last line with no newline, and nesting 200,000 parentheses deep.\n- **Generated input:** five randomly generated files of 200,000–300,000 lines each.\n\n",
+  "skillsOffered": [],
+  "usage": {
+    "input": 16,
+    "output": 10430,
+    "thinking": 2800,
+    "cacheRead": 161660,
+    "cacheWrite": 27645
+  },
+  "tools": {
+    "Bash": 7
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

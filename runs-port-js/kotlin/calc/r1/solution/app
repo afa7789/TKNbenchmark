@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "$0")" && pwd)"
+cds=()
+[[ -f "$dir/build/calc.jsa" ]] && cds=(-XX:SharedArchiveFile="$dir/build/calc.jsa")
+exec java -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xshare:auto "${cds[@]}" -jar "$dir/build/calc.jar" "$@"

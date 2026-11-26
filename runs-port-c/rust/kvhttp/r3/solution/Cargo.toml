@@ -1,0 +1,18 @@
+[package]
+name = "kvhttp"
+version = "0.1.0"
+edition = "2024"
+description = "An in-memory HTTP/1.1 key-value server"
+publish = false
+
+[dependencies]
+bytes = "1"
+http-body-util = "0.1"
+hyper = { version = "1", features = ["http1", "server"] }
+hyper-util = { version = "0.1", features = ["tokio"] }
+tokio = { version = "1", features = ["macros", "net", "rt-multi-thread", "time"] }
+
+[profile.release]
+codegen-units = 1
+lto = true
+panic = "abort"

@@ -1,0 +1,89 @@
+{
+  "buildOk": true,
+  "buildSecs": 2.04,
+  "buildLog": "",
+  "binaryBytes": 171936,
+  "projectBytes": 43577344,
+  "cacheBytes": 0,
+  "footprintBytes": 43577344,
+  "pass": 15,
+  "total": 15,
+  "solved": true,
+  "cases": [
+    {
+      "name": "spec-example",
+      "ok": true,
+      "ms": 3
+    },
+    {
+      "name": "precedence",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "division-and-remainder",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "unary-minus",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "syntax-errors",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "blank-lines",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "literal-overflow",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "int64-min",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "mul-overflow",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "sub-overflow",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "parens",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "whitespace",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "operators-misused",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "other-chars",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "name": "random-20k-lines",
+      "ok": true,
+      "ms": 4
+    }
+  ]
+}

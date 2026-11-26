@@ -1,0 +1,154 @@
+{
+  "task": "kvhttp",
+  "file": "src/main.zig",
+  "cycles": 20,
+  "series": [
+    {
+      "cycle": 0,
+      "ok": true,
+      "secs": 9.78,
+      "projectBytes": 21946368,
+      "cacheBytes": 46424064
+    },
+    {
+      "cycle": 1,
+      "ok": true,
+      "secs": 4.79,
+      "projectBytes": 24825856,
+      "cacheBytes": 46428160
+    },
+    {
+      "cycle": 2,
+      "ok": true,
+      "secs": 4.84,
+      "projectBytes": 27705344,
+      "cacheBytes": 46432256
+    },
+    {
+      "cycle": 3,
+      "ok": true,
+      "secs": 4.87,
+      "projectBytes": 30584832,
+      "cacheBytes": 46436352
+    },
+    {
+      "cycle": 4,
+      "ok": true,
+      "secs": 4.92,
+      "projectBytes": 33464320,
+      "cacheBytes": 46440448
+    },
+    {
+      "cycle": 5,
+      "ok": true,
+      "secs": 4.95,
+      "projectBytes": 36343808,
+      "cacheBytes": 46444544
+    },
+    {
+      "cycle": 6,
+      "ok": true,
+      "secs": 4.78,
+      "projectBytes": 39223296,
+      "cacheBytes": 46448640
+    },
+    {
+      "cycle": 7,
+      "ok": true,
+      "secs": 4.72,
+      "projectBytes": 42102784,
+      "cacheBytes": 46452736
+    },
+    {
+      "cycle": 8,
+      "ok": true,
+      "secs": 4.82,
+      "projectBytes": 44982272,
+      "cacheBytes": 46456832
+    },
+    {
+      "cycle": 9,
+      "ok": true,
+      "secs": 4.77,
+      "projectBytes": 47861760,
+      "cacheBytes": 46460928
+    },
+    {
+      "cycle": 10,
+      "ok": true,
+      "secs": 4.88,
+      "projectBytes": 50741248,
+      "cacheBytes": 46465024
+    },
+    {
+      "cycle": 11,
+      "ok": true,
+      "secs": 4.86,
+      "projectBytes": 53620736,
+      "cacheBytes": 46469120
+    },
+    {
+      "cycle": 12,
+      "ok": true,
+      "secs": 4.72,
+      "projectBytes": 56500224,
+      "cacheBytes": 46473216
+    },
+    {
+      "cycle": 13,
+      "ok": true,
+      "secs": 4.73,
+      "projectBytes": 59379712,
+      "cacheBytes": 46477312
+    },
+    {
+      "cycle": 14,
+      "ok": true,
+      "secs": 4.77,
+      "projectBytes": 62259200,
+      "cacheBytes": 46481408
+    },
+    {
+      "cycle": 15,
+      "ok": true,
+      "secs": 4.92,
+      "projectBytes": 65138688,
+      "cacheBytes": 46485504
+    },
+    {
+      "cycle": 16,
+      "ok": true,
+      "secs": 5.08,
+      "projectBytes": 68018176,
+      "cacheBytes": 46489600
+    },
+    {
+      "cycle": 17,
+      "ok": true,
+      "secs": 4.86,
+      "projectBytes": 70897664,
+      "cacheBytes": 46493696
+    },
+    {
+      "cycle": 18,
+      "ok": true,
+      "secs": 4.78,
+      "projectBytes": 73777152,
+      "cacheBytes": 46497792
+    },
+    {
+      "cycle": 19,
+      "ok": true,
+      "secs": 4.69,
+      "projectBytes": 76656640,
+      "cacheBytes": 46501888
+    },
+    {
+      "cycle": 20,
+      "ok": true,
+      "secs": 4.76,
+      "projectBytes": 79536128,
+      "cacheBytes": 46505984
+    }
+  ]
+}

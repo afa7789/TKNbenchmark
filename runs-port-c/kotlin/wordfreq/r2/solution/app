@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+exec java -XX:+UseSerialGC -Xss8m -Xms256m -Xmx2g -Xshare:auto \
+    -cp "$(dirname "$0")/build/wordfreq.jar" wordfreq.MainKt "$@"

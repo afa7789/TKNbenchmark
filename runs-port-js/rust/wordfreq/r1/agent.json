@@ -1,0 +1,52 @@
+{
+  "id": "rust-wordfreq-r1",
+  "lang": "rust",
+  "task": "wordfreq",
+  "rep": 1,
+  "arm": "port-js",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "js",
+  "exitCode": 0,
+  "wallMs": 61557,
+  "files": [
+    ".gitignore",
+    "Cargo.lock",
+    "Cargo.toml",
+    "build.sh",
+    "src/main.rs"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.22394,
+  "durationMs": 60835,
+  "apiMs": 53643,
+  "turns": 6,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe Rust port is finished and passes all 6 cases in `node check.mjs`. It builds from a clean copy with `./build.sh` and uses only the standard library.\n\n- **Unit tests:** 3 tests pass via `cargo test`, covering the spec example, separators with invalid UTF-8, and empty input.\n- **Matches the original:** on 5 MB of random bytes, its output was identical to the Node.js version's.\n- **Speed:** on a 50 MB generated input it took about 0.15 s, against about 1 s for the original, with identical ",
+  "skillsOffered": [],
+  "usage": {
+    "input": 12,
+    "output": 3138,
+    "thinking": 368,
+    "cacheRead": 87340,
+    "cacheWrite": 17958
+  },
+  "tools": {
+    "Bash": 5
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 2,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

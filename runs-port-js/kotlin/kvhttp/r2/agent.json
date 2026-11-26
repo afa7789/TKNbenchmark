@@ -1,0 +1,52 @@
+{
+  "id": "kotlin-kvhttp-r2",
+  "lang": "kotlin",
+  "task": "kvhttp",
+  "rep": 2,
+  "arm": "port-js",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "js",
+  "exitCode": 0,
+  "wallMs": 325968,
+  "files": [
+    "app",
+    "build.sh",
+    "src/main/kotlin/kvhttp/Http.kt",
+    "src/main/kotlin/kvhttp/KvApp.kt",
+    "src/main/kotlin/kvhttp/Main.kt"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.6161347999999999,
+  "durationMs": 325421,
+  "apiMs": 133570,
+  "turns": 10,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE",
+  "skillsOffered": [],
+  "usage": {
+    "input": 20,
+    "output": 14362,
+    "thinking": 3423,
+    "cacheRead": 237634,
+    "cacheWrite": 35161
+  },
+  "tools": {
+    "Bash": 9
+  },
+  "toolErrors": 0,
+  "stdlibReads": 0,
+  "builds": 5,
+  "compileErrors": 0,
+  "checkRuns": 4,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

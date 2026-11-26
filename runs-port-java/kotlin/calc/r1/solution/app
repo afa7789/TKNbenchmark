@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+opts=(-XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xshare:auto)
+if [[ -f "$dir/build/calc.jsa" ]]; then
+  opts+=("-XX:SharedArchiveFile=$dir/build/calc.jsa")
+fi
+exec java "${opts[@]}" -jar "$dir/build/calc.jar"

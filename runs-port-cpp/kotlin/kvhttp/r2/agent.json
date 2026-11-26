@@ -1,0 +1,54 @@
+{
+  "id": "kotlin-kvhttp-r2",
+  "lang": "kotlin",
+  "task": "kvhttp",
+  "rep": 2,
+  "arm": "port-cpp",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "cpp",
+  "exitCode": 0,
+  "wallMs": 225376,
+  "files": [
+    "app",
+    "build.sh",
+    "src/main/kotlin/kvhttp/Http.kt",
+    "src/main/kotlin/kvhttp/KvStore.kt",
+    "src/main/kotlin/kvhttp/Main.kt",
+    "src/main/kotlin/kvhttp/Routes.kt",
+    "src/main/kotlin/kvhttp/Server.kt"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.5555414,
+  "durationMs": 224602,
+  "apiMs": 96588,
+  "turns": 10,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nI ported the server to Kotlin in `src/main/kotlin/kvhttp/` and wrote `build.sh` to produce `./app`. `node check.mjs` builds it and passes all 4 example cases.\n\n- **No third-party packages:** it uses plain JDK sockets with one virtual thread per connection. `build.sh` therefore only needs `kotlinc` and `java` on the PATH. It compiles a self-contained jar into `build/`, and `./app` is a small launcher script that runs it.\n- **Same behaviour as the C++ version:** the parsing rules, error code",
+  "skillsOffered": [],
+  "usage": {
+    "input": 18,
+    "output": 10534,
+    "thinking": 1063,
+    "cacheRead": 232867,
+    "cacheWrite": 37277
+  },
+  "tools": {
+    "Bash": 9
+  },
+  "toolErrors": 1,
+  "stdlibReads": 0,
+  "builds": 2,
+  "compileErrors": 1,
+  "checkRuns": 2,
+  "checkFails": 1,
+  "firstCheckPass": false,
+  "lastCheck": {
+    "pass": 4,
+    "total": 4
+  }
+}

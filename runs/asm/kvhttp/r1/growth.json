@@ -1,0 +1,154 @@
+{
+  "task": "kvhttp",
+  "file": "src/http.s",
+  "cycles": 20,
+  "series": [
+    {
+      "cycle": 0,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 1,
+      "ok": true,
+      "secs": 0.16,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 2,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 3,
+      "ok": true,
+      "secs": 0.16,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 4,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 5,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 6,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 7,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 8,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 9,
+      "ok": true,
+      "secs": 0.16,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 10,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 11,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 12,
+      "ok": true,
+      "secs": 0.16,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 13,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 14,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 15,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 16,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 17,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 18,
+      "ok": true,
+      "secs": 0.18,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 19,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    },
+    {
+      "cycle": 20,
+      "ok": true,
+      "secs": 0.17,
+      "projectBytes": 36864,
+      "cacheBytes": 0
+    }
+  ]
+}

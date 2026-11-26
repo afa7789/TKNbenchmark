@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export NODE_COMPILE_CACHE="${NODE_COMPILE_CACHE:-$DIR/.cache/node-compile}"
+exec node --disable-warning=ExperimentalWarning "$DIR/src/main.ts" "$@"

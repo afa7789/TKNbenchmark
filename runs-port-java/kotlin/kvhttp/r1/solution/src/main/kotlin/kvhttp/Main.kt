@@ -1,0 +1,32 @@
+package kvhttp
+
+import com.sun.net.httpserver.HttpServer
+import java.net.InetAddress
+import java.net.InetSocketAddress
+import java.util.concurrent.Executors
+import kotlin.system.exitProcess
+
+private const val BACKLOG = 1024
+
+/** Entry point: `app <port>` serves the key-value API on 127.0.0.1 until killed. */
+fun main(args: Array<String>) {
+    if (args.size != 1) {
+        System.err.println("usage: app <port>")
+        exitProcess(2)
+    }
+    val port = args[0].toIntOrNull() ?: run {
+        System.err.println("invalid port: ${args[0]}")
+        exitProcess(2)
+    }
+
+    val server = HttpServer.create(InetSocketAddress(InetAddress.getLoopbackAddress(), port), BACKLOG)
+    server.createContext("/", KvHandler(KvStore()))
+    val executor = Executors.newVirtualThreadPerTaskExecutor()
+    server.executor = executor
+    server.start()
+
+    Runtime.getRuntime().addShutdownHook(Thread({
+        server.stop(0)
+        executor.shutdown()
+    }, "shutdown"))
+}

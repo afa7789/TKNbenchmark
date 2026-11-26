@@ -1,0 +1,49 @@
+{
+  "id": "zig-wordfreq-r2",
+  "lang": "zig",
+  "task": "wordfreq",
+  "rep": 2,
+  "arm": "port-cpp",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "skillSha": null,
+  "portFrom": "cpp",
+  "exitCode": 0,
+  "wallMs": 65189,
+  "files": [
+    "build.sh",
+    "src/main.zig"
+  ],
+  "finished": true,
+  "terminalReason": "completed",
+  "costUsd": 0.3233368,
+  "durationMs": 64558,
+  "apiMs": 60751,
+  "turns": 10,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "reply": "DONE\n\nThe Zig port is in `src/main.zig`, and `build.sh` builds an optimized release binary at `./app`. `node check.mjs` passes all 6 example cases.\n\nI also ran it against the original C++ build on three extra inputs, and the output matched byte for byte each time:\n- **Large text:** a 50 MB generated input. The Zig version took 0.13s and the C++ one 0.30s.\n- **Random bytes:** 5 MB of arbitrary bytes, including invalid UTF-8.\n- **Long words:** very long words that cross the 64 KB read-buffer bound",
+  "skillsOffered": [],
+  "usage": {
+    "input": 20,
+    "output": 5070,
+    "thinking": 1036,
+    "cacheRead": 185484,
+    "cacheWrite": 23095
+  },
+  "tools": {
+    "Bash": 9
+  },
+  "toolErrors": 1,
+  "stdlibReads": 5,
+  "builds": 2,
+  "compileErrors": 0,
+  "checkRuns": 1,
+  "checkFails": 0,
+  "firstCheckPass": true,
+  "lastCheck": {
+    "pass": 6,
+    "total": 6
+  }
+}

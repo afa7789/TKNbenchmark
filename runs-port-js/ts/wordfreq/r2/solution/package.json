@@ -1,0 +1,8 @@
+{
+  "name": "wordfreq",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Print the 10 most frequent ASCII words read from standard input",
+  "engines": { "node": ">=23.6" }
+}

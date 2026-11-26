@@ -1,0 +1,154 @@
+{
+  "task": "kvhttp",
+  "file": "src/KvHttp/KvHandler.cs",
+  "cycles": 20,
+  "series": [
+    {
+      "cycle": 0,
+      "ok": true,
+      "secs": 5.56,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 1,
+      "ok": true,
+      "secs": 1.97,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 2,
+      "ok": true,
+      "secs": 1.97,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 3,
+      "ok": true,
+      "secs": 1.99,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 4,
+      "ok": true,
+      "secs": 2,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 5,
+      "ok": true,
+      "secs": 2,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 6,
+      "ok": true,
+      "secs": 2.04,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 7,
+      "ok": true,
+      "secs": 1.79,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 8,
+      "ok": true,
+      "secs": 2.03,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 9,
+      "ok": true,
+      "secs": 1.97,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 10,
+      "ok": true,
+      "secs": 2.03,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 11,
+      "ok": true,
+      "secs": 2.01,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 12,
+      "ok": true,
+      "secs": 1.94,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 13,
+      "ok": true,
+      "secs": 1.97,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 14,
+      "ok": true,
+      "secs": 2.01,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 15,
+      "ok": true,
+      "secs": 2.02,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 16,
+      "ok": true,
+      "secs": 2.03,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 17,
+      "ok": true,
+      "secs": 2.04,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 18,
+      "ok": true,
+      "secs": 2,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 19,
+      "ok": true,
+      "secs": 2.06,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    },
+    {
+      "cycle": 20,
+      "ok": true,
+      "secs": 2.02,
+      "projectBytes": 219926528,
+      "cacheBytes": 56483840
+    }
+  ]
+}
