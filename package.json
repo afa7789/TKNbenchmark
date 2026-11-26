@@ -18,7 +18,8 @@
     "paper": "node paper/build.mjs && tectonic -o public paper/paper.tex && node paper/arxiv.mjs",
     "selftest:tracks": "node bench/selftest-tracks.mjs",
     "skills": "node bench/skills.mjs",
-    "swarm": "node bench/swarm.mjs"
+    "swarm": "node bench/swarm.mjs",
+    "growth": "node bench/growth.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

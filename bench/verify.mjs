@@ -10,7 +10,7 @@ import { copyFiles, duBytes, killStragglers, parseArgs, readJson, solutionFiles,
 
 export const builtDir = (id) => join(WORK, 'built', id)
 
-function sandboxEnv(home) {
+export function sandboxEnv(home) {
   mkdirSync(home, { recursive: true })
   return {
     ...process.env,

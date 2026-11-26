@@ -39,7 +39,7 @@ function collect() {
       for (const rep of readdirSync(join(RUNS, lang.name, task))) {
         const dir = join(RUNS, lang.name, task, rep)
         const agent = opt(join(dir, 'agent.json'))
-        if (agent) runs.push({ dir, agent, verify: opt(join(dir, 'verify.json')), tokens: opt(join(dir, 'tokens.json')), perf: opt(join(dir, 'perf.json')), repair: opt(join(dir, 'repair.json')), devloop: opt(join(dir, 'devloop.json')), twins: opt(join(dir, 'perf-twins.json')), merge: opt(join(dir, 'merge.json')) })
+        if (agent) runs.push({ dir, agent, verify: opt(join(dir, 'verify.json')), tokens: opt(join(dir, 'tokens.json')), perf: opt(join(dir, 'perf.json')), repair: opt(join(dir, 'repair.json')), devloop: opt(join(dir, 'devloop.json')), twins: opt(join(dir, 'perf-twins.json')), merge: opt(join(dir, 'merge.json')), growth: opt(join(dir, 'growth.json')) })
       }
     }
   }
@@ -405,8 +405,10 @@ function build() {
   const compare = baseData ? { vsBase: vsBase(cells, runs), effect: pairedEffect(baseData.runs, runs), length: lengthEffect(baseData.summary.cells, cells) } : {}
   // The two rankings against each other: cost to write vs speed of the code (main languages).
   const ranked = Object.keys(langs).filter((l) => Number.isFinite(langs[l].perfTotal))
+  // Disk over an edit-rebuild loop (bench/growth.mjs), one series per language.
+  const growth = Object.fromEntries(raw.filter((r) => r.growth).map((r) => [r.agent.lang, r.growth]))
   const costSpeedRho = spearman(ranked.map((l) => langs[l].costUsd), ranked.map((l) => langs[l].perfTotal))
-  writeJson(join(OUT, 'results.json'), { meta, summary: { langs, tracks, cells, frontends, shop, combos: combos(cells, frontends), costSpeedRho, ...compare }, runs })
+  writeJson(join(OUT, 'results.json'), { meta, summary: { langs, tracks, cells, frontends, shop, combos: combos(cells, frontends), costSpeedRho, growth, ...compare }, runs })
   console.log(`${runs.length} runs → public/data/results.json`)
 }
 
