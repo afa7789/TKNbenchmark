@@ -642,6 +642,27 @@ tasks of hours, which we leave to future work. The skills arm ran a day after th
 Clojure, whose two arms both ran that day, moved like the others (\SkillDeltaClojure), so the gap is not a
 day-to-day effect.
 
+\section{Future work: when does a team start to pay off?}
+
+Our measurements split the team's wall-clock into three handoffs in series, which gives a simple model of when
+a team finishes first. Let a solo agent take $T_1 = S + W$, where $S$ is the serial part (choosing libraries,
+the build, the core) and $W$ the work that can be split. A team of a lead, $k$ workers and an integrator takes
+\[ T_k = L + \frac{W}{k} + R + I, \]
+where $L$ is the lead's time, $R$ the time each worker spends reading the specification and the code again
+before it starts, and $I$ the integrator's time. The team finishes first when $T_k < T_1$, that is when
+\[ W > \frac{k}{k-1}\,\bigl(L - S + R + I\bigr): \]
+with three workers, once the splittable work exceeds 1.5 times the overhead of the handoffs. Cost has no such
+crossing. To a first approximation every extra agent loads the context again,
+\[ C_k \approx C_1 + (k+1)\,C_{\mathrm{ctx}}, \]
+with $C_{\mathrm{ctx}}$ the cost of one agent loading the specification and the code (replicated context was
+\SwarmShareContext{} and \NotesShareContext{} of the extra spend in our two studies), so a team pays off only
+where the time it saves is worth more than it costs, $v\,(T_1 - T_k) > C_k - C_1$ for a value $v$ of an hour
+of waiting. On disk each worktree adds its own build output, $D_k \approx D_{\mathrm{shared}} + (k+1)\,
+D_{\mathrm{project}}$. In every case we ran the first inequality failed: on \texttt{notes} the lead alone took
+about as long as a whole solo run ($L \approx T_1$), and on \texttt{suite} the integrator alone took
+\SwarmIntegrateMin--\SwarmIntegrateMax\,s. The next study is to find where it turns, with tasks whose
+splittable part grows while the core stays fixed, and with more workers.
+
 \section{Conclusion}
 
 With Claude Opus 5.5 the language hardly decided whether the agent succeeded (only Odin failed a hidden
