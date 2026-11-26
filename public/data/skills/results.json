@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-25T23:57:04.204Z",
+    "generatedAt": "2026-11-26T00:23:39.890Z",
     "arm": "skills",
     "model": "claude-opus-5-5",
     "effort": "high",
@@ -14497,6 +14497,7 @@
       "costToGreenUsd": 0.7846414,
       "worktrees4Bytes": 196608,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -14570,6 +14571,7 @@
       "costToGreenUsd": 0.738542,
       "worktrees4Bytes": 196608,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -14637,6 +14639,7 @@
       "costToGreenUsd": 0.6542288,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -14711,6 +14714,7 @@
       "costToGreenUsd": 1.3950126000000003,
       "worktrees4Bytes": 212992,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -14791,6 +14795,7 @@
       "costToGreenUsd": 1.582475,
       "worktrees4Bytes": 278528,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -14871,6 +14876,7 @@
       "costToGreenUsd": 1.7596198,
       "worktrees4Bytes": 212992,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -14938,6 +14944,7 @@
       "costToGreenUsd": 0.7073734,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15005,6 +15012,7 @@
       "costToGreenUsd": 0.6929160000000001,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15072,6 +15080,7 @@
       "costToGreenUsd": 0.8106013999999999,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15139,6 +15148,7 @@
       "costToGreenUsd": 0.5258290000000001,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15208,6 +15218,7 @@
       "costToGreenUsd": 0.7784466,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15275,6 +15286,7 @@
       "costToGreenUsd": 0.5098856,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15348,6 +15360,7 @@
       "costToGreenUsd": 0.2927272,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15421,6 +15434,7 @@
       "costToGreenUsd": 0.29783139999999997,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15488,6 +15502,7 @@
       "costToGreenUsd": 0.29074940000000005,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15562,6 +15577,7 @@
       "costToGreenUsd": 0.8204502,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15642,6 +15658,7 @@
       "costToGreenUsd": 0.7132417999999999,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15715,6 +15732,7 @@
       "costToGreenUsd": 0.6549242000000001,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15788,6 +15806,7 @@
       "costToGreenUsd": 0.5139543999999999,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15855,6 +15874,7 @@
       "costToGreenUsd": 0.3442612,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15922,6 +15942,7 @@
       "costToGreenUsd": 0.3783594,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -15989,6 +16010,7 @@
       "costToGreenUsd": 0.2725952,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -16056,6 +16078,7 @@
       "costToGreenUsd": 0.2560054,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -16123,6 +16146,7 @@
       "costToGreenUsd": 0.251362,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -16199,6 +16223,7 @@
       "costToGreenUsd": 0.2305936,
       "worktrees4Bytes": 304717824,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -16275,6 +16300,7 @@
       "costToGreenUsd": 0.23055859999999997,
       "worktrees4Bytes": 312320000,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -16351,6 +16377,7 @@
       "costToGreenUsd": 0.20821820000000002,
       "worktrees4Bytes": 301010944,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -16424,6 +16451,7 @@
       "costToGreenUsd": 0.2740603999999999,
       "worktrees4Bytes": 376832,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -16497,6 +16525,7 @@
       "costToGreenUsd": 0.31860580000000005,
       "worktrees4Bytes": 360448,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -16570,6 +16599,7 @@
       "costToGreenUsd": 0.2793396,
       "worktrees4Bytes": 376832,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -16643,6 +16673,7 @@
       "costToGreenUsd": 0.336321,
       "worktrees4Bytes": 35614720,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -16713,6 +16744,7 @@
       "costToGreenUsd": 0.45681679999999997,
       "worktrees4Bytes": 109625344,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -16787,6 +16819,7 @@
       "costToGreenUsd": 0.379402,
       "worktrees4Bytes": 35827712,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -16860,6 +16893,7 @@
       "costToGreenUsd": 0.3978958,
       "worktrees4Bytes": 41635840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "data.json",
         "http-kit"
@@ -16945,6 +16979,7 @@
       "costToGreenUsd": 0.36690280000000003,
       "worktrees4Bytes": 42201088,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "data.json",
         "http-kit",
@@ -17041,6 +17076,7 @@
       "costToGreenUsd": 0.4396008,
       "worktrees4Bytes": 40837120,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "data.json",
         "http-kit"
@@ -17117,6 +17153,7 @@
       "costToGreenUsd": 0.262219,
       "worktrees4Bytes": 36577280,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -17190,6 +17227,7 @@
       "costToGreenUsd": 0.290408,
       "worktrees4Bytes": 76050432,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -17263,6 +17301,7 @@
       "costToGreenUsd": 0.24978219999999998,
       "worktrees4Bytes": 35500032,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -17336,6 +17375,7 @@
       "costToGreenUsd": 0.5280066,
       "worktrees4Bytes": 77074432,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -17409,6 +17449,7 @@
       "costToGreenUsd": 0.30757660000000003,
       "worktrees4Bytes": 76525568,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -17482,6 +17523,7 @@
       "costToGreenUsd": 0.2767028,
       "worktrees4Bytes": 35778560,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -17549,6 +17591,7 @@
       "costToGreenUsd": 0.2601758,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -17622,6 +17665,7 @@
       "costToGreenUsd": 0.27124820000000005,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -17695,6 +17739,7 @@
       "costToGreenUsd": 0.27122779999999996,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -17789,6 +17834,7 @@
       "costToGreenUsd": 0.6227144,
       "worktrees4Bytes": 4456448,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -17883,6 +17929,7 @@
       "costToGreenUsd": 0.6329572,
       "worktrees4Bytes": 3817472,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -17983,6 +18030,7 @@
       "costToGreenUsd": 0.8696192,
       "worktrees4Bytes": 4751360,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18053,6 +18101,7 @@
       "costToGreenUsd": 0.3151286,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18123,6 +18172,7 @@
       "costToGreenUsd": 0.223077,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18193,6 +18243,7 @@
       "costToGreenUsd": 0.23169900000000002,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18260,6 +18311,7 @@
       "costToGreenUsd": 0.19326580000000002,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18327,6 +18379,7 @@
       "costToGreenUsd": 0.218088,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18394,6 +18447,7 @@
       "costToGreenUsd": 0.1954834,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18470,6 +18524,7 @@
       "costToGreenUsd": 0.35482660000000005,
       "worktrees4Bytes": 367493120,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18549,6 +18604,7 @@
       "costToGreenUsd": 0.29013740000000005,
       "worktrees4Bytes": 690946048,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18622,6 +18678,7 @@
       "costToGreenUsd": 0.2883902,
       "worktrees4Bytes": 382582784,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18704,6 +18761,7 @@
       "costToGreenUsd": 0.40913499999999997,
       "worktrees4Bytes": 934084608,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18780,6 +18838,7 @@
       "costToGreenUsd": 0.4460154,
       "worktrees4Bytes": 2269929472,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18856,6 +18915,7 @@
       "costToGreenUsd": 0.38482759999999994,
       "worktrees4Bytes": 2270388224,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -18932,6 +18992,7 @@
       "costToGreenUsd": 0.2640744,
       "worktrees4Bytes": 1192329216,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19005,6 +19066,7 @@
       "costToGreenUsd": 0.2836642,
       "worktrees4Bytes": 1571717120,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19078,6 +19140,7 @@
       "costToGreenUsd": 0.2609008,
       "worktrees4Bytes": 1584881664,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19151,6 +19214,7 @@
       "costToGreenUsd": 0.24810239999999997,
       "worktrees4Bytes": 381026304,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19224,6 +19288,7 @@
       "costToGreenUsd": 0.3143868,
       "worktrees4Bytes": 383320064,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19297,6 +19362,7 @@
       "costToGreenUsd": 0.27623800000000004,
       "worktrees4Bytes": 396705792,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19364,6 +19430,7 @@
       "costToGreenUsd": 0.1780032,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19431,6 +19498,7 @@
       "costToGreenUsd": 0.1774152,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19498,6 +19566,7 @@
       "costToGreenUsd": 0.1780032,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19565,6 +19634,7 @@
       "costToGreenUsd": 0.19100320000000004,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19632,6 +19702,7 @@
       "costToGreenUsd": 0.18370720000000001,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19699,6 +19770,7 @@
       "costToGreenUsd": 0.1896352,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19775,6 +19847,7 @@
       "costToGreenUsd": 0.29631,
       "worktrees4Bytes": 48824320,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19851,6 +19924,7 @@
       "costToGreenUsd": 0.2840744,
       "worktrees4Bytes": 48959488,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -19927,6 +20001,7 @@
       "costToGreenUsd": 0.272578,
       "worktrees4Bytes": 48963584,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -20006,6 +20081,7 @@
       "costToGreenUsd": 0.35458699999999993,
       "worktrees4Bytes": 133840896,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -20085,6 +20161,7 @@
       "costToGreenUsd": 0.36469840000000003,
       "worktrees4Bytes": 133922816,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -20164,6 +20241,7 @@
       "costToGreenUsd": 0.3398732,
       "worktrees4Bytes": 133869568,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -20240,6 +20318,7 @@
       "costToGreenUsd": 0.2896344,
       "worktrees4Bytes": 49078272,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -20317,6 +20396,7 @@
       "costToGreenUsd": 0.3045504,
       "worktrees4Bytes": 49070080,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -20393,6 +20473,7 @@
       "costToGreenUsd": 0.26929600000000004,
       "worktrees4Bytes": 49053696,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -20466,6 +20547,7 @@
       "costToGreenUsd": 0.20910839999999997,
       "worktrees4Bytes": 49020928,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -20536,6 +20618,7 @@
       "costToGreenUsd": 0.1974622,
       "worktrees4Bytes": 49020928,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -20606,6 +20689,7 @@
       "costToGreenUsd": 0.21565,
       "worktrees4Bytes": 49020928,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -20679,6 +20763,7 @@
       "costToGreenUsd": 0.32188059999999996,
       "worktrees4Bytes": 162373632,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "bytestring",
         "calc"
@@ -20749,6 +20834,7 @@
       "costToGreenUsd": 0.2760702,
       "worktrees4Bytes": 155828224,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -20816,6 +20902,7 @@
       "costToGreenUsd": 0.25901300000000005,
       "worktrees4Bytes": 78479360,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -20893,6 +20980,7 @@
       "costToGreenUsd": 0.4261926,
       "worktrees4Bytes": 1778372608,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "bytestring",
         "containers",
@@ -20970,6 +21058,7 @@
       "costToGreenUsd": 0.3619212,
       "worktrees4Bytes": 1783369728,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "bytestring",
         "containers",
@@ -21050,6 +21139,7 @@
       "costToGreenUsd": 0.40444260000000004,
       "worktrees4Bytes": 1777930240,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "bytestring",
         "containers",
@@ -21132,6 +21222,7 @@
       "costToGreenUsd": 0.5501722,
       "worktrees4Bytes": 134389760,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "array",
         "bytestring",
@@ -21210,6 +21301,7 @@
       "costToGreenUsd": 0.5667887999999999,
       "worktrees4Bytes": 165126144,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "array",
         "bytestring",
@@ -21288,6 +21380,7 @@
       "costToGreenUsd": 0.61342,
       "worktrees4Bytes": 165011456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "array",
         "bytestring",
@@ -21362,6 +21455,7 @@
       "costToGreenUsd": 0.28849420000000003,
       "worktrees4Bytes": 172564480,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "bytestring",
         "containers"
@@ -21435,6 +21529,7 @@
       "costToGreenUsd": 0.2389768,
       "worktrees4Bytes": 172531712,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "bytestring",
         "containers"
@@ -21505,6 +21600,7 @@
       "costToGreenUsd": 0.2131368,
       "worktrees4Bytes": 85147648,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -21578,6 +21674,7 @@
       "costToGreenUsd": 0.333999,
       "worktrees4Bytes": 40435712,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -21651,6 +21748,7 @@
       "costToGreenUsd": 0.3272658,
       "worktrees4Bytes": 39665664,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -21724,6 +21822,7 @@
       "costToGreenUsd": 0.37547659999999994,
       "worktrees4Bytes": 40255488,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -21797,6 +21896,7 @@
       "costToGreenUsd": 0.347167,
       "worktrees4Bytes": 98304,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -21870,6 +21970,7 @@
       "costToGreenUsd": 0.37626640000000006,
       "worktrees4Bytes": 131072,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -21943,6 +22044,7 @@
       "costToGreenUsd": 0.32277079999999997,
       "worktrees4Bytes": 98304,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22013,6 +22115,7 @@
       "costToGreenUsd": 0.2644318,
       "worktrees4Bytes": 37076992,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22083,6 +22186,7 @@
       "costToGreenUsd": 0.2871254,
       "worktrees4Bytes": 37421056,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22153,6 +22257,7 @@
       "costToGreenUsd": 0.31075220000000003,
       "worktrees4Bytes": 36716544,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22223,6 +22328,7 @@
       "costToGreenUsd": 0.29331520000000005,
       "worktrees4Bytes": 41648128,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22296,6 +22402,7 @@
       "costToGreenUsd": 0.2636936,
       "worktrees4Bytes": 81920,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22369,6 +22476,7 @@
       "costToGreenUsd": 0.32510039999999996,
       "worktrees4Bytes": 39731200,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22445,6 +22553,7 @@
       "costToGreenUsd": 0.29447979999999996,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22521,6 +22630,7 @@
       "costToGreenUsd": 0.27272019999999997,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22612,6 +22722,7 @@
       "costToGreenUsd": 0.33735519999999997,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22688,6 +22799,7 @@
       "costToGreenUsd": 0.2699498,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22767,6 +22879,7 @@
       "costToGreenUsd": 0.30555380000000004,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22843,6 +22956,7 @@
       "costToGreenUsd": 0.2795398,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22916,6 +23030,7 @@
       "costToGreenUsd": 0.2532972,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -22989,6 +23104,7 @@
       "costToGreenUsd": 0.297104,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23062,6 +23178,7 @@
       "costToGreenUsd": 0.2535504,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23132,6 +23249,7 @@
       "costToGreenUsd": 0.220889,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23205,6 +23323,7 @@
       "costToGreenUsd": 0.258273,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23278,6 +23397,7 @@
       "costToGreenUsd": 0.286931,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23345,6 +23465,7 @@
       "costToGreenUsd": 0.21306960000000003,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23415,6 +23536,7 @@
       "costToGreenUsd": 0.2277226,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23485,6 +23607,7 @@
       "costToGreenUsd": 0.23960519999999996,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23558,6 +23681,7 @@
       "costToGreenUsd": 0.4185816,
       "worktrees4Bytes": 85876736,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23625,6 +23749,7 @@
       "costToGreenUsd": 0.31396019999999997,
       "worktrees4Bytes": 294912,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23692,6 +23817,7 @@
       "costToGreenUsd": 0.4445661999999999,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23759,6 +23885,7 @@
       "costToGreenUsd": 0.2353948,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23826,6 +23953,7 @@
       "costToGreenUsd": 0.2933676,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23893,6 +24021,7 @@
       "costToGreenUsd": 0.26828940000000007,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -23966,6 +24095,7 @@
       "costToGreenUsd": 0.2938754,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24039,6 +24169,7 @@
       "costToGreenUsd": 0.3447534,
       "worktrees4Bytes": 23019520,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24112,6 +24243,7 @@
       "costToGreenUsd": 0.285555,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24182,6 +24314,7 @@
       "costToGreenUsd": 0.2030438,
       "worktrees4Bytes": 22986752,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24252,6 +24385,7 @@
       "costToGreenUsd": 0.22165359999999995,
       "worktrees4Bytes": 22986752,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24319,6 +24453,7 @@
       "costToGreenUsd": 0.20284200000000002,
       "worktrees4Bytes": 22986752,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24386,6 +24521,7 @@
       "costToGreenUsd": 0.23560920000000002,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24453,6 +24589,7 @@
       "costToGreenUsd": 0.25006680000000003,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24520,6 +24657,7 @@
       "costToGreenUsd": 0.2813378000000001,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24587,6 +24725,7 @@
       "costToGreenUsd": 0.22807219999999997,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24655,6 +24794,7 @@
       "costToGreenUsd": 0.2486436,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24722,6 +24862,7 @@
       "costToGreenUsd": 0.19507059999999998,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24789,6 +24930,7 @@
       "costToGreenUsd": 0.18211039999999998,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24856,6 +24998,7 @@
       "costToGreenUsd": 0.17986839999999998,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24923,6 +25066,7 @@
       "costToGreenUsd": 0.18727080000000002,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -24990,6 +25134,7 @@
       "costToGreenUsd": 0.2627108,
       "worktrees4Bytes": 2195456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25057,6 +25202,7 @@
       "costToGreenUsd": 0.3039976,
       "worktrees4Bytes": 2048000,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25124,6 +25270,7 @@
       "costToGreenUsd": 0.36087800000000003,
       "worktrees4Bytes": 2015232,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25191,6 +25338,7 @@
       "costToGreenUsd": 0.34993060000000004,
       "worktrees4Bytes": 4263936,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25261,6 +25409,7 @@
       "costToGreenUsd": 0.2867488,
       "worktrees4Bytes": 4239360,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25331,6 +25480,7 @@
       "costToGreenUsd": 0.379901,
       "worktrees4Bytes": 3579904,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25398,6 +25548,7 @@
       "costToGreenUsd": 0.2349808,
       "worktrees4Bytes": 2670592,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25465,6 +25616,7 @@
       "costToGreenUsd": 0.21366779999999996,
       "worktrees4Bytes": 2260992,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25532,6 +25684,7 @@
       "costToGreenUsd": 0.2314112,
       "worktrees4Bytes": 2129920,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25599,6 +25752,7 @@
       "costToGreenUsd": 0.203147,
       "worktrees4Bytes": 1900544,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25666,6 +25820,7 @@
       "costToGreenUsd": 0.19720559999999998,
       "worktrees4Bytes": 2080768,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25733,6 +25888,7 @@
       "costToGreenUsd": 0.188603,
       "worktrees4Bytes": 1933312,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25806,6 +25962,7 @@
       "costToGreenUsd": 0.2770986,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25879,6 +26036,7 @@
       "costToGreenUsd": 0.224654,
       "worktrees4Bytes": 49152,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -25952,6 +26110,7 @@
       "costToGreenUsd": 0.2014832,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -26025,6 +26184,7 @@
       "costToGreenUsd": 0.2694196,
       "worktrees4Bytes": 65536,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -26098,6 +26258,7 @@
       "costToGreenUsd": 0.2586188,
       "worktrees4Bytes": 81920,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -26171,6 +26332,7 @@
       "costToGreenUsd": 0.3086622,
       "worktrees4Bytes": 65536,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -26253,6 +26415,7 @@
       "costToGreenUsd": 0.2899724,
       "worktrees4Bytes": 9453568,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -26335,6 +26498,7 @@
       "costToGreenUsd": 0.2950345999999999,
       "worktrees4Bytes": 9437184,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -26417,6 +26581,7 @@
       "costToGreenUsd": 0.30465680000000006,
       "worktrees4Bytes": 9453568,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -26523,6 +26688,7 @@
       "costToGreenUsd": 0.5925322,
       "worktrees4Bytes": 14106624,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -26638,6 +26804,7 @@
       "costToGreenUsd": 0.5463948000000001,
       "worktrees4Bytes": 14188544,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -26732,6 +26899,7 @@
       "costToGreenUsd": 0.4452977999999999,
       "worktrees4Bytes": 13549568,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -26814,6 +26982,7 @@
       "costToGreenUsd": 0.30413260000000003,
       "worktrees4Bytes": 11010048,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -26896,6 +27065,7 @@
       "costToGreenUsd": 0.28940679999999996,
       "worktrees4Bytes": 11010048,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -26978,6 +27148,7 @@
       "costToGreenUsd": 0.2676134,
       "worktrees4Bytes": 10829824,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27057,6 +27228,7 @@
       "costToGreenUsd": 0.4689042,
       "worktrees4Bytes": 9617408,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27130,6 +27302,7 @@
       "costToGreenUsd": 0.43435519999999994,
       "worktrees4Bytes": 9191424,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27203,6 +27376,7 @@
       "costToGreenUsd": 0.24065340000000002,
       "worktrees4Bytes": 10600448,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27270,6 +27444,7 @@
       "costToGreenUsd": 0.20033399999999998,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27337,6 +27512,7 @@
       "costToGreenUsd": 0.20260419999999998,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27404,6 +27580,7 @@
       "costToGreenUsd": 0.1990852,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27471,6 +27648,7 @@
       "costToGreenUsd": 0.4133944,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27541,6 +27719,7 @@
       "costToGreenUsd": 0.47309840000000003,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27608,6 +27787,7 @@
       "costToGreenUsd": 0.38786499999999996,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27693,6 +27873,7 @@
       "costToGreenUsd": 0.5731918,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27781,6 +27962,7 @@
       "costToGreenUsd": 0.6429416000000001,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27866,6 +28048,7 @@
       "costToGreenUsd": 0.5857406000000001,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -27940,6 +28123,7 @@
       "costToGreenUsd": 0.608448,
       "worktrees4Bytes": 1343488,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28016,6 +28200,7 @@
       "costToGreenUsd": 0.5763118000000002,
       "worktrees4Bytes": 1343488,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28096,6 +28281,7 @@
       "costToGreenUsd": 0.8017844000000001,
       "worktrees4Bytes": 1343488,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28163,6 +28349,7 @@
       "costToGreenUsd": 0.4081778,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28230,6 +28417,7 @@
       "costToGreenUsd": 0.4161372,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28300,6 +28488,7 @@
       "costToGreenUsd": 0.4326086,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28367,6 +28556,7 @@
       "costToGreenUsd": 0.26772919999999995,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28434,6 +28624,7 @@
       "costToGreenUsd": 0.2412182,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28501,6 +28692,7 @@
       "costToGreenUsd": 0.27982,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28569,6 +28761,7 @@
       "costToGreenUsd": 0.2563382,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28636,6 +28829,7 @@
       "costToGreenUsd": 0.24922279999999997,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28718,6 +28912,7 @@
       "costToGreenUsd": 0.39212119999999995,
       "worktrees4Bytes": 49152,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28792,6 +28987,7 @@
       "costToGreenUsd": 0.4490607999999999,
       "worktrees4Bytes": 131072,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28860,6 +29056,7 @@
       "costToGreenUsd": 0.35184899999999997,
       "worktrees4Bytes": 81920,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -28937,6 +29134,7 @@
       "costToGreenUsd": 0.364917,
       "worktrees4Bytes": 131072,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29004,6 +29202,7 @@
       "costToGreenUsd": 0.19554439999999998,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29071,6 +29270,7 @@
       "costToGreenUsd": 0.2037332,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29138,6 +29338,7 @@
       "costToGreenUsd": 0.1873002,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29205,6 +29406,7 @@
       "costToGreenUsd": 0.1880016,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29272,6 +29474,7 @@
       "costToGreenUsd": 0.18951040000000002,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29339,6 +29542,7 @@
       "costToGreenUsd": 0.193382,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29406,6 +29610,7 @@
       "costToGreenUsd": 0.2025458,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29473,6 +29678,7 @@
       "costToGreenUsd": 0.20761860000000001,
       "worktrees4Bytes": 98304,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29540,6 +29746,7 @@
       "costToGreenUsd": 0.20241279999999998,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29607,6 +29814,7 @@
       "costToGreenUsd": 0.2230826,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29674,6 +29882,7 @@
       "costToGreenUsd": 0.20357380000000003,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29741,6 +29950,7 @@
       "costToGreenUsd": 0.20275280000000004,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -29879,6 +30089,7 @@
       "costToGreenUsd": 0.1974654,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [],
       "store": "Context + useReducer"
     },
@@ -30018,6 +30229,7 @@
       "costToGreenUsd": 0.20062539999999998,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [],
       "store": "Context + useReducer"
     },
@@ -30157,6 +30369,7 @@
       "costToGreenUsd": 0.2234128,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [],
       "store": "Context + useReducer"
     },
@@ -30261,6 +30474,7 @@
       "costToGreenUsd": 0.1522362,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -30364,6 +30578,7 @@
       "costToGreenUsd": 0.15226040000000002,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -30467,6 +30682,7 @@
       "costToGreenUsd": 0.1541604,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -30534,6 +30750,7 @@
       "costToGreenUsd": 0.2092534,
       "worktrees4Bytes": 98304,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -30601,6 +30818,7 @@
       "costToGreenUsd": 0.22488240000000004,
       "worktrees4Bytes": 98304,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -30668,6 +30886,7 @@
       "costToGreenUsd": 0.22464680000000004,
       "worktrees4Bytes": 98304,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -30735,6 +30954,7 @@
       "costToGreenUsd": 0.18684540000000002,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -30802,6 +31022,7 @@
       "costToGreenUsd": 0.1915634,
       "worktrees4Bytes": 65536,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -30869,6 +31090,7 @@
       "costToGreenUsd": 0.1941954,
       "worktrees4Bytes": 65536,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -30942,6 +31164,7 @@
       "costToGreenUsd": 0.34108379999999994,
       "worktrees4Bytes": 4366336,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -31016,6 +31239,7 @@
       "costToGreenUsd": 0.406611,
       "worktrees4Bytes": 4399104,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -31089,6 +31313,7 @@
       "costToGreenUsd": 0.3531853999999999,
       "worktrees4Bytes": 4399104,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -31159,6 +31384,7 @@
       "costToGreenUsd": 0.3260356,
       "worktrees4Bytes": 331816960,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "anyhow",
         "bytes",
@@ -31240,6 +31466,7 @@
       "costToGreenUsd": 0.36164120000000005,
       "worktrees4Bytes": 441831424,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "anyhow",
         "axum",
@@ -31315,6 +31542,7 @@
       "costToGreenUsd": 0.35531500000000005,
       "worktrees4Bytes": 508825600,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [
         "anyhow",
         "axum",
@@ -31392,6 +31620,7 @@
       "costToGreenUsd": 0.2783168,
       "worktrees4Bytes": 4546560,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -31465,6 +31694,7 @@
       "costToGreenUsd": 0.30930879999999994,
       "worktrees4Bytes": 4890624,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -31538,6 +31768,7 @@
       "costToGreenUsd": 0.32205480000000003,
       "worktrees4Bytes": 4972544,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -31611,6 +31842,7 @@
       "costToGreenUsd": 0.27113160000000003,
       "worktrees4Bytes": 4530176,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -31684,6 +31916,7 @@
       "costToGreenUsd": 0.28714799999999996,
       "worktrees4Bytes": 4939776,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -31757,6 +31990,7 @@
       "costToGreenUsd": 0.29295160000000003,
       "worktrees4Bytes": 5103616,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -31830,6 +32064,7 @@
       "costToGreenUsd": 0.3237316,
       "worktrees4Bytes": 127270912,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -31903,6 +32138,7 @@
       "costToGreenUsd": 0.24968939999999998,
       "worktrees4Bytes": 123830272,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -31976,6 +32212,7 @@
       "costToGreenUsd": 0.31065479999999995,
       "worktrees4Bytes": 128090112,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -32049,6 +32286,7 @@
       "costToGreenUsd": 0.28829039999999995,
       "worktrees4Bytes": 32194560,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -32119,6 +32357,7 @@
       "costToGreenUsd": 0.20876560000000002,
       "worktrees4Bytes": 32292864,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -32192,6 +32431,7 @@
       "costToGreenUsd": 0.2592444,
       "worktrees4Bytes": 38780928,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -32323,6 +32563,7 @@
       "costToGreenUsd": 0.1827066,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [],
       "store": "Svelte runes ($state)"
     },
@@ -32455,6 +32696,7 @@
       "costToGreenUsd": 0.1838358,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [],
       "store": "Svelte runes ($state)"
     },
@@ -32587,6 +32829,7 @@
       "costToGreenUsd": 0.18814879999999998,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [],
       "store": "Svelte runes ($state)"
     },
@@ -32691,6 +32934,7 @@
       "costToGreenUsd": 0.1565234,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -32794,6 +33038,7 @@
       "costToGreenUsd": 0.18265119999999999,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -32897,6 +33142,7 @@
       "costToGreenUsd": 0.1600764,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -32971,6 +33217,7 @@
       "costToGreenUsd": 0.43281660000000005,
       "worktrees4Bytes": 589824,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -33047,6 +33294,7 @@
       "costToGreenUsd": 0.4624418,
       "worktrees4Bytes": 557056,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -33123,6 +33371,7 @@
       "costToGreenUsd": 0.5665290000000001,
       "worktrees4Bytes": 573440,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -33215,6 +33464,7 @@
       "costToGreenUsd": 1.0879678,
       "worktrees4Bytes": 1916928,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -33306,6 +33556,7 @@
       "costToGreenUsd": 1.0108916,
       "worktrees4Bytes": 1343488,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -33398,6 +33649,7 @@
       "costToGreenUsd": 1.1012845999999998,
       "worktrees4Bytes": 1753088,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -33477,6 +33729,7 @@
       "costToGreenUsd": 0.41501360000000004,
       "worktrees4Bytes": 770048,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -33553,6 +33806,7 @@
       "costToGreenUsd": 0.5021786,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -33632,6 +33886,7 @@
       "costToGreenUsd": 0.5535552,
       "worktrees4Bytes": 720896,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -33705,6 +33960,7 @@
       "costToGreenUsd": 0.39636379999999993,
       "worktrees4Bytes": 245760,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -33781,6 +34037,7 @@
       "costToGreenUsd": 0.3405646,
       "worktrees4Bytes": 638976,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -33860,6 +34117,7 @@
       "costToGreenUsd": 0.5260124,
       "worktrees4Bytes": 589824,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -33937,6 +34195,7 @@
       "costToGreenUsd": 0.2905044,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -34016,6 +34275,7 @@
       "costToGreenUsd": 0.2952616,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -34095,6 +34355,7 @@
       "costToGreenUsd": 0.2899262,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -34177,6 +34438,7 @@
       "costToGreenUsd": 0.34016759999999996,
       "worktrees4Bytes": 151990272,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -34259,6 +34521,7 @@
       "costToGreenUsd": 0.3587744,
       "worktrees4Bytes": 152244224,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -34341,6 +34604,7 @@
       "costToGreenUsd": 0.3326966,
       "worktrees4Bytes": 151678976,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -34417,6 +34681,7 @@
       "costToGreenUsd": 0.2193852,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -34493,6 +34758,7 @@
       "costToGreenUsd": 0.2839372,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -34569,6 +34835,7 @@
       "costToGreenUsd": 0.25957359999999996,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -34646,6 +34913,7 @@
       "costToGreenUsd": 0.31942999999999994,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -34722,6 +34990,7 @@
       "costToGreenUsd": 0.289605,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -34801,6 +35070,7 @@
       "costToGreenUsd": 0.33748279999999997,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -34932,6 +35202,7 @@
       "costToGreenUsd": 0.18889740000000002,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [],
       "store": "Pinia"
     },
@@ -35057,6 +35328,7 @@
       "costToGreenUsd": 0.17286439999999997,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [],
       "store": "Pinia"
     },
@@ -35189,6 +35461,7 @@
       "costToGreenUsd": 0.184252,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": [],
       "store": "Pinia"
     },
@@ -35293,6 +35566,7 @@
       "costToGreenUsd": 0.13889859999999998,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -35396,6 +35670,7 @@
       "costToGreenUsd": 0.1625812,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -35499,6 +35774,7 @@
       "costToGreenUsd": 0.19444499999999998,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -35566,6 +35842,7 @@
       "costToGreenUsd": 0.24410220000000002,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -35633,6 +35910,7 @@
       "costToGreenUsd": 0.203363,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -35700,6 +35978,7 @@
       "costToGreenUsd": 0.2508758,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -35767,6 +36046,7 @@
       "costToGreenUsd": 0.22966359999999997,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -35834,6 +36114,7 @@
       "costToGreenUsd": 0.23120940000000004,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -35901,6 +36182,7 @@
       "costToGreenUsd": 0.2004038,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -35971,6 +36253,7 @@
       "costToGreenUsd": 0.3343146,
       "worktrees4Bytes": 132685824,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -36042,6 +36325,7 @@
       "costToGreenUsd": 0.309946,
       "worktrees4Bytes": 131661824,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -36109,6 +36393,7 @@
       "costToGreenUsd": 0.3032576,
       "worktrees4Bytes": 194723840,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -36190,6 +36475,7 @@
       "costToGreenUsd": 0.8693206,
       "worktrees4Bytes": 134291456,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -36266,6 +36552,7 @@
       "costToGreenUsd": 0.8129898000000001,
       "worktrees4Bytes": 133251072,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -36345,6 +36632,7 @@
       "costToGreenUsd": 0.8255014,
       "worktrees4Bytes": 134258688,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -36412,6 +36700,7 @@
       "costToGreenUsd": 0.28275839999999997,
       "worktrees4Bytes": 195428352,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -36485,6 +36774,7 @@
       "costToGreenUsd": 0.5086068,
       "worktrees4Bytes": 131727360,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -36555,6 +36845,7 @@
       "costToGreenUsd": 0.5030366,
       "worktrees4Bytes": 131227648,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -36625,6 +36916,7 @@
       "costToGreenUsd": 0.27704499999999993,
       "worktrees4Bytes": 130023424,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -36692,6 +36984,7 @@
       "costToGreenUsd": 0.27941019999999994,
       "worktrees4Bytes": 190513152,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     },
     {
@@ -36759,6 +37052,7 @@
       "costToGreenUsd": 0.2325768,
       "worktrees4Bytes": 48984064,
       "devloopTargetBytes": null,
+      "twinPerf": null,
       "deps": []
     }
   ]

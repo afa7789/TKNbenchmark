@@ -2,7 +2,7 @@
 import { spawn } from 'node:child_process'
 import { createWriteStream, existsSync, mkdirSync, readFileSync, rmSync, copyFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { TASKS, MODEL, EFFORT, RUN_TIMEOUT_MS, ROOT, ARM, AGENT_CLI, BASE_RUNS, CLAUDE_BIN, SKILLS } from './config.mjs'
+import { TASKS, MODEL, EFFORT, RUN_TIMEOUT_MS, ROOT, ARM, AGENT_CLI, BASE_RUNS, CLAUDE_BIN, SKILLS, PORT_FROM } from './config.mjs'
 import { claudeEnv, copyFiles, firstLine, killStragglers, readJson, solutionFiles } from './lib.mjs'
 
 // Every round that starts agents (write, repair, skill writing) runs the published run's Claude Code.
@@ -22,10 +22,19 @@ function forgetMemory(transcript) {
   if (dir) rmSync(dir, { recursive: true, force: true })
 }
 
+// The baseline's working solution of a case: round 3's if it passed, else the repair that fixed it.
+export function workingSolution(lang, task, rep) {
+  const run = join(BASE_RUNS, lang, task, `r${rep}`)
+  if (readJson(join(run, 'verify.json')).solved) return join(run, 'solution')
+  const fix = readJson(join(run, 'repair.json'))
+  if (!fix.fixed) throw new Error(`${lang}-${task}-r${rep} never worked: nothing to port`)
+  return join(run, 'repair', `a${fix.attempts.length}`, 'solution')
+}
+
 // Fresh workdir with what the agent may see: SPEC.md, per-language templates (proof statements),
-// the language's skill in the skills arm, plus check.mjs and the visible cases for non-front-end tasks.
-// .claude/ is a dot-dir, so solutionFiles never copies the skill into solution/.
-export async function prepareWorkdir(task, dir, lang) {
+// the language's skill in the skills arm, the program to port in a port arm, plus check.mjs and the
+// visible cases for non-front-end tasks. Dot-dirs (.claude/, .source/) never reach solution/.
+export async function prepareWorkdir(task, dir, lang, rep) {
   rmSync(dir, { recursive: true, force: true })
   mkdirSync(dir, { recursive: true })
   const taskDir = join(ROOT, 'bench', 'tasks', task)
@@ -33,6 +42,10 @@ export async function prepareWorkdir(task, dir, lang) {
   const templates = join(taskDir, 'templates', lang ?? '')
   if (lang && existsSync(templates)) copyFiles(templates, dir, solutionFiles(templates))
   if (ARM === 'skills') copyFiles(join(SKILLS, lang), join(dir, '.claude', 'skills', lang), ['SKILL.md'])
+  if (PORT_FROM) {
+    const src = workingSolution(PORT_FROM, task, rep)
+    copyFiles(src, join(dir, '.source'), solutionFiles(src))
+  }
   if (TASKS[task].frontend) return
   copyFileSync(join(ROOT, 'bench', 'harness', 'check.mjs'), join(dir, 'check.mjs'))
   const { visible } = await import(join(taskDir, 'cases.mjs'))

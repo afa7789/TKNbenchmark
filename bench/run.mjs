@@ -3,7 +3,7 @@
 // TKN_ARM=skills runs the skills arm into runs-skills/ (see config.mjs).
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { LANGS, FRONTENDS, TASKS, MODEL, EFFORT, RUNS, WORK, MAIN_LANGS, ARM, BASE_RUNS, CLAUDE_BIN, SKILLS, prompt, runDir, runId, trackLangs } from './config.mjs'
+import { LANGS, FRONTENDS, TASKS, MODEL, EFFORT, RUNS, WORK, MAIN_LANGS, ARM, BASE_RUNS, CLAUDE_BIN, SKILLS, PORT_FROM, prompt, runDir, runId, trackLangs } from './config.mjs'
 import { prepareWorkdir, runAgent } from './agent.mjs'
 import { copyFiles, firstLine, list, parseArgs, pool, readJson, shortSha, solutionFiles, writeJson } from './lib.mjs'
 import { parseTranscript } from './transcript.mjs'
@@ -43,7 +43,7 @@ async function runCell({ lang, task, rep }) {
   if (existsSync(join(out, 'agent.json')) && !args.force) return
   const id = runId(lang, task, rep)
   const dir = join(WORK, 'agent', id)
-  await prepareWorkdir(task, dir, lang)
+  await prepareWorkdir(task, dir, lang, rep)
   rmSync(out, { recursive: true, force: true })
   mkdirSync(out, { recursive: true })
   const transcript = join(out, 'transcript.jsonl')
@@ -61,7 +61,7 @@ async function runCell({ lang, task, rep }) {
   }
   const files = solutionFiles(dir)
   copyFiles(dir, join(out, 'solution'), files)
-  writeJson(join(out, 'agent.json'), { id, lang, task, rep, arm: ARM, model: MODEL, effort: EFFORT, skillSha: skillSha(lang), exitCode, wallMs: Date.now() - t0, files, ...metrics })
+  writeJson(join(out, 'agent.json'), { id, lang, task, rep, arm: ARM, model: MODEL, effort: EFFORT, skillSha: skillSha(lang), portFrom: PORT_FROM, exitCode, wallMs: Date.now() - t0, files, ...metrics })
   console.log(`✔ ${id} cost=$${metrics.costUsd?.toFixed(3)} out=${metrics.usage.output} turns=${metrics.turns} check=${JSON.stringify(metrics.lastCheck)}`)
 }
 
@@ -84,8 +84,10 @@ if (args.reparse) {
   process.exit(0)
 }
 
-// Front ends, a specialised track's languages, or the main languages.
+// Front ends, a specialised track's languages, or the main languages. A port arm has sources only for
+// the main tasks, and never ports a language to itself.
 function languagesFor(task) {
+  if (PORT_FROM) return TASKS[task].frontend || TASKS[task].track ? [] : MAIN_LANGS.filter((l) => l !== PORT_FROM)
   if (TASKS[task].frontend) return Object.keys(FRONTENDS)
   return TASKS[task].track ? trackLangs(TASKS[task].track) : MAIN_LANGS
 }

@@ -25,7 +25,7 @@ async function attempt(run, meta, n, sol, last) {
   const id = `${meta.id}-fix${n}`
   const dir = join(WORK, 'repair', id)
   const out = join(run, 'repair', `a${n}`)
-  await prepareWorkdir(meta.task, dir, meta.lang)
+  await prepareWorkdir(meta.task, dir, meta.lang, meta.rep)
   copyFiles(sol, dir, solutionFiles(sol))
   rmSync(out, { recursive: true, force: true })
   mkdirSync(out, { recursive: true })

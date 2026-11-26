@@ -3,7 +3,7 @@
 // node bench/aggregate.mjs --check  validate the committed data (CI smoke)
 import { existsSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { ROOT, RUNS, LANGS, FRONTENDS, TASKS, TRACKS, MODEL, EFFORT, MAIN_LANGS, ARM, SKILLS, PRICE } from './config.mjs'
+import { ROOT, RUNS, LANGS, FRONTENDS, TASKS, TRACKS, MODEL, EFFORT, MAIN_LANGS, ARM, SKILLS, PRICE, PORT_FROM } from './config.mjs'
 import { isCounted, readJson, solutionFiles, spearman, writeJson } from './lib.mjs'
 import { detectDeps } from './deps.mjs'
 
@@ -39,7 +39,7 @@ function collect() {
       for (const rep of readdirSync(join(RUNS, lang.name, task))) {
         const dir = join(RUNS, lang.name, task, rep)
         const agent = opt(join(dir, 'agent.json'))
-        if (agent) runs.push({ dir, agent, verify: opt(join(dir, 'verify.json')), tokens: opt(join(dir, 'tokens.json')), perf: opt(join(dir, 'perf.json')), repair: opt(join(dir, 'repair.json')), devloop: opt(join(dir, 'devloop.json')) })
+        if (agent) runs.push({ dir, agent, verify: opt(join(dir, 'verify.json')), tokens: opt(join(dir, 'tokens.json')), perf: opt(join(dir, 'perf.json')), repair: opt(join(dir, 'repair.json')), devloop: opt(join(dir, 'devloop.json')), twins: opt(join(dir, 'perf-twins.json')) })
       }
     }
   }
@@ -68,7 +68,10 @@ function repairFields(a, v, found) {
 // Disk for N parallel worktrees: per-project artifacts are duplicated, global caches are shared.
 const worktrees = (v, n) => (v ? n * v.projectBytes + v.cacheBytes : null)
 
-function publicRun({ agent: a, verify: v, tokens: t, perf: p, repair: rp, devloop: dl }) {
+// One perf record's headline number: throughput for kvhttp, else wall time.
+const perfValue = (p) => p?.rps ?? p?.wallMs ?? null
+
+function publicRun({ agent: a, verify: v, tokens: t, perf: p, repair: rp, devloop: dl, twins: tw }) {
   return {
     ...fields(a, same('id', 'lang', 'task', 'rep', 'finished', 'terminalReason', 'costUsd', 'turns', 'usage', 'tools', 'builds', 'compileErrors', 'stdlibReads', 'checkRuns', 'firstCheckPass', 'models')),
     durationS: a.durationMs / 1000,
@@ -81,6 +84,8 @@ function publicRun({ agent: a, verify: v, tokens: t, perf: p, repair: rp, devloo
     ...repairFields(a, v, rp),
     worktrees4Bytes: worktrees(v, 4),
     devloopTargetBytes: dl?.targetBytes ?? null,
+    // Paired perf (arms): the same session's timings of the baseline cases this run is compared with.
+    twinPerf: tw ? Object.fromEntries(Object.entries(tw).map(([role, x]) => [role, perfValue(x)])) : null,
   }
 }
 
@@ -293,6 +298,32 @@ function pairedEffect(baseRuns, runs) {
 }
 
 // This arm vs the published run, per language over the tasks both ran, plus what the skill cost to write.
+// How much faster the run's code is than a twin, from paired timings: geometric mean over the tasks of
+// the per-task median ratio (time: twin ÷ own; throughput: own ÷ twin). null without paired data.
+function pairedSpeed(rs, role) {
+  const byTask = Object.groupBy(rs.filter((r) => Number.isFinite(r.twinPerf?.[role]) && Number.isFinite(r.perfMs ?? r.perfRps)), (r) => r.task)
+  const ratios = Object.entries(byTask).map(([t, xs]) => {
+    const [own, twin] = [stats(xs.map((r) => r.perfMs ?? r.perfRps)).median, stats(xs.map((r) => r.twinPerf[role])).median]
+    return t === 'kvhttp' ? own / twin : twin / own
+  })
+  return ratios.length ? geomean(ratios) : null
+}
+
+// Port arm: what migrating cost per 10 000 lines of the source program (write + repair, so a run that
+// needed repair is not cheaper than one that did not), and how much faster the port runs than the source.
+function portFields(rs, base) {
+  const lines = new Map(base.runs.filter((r) => r.lang === PORT_FROM).map((r) => [`${r.task}/${r.rep}`, r.codeLines]))
+  const per10k = rs.filter((r) => r.works && lines.get(`${r.task}/${r.rep}`)).map((r) => (r.costToGreenUsd / lines.get(`${r.task}/${r.rep}`)) * 1e4)
+  return { from: PORT_FROM, costPer10kSourceLines: stats(per10k), speedVsSource: pairedSpeed(rs, 'source') }
+}
+
+// Skills arm: what the skill cost to write, how often it was used, and runs until it pays for itself.
+function skillFields(lang, rs, sides, nTasks, beyondNoise, skills) {
+  const skill = { costUsd: skills[lang]?.costUsd ?? null, bodyBytes: skills[lang]?.bodyBytes ?? null, usedRate: rs.filter((r) => r.tools?.Skill).length / rs.length }
+  // Break-even only for a saving outside the noise: a within-noise "saving" is no saving.
+  return { skill, breakEvenRuns: beyondNoise ? breakEven(skill.costUsd, sides, nTasks) : null }
+}
+
 function vsBase(cells, runs) {
   const base = readJson(join(BASE_OUT, 'results.json'))
   const skills = opt(join(SKILLS, 'meta.json')) ?? {}
@@ -301,12 +332,12 @@ function vsBase(cells, runs) {
     Object.entries(byLang).map(([lang, rs]) => {
       const tasks = [...new Set(rs.map((r) => r.task))].filter((t) => base.summary.cells[`${lang}/${t}`]).sort()
       const sides = { base: armSide(base.summary.cells, base.runs, lang, tasks), arm: armSide(cells, runs, lang, tasks) }
-      const skill = { costUsd: skills[lang]?.costUsd ?? null, bodyBytes: skills[lang]?.bodyBytes ?? null, usedRate: rs.filter((r) => r.tools?.Skill).length / rs.length }
       // A cost change counts only outside the baseline's own spread between repetitions.
       const beyondNoise = sides.arm.costUsd < sides.base.costMin || sides.arm.costUsd > sides.base.costMax
-      // Break-even only for a saving outside the noise: a within-noise "saving" is no saving.
-      const breakEvenRuns = beyondNoise ? breakEven(skill.costUsd, sides, tasks.length) : null
-      return [lang, { tasks, ...sides, beyondNoise, speedChange: speedChange(sides.base, sides.arm), skill, breakEvenRuns }]
+      // Speed vs the same case written from scratch: paired timings when present, else both arms' medians.
+      const speed = pairedSpeed(rs, 'scratch') ?? speedChange(sides.base, sides.arm)
+      const extra = ARM === 'skills' ? skillFields(lang, rs, sides, tasks.length, beyondNoise, skills) : { port: portFields(rs, base) }
+      return [lang, { tasks, ...sides, beyondNoise, speedChange: speed, ...extra }]
     }),
   )
 }

@@ -8,8 +8,10 @@ export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 
 // Experimental arm. base: the published run, no rules of any kind. skills: the same run plus one
 // project Skill per language (bench/skills/<lang>/SKILL.md), offered through the Skill tool.
+// port-<lang>: the agent ports the baseline's working <lang> solution (in ./.source/) to the target.
 export const ARM = process.env.TKN_ARM ?? 'base'
-if (!['base', 'skills'].includes(ARM)) throw new Error(`unknown TKN_ARM "${ARM}" (base, skills)`)
+if (!/^(base|skills|port-[a-z]+)$/.test(ARM)) throw new Error(`unknown TKN_ARM "${ARM}" (base, skills, port-<lang>)`)
+export const PORT_FROM = ARM.startsWith('port-') ? ARM.slice(5) : null
 const armSuffix = ARM === 'base' ? '' : `-${ARM}`
 export const BASE_RUNS = join(ROOT, 'runs')
 export const RUNS = join(ROOT, `runs${armSuffix}`)
@@ -84,6 +86,7 @@ Object.assign(LANGS, {
   noir: { label: 'Noir', name: 'Noir (nargo)', version: ['sh', '-c', 'nargo --version | head -1'], track: 'zk' },
 })
 export const MAIN_LANGS = Object.keys(LANGS).filter((k) => !LANGS[k].track)
+if (PORT_FROM && !MAIN_LANGS.includes(PORT_FROM)) throw new Error(`port source "${PORT_FROM}" is not a main language`)
 export const trackLangs = (track) => Object.keys(LANGS).filter((k) => LANGS[k].track === track)
 
 // Quiet first-run banners that would cost every .NET run the same extra tokens.
@@ -174,7 +177,10 @@ export function prompt(task, lang, versionText) {
     return `Write ${what} specified in SPEC.md using ${FRONTENDS[lang].name}. Work only inside the current directory.\n\nWhen finished, reply with the single word DONE.`
   }
   const { name, note } = LANGS[lang]
-  return `Implement the program specified in SPEC.md, in ${name}.
+  const goal = PORT_FROM
+    ? `Port the program in ./.source/ from ${LANGS[PORT_FROM].name} to ${name}. It implements SPEC.md and passes the full acceptance suite.`
+    : `Implement the program specified in SPEC.md, in ${name}.`
+  return `${goal}
 
 Environment: macOS arm64, toolchain: ${versionText}. Work only inside the current directory.
 

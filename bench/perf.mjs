@@ -2,14 +2,16 @@
 // stdio tasks: median wall time of 5 runs on one large input + peak RSS.
 // kvhttp: requests/second under 64 concurrent clients (median of 3 rounds) + RSS after load.
 // node bench/perf.mjs [--force] [--paired]
-// --paired (an arm other than base): each case is measured right next to the baseline's same case,
-// alternating which goes first, so drift in machine speed falls on both arms alike.
+// --paired (an arm other than base): each case is measured right next to its baseline twins (the same
+// case written from scratch; in a port arm also the source language's case), in rotating order, so drift
+// in machine speed falls on all of them alike. Twin timings go to the arm's perf-twins.json; runs/ is
+// never written.
 import { spawn, spawnSync } from 'node:child_process'
 import { existsSync, mkdirSync, openSync, closeSync, readdirSync, writeFileSync } from 'node:fs'
 import http from 'node:http'
 import net from 'node:net'
 import { dirname, join, relative } from 'node:path'
-import { ARM, BASE_RUNS, BASE_WORK, RUNS, WORK } from './config.mjs'
+import { ARM, BASE_RUNS, BASE_WORK, PORT_FROM, RUNS, WORK } from './config.mjs'
 import { genInput } from './harness/check.mjs'
 import { parseArgs, readJson, writeJson } from './lib.mjs'
 
@@ -120,20 +122,31 @@ function measurable(run, built) {
   const meta = readJson(join(run, 'agent.json'))
   const bin = join(built, meta.id, 'app')
   const fixed = existsSync(join(run, 'repair.json')) && readJson(join(run, 'repair.json')).fixed
-  if (!(readJson(join(run, 'verify.json')).solved || fixed) || !existsSync(bin)) return null
-  return meta.task === 'kvhttp' || INPUTS[meta.task] ? { dir: run, id: meta.id, task: meta.task, bin } : null
+  if (!(readJson(join(run, 'verify.json')).solved || fixed) || !(meta.task === 'kvhttp' || INPUTS[meta.task])) return null
+  // A working run whose binary is gone would silently drop out of a paired comparison.
+  if (!existsSync(bin)) throw new Error(`${meta.id}: worked but ${bin} is missing; rebuild it with verify --force`)
+  return { dir: run, id: meta.id, task: meta.task, bin }
 }
 
-async function measure(m) {
-  const perf = m.task === 'kvhttp' ? await perfHttp(m.bin) : perfStdio(m.bin, m.task)
-  writeJson(join(m.dir, 'perf.json'), perf)
-  console.log(`${relative(dirname(RUNS), m.dir)}: ${JSON.stringify(perf)}`)
+const timing = (m) => (m.task === 'kvhttp' ? perfHttp(m.bin) : perfStdio(m.bin, m.task))
+
+// The baseline cases a run is compared with: the same case written from scratch, and the ported source.
+function twins(run) {
+  const [lang, task, rep] = relative(RUNS, run).split('/')
+  const base = (l) => measurable(join(BASE_RUNS, l, task, rep), join(BASE_WORK, 'built'))
+  return Object.fromEntries([['scratch', base(lang)], ['source', PORT_FROM && base(PORT_FROM)]].filter(([, m]) => m))
 }
 
 const paired = args.paired && ARM !== 'base'
 for (const [i, run] of runs.entries()) {
   if (existsSync(join(run, 'perf.json')) && !args.force) continue
   const own = measurable(run, join(WORK, 'built'))
-  const twin = paired ? measurable(join(BASE_RUNS, relative(RUNS, run)), join(BASE_WORK, 'built')) : null
-  for (const m of (i % 2 ? [twin, own] : [own, twin]).filter(Boolean)) await measure(m)
+  if (!own) continue
+  const roles = [['own', own], ...Object.entries(paired ? twins(run) : {})]
+  const order = roles.map((_, j) => roles[(i + j) % roles.length])
+  const out = {}
+  for (const [role, m] of order) out[role] = await timing(m)
+  writeJson(join(run, 'perf.json'), out.own)
+  if (paired) writeJson(join(run, 'perf-twins.json'), Object.fromEntries(Object.entries(out).filter(([r]) => r !== 'own')))
+  console.log(`${own.id}: ${JSON.stringify(out)}`)
 }
