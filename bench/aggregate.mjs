@@ -298,7 +298,24 @@ function pairedEffect(baseRuns, runs) {
   const extra = Object.fromEntries(Object.entries(PRICE).map(([k, usd]) => [k, (usd / 1e6) * sum(pairs.map(([b, a]) => a.usage[k] - b.usage[k]))]))
   const total = sum(Object.values(extra))
   const costShare = Object.fromEntries(Object.entries(extra).map(([k, v]) => [k, v / total]))
-  return { pairs: pairs.length, costUsd: metric((r) => r.costUsd), turns: metric((r) => r.turns), output: metric((r) => r.usage.output), cacheWrite: metric((r) => r.usage.cacheWrite), cacheRead: metric((r) => r.usage.cacheRead), extraUsd: extra, costShare }
+  return { pairs: pairs.length, costUsd: metric((r) => r.costUsd), turns: metric((r) => r.turns), output: metric((r) => r.usage.output), cacheWrite: metric((r) => r.usage.cacheWrite), cacheRead: metric((r) => r.usage.cacheRead), extraUsd: extra, costShare, code: codeEffect(pairs, metric) }
+}
+
+// Did the code itself change? Over the same pairs: hidden tests passed in round 3, examples passed on the
+// first check, runs that left test files behind, compiler errors met, code size and file count.
+const TEST_FILE_RE = /(^|\/)(tests?|spec|__tests__)\/|_test\.|\.test\.|(^|\/)test_|Tests?\.|Tests?\//
+const hasTests = (r) => (r.fileTokens ?? []).some((f) => TEST_FILE_RE.test(f.path))
+
+function codeEffect(pairs, metric) {
+  const both = (f) => ({ base: sum(pairs.map(([b]) => f(b))), arm: sum(pairs.map(([, a]) => f(a))) })
+  return {
+    solved: both((r) => Number(Boolean(r.solved))),
+    firstTry: both((r) => Number(Boolean(r.firstCheckPass))),
+    withTests: both((r) => Number(hasTests(r))),
+    compileErrors: both((r) => r.compileErrors ?? 0),
+    codeTokens: metric((r) => r.codeTokens),
+    files: metric((r) => r.fileTokens?.length),
+  }
 }
 
 // Does the arm's overhead shrink on longer work? Per case (language/task): the baseline's median turns

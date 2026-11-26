@@ -73,6 +73,9 @@ integrator) built a three-part program slower than one agent alone in all \NSwar
   \item \textbf{The skill is paid as context, not as work.} \SkillTurnsBase{}$\to$\SkillTurnsArm{} turns
         per run; \SkillShareWrite{} of the extra spend is context written to the prompt cache, \SkillShareRead{}
         context re-read and only \SkillShareOutput{} the agent's own output.
+  \item \textbf{The code was not better, only more tested.} With the skill, \SkillCodeSolvedArm{} runs
+        passed the hidden tests in round 3 (\SkillCodeSolvedBase{} without) and the code was as fast and as
+        long; \SkillCodeTestsArm{} runs left tests behind (\SkillCodeTestsBase{} without).
   \item \textbf{The longer the task, the less the skill costs.} The increase fell from \SkillLenShort{}
         where the agent needed fewer than five turns without it to \SkillLenLong{} where it needed twelve
         or more ($\rho = \SkillLenRho$); our tasks are too short for a skill to pay for itself.
@@ -316,6 +319,15 @@ prices, \SkillShareWrite{} of the extra spend is context written to the cache, \
 re-read and \SkillShareOutput{} output.
 Figure~\ref{fig:skillslope} shows how the cost ranking moved.
 
+The code itself did not get better. Over the same pairs, \SkillCodeSolvedArm{} runs passed the hidden
+tests in round 3 with the skill and \SkillCodeSolvedBase{} without; the examples passed on the first check
+in \SkillCodeFirstArm{} and \SkillCodeFirstBase; the final code ran as fast (median
+\SkillSpeedMedian$\times$) and was about as long (\SkillCodeTokBase{} $\to$ \SkillCodeTokArm{} tokens in the
+median run). What changed was the process: \SkillCodeTestsArm{} runs left test files behind against
+\SkillCodeTestsBase{} without, the median solution had \SkillCodeFilesArm{} files instead of
+\SkillCodeFilesBase, and the agents met more compiler errors on the way (\SkillCodeErrArm{} against
+\SkillCodeErrBase{} in total).
+
 \begin{table}[h]
 \centering\small
 \caption{With vs without a language skill, per language, summing the per-task medians over the tasks
@@ -446,8 +458,10 @@ the skill rarely replaced work that the agent would otherwise have done; in seve
 work instead (more runs left test files behind, and every skill covers testing). Zig shows what a skill is for.
 Without one, the agent learned the Zig~0.16 I/O API by reading the standard library's sources
 (\ZigStdBase{} reads); with one, the same knowledge came from the skill (\ZigStdArm{} reads, output
-\ZigOutPct), and the cost stayed the same (\SkillDeltaZig). A skill pays where the model's knowledge lags
-the toolchain, and it should be short, since its text and every turn it adds are written into the context. The data point to task length: across the
+\ZigOutPct), and the cost stayed the same (\SkillDeltaZig). The skill did not make the code better either: correctness, speed and size stayed
+where they were, and the hidden tests, not the skill, kept the code correct; the skill made the agents
+write more tests, which a reviewer may value but which this benchmark does not reward. A skill pays where
+the model's knowledge lags the toolchain, and it should be short, since its text and every turn it adds are written into the context. The data point to task length: across the
 language--task cases, the longer the agent worked without the skill, the smaller the increase (Spearman
 $\rho = \SkillLenRho$ between the baseline's turns and the change in cost), from \SkillLenShort{} for
 cases under five turns to \SkillLenLong{} for the \SkillLenLongN{} cases of twelve turns or more. The cost

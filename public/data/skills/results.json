@@ -1,9 +1,13 @@
 {
   "meta": {
-    "generatedAt": "2026-11-26T01:04:14.245Z",
+    "generatedAt": "2026-11-26T11:41:57.917Z",
     "arm": "skills",
     "arms": [
-      "skills"
+      "port-clojure",
+      "port-python",
+      "port-ts",
+      "skills",
+      "swarm"
     ],
     "model": "claude-opus-5-5",
     "effort": "high",
@@ -407,6 +411,12 @@
         "title": "4x4 Sudoku",
         "topic": "permutation constraints",
         "track": "zk"
+      },
+      "suite": {
+        "kind": "stdio",
+        "title": "Three tools in one binary",
+        "topic": "one build, three modules: solo vs a swarm of agents",
+        "swarm": true
       }
     },
     "external": {
@@ -12748,6 +12758,7 @@
       }
     ],
     "costSpeedRho": 0.4097007223942208,
+    "growth": {},
     "vsBase": {
       "asm": {
         "tasks": [
@@ -14425,6 +14436,32 @@
         "output": 0.09827072797655226,
         "cacheWrite": 0.793415768008959,
         "cacheRead": 0.10828793602946966
+      },
+      "code": {
+        "solved": {
+          "base": 291,
+          "arm": 288
+        },
+        "firstTry": {
+          "base": 223,
+          "arm": 213
+        },
+        "withTests": {
+          "base": 11,
+          "arm": 40
+        },
+        "compileErrors": {
+          "base": 57,
+          "arm": 81
+        },
+        "codeTokens": {
+          "base": 2276.5,
+          "arm": 2389.5
+        },
+        "files": {
+          "base": 3,
+          "arm": 4
+        }
       }
     },
     "length": {
@@ -14488,6 +14525,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 214.383,
+      "wallS": 215,
       "apiS": 207.1,
       "solved": true,
       "pass": 15,
@@ -14530,6 +14568,7 @@
       "costToGreenUsd": 0.7846414,
       "worktrees4Bytes": 196608,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -14562,6 +14601,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 195.946,
+      "wallS": 196.56,
       "apiS": 187.907,
       "solved": true,
       "pass": 15,
@@ -14604,6 +14644,7 @@
       "costToGreenUsd": 0.738542,
       "worktrees4Bytes": 196608,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -14636,6 +14677,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 162.417,
+      "wallS": 163.03,
       "apiS": 159.824,
       "solved": true,
       "pass": 15,
@@ -14672,6 +14714,7 @@
       "costToGreenUsd": 0.6542288,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -14705,6 +14748,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 378.389,
+      "wallS": 378.994,
       "apiS": 374.863,
       "solved": true,
       "pass": 11,
@@ -14747,6 +14791,7 @@
       "costToGreenUsd": 1.3950126000000003,
       "worktrees4Bytes": 212992,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -14780,6 +14825,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 429.106,
+      "wallS": 429.835,
       "apiS": 423.404,
       "solved": true,
       "pass": 11,
@@ -14828,6 +14874,7 @@
       "costToGreenUsd": 1.582475,
       "worktrees4Bytes": 278528,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -14861,6 +14908,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 459.328,
+      "wallS": 460.108,
       "apiS": 455.921,
       "solved": true,
       "pass": 11,
@@ -14909,6 +14957,7 @@
       "costToGreenUsd": 1.7596198,
       "worktrees4Bytes": 212992,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -14941,6 +14990,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 202.11,
+      "wallS": 202.788,
       "apiS": 174.113,
       "solved": true,
       "pass": 14,
@@ -14977,6 +15027,7 @@
       "costToGreenUsd": 0.7073734,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15009,6 +15060,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 176.587,
+      "wallS": 177.294,
       "apiS": 173.017,
       "solved": true,
       "pass": 14,
@@ -15045,6 +15097,7 @@
       "costToGreenUsd": 0.6929160000000001,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15077,6 +15130,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 217.812,
+      "wallS": 218.623,
       "apiS": 212.361,
       "solved": true,
       "pass": 14,
@@ -15113,6 +15167,7 @@
       "costToGreenUsd": 0.8106013999999999,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15145,6 +15200,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 166.274,
+      "wallS": 167.013,
       "apiS": 125.132,
       "solved": true,
       "pass": 14,
@@ -15181,6 +15237,7 @@
       "costToGreenUsd": 0.5258290000000001,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15215,6 +15272,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 222.386,
+      "wallS": 223.079,
       "apiS": 192.086,
       "solved": true,
       "pass": 14,
@@ -15251,6 +15309,7 @@
       "costToGreenUsd": 0.7784466,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15283,6 +15342,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 126.467,
+      "wallS": 127.129,
       "apiS": 119.297,
       "solved": true,
       "pass": 14,
@@ -15319,6 +15379,7 @@
       "costToGreenUsd": 0.5098856,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15351,6 +15412,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 47.947,
+      "wallS": 48.626,
       "apiS": 46.553,
       "solved": true,
       "pass": 15,
@@ -15393,6 +15455,7 @@
       "costToGreenUsd": 0.2927272,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15425,6 +15488,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 54.944,
+      "wallS": 55.721,
       "apiS": 53.491,
       "solved": true,
       "pass": 15,
@@ -15467,6 +15531,7 @@
       "costToGreenUsd": 0.29783139999999997,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15499,6 +15564,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 46.956,
+      "wallS": 47.649,
       "apiS": 45.233,
       "solved": true,
       "pass": 15,
@@ -15535,6 +15601,7 @@
       "costToGreenUsd": 0.29074940000000005,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15568,6 +15635,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 313.307,
+      "wallS": 314.44,
       "apiS": 187.156,
       "solved": true,
       "pass": 11,
@@ -15610,6 +15678,7 @@
       "costToGreenUsd": 0.8204502,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15643,6 +15712,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 169.077,
+      "wallS": 169.739,
       "apiS": 165.361,
       "solved": true,
       "pass": 11,
@@ -15691,6 +15761,7 @@
       "costToGreenUsd": 0.7132417999999999,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15723,6 +15794,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 152.645,
+      "wallS": 153.294,
       "apiS": 146.471,
       "solved": true,
       "pass": 11,
@@ -15765,6 +15837,7 @@
       "costToGreenUsd": 0.6549242000000001,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15797,6 +15870,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 117.836,
+      "wallS": 118.521,
       "apiS": 112.086,
       "solved": true,
       "pass": 14,
@@ -15839,6 +15913,7 @@
       "costToGreenUsd": 0.5139543999999999,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15871,6 +15946,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 86.011,
+      "wallS": 86.792,
       "apiS": 68.171,
       "solved": true,
       "pass": 14,
@@ -15907,6 +15983,7 @@
       "costToGreenUsd": 0.3442612,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -15939,6 +16016,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 73.09,
+      "wallS": 73.953,
       "apiS": 66.529,
       "solved": true,
       "pass": 14,
@@ -15975,6 +16053,7 @@
       "costToGreenUsd": 0.3783594,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16007,6 +16086,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 50.564,
+      "wallS": 51.29,
       "apiS": 47.271,
       "solved": true,
       "pass": 14,
@@ -16043,6 +16123,7 @@
       "costToGreenUsd": 0.2725952,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16075,6 +16156,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.338,
+      "wallS": 40.02,
       "apiS": 36.321,
       "solved": true,
       "pass": 14,
@@ -16111,6 +16193,7 @@
       "costToGreenUsd": 0.2560054,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16143,6 +16226,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 36.973,
+      "wallS": 37.686,
       "apiS": 34.093,
       "solved": true,
       "pass": 14,
@@ -16179,6 +16263,7 @@
       "costToGreenUsd": 0.251362,
       "worktrees4Bytes": 147456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16211,6 +16296,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 41.194,
+      "wallS": 42.12,
       "apiS": 33.213,
       "solved": true,
       "pass": 12,
@@ -16256,6 +16342,7 @@
       "costToGreenUsd": 0.2305936,
       "worktrees4Bytes": 304717824,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16288,6 +16375,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.726,
+      "wallS": 43.401,
       "apiS": 32.995,
       "solved": true,
       "pass": 12,
@@ -16333,6 +16421,7 @@
       "costToGreenUsd": 0.23055859999999997,
       "worktrees4Bytes": 312320000,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16365,6 +16454,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 31.833,
+      "wallS": 32.508,
       "apiS": 23.85,
       "solved": true,
       "pass": 12,
@@ -16410,6 +16500,7 @@
       "costToGreenUsd": 0.20821820000000002,
       "worktrees4Bytes": 301010944,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16442,6 +16533,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 49.113,
+      "wallS": 49.775,
       "apiS": 47.206,
       "solved": true,
       "pass": 10,
@@ -16484,6 +16576,7 @@
       "costToGreenUsd": 0.2740603999999999,
       "worktrees4Bytes": 376832,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16516,6 +16609,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 67.867,
+      "wallS": 68.626,
       "apiS": 60.828,
       "solved": true,
       "pass": 10,
@@ -16558,6 +16652,7 @@
       "costToGreenUsd": 0.31860580000000005,
       "worktrees4Bytes": 360448,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16590,6 +16685,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 47.899,
+      "wallS": 48.439,
       "apiS": 46.421,
       "solved": true,
       "pass": 10,
@@ -16632,6 +16728,7 @@
       "costToGreenUsd": 0.2793396,
       "worktrees4Bytes": 376832,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16664,6 +16761,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 94.217,
+      "wallS": 94.91,
       "apiS": 73.199,
       "solved": true,
       "pass": 15,
@@ -16706,6 +16804,7 @@
       "costToGreenUsd": 0.336321,
       "worktrees4Bytes": 35614720,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16738,6 +16837,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 155.106,
+      "wallS": 155.838,
       "apiS": 98.602,
       "solved": true,
       "pass": 15,
@@ -16777,6 +16877,7 @@
       "costToGreenUsd": 0.45681679999999997,
       "worktrees4Bytes": 109625344,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16810,6 +16911,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 96.659,
+      "wallS": 97.287,
       "apiS": 82.689,
       "solved": true,
       "pass": 15,
@@ -16852,6 +16954,7 @@
       "costToGreenUsd": 0.379402,
       "worktrees4Bytes": 35827712,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -16884,6 +16987,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 234.438,
+      "wallS": 235.131,
       "apiS": 89.215,
       "solved": true,
       "pass": 11,
@@ -16926,6 +17030,7 @@
       "costToGreenUsd": 0.3978958,
       "worktrees4Bytes": 41635840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "data.json",
@@ -16961,6 +17066,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 80.513,
+      "wallS": 81.323,
       "apiS": 69.617,
       "solved": true,
       "pass": 11,
@@ -17012,6 +17118,7 @@
       "costToGreenUsd": 0.36690280000000003,
       "worktrees4Bytes": 42201088,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "data.json",
@@ -17048,6 +17155,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 390.099,
+      "wallS": 390.843,
       "apiS": 317.341,
       "solved": false,
       "pass": 9,
@@ -17109,6 +17217,7 @@
       "costToGreenUsd": 0.4396008,
       "worktrees4Bytes": 40837120,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "data.json",
@@ -17144,6 +17253,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 71.324,
+      "wallS": 72.229,
       "apiS": 46.304,
       "solved": true,
       "pass": 14,
@@ -17186,6 +17296,7 @@
       "costToGreenUsd": 0.262219,
       "worktrees4Bytes": 36577280,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -17218,6 +17329,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 61.488,
+      "wallS": 62.169,
       "apiS": 47.942,
       "solved": true,
       "pass": 14,
@@ -17260,6 +17372,7 @@
       "costToGreenUsd": 0.290408,
       "worktrees4Bytes": 76050432,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -17292,6 +17405,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 50.727,
+      "wallS": 51.42,
       "apiS": 41.344,
       "solved": true,
       "pass": 14,
@@ -17334,6 +17448,7 @@
       "costToGreenUsd": 0.24978219999999998,
       "worktrees4Bytes": 35500032,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -17366,6 +17481,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 204.501,
+      "wallS": 205.877,
       "apiS": 126.079,
       "solved": true,
       "pass": 14,
@@ -17408,6 +17524,7 @@
       "costToGreenUsd": 0.5280066,
       "worktrees4Bytes": 77074432,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -17440,6 +17557,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 96.495,
+      "wallS": 97.673,
       "apiS": 54.089,
       "solved": true,
       "pass": 14,
@@ -17482,6 +17600,7 @@
       "costToGreenUsd": 0.30757660000000003,
       "worktrees4Bytes": 76525568,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -17514,6 +17633,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 81.883,
+      "wallS": 82.592,
       "apiS": 55.911,
       "solved": true,
       "pass": 14,
@@ -17556,6 +17676,7 @@
       "costToGreenUsd": 0.2767028,
       "worktrees4Bytes": 35778560,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -17588,6 +17709,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 45.979,
+      "wallS": 46.659,
       "apiS": 44.05,
       "solved": true,
       "pass": 15,
@@ -17624,6 +17746,7 @@
       "costToGreenUsd": 0.2601758,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -17656,6 +17779,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 47.069,
+      "wallS": 48.556,
       "apiS": 45.288,
       "solved": true,
       "pass": 15,
@@ -17698,6 +17822,7 @@
       "costToGreenUsd": 0.27124820000000005,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -17730,6 +17855,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.897,
+      "wallS": 43.625,
       "apiS": 41,
       "solved": true,
       "pass": 15,
@@ -17772,6 +17898,7 @@
       "costToGreenUsd": 0.27122779999999996,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -17804,6 +17931,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 151.041,
+      "wallS": 151.76,
       "apiS": 143.983,
       "solved": true,
       "pass": 11,
@@ -17867,6 +17995,7 @@
       "costToGreenUsd": 0.6227144,
       "worktrees4Bytes": 4456448,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -17899,6 +18028,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 158.364,
+      "wallS": 159.049,
       "apiS": 149.281,
       "solved": true,
       "pass": 11,
@@ -17962,6 +18092,7 @@
       "costToGreenUsd": 0.6329572,
       "worktrees4Bytes": 3817472,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -17994,6 +18125,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 336.401,
+      "wallS": 337.179,
       "apiS": 205.443,
       "solved": true,
       "pass": 11,
@@ -18063,6 +18195,7 @@
       "costToGreenUsd": 0.8696192,
       "worktrees4Bytes": 4751360,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18095,6 +18228,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 89.243,
+      "wallS": 89.944,
       "apiS": 68.199,
       "solved": true,
       "pass": 14,
@@ -18134,6 +18268,7 @@
       "costToGreenUsd": 0.3151286,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18166,6 +18301,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 34.628,
+      "wallS": 35.292,
       "apiS": 30.725,
       "solved": true,
       "pass": 14,
@@ -18205,6 +18341,7 @@
       "costToGreenUsd": 0.223077,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18237,6 +18374,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.51,
+      "wallS": 33.233,
       "apiS": 30.443,
       "solved": true,
       "pass": 14,
@@ -18276,6 +18414,7 @@
       "costToGreenUsd": 0.23169900000000002,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18308,6 +18447,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 26.279,
+      "wallS": 26.997,
       "apiS": 22.357,
       "solved": true,
       "pass": 14,
@@ -18344,6 +18484,7 @@
       "costToGreenUsd": 0.19326580000000002,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18376,6 +18517,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 30.647,
+      "wallS": 31.456,
       "apiS": 27.785,
       "solved": true,
       "pass": 14,
@@ -18412,6 +18554,7 @@
       "costToGreenUsd": 0.218088,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18444,6 +18587,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 22.262,
+      "wallS": 22.983,
       "apiS": 19.021,
       "solved": true,
       "pass": 14,
@@ -18480,6 +18624,7 @@
       "costToGreenUsd": 0.1954834,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18512,6 +18657,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 72.182,
+      "wallS": 72.892,
       "apiS": 65.996,
       "solved": true,
       "pass": 15,
@@ -18557,6 +18703,7 @@
       "costToGreenUsd": 0.35482660000000005,
       "worktrees4Bytes": 367493120,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18589,6 +18736,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 56.379,
+      "wallS": 57.099,
       "apiS": 48.395,
       "solved": true,
       "pass": 15,
@@ -18637,6 +18785,7 @@
       "costToGreenUsd": 0.29013740000000005,
       "worktrees4Bytes": 690946048,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18669,6 +18818,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 54.663,
+      "wallS": 55.321,
       "apiS": 46.695,
       "solved": true,
       "pass": 15,
@@ -18711,6 +18861,7 @@
       "costToGreenUsd": 0.2883902,
       "worktrees4Bytes": 382582784,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18743,6 +18894,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 101.999,
+      "wallS": 102.752,
       "apiS": 79.711,
       "solved": true,
       "pass": 11,
@@ -18794,6 +18946,7 @@
       "costToGreenUsd": 0.40913499999999997,
       "worktrees4Bytes": 934084608,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18826,6 +18979,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 245.094,
+      "wallS": 245.97,
       "apiS": 93.414,
       "solved": true,
       "pass": 11,
@@ -18871,6 +19025,7 @@
       "costToGreenUsd": 0.4460154,
       "worktrees4Bytes": 2269929472,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18903,6 +19058,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 226.631,
+      "wallS": 227.301,
       "apiS": 81.617,
       "solved": true,
       "pass": 11,
@@ -18948,6 +19104,7 @@
       "costToGreenUsd": 0.38482759999999994,
       "worktrees4Bytes": 2270388224,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -18980,6 +19137,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 98.092,
+      "wallS": 99.503,
       "apiS": 42.542,
       "solved": true,
       "pass": 14,
@@ -19025,6 +19183,7 @@
       "costToGreenUsd": 0.2640744,
       "worktrees4Bytes": 1192329216,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19057,6 +19216,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 87.554,
+      "wallS": 88.238,
       "apiS": 45.102,
       "solved": true,
       "pass": 14,
@@ -19099,6 +19259,7 @@
       "costToGreenUsd": 0.2836642,
       "worktrees4Bytes": 1571717120,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19131,6 +19292,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 72.162,
+      "wallS": 73.139,
       "apiS": 45.207,
       "solved": true,
       "pass": 14,
@@ -19173,6 +19335,7 @@
       "costToGreenUsd": 0.2609008,
       "worktrees4Bytes": 1584881664,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19205,6 +19368,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 43.305,
+      "wallS": 43.967,
       "apiS": 35.306,
       "solved": true,
       "pass": 14,
@@ -19247,6 +19411,7 @@
       "costToGreenUsd": 0.24810239999999997,
       "worktrees4Bytes": 381026304,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19279,6 +19444,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 66.674,
+      "wallS": 67.609,
       "apiS": 50.84,
       "solved": true,
       "pass": 14,
@@ -19321,6 +19487,7 @@
       "costToGreenUsd": 0.3143868,
       "worktrees4Bytes": 383320064,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19353,6 +19520,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 76.114,
+      "wallS": 76.976,
       "apiS": 45.206,
       "solved": true,
       "pass": 14,
@@ -19395,6 +19563,7 @@
       "costToGreenUsd": 0.27623800000000004,
       "worktrees4Bytes": 396705792,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19427,6 +19596,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 22.215,
+      "wallS": 22.943,
       "apiS": 19.261,
       "solved": true,
       "pass": 9,
@@ -19463,6 +19633,7 @@
       "costToGreenUsd": 0.1780032,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19495,6 +19666,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 16.113,
+      "wallS": 16.805,
       "apiS": 13.223,
       "solved": true,
       "pass": 9,
@@ -19531,6 +19703,7 @@
       "costToGreenUsd": 0.1774152,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19563,6 +19736,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 19.627,
+      "wallS": 20.534,
       "apiS": 16.597,
       "solved": true,
       "pass": 9,
@@ -19599,6 +19773,7 @@
       "costToGreenUsd": 0.1780032,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19631,6 +19806,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 25.348,
+      "wallS": 26.306,
       "apiS": 22.247,
       "solved": true,
       "pass": 9,
@@ -19667,6 +19843,7 @@
       "costToGreenUsd": 0.19100320000000004,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19699,6 +19876,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 18.579,
+      "wallS": 19.307,
       "apiS": 15.287,
       "solved": true,
       "pass": 9,
@@ -19735,6 +19913,7 @@
       "costToGreenUsd": 0.18370720000000001,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19767,6 +19946,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 23.528,
+      "wallS": 24.253,
       "apiS": 20.639,
       "solved": true,
       "pass": 9,
@@ -19803,6 +19983,7 @@
       "costToGreenUsd": 0.1896352,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19835,6 +20016,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.168,
+      "wallS": 51.824,
       "apiS": 48.452,
       "solved": true,
       "pass": 15,
@@ -19880,6 +20062,7 @@
       "costToGreenUsd": 0.29631,
       "worktrees4Bytes": 48824320,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19912,6 +20095,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 44.897,
+      "wallS": 45.668,
       "apiS": 42.608,
       "solved": true,
       "pass": 15,
@@ -19957,6 +20141,7 @@
       "costToGreenUsd": 0.2840744,
       "worktrees4Bytes": 48959488,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -19989,6 +20174,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 41.084,
+      "wallS": 41.624,
       "apiS": 39.487,
       "solved": true,
       "pass": 15,
@@ -20034,6 +20220,7 @@
       "costToGreenUsd": 0.272578,
       "worktrees4Bytes": 48963584,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -20066,6 +20253,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 69.183,
+      "wallS": 69.944,
       "apiS": 63.445,
       "solved": true,
       "pass": 11,
@@ -20114,6 +20302,7 @@
       "costToGreenUsd": 0.35458699999999993,
       "worktrees4Bytes": 133840896,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -20146,6 +20335,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 74.408,
+      "wallS": 75.062,
       "apiS": 67.847,
       "solved": true,
       "pass": 11,
@@ -20194,6 +20384,7 @@
       "costToGreenUsd": 0.36469840000000003,
       "worktrees4Bytes": 133922816,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -20226,6 +20417,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 65.95,
+      "wallS": 66.667,
       "apiS": 59.864,
       "solved": true,
       "pass": 11,
@@ -20274,6 +20466,7 @@
       "costToGreenUsd": 0.3398732,
       "worktrees4Bytes": 133869568,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -20306,6 +20499,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 53.683,
+      "wallS": 54.356,
       "apiS": 50.301,
       "solved": true,
       "pass": 14,
@@ -20351,6 +20545,7 @@
       "costToGreenUsd": 0.2896344,
       "worktrees4Bytes": 49078272,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -20384,6 +20579,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 49.537,
+      "wallS": 50.279,
       "apiS": 47.13,
       "solved": true,
       "pass": 14,
@@ -20429,6 +20625,7 @@
       "costToGreenUsd": 0.3045504,
       "worktrees4Bytes": 49070080,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -20461,6 +20658,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 41.279,
+      "wallS": 41.976,
       "apiS": 38.954,
       "solved": true,
       "pass": 14,
@@ -20506,6 +20704,7 @@
       "costToGreenUsd": 0.26929600000000004,
       "worktrees4Bytes": 49053696,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -20538,6 +20737,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 34.172,
+      "wallS": 34.872,
       "apiS": 30.879,
       "solved": true,
       "pass": 14,
@@ -20580,6 +20780,7 @@
       "costToGreenUsd": 0.20910839999999997,
       "worktrees4Bytes": 49020928,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -20612,6 +20813,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 24.375,
+      "wallS": 25.11,
       "apiS": 22.482,
       "solved": true,
       "pass": 14,
@@ -20651,6 +20853,7 @@
       "costToGreenUsd": 0.1974622,
       "worktrees4Bytes": 49020928,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -20683,6 +20886,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 56.403,
+      "wallS": 57.207,
       "apiS": 51.377,
       "solved": true,
       "pass": 14,
@@ -20722,6 +20926,7 @@
       "costToGreenUsd": 0.21565,
       "worktrees4Bytes": 49020928,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -20754,6 +20959,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 76.542,
+      "wallS": 77.509,
       "apiS": 63.293,
       "solved": true,
       "pass": 15,
@@ -20796,6 +21002,7 @@
       "costToGreenUsd": 0.32188059999999996,
       "worktrees4Bytes": 162373632,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "bytestring",
@@ -20831,6 +21038,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.309,
+      "wallS": 52.009,
       "apiS": 48.398,
       "solved": true,
       "pass": 15,
@@ -20867,6 +21075,7 @@
       "costToGreenUsd": 0.2760702,
       "worktrees4Bytes": 155828224,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -20899,6 +21108,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 50.388,
+      "wallS": 51.312,
       "apiS": 46.708,
       "solved": true,
       "pass": 15,
@@ -20935,6 +21145,7 @@
       "costToGreenUsd": 0.25901300000000005,
       "worktrees4Bytes": 78479360,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -20968,6 +21179,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 260.248,
+      "wallS": 260.921,
       "apiS": 86.959,
       "solved": true,
       "pass": 11,
@@ -21013,6 +21225,7 @@
       "costToGreenUsd": 0.4261926,
       "worktrees4Bytes": 1778372608,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "bytestring",
@@ -21052,6 +21265,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 199.11,
+      "wallS": 199.902,
       "apiS": 66.5,
       "solved": true,
       "pass": 11,
@@ -21091,6 +21305,7 @@
       "costToGreenUsd": 0.3619212,
       "worktrees4Bytes": 1783369728,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "bytestring",
@@ -21130,6 +21345,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 107.767,
+      "wallS": 108.426,
       "apiS": 88.925,
       "solved": true,
       "pass": 11,
@@ -21172,6 +21388,7 @@
       "costToGreenUsd": 0.40444260000000004,
       "worktrees4Bytes": 1777930240,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "bytestring",
@@ -21213,6 +21430,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 190.946,
+      "wallS": 191.663,
       "apiS": 136.9,
       "solved": true,
       "pass": 14,
@@ -21255,6 +21473,7 @@
       "costToGreenUsd": 0.5501722,
       "worktrees4Bytes": 134389760,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "array",
@@ -21292,6 +21511,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 160.716,
+      "wallS": 161.441,
       "apiS": 135.5,
       "solved": true,
       "pass": 14,
@@ -21334,6 +21554,7 @@
       "costToGreenUsd": 0.5667887999999999,
       "worktrees4Bytes": 165126144,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "array",
@@ -21371,6 +21592,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 174.517,
+      "wallS": 175.248,
       "apiS": 145.374,
       "solved": true,
       "pass": 14,
@@ -21413,6 +21635,7 @@
       "costToGreenUsd": 0.61342,
       "worktrees4Bytes": 165011456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "array",
@@ -21449,6 +21672,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 67.318,
+      "wallS": 68.02,
       "apiS": 50.145,
       "solved": true,
       "pass": 14,
@@ -21488,6 +21712,7 @@
       "costToGreenUsd": 0.28849420000000003,
       "worktrees4Bytes": 172564480,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "bytestring",
@@ -21523,6 +21748,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 56.301,
+      "wallS": 57.176,
       "apiS": 41.318,
       "solved": true,
       "pass": 14,
@@ -21562,6 +21788,7 @@
       "costToGreenUsd": 0.2389768,
       "worktrees4Bytes": 172531712,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "bytestring",
@@ -21597,6 +21824,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 33.282,
+      "wallS": 34.156,
       "apiS": 27.695,
       "solved": true,
       "pass": 14,
@@ -21633,6 +21861,7 @@
       "costToGreenUsd": 0.2131368,
       "worktrees4Bytes": 85147648,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -21665,6 +21894,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 76.338,
+      "wallS": 76.93,
       "apiS": 68.319,
       "solved": true,
       "pass": 15,
@@ -21707,6 +21937,7 @@
       "costToGreenUsd": 0.333999,
       "worktrees4Bytes": 40435712,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -21739,6 +21970,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 64.119,
+      "wallS": 64.771,
       "apiS": 59.468,
       "solved": true,
       "pass": 15,
@@ -21781,6 +22013,7 @@
       "costToGreenUsd": 0.3272658,
       "worktrees4Bytes": 39665664,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -21813,6 +22046,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 148.79,
+      "wallS": 149.586,
       "apiS": 144.732,
       "solved": true,
       "pass": 15,
@@ -21855,6 +22089,7 @@
       "costToGreenUsd": 0.37547659999999994,
       "worktrees4Bytes": 40255488,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -21887,6 +22122,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 192.709,
+      "wallS": 193.497,
       "apiS": 67.506,
       "solved": true,
       "pass": 11,
@@ -21929,6 +22165,7 @@
       "costToGreenUsd": 0.347167,
       "worktrees4Bytes": 98304,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -21961,6 +22198,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 191.231,
+      "wallS": 192.081,
       "apiS": 67.487,
       "solved": true,
       "pass": 11,
@@ -22003,6 +22241,7 @@
       "costToGreenUsd": 0.37626640000000006,
       "worktrees4Bytes": 131072,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22035,6 +22274,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 103.162,
+      "wallS": 104.965,
       "apiS": 60.52,
       "solved": true,
       "pass": 11,
@@ -22077,6 +22317,7 @@
       "costToGreenUsd": 0.32277079999999997,
       "worktrees4Bytes": 98304,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22109,6 +22350,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 53.371,
+      "wallS": 54.085,
       "apiS": 48.009,
       "solved": true,
       "pass": 14,
@@ -22148,6 +22390,7 @@
       "costToGreenUsd": 0.2644318,
       "worktrees4Bytes": 37076992,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22180,6 +22423,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 49.428,
+      "wallS": 50.124,
       "apiS": 46.368,
       "solved": true,
       "pass": 14,
@@ -22219,6 +22463,7 @@
       "costToGreenUsd": 0.2871254,
       "worktrees4Bytes": 37421056,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22251,6 +22496,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 62.512,
+      "wallS": 63.246,
       "apiS": 57.174,
       "solved": true,
       "pass": 14,
@@ -22290,6 +22536,7 @@
       "costToGreenUsd": 0.31075220000000003,
       "worktrees4Bytes": 36716544,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22322,6 +22569,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 62.665,
+      "wallS": 63.373,
       "apiS": 57.28,
       "solved": true,
       "pass": 14,
@@ -22361,6 +22609,7 @@
       "costToGreenUsd": 0.29331520000000005,
       "worktrees4Bytes": 41648128,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22393,6 +22642,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 47.719,
+      "wallS": 48.426,
       "apiS": 40.459,
       "solved": true,
       "pass": 14,
@@ -22435,6 +22685,7 @@
       "costToGreenUsd": 0.2636936,
       "worktrees4Bytes": 81920,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22467,6 +22718,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 72.402,
+      "wallS": 73.023,
       "apiS": 63.589,
       "solved": true,
       "pass": 14,
@@ -22509,6 +22761,7 @@
       "costToGreenUsd": 0.32510039999999996,
       "worktrees4Bytes": 39731200,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22541,6 +22794,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.907,
+      "wallS": 52.618,
       "apiS": 49.404,
       "solved": true,
       "pass": 15,
@@ -22586,6 +22840,7 @@
       "costToGreenUsd": 0.29447979999999996,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22618,6 +22873,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 46.076,
+      "wallS": 46.97,
       "apiS": 43.211,
       "solved": true,
       "pass": 15,
@@ -22663,6 +22919,7 @@
       "costToGreenUsd": 0.27272019999999997,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22695,6 +22952,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 44.894,
+      "wallS": 45.666,
       "apiS": 42.724,
       "solved": false,
       "pass": 14,
@@ -22755,6 +23013,7 @@
       "costToGreenUsd": 0.33735519999999997,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22787,6 +23046,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 162.659,
+      "wallS": 178.192,
       "apiS": 39.914,
       "solved": true,
       "pass": 11,
@@ -22832,6 +23092,7 @@
       "costToGreenUsd": 0.2699498,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22864,6 +23125,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 171.013,
+      "wallS": 174.607,
       "apiS": 48.965,
       "solved": true,
       "pass": 11,
@@ -22912,6 +23174,7 @@
       "costToGreenUsd": 0.30555380000000004,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -22944,6 +23207,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 167.741,
+      "wallS": 183.252,
       "apiS": 46.081,
       "solved": true,
       "pass": 11,
@@ -22989,6 +23253,7 @@
       "costToGreenUsd": 0.2795398,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23021,6 +23286,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.992,
+      "wallS": 40.792,
       "apiS": 36.035,
       "solved": true,
       "pass": 14,
@@ -23063,6 +23329,7 @@
       "costToGreenUsd": 0.2532972,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23095,6 +23362,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 68.736,
+      "wallS": 69.493,
       "apiS": 50.074,
       "solved": true,
       "pass": 14,
@@ -23137,6 +23405,7 @@
       "costToGreenUsd": 0.297104,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23169,6 +23438,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.496,
+      "wallS": 40.511,
       "apiS": 35.792,
       "solved": true,
       "pass": 14,
@@ -23211,6 +23481,7 @@
       "costToGreenUsd": 0.2535504,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23243,6 +23514,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 56.459,
+      "wallS": 57.156,
       "apiS": 36.612,
       "solved": true,
       "pass": 14,
@@ -23282,6 +23554,7 @@
       "costToGreenUsd": 0.220889,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23314,6 +23587,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 43.389,
+      "wallS": 44.16,
       "apiS": 39.864,
       "solved": true,
       "pass": 14,
@@ -23356,6 +23630,7 @@
       "costToGreenUsd": 0.258273,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23388,6 +23663,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 60.797,
+      "wallS": 61.45,
       "apiS": 47.307,
       "solved": true,
       "pass": 14,
@@ -23430,6 +23706,7 @@
       "costToGreenUsd": 0.286931,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23462,6 +23739,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.067,
+      "wallS": 32.859,
       "apiS": 27.186,
       "solved": true,
       "pass": 8,
@@ -23498,6 +23776,7 @@
       "costToGreenUsd": 0.21306960000000003,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23530,6 +23809,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 37.419,
+      "wallS": 38.142,
       "apiS": 29.373,
       "solved": true,
       "pass": 8,
@@ -23569,6 +23849,7 @@
       "costToGreenUsd": 0.2277226,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23601,6 +23882,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 53.773,
+      "wallS": 54.569,
       "apiS": 42.644,
       "solved": true,
       "pass": 8,
@@ -23640,6 +23922,7 @@
       "costToGreenUsd": 0.23960519999999996,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23672,6 +23955,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 206.738,
+      "wallS": 209.184,
       "apiS": 92.745,
       "solved": true,
       "pass": 8,
@@ -23714,6 +23998,7 @@
       "costToGreenUsd": 0.4185816,
       "worktrees4Bytes": 85876736,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23746,6 +24031,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 75.431,
+      "wallS": 76.416,
       "apiS": 60.03,
       "solved": true,
       "pass": 8,
@@ -23782,6 +24068,7 @@
       "costToGreenUsd": 0.31396019999999997,
       "worktrees4Bytes": 294912,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23814,6 +24101,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 162.048,
+      "wallS": 162.752,
       "apiS": 110.212,
       "solved": true,
       "pass": 8,
@@ -23850,6 +24138,7 @@
       "costToGreenUsd": 0.4445661999999999,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23882,6 +24171,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 40.481,
+      "wallS": 41.156,
       "apiS": 35.578,
       "solved": true,
       "pass": 15,
@@ -23918,6 +24208,7 @@
       "costToGreenUsd": 0.2353948,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -23950,6 +24241,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 61.854,
+      "wallS": 62.568,
       "apiS": 48.786,
       "solved": true,
       "pass": 15,
@@ -23986,6 +24278,7 @@
       "costToGreenUsd": 0.2933676,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24018,6 +24311,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 55.377,
+      "wallS": 56.062,
       "apiS": 46.1,
       "solved": true,
       "pass": 15,
@@ -24054,6 +24348,7 @@
       "costToGreenUsd": 0.26828940000000007,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24086,6 +24381,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 66.381,
+      "wallS": 67.09,
       "apiS": 52.499,
       "solved": true,
       "pass": 11,
@@ -24128,6 +24424,7 @@
       "costToGreenUsd": 0.2938754,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24160,6 +24457,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 76.494,
+      "wallS": 77.186,
       "apiS": 62.363,
       "solved": true,
       "pass": 11,
@@ -24202,6 +24500,7 @@
       "costToGreenUsd": 0.3447534,
       "worktrees4Bytes": 23019520,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24234,6 +24533,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 58.719,
+      "wallS": 59.514,
       "apiS": 46.207,
       "solved": true,
       "pass": 11,
@@ -24276,6 +24576,7 @@
       "costToGreenUsd": 0.285555,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24308,6 +24609,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 35.089,
+      "wallS": 36.02,
       "apiS": 29.183,
       "solved": true,
       "pass": 14,
@@ -24347,6 +24649,7 @@
       "costToGreenUsd": 0.2030438,
       "worktrees4Bytes": 22986752,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24379,6 +24682,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 34.363,
+      "wallS": 35.117,
       "apiS": 27.003,
       "solved": true,
       "pass": 14,
@@ -24418,6 +24722,7 @@
       "costToGreenUsd": 0.22165359999999995,
       "worktrees4Bytes": 22986752,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24450,6 +24755,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 31.934,
+      "wallS": 32.767,
       "apiS": 25.269,
       "solved": true,
       "pass": 14,
@@ -24486,6 +24792,7 @@
       "costToGreenUsd": 0.20284200000000002,
       "worktrees4Bytes": 22986752,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24518,6 +24825,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 46.711,
+      "wallS": 47.434,
       "apiS": 33.789,
       "solved": true,
       "pass": 14,
@@ -24554,6 +24862,7 @@
       "costToGreenUsd": 0.23560920000000002,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24586,6 +24895,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 73.397,
+      "wallS": 74.085,
       "apiS": 36.845,
       "solved": true,
       "pass": 14,
@@ -24622,6 +24932,7 @@
       "costToGreenUsd": 0.25006680000000003,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24654,6 +24965,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 73.381,
+      "wallS": 74.066,
       "apiS": 54.562,
       "solved": true,
       "pass": 14,
@@ -24690,6 +25002,7 @@
       "costToGreenUsd": 0.2813378000000001,
       "worktrees4Bytes": 23003136,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24722,6 +25035,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 41.272,
+      "wallS": 41.99,
       "apiS": 34.618,
       "solved": true,
       "pass": 10,
@@ -24758,6 +25072,7 @@
       "costToGreenUsd": 0.22807219999999997,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24791,6 +25106,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 40.866,
+      "wallS": 41.587,
       "apiS": 33.664,
       "solved": true,
       "pass": 10,
@@ -24827,6 +25143,7 @@
       "costToGreenUsd": 0.2486436,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24859,6 +25176,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 24.413,
+      "wallS": 25.02,
       "apiS": 21.441,
       "solved": true,
       "pass": 10,
@@ -24895,6 +25213,7 @@
       "costToGreenUsd": 0.19507059999999998,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24927,6 +25246,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 23.574,
+      "wallS": 24.429,
       "apiS": 19.995,
       "solved": true,
       "pass": 10,
@@ -24963,6 +25283,7 @@
       "costToGreenUsd": 0.18211039999999998,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -24995,6 +25316,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 16.11,
+      "wallS": 16.792,
       "apiS": 12.257,
       "solved": true,
       "pass": 10,
@@ -25031,6 +25353,7 @@
       "costToGreenUsd": 0.17986839999999998,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25063,6 +25386,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 27.26,
+      "wallS": 27.838,
       "apiS": 23.506,
       "solved": true,
       "pass": 10,
@@ -25099,6 +25423,7 @@
       "costToGreenUsd": 0.18727080000000002,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25131,6 +25456,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 46.838,
+      "wallS": 48.485,
       "apiS": 44.399,
       "solved": true,
       "pass": 15,
@@ -25167,6 +25493,7 @@
       "costToGreenUsd": 0.2627108,
       "worktrees4Bytes": 2195456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25199,6 +25526,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 58.956,
+      "wallS": 59.679,
       "apiS": 55.105,
       "solved": true,
       "pass": 15,
@@ -25235,6 +25563,7 @@
       "costToGreenUsd": 0.3039976,
       "worktrees4Bytes": 2048000,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25267,6 +25596,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 72.428,
+      "wallS": 73.042,
       "apiS": 69.612,
       "solved": true,
       "pass": 15,
@@ -25303,6 +25633,7 @@
       "costToGreenUsd": 0.36087800000000003,
       "worktrees4Bytes": 2015232,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25335,6 +25666,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 195.641,
+      "wallS": 196.382,
       "apiS": 68.742,
       "solved": true,
       "pass": 11,
@@ -25371,6 +25703,7 @@
       "costToGreenUsd": 0.34993060000000004,
       "worktrees4Bytes": 4263936,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25403,6 +25736,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 167.002,
+      "wallS": 167.846,
       "apiS": 42.567,
       "solved": true,
       "pass": 11,
@@ -25442,6 +25776,7 @@
       "costToGreenUsd": 0.2867488,
       "worktrees4Bytes": 4239360,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25474,6 +25809,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 140.21,
+      "wallS": 140.925,
       "apiS": 64.222,
       "solved": true,
       "pass": 11,
@@ -25513,6 +25849,7 @@
       "costToGreenUsd": 0.379901,
       "worktrees4Bytes": 3579904,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25545,6 +25882,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 44.74,
+      "wallS": 45.445,
       "apiS": 41.404,
       "solved": true,
       "pass": 14,
@@ -25581,6 +25919,7 @@
       "costToGreenUsd": 0.2349808,
       "worktrees4Bytes": 2670592,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25613,6 +25952,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 29.554,
+      "wallS": 30.273,
       "apiS": 26.936,
       "solved": true,
       "pass": 14,
@@ -25649,6 +25989,7 @@
       "costToGreenUsd": 0.21366779999999996,
       "worktrees4Bytes": 2260992,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25681,6 +26022,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 70.391,
+      "wallS": 71.177,
       "apiS": 63.529,
       "solved": true,
       "pass": 14,
@@ -25717,6 +26059,7 @@
       "costToGreenUsd": 0.2314112,
       "worktrees4Bytes": 2129920,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25749,6 +26092,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 34.985,
+      "wallS": 35.702,
       "apiS": 26.998,
       "solved": true,
       "pass": 14,
@@ -25785,6 +26129,7 @@
       "costToGreenUsd": 0.203147,
       "worktrees4Bytes": 1900544,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25817,6 +26162,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 25.697,
+      "wallS": 26.436,
       "apiS": 22.202,
       "solved": true,
       "pass": 14,
@@ -25853,6 +26199,7 @@
       "costToGreenUsd": 0.19720559999999998,
       "worktrees4Bytes": 2080768,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25885,6 +26232,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 28.696,
+      "wallS": 29.499,
       "apiS": 21.042,
       "solved": true,
       "pass": 14,
@@ -25921,6 +26269,7 @@
       "costToGreenUsd": 0.188603,
       "worktrees4Bytes": 1933312,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -25953,6 +26302,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 66.125,
+      "wallS": 66.77,
       "apiS": 55.962,
       "solved": true,
       "pass": 12,
@@ -25995,6 +26345,7 @@
       "costToGreenUsd": 0.2770986,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -26027,6 +26378,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 33.594,
+      "wallS": 34.298,
       "apiS": 28.94,
       "solved": true,
       "pass": 12,
@@ -26069,6 +26421,7 @@
       "costToGreenUsd": 0.224654,
       "worktrees4Bytes": 49152,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -26101,6 +26454,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 25.844,
+      "wallS": 26.595,
       "apiS": 22.903,
       "solved": true,
       "pass": 12,
@@ -26143,6 +26497,7 @@
       "costToGreenUsd": 0.2014832,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -26175,6 +26530,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.497,
+      "wallS": 52.353,
       "apiS": 47.647,
       "solved": true,
       "pass": 10,
@@ -26217,6 +26573,7 @@
       "costToGreenUsd": 0.2694196,
       "worktrees4Bytes": 65536,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -26249,6 +26606,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 41.615,
+      "wallS": 42.32,
       "apiS": 39.172,
       "solved": true,
       "pass": 10,
@@ -26291,6 +26649,7 @@
       "costToGreenUsd": 0.2586188,
       "worktrees4Bytes": 81920,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -26323,6 +26682,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 56.009,
+      "wallS": 56.758,
       "apiS": 52.961,
       "solved": true,
       "pass": 10,
@@ -26365,6 +26725,7 @@
       "costToGreenUsd": 0.3086622,
       "worktrees4Bytes": 65536,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -26397,6 +26758,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 58.721,
+      "wallS": 59.371,
       "apiS": 54.958,
       "solved": true,
       "pass": 15,
@@ -26448,6 +26810,7 @@
       "costToGreenUsd": 0.2899724,
       "worktrees4Bytes": 9453568,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -26480,6 +26843,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.835,
+      "wallS": 52.654,
       "apiS": 49.112,
       "solved": true,
       "pass": 15,
@@ -26531,6 +26895,7 @@
       "costToGreenUsd": 0.2950345999999999,
       "worktrees4Bytes": 9437184,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -26563,6 +26928,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 64.372,
+      "wallS": 65.552,
       "apiS": 61.98,
       "solved": true,
       "pass": 15,
@@ -26614,6 +26980,7 @@
       "costToGreenUsd": 0.30465680000000006,
       "worktrees4Bytes": 9453568,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -26646,6 +27013,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 254.091,
+      "wallS": 254.785,
       "apiS": 129.376,
       "solved": true,
       "pass": 11,
@@ -26721,6 +27089,7 @@
       "costToGreenUsd": 0.5925322,
       "worktrees4Bytes": 14106624,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -26753,6 +27122,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 235.575,
+      "wallS": 236.291,
       "apiS": 108.879,
       "solved": true,
       "pass": 11,
@@ -26837,6 +27207,7 @@
       "costToGreenUsd": 0.5463948000000001,
       "worktrees4Bytes": 14188544,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -26869,6 +27240,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 101.502,
+      "wallS": 102.252,
       "apiS": 96.282,
       "solved": true,
       "pass": 11,
@@ -26932,6 +27304,7 @@
       "costToGreenUsd": 0.4452977999999999,
       "worktrees4Bytes": 13549568,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -26964,6 +27337,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 58.921,
+      "wallS": 59.801,
       "apiS": 56.838,
       "solved": true,
       "pass": 14,
@@ -27015,6 +27389,7 @@
       "costToGreenUsd": 0.30413260000000003,
       "worktrees4Bytes": 11010048,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27047,6 +27422,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 53.801,
+      "wallS": 54.644,
       "apiS": 49.976,
       "solved": true,
       "pass": 14,
@@ -27098,6 +27474,7 @@
       "costToGreenUsd": 0.28940679999999996,
       "worktrees4Bytes": 11010048,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27130,6 +27507,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 48.19,
+      "wallS": 48.866,
       "apiS": 44.906,
       "solved": true,
       "pass": 14,
@@ -27181,6 +27559,7 @@
       "costToGreenUsd": 0.2676134,
       "worktrees4Bytes": 10829824,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27213,6 +27592,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 160.237,
+      "wallS": 160.95,
       "apiS": 107.6,
       "solved": true,
       "pass": 14,
@@ -27261,6 +27641,7 @@
       "costToGreenUsd": 0.4689042,
       "worktrees4Bytes": 9617408,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27293,6 +27674,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 180.271,
+      "wallS": 181.01,
       "apiS": 107.48,
       "solved": true,
       "pass": 14,
@@ -27335,6 +27717,7 @@
       "costToGreenUsd": 0.43435519999999994,
       "worktrees4Bytes": 9191424,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27367,6 +27750,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.55,
+      "wallS": 43.191,
       "apiS": 38.51,
       "solved": true,
       "pass": 14,
@@ -27409,6 +27793,7 @@
       "costToGreenUsd": 0.24065340000000002,
       "worktrees4Bytes": 10600448,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27441,6 +27826,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 31.087,
+      "wallS": 31.768,
       "apiS": 28.177,
       "solved": true,
       "pass": 8,
@@ -27477,6 +27863,7 @@
       "costToGreenUsd": 0.20033399999999998,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27509,6 +27896,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 26.003,
+      "wallS": 26.852,
       "apiS": 23.243,
       "solved": true,
       "pass": 8,
@@ -27545,6 +27933,7 @@
       "costToGreenUsd": 0.20260419999999998,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27577,6 +27966,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 27.896,
+      "wallS": 28.677,
       "apiS": 25.19,
       "solved": true,
       "pass": 8,
@@ -27613,6 +28003,7 @@
       "costToGreenUsd": 0.1990852,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27645,6 +28036,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 181.772,
+      "wallS": 182.449,
       "apiS": 100.45,
       "solved": true,
       "pass": 8,
@@ -27681,6 +28073,7 @@
       "costToGreenUsd": 0.4133944,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27713,6 +28106,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 255.351,
+      "wallS": 256.08,
       "apiS": 109.184,
       "solved": true,
       "pass": 8,
@@ -27752,6 +28146,7 @@
       "costToGreenUsd": 0.47309840000000003,
       "worktrees4Bytes": 163840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27784,6 +28179,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 205.758,
+      "wallS": 206.422,
       "apiS": 96.171,
       "solved": true,
       "pass": 8,
@@ -27820,6 +28216,7 @@
       "costToGreenUsd": 0.38786499999999996,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27852,6 +28249,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 63.083,
+      "wallS": 63.784,
       "apiS": 54.258,
       "solved": false,
       "pass": 14,
@@ -27906,6 +28304,7 @@
       "costToGreenUsd": 0.5731918,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -27938,6 +28337,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 76.015,
+      "wallS": 76.813,
       "apiS": 68.289,
       "solved": false,
       "pass": 14,
@@ -27995,6 +28395,7 @@
       "costToGreenUsd": 0.6429416000000001,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28027,6 +28428,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 77.264,
+      "wallS": 77.951,
       "apiS": 66.231,
       "solved": false,
       "pass": 14,
@@ -28081,6 +28483,7 @@
       "costToGreenUsd": 0.5857406000000001,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28114,6 +28517,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 139.157,
+      "wallS": 139.879,
       "apiS": 133.696,
       "solved": true,
       "pass": 11,
@@ -28156,6 +28560,7 @@
       "costToGreenUsd": 0.608448,
       "worktrees4Bytes": 1343488,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28188,6 +28593,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 118.838,
+      "wallS": 119.548,
       "apiS": 113.021,
       "solved": true,
       "pass": 11,
@@ -28233,6 +28639,7 @@
       "costToGreenUsd": 0.5763118000000002,
       "worktrees4Bytes": 1343488,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28266,6 +28673,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 190.189,
+      "wallS": 191.028,
       "apiS": 180.448,
       "solved": true,
       "pass": 11,
@@ -28314,6 +28722,7 @@
       "costToGreenUsd": 0.8017844000000001,
       "worktrees4Bytes": 1343488,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28346,6 +28755,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 106.398,
+      "wallS": 107.676,
       "apiS": 81.819,
       "solved": true,
       "pass": 14,
@@ -28382,6 +28792,7 @@
       "costToGreenUsd": 0.4081778,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28414,6 +28825,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 92.677,
+      "wallS": 93.42,
       "apiS": 80.023,
       "solved": true,
       "pass": 14,
@@ -28450,6 +28862,7 @@
       "costToGreenUsd": 0.4161372,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28482,6 +28895,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 118.981,
+      "wallS": 119.661,
       "apiS": 106.456,
       "solved": true,
       "pass": 14,
@@ -28521,6 +28935,7 @@
       "costToGreenUsd": 0.4326086,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28553,6 +28968,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 55.707,
+      "wallS": 56.332,
       "apiS": 42.764,
       "solved": true,
       "pass": 14,
@@ -28589,6 +29005,7 @@
       "costToGreenUsd": 0.26772919999999995,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28621,6 +29038,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 44.913,
+      "wallS": 45.653,
       "apiS": 36.202,
       "solved": true,
       "pass": 14,
@@ -28657,6 +29075,7 @@
       "costToGreenUsd": 0.2412182,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28689,6 +29108,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 61.12,
+      "wallS": 61.829,
       "apiS": 50.243,
       "solved": true,
       "pass": 14,
@@ -28725,6 +29145,7 @@
       "costToGreenUsd": 0.27982,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28758,6 +29179,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.947,
+      "wallS": 52.588,
       "apiS": 49.193,
       "solved": true,
       "pass": 15,
@@ -28794,6 +29216,7 @@
       "costToGreenUsd": 0.2563382,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28826,6 +29249,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.765,
+      "wallS": 43.481,
       "apiS": 39.114,
       "solved": true,
       "pass": 15,
@@ -28862,6 +29286,7 @@
       "costToGreenUsd": 0.24922279999999997,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28894,6 +29319,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 37.516,
+      "wallS": 38.175,
       "apiS": 36.391,
       "solved": false,
       "pass": 14,
@@ -28945,6 +29371,7 @@
       "costToGreenUsd": 0.39212119999999995,
       "worktrees4Bytes": 49152,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -28978,6 +29405,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 209.57,
+      "wallS": 210.264,
       "apiS": 86.124,
       "solved": true,
       "pass": 11,
@@ -29020,6 +29448,7 @@
       "costToGreenUsd": 0.4490607999999999,
       "worktrees4Bytes": 131072,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29053,6 +29482,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 72.479,
+      "wallS": 73.212,
       "apiS": 70.303,
       "solved": true,
       "pass": 11,
@@ -29089,6 +29519,7 @@
       "costToGreenUsd": 0.35184899999999997,
       "worktrees4Bytes": 81920,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29122,6 +29553,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 68.294,
+      "wallS": 69.003,
       "apiS": 66.114,
       "solved": true,
       "pass": 11,
@@ -29167,6 +29599,7 @@
       "costToGreenUsd": 0.364917,
       "worktrees4Bytes": 131072,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29199,6 +29632,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 24.414,
+      "wallS": 25.09,
       "apiS": 22.176,
       "solved": true,
       "pass": 14,
@@ -29235,6 +29669,7 @@
       "costToGreenUsd": 0.19554439999999998,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29267,6 +29702,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 29.629,
+      "wallS": 30.335,
       "apiS": 27.313,
       "solved": true,
       "pass": 14,
@@ -29303,6 +29739,7 @@
       "costToGreenUsd": 0.2037332,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29335,6 +29772,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 20.619,
+      "wallS": 21.391,
       "apiS": 18.636,
       "solved": true,
       "pass": 14,
@@ -29371,6 +29809,7 @@
       "costToGreenUsd": 0.1873002,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29403,6 +29842,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 29.756,
+      "wallS": 30.503,
       "apiS": 21.965,
       "solved": true,
       "pass": 14,
@@ -29439,6 +29879,7 @@
       "costToGreenUsd": 0.1880016,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29471,6 +29912,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 25.424,
+      "wallS": 26.224,
       "apiS": 21.427,
       "solved": true,
       "pass": 14,
@@ -29507,6 +29949,7 @@
       "costToGreenUsd": 0.18951040000000002,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29539,6 +29982,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 25.287,
+      "wallS": 25.933,
       "apiS": 20.954,
       "solved": true,
       "pass": 14,
@@ -29575,6 +30019,7 @@
       "costToGreenUsd": 0.193382,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29607,6 +30052,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 26.03,
+      "wallS": 29.04,
       "apiS": 20.91,
       "solved": true,
       "pass": 8,
@@ -29643,6 +30089,7 @@
       "costToGreenUsd": 0.2025458,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29675,6 +30122,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 29.943,
+      "wallS": 30.717,
       "apiS": 23.336,
       "solved": true,
       "pass": 8,
@@ -29711,6 +30159,7 @@
       "costToGreenUsd": 0.20761860000000001,
       "worktrees4Bytes": 98304,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29743,6 +30192,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 30.305,
+      "wallS": 31.007,
       "apiS": 27.644,
       "solved": true,
       "pass": 8,
@@ -29779,6 +30229,7 @@
       "costToGreenUsd": 0.20241279999999998,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29811,6 +30262,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 40.493,
+      "wallS": 41.324,
       "apiS": 30.735,
       "solved": true,
       "pass": 8,
@@ -29847,6 +30299,7 @@
       "costToGreenUsd": 0.2230826,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29879,6 +30332,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 35.917,
+      "wallS": 36.709,
       "apiS": 22.627,
       "solved": true,
       "pass": 8,
@@ -29915,6 +30369,7 @@
       "costToGreenUsd": 0.20357380000000003,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -29947,6 +30402,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.432,
+      "wallS": 40.818,
       "apiS": 26.996,
       "solved": true,
       "pass": 8,
@@ -29983,6 +30439,7 @@
       "costToGreenUsd": 0.20275280000000004,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -30015,6 +30472,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 43.358,
+      "wallS": 44.273,
       "apiS": 42.413,
       "solved": true,
       "pass": 5,
@@ -30122,6 +30580,7 @@
       "costToGreenUsd": 0.1974654,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [],
       "store": "Context + useReducer"
@@ -30155,6 +30614,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 41.769,
+      "wallS": 42.713,
       "apiS": 40.98,
       "solved": true,
       "pass": 5,
@@ -30262,6 +30722,7 @@
       "costToGreenUsd": 0.20062539999999998,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [],
       "store": "Context + useReducer"
@@ -30295,6 +30756,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 56.076,
+      "wallS": 56.842,
       "apiS": 53.712,
       "solved": true,
       "pass": 5,
@@ -30402,6 +30864,7 @@
       "costToGreenUsd": 0.2234128,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [],
       "store": "Context + useReducer"
@@ -30435,6 +30898,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 30.869,
+      "wallS": 32.074,
       "apiS": 30.275,
       "solved": true,
       "pass": 8,
@@ -30507,6 +30971,7 @@
       "costToGreenUsd": 0.1522362,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -30539,6 +31004,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 27.308,
+      "wallS": 28.086,
       "apiS": 26.751,
       "solved": true,
       "pass": 8,
@@ -30611,6 +31077,7 @@
       "costToGreenUsd": 0.15226040000000002,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -30643,6 +31110,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 30.496,
+      "wallS": 31.166,
       "apiS": 30.072,
       "solved": true,
       "pass": 8,
@@ -30715,6 +31183,7 @@
       "costToGreenUsd": 0.1541604,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -30747,6 +31216,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 30.475,
+      "wallS": 31.23,
       "apiS": 28.593,
       "solved": true,
       "pass": 8,
@@ -30783,6 +31253,7 @@
       "costToGreenUsd": 0.2092534,
       "worktrees4Bytes": 98304,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -30815,6 +31286,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 29.396,
+      "wallS": 30.225,
       "apiS": 27.602,
       "solved": true,
       "pass": 8,
@@ -30851,6 +31323,7 @@
       "costToGreenUsd": 0.22488240000000004,
       "worktrees4Bytes": 98304,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -30883,6 +31356,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.059,
+      "wallS": 32.601,
       "apiS": 30.894,
       "solved": true,
       "pass": 8,
@@ -30919,6 +31393,7 @@
       "costToGreenUsd": 0.22464680000000004,
       "worktrees4Bytes": 98304,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -30951,6 +31426,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 29.393,
+      "wallS": 30.243,
       "apiS": 28.416,
       "solved": true,
       "pass": 8,
@@ -30987,6 +31463,7 @@
       "costToGreenUsd": 0.18684540000000002,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -31019,6 +31496,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 17.357,
+      "wallS": 18.038,
       "apiS": 16.382,
       "solved": true,
       "pass": 8,
@@ -31055,6 +31533,7 @@
       "costToGreenUsd": 0.1915634,
       "worktrees4Bytes": 65536,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -31087,6 +31566,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 23.502,
+      "wallS": 24.23,
       "apiS": 22.109,
       "solved": true,
       "pass": 8,
@@ -31123,6 +31603,7 @@
       "costToGreenUsd": 0.1941954,
       "worktrees4Bytes": 65536,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -31155,6 +31636,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 72.144,
+      "wallS": 72.927,
       "apiS": 62.347,
       "solved": true,
       "pass": 15,
@@ -31197,6 +31679,7 @@
       "costToGreenUsd": 0.34108379999999994,
       "worktrees4Bytes": 4366336,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -31230,6 +31713,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 91.592,
+      "wallS": 92.244,
       "apiS": 82.469,
       "solved": true,
       "pass": 15,
@@ -31272,6 +31756,7 @@
       "costToGreenUsd": 0.406611,
       "worktrees4Bytes": 4399104,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -31304,6 +31789,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 70.182,
+      "wallS": 70.931,
       "apiS": 60.471,
       "solved": true,
       "pass": 15,
@@ -31346,6 +31832,7 @@
       "costToGreenUsd": 0.3531853999999999,
       "worktrees4Bytes": 4399104,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -31378,6 +31865,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 198.306,
+      "wallS": 199.167,
       "apiS": 56.511,
       "solved": true,
       "pass": 11,
@@ -31417,6 +31905,7 @@
       "costToGreenUsd": 0.3260356,
       "worktrees4Bytes": 331816960,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "anyhow",
@@ -31457,6 +31946,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 230.265,
+      "wallS": 230.989,
       "apiS": 71.924,
       "solved": true,
       "pass": 11,
@@ -31499,6 +31989,7 @@
       "costToGreenUsd": 0.36164120000000005,
       "worktrees4Bytes": 441831424,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "anyhow",
@@ -31536,6 +32027,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 226.71,
+      "wallS": 227.689,
       "apiS": 65.789,
       "solved": true,
       "pass": 11,
@@ -31575,6 +32067,7 @@
       "costToGreenUsd": 0.35531500000000005,
       "worktrees4Bytes": 508825600,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [
         "anyhow",
@@ -31611,6 +32104,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 54.476,
+      "wallS": 55.151,
       "apiS": 42.902,
       "solved": true,
       "pass": 14,
@@ -31653,6 +32147,7 @@
       "costToGreenUsd": 0.2783168,
       "worktrees4Bytes": 4546560,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -31685,6 +32180,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 56.782,
+      "wallS": 57.517,
       "apiS": 50.45,
       "solved": true,
       "pass": 14,
@@ -31727,6 +32223,7 @@
       "costToGreenUsd": 0.30930879999999994,
       "worktrees4Bytes": 4890624,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -31759,6 +32256,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 57.303,
+      "wallS": 57.943,
       "apiS": 50.799,
       "solved": true,
       "pass": 14,
@@ -31801,6 +32299,7 @@
       "costToGreenUsd": 0.32205480000000003,
       "worktrees4Bytes": 4972544,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -31833,6 +32332,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 54.169,
+      "wallS": 55.033,
       "apiS": 42.637,
       "solved": true,
       "pass": 14,
@@ -31875,6 +32375,7 @@
       "costToGreenUsd": 0.27113160000000003,
       "worktrees4Bytes": 4530176,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -31907,6 +32408,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 55.066,
+      "wallS": 55.812,
       "apiS": 44.063,
       "solved": true,
       "pass": 14,
@@ -31949,6 +32451,7 @@
       "costToGreenUsd": 0.28714799999999996,
       "worktrees4Bytes": 4939776,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -31981,6 +32484,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 51.95,
+      "wallS": 52.51,
       "apiS": 44.56,
       "solved": true,
       "pass": 14,
@@ -32023,6 +32527,7 @@
       "costToGreenUsd": 0.29295160000000003,
       "worktrees4Bytes": 5103616,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -32055,6 +32560,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 75.518,
+      "wallS": 76.307,
       "apiS": 60.541,
       "solved": true,
       "pass": 11,
@@ -32097,6 +32603,7 @@
       "costToGreenUsd": 0.3237316,
       "worktrees4Bytes": 127270912,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -32129,6 +32636,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 41.234,
+      "wallS": 41.918,
       "apiS": 32.31,
       "solved": true,
       "pass": 11,
@@ -32171,6 +32679,7 @@
       "costToGreenUsd": 0.24968939999999998,
       "worktrees4Bytes": 123830272,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -32203,6 +32712,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 100.43,
+      "wallS": 101.302,
       "apiS": 62.197,
       "solved": true,
       "pass": 11,
@@ -32245,6 +32755,7 @@
       "costToGreenUsd": 0.31065479999999995,
       "worktrees4Bytes": 128090112,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -32277,6 +32788,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 56.85,
+      "wallS": 57.596,
       "apiS": 52.453,
       "solved": true,
       "pass": 11,
@@ -32319,6 +32831,7 @@
       "costToGreenUsd": 0.28829039999999995,
       "worktrees4Bytes": 32194560,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -32351,6 +32864,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 25.811,
+      "wallS": 26.554,
       "apiS": 24.554,
       "solved": true,
       "pass": 11,
@@ -32390,6 +32904,7 @@
       "costToGreenUsd": 0.20876560000000002,
       "worktrees4Bytes": 32292864,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -32422,6 +32937,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 38.002,
+      "wallS": 38.802,
       "apiS": 35.006,
       "solved": true,
       "pass": 11,
@@ -32464,6 +32980,7 @@
       "costToGreenUsd": 0.2592444,
       "worktrees4Bytes": 38780928,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -32496,6 +33013,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 52.282,
+      "wallS": 53.017,
       "apiS": 39.894,
       "solved": true,
       "pass": 5,
@@ -32596,6 +33114,7 @@
       "costToGreenUsd": 0.1827066,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [],
       "store": "Svelte runes ($state)"
@@ -32629,6 +33148,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 48.471,
+      "wallS": 49.105,
       "apiS": 37.844,
       "solved": true,
       "pass": 5,
@@ -32729,6 +33249,7 @@
       "costToGreenUsd": 0.1838358,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [],
       "store": "Svelte runes ($state)"
@@ -32762,6 +33283,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 50.453,
+      "wallS": 51.254,
       "apiS": 38.025,
       "solved": true,
       "pass": 5,
@@ -32862,6 +33384,7 @@
       "costToGreenUsd": 0.18814879999999998,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [],
       "store": "Svelte runes ($state)"
@@ -32895,6 +33418,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.644,
+      "wallS": 40.253,
       "apiS": 29.262,
       "solved": true,
       "pass": 8,
@@ -32967,6 +33491,7 @@
       "costToGreenUsd": 0.1565234,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -32999,6 +33524,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 47.899,
+      "wallS": 48.772,
       "apiS": 37.027,
       "solved": true,
       "pass": 8,
@@ -33071,6 +33597,7 @@
       "costToGreenUsd": 0.18265119999999999,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -33103,6 +33630,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 38.793,
+      "wallS": 39.467,
       "apiS": 30.637,
       "solved": true,
       "pass": 8,
@@ -33175,6 +33703,7 @@
       "costToGreenUsd": 0.1600764,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -33208,6 +33737,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 146.827,
+      "wallS": 147.605,
       "apiS": 93.916,
       "solved": true,
       "pass": 15,
@@ -33250,6 +33780,7 @@
       "costToGreenUsd": 0.43281660000000005,
       "worktrees4Bytes": 589824,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -33282,6 +33813,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 106.475,
+      "wallS": 107.217,
       "apiS": 92.329,
       "solved": true,
       "pass": 15,
@@ -33327,6 +33859,7 @@
       "costToGreenUsd": 0.4624418,
       "worktrees4Bytes": 557056,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -33359,6 +33892,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 191.743,
+      "wallS": 192.548,
       "apiS": 168.518,
       "solved": true,
       "pass": 15,
@@ -33404,6 +33938,7 @@
       "costToGreenUsd": 0.5665290000000001,
       "worktrees4Bytes": 573440,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -33437,6 +33972,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 359.353,
+      "wallS": 359.996,
       "apiS": 265.79,
       "solved": true,
       "pass": 11,
@@ -33497,6 +34033,7 @@
       "costToGreenUsd": 1.0879678,
       "worktrees4Bytes": 1916928,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -33529,6 +34066,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 255.752,
+      "wallS": 256.479,
       "apiS": 236.794,
       "solved": true,
       "pass": 11,
@@ -33589,6 +34127,7 @@
       "costToGreenUsd": 1.0108916,
       "worktrees4Bytes": 1343488,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -33622,6 +34161,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 276.486,
+      "wallS": 277.258,
       "apiS": 251.048,
       "solved": true,
       "pass": 11,
@@ -33682,6 +34222,7 @@
       "costToGreenUsd": 1.1012845999999998,
       "worktrees4Bytes": 1753088,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -33714,6 +34255,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 163.745,
+      "wallS": 164.483,
       "apiS": 87.644,
       "solved": true,
       "pass": 14,
@@ -33762,6 +34304,7 @@
       "costToGreenUsd": 0.41501360000000004,
       "worktrees4Bytes": 770048,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -33794,6 +34337,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 195.43,
+      "wallS": 196.131,
       "apiS": 100.003,
       "solved": true,
       "pass": 14,
@@ -33839,6 +34383,7 @@
       "costToGreenUsd": 0.5021786,
       "worktrees4Bytes": 1048576,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -33871,6 +34416,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 176.301,
+      "wallS": 177.11,
       "apiS": 166.361,
       "solved": true,
       "pass": 14,
@@ -33919,6 +34465,7 @@
       "costToGreenUsd": 0.5535552,
       "worktrees4Bytes": 720896,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -33951,6 +34498,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 153.544,
+      "wallS": 154.351,
       "apiS": 89.028,
       "solved": true,
       "pass": 14,
@@ -33993,6 +34541,7 @@
       "costToGreenUsd": 0.39636379999999993,
       "worktrees4Bytes": 245760,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34025,6 +34574,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 81.55,
+      "wallS": 82.204,
       "apiS": 63.252,
       "solved": true,
       "pass": 14,
@@ -34070,6 +34620,7 @@
       "costToGreenUsd": 0.3405646,
       "worktrees4Bytes": 638976,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34102,6 +34653,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 176.098,
+      "wallS": 176.725,
       "apiS": 138.418,
       "solved": true,
       "pass": 14,
@@ -34150,6 +34702,7 @@
       "costToGreenUsd": 0.5260124,
       "worktrees4Bytes": 589824,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34183,6 +34736,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 49.004,
+      "wallS": 49.708,
       "apiS": 46.772,
       "solved": true,
       "pass": 15,
@@ -34228,6 +34782,7 @@
       "costToGreenUsd": 0.2905044,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34260,6 +34815,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 58.835,
+      "wallS": 59.564,
       "apiS": 56.042,
       "solved": true,
       "pass": 15,
@@ -34308,6 +34864,7 @@
       "costToGreenUsd": 0.2952616,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34340,6 +34897,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 49.713,
+      "wallS": 50.488,
       "apiS": 46.271,
       "solved": true,
       "pass": 15,
@@ -34388,6 +34946,7 @@
       "costToGreenUsd": 0.2899262,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34420,6 +34979,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 65.637,
+      "wallS": 66.344,
       "apiS": 57.855,
       "solved": true,
       "pass": 11,
@@ -34471,6 +35031,7 @@
       "costToGreenUsd": 0.34016759999999996,
       "worktrees4Bytes": 151990272,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34503,6 +35064,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 79.083,
+      "wallS": 79.827,
       "apiS": 66.811,
       "solved": true,
       "pass": 11,
@@ -34554,6 +35116,7 @@
       "costToGreenUsd": 0.3587744,
       "worktrees4Bytes": 152244224,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34586,6 +35149,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 65.809,
+      "wallS": 66.692,
       "apiS": 59.541,
       "solved": true,
       "pass": 11,
@@ -34637,6 +35201,7 @@
       "costToGreenUsd": 0.3326966,
       "worktrees4Bytes": 151678976,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34669,6 +35234,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 35.3,
+      "wallS": 35.952,
       "apiS": 32.172,
       "solved": true,
       "pass": 14,
@@ -34714,6 +35280,7 @@
       "costToGreenUsd": 0.2193852,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34746,6 +35313,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 54.593,
+      "wallS": 55.449,
       "apiS": 49.727,
       "solved": true,
       "pass": 14,
@@ -34791,6 +35359,7 @@
       "costToGreenUsd": 0.2839372,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34823,6 +35392,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.789,
+      "wallS": 43.608,
       "apiS": 38.563,
       "solved": true,
       "pass": 14,
@@ -34868,6 +35438,7 @@
       "costToGreenUsd": 0.25957359999999996,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34901,6 +35472,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 71.724,
+      "wallS": 72.418,
       "apiS": 58.402,
       "solved": true,
       "pass": 14,
@@ -34946,6 +35518,7 @@
       "costToGreenUsd": 0.31942999999999994,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -34978,6 +35551,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 53.4,
+      "wallS": 54.057,
       "apiS": 47.521,
       "solved": true,
       "pass": 14,
@@ -35023,6 +35597,7 @@
       "costToGreenUsd": 0.289605,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -35055,6 +35630,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 64.556,
+      "wallS": 65.416,
       "apiS": 59.379,
       "solved": true,
       "pass": 14,
@@ -35103,6 +35679,7 @@
       "costToGreenUsd": 0.33748279999999997,
       "worktrees4Bytes": 0,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -35135,6 +35712,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 41.226,
+      "wallS": 42.644,
       "apiS": 40.286,
       "solved": true,
       "pass": 5,
@@ -35235,6 +35813,7 @@
       "costToGreenUsd": 0.18889740000000002,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [],
       "store": "Pinia"
@@ -35268,6 +35847,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 35.058,
+      "wallS": 35.823,
       "apiS": 34.593,
       "solved": true,
       "pass": 5,
@@ -35361,6 +35941,7 @@
       "costToGreenUsd": 0.17286439999999997,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [],
       "store": "Pinia"
@@ -35394,6 +35975,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.684,
+      "wallS": 40.377,
       "apiS": 39.052,
       "solved": true,
       "pass": 5,
@@ -35494,6 +36076,7 @@
       "costToGreenUsd": 0.184252,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": [],
       "store": "Pinia"
@@ -35527,6 +36110,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 24.932,
+      "wallS": 25.632,
       "apiS": 24.327,
       "solved": true,
       "pass": 8,
@@ -35599,6 +36183,7 @@
       "costToGreenUsd": 0.13889859999999998,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -35631,6 +36216,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.462,
+      "wallS": 33.163,
       "apiS": 30.43,
       "solved": true,
       "pass": 8,
@@ -35703,6 +36289,7 @@
       "costToGreenUsd": 0.1625812,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -35735,6 +36322,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 42.937,
+      "wallS": 43.658,
       "apiS": 40.9,
       "solved": true,
       "pass": 8,
@@ -35807,6 +36395,7 @@
       "costToGreenUsd": 0.19444499999999998,
       "worktrees4Bytes": null,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -35839,6 +36428,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 36.682,
+      "wallS": 37.444,
       "apiS": 34.214,
       "solved": true,
       "pass": 11,
@@ -35875,6 +36465,7 @@
       "costToGreenUsd": 0.24410220000000002,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -35907,6 +36498,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 23.209,
+      "wallS": 23.904,
       "apiS": 21.468,
       "solved": true,
       "pass": 11,
@@ -35943,6 +36535,7 @@
       "costToGreenUsd": 0.203363,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -35975,6 +36568,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 196.174,
+      "wallS": 197.028,
       "apiS": 193.901,
       "solved": true,
       "pass": 11,
@@ -36011,6 +36605,7 @@
       "costToGreenUsd": 0.2508758,
       "worktrees4Bytes": 32768,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36043,6 +36638,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 38.605,
+      "wallS": 39.338,
       "apiS": 36.115,
       "solved": true,
       "pass": 11,
@@ -36079,6 +36675,7 @@
       "costToGreenUsd": 0.22966359999999997,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36111,6 +36708,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 32.202,
+      "wallS": 32.85,
       "apiS": 30.034,
       "solved": true,
       "pass": 11,
@@ -36147,6 +36745,7 @@
       "costToGreenUsd": 0.23120940000000004,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36179,6 +36778,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 29.699,
+      "wallS": 30.492,
       "apiS": 24.733,
       "solved": true,
       "pass": 11,
@@ -36215,6 +36815,7 @@
       "costToGreenUsd": 0.2004038,
       "worktrees4Bytes": 16384,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36247,6 +36848,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 86.74,
+      "wallS": 87.346,
       "apiS": 70.651,
       "solved": true,
       "pass": 15,
@@ -36286,6 +36888,7 @@
       "costToGreenUsd": 0.3343146,
       "worktrees4Bytes": 132685824,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36319,6 +36922,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 66.288,
+      "wallS": 67.079,
       "apiS": 52.387,
       "solved": true,
       "pass": 15,
@@ -36358,6 +36962,7 @@
       "costToGreenUsd": 0.309946,
       "worktrees4Bytes": 131661824,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36390,6 +36995,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 86.923,
+      "wallS": 87.722,
       "apiS": 75.849,
       "solved": true,
       "pass": 15,
@@ -36426,6 +37032,7 @@
       "costToGreenUsd": 0.3032576,
       "worktrees4Bytes": 194723840,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36460,6 +37067,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 209.894,
+      "wallS": 210.635,
       "apiS": 180.057,
       "solved": true,
       "pass": 11,
@@ -36508,6 +37116,7 @@
       "costToGreenUsd": 0.8693206,
       "worktrees4Bytes": 134291456,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36540,6 +37149,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 200.038,
+      "wallS": 200.685,
       "apiS": 169.344,
       "solved": true,
       "pass": 11,
@@ -36585,6 +37195,7 @@
       "costToGreenUsd": 0.8129898000000001,
       "worktrees4Bytes": 133251072,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36617,6 +37228,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 175.253,
+      "wallS": 175.888,
       "apiS": 155.698,
       "solved": true,
       "pass": 11,
@@ -36665,6 +37277,7 @@
       "costToGreenUsd": 0.8255014,
       "worktrees4Bytes": 134258688,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36697,6 +37310,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 60.989,
+      "wallS": 61.761,
       "apiS": 46.304,
       "solved": true,
       "pass": 14,
@@ -36733,6 +37347,7 @@
       "costToGreenUsd": 0.28275839999999997,
       "worktrees4Bytes": 195428352,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36765,6 +37380,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 160.768,
+      "wallS": 161.494,
       "apiS": 112.183,
       "solved": true,
       "pass": 14,
@@ -36807,6 +37423,7 @@
       "costToGreenUsd": 0.5086068,
       "worktrees4Bytes": 131727360,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36839,6 +37456,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 158.725,
+      "wallS": 159.738,
       "apiS": 128.589,
       "solved": true,
       "pass": 14,
@@ -36878,6 +37496,7 @@
       "costToGreenUsd": 0.5030366,
       "worktrees4Bytes": 131227648,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36910,6 +37529,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 68.736,
+      "wallS": 69.507,
       "apiS": 52.09,
       "solved": true,
       "pass": 14,
@@ -36949,6 +37569,7 @@
       "costToGreenUsd": 0.27704499999999993,
       "worktrees4Bytes": 130023424,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -36981,6 +37602,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 56.885,
+      "wallS": 57.593,
       "apiS": 44.454,
       "solved": true,
       "pass": 14,
@@ -37017,6 +37639,7 @@
       "costToGreenUsd": 0.27941019999999994,
       "worktrees4Bytes": 190513152,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     },
@@ -37049,6 +37672,7 @@
         "claude-opus-5-5"
       ],
       "durationS": 39.308,
+      "wallS": 39.907,
       "apiS": 31.43,
       "solved": true,
       "pass": 14,
@@ -37085,6 +37709,7 @@
       "costToGreenUsd": 0.2325768,
       "worktrees4Bytes": 48984064,
       "devloopTargetBytes": null,
+      "swarm": null,
       "twinPerf": null,
       "deps": []
     }

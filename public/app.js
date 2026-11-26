@@ -420,6 +420,10 @@ function skillFindings(d, arm) {
     li('A language skill made the agent costlier, not cheaper.', `With one researched SKILL.md per language, ${costlier} of ${rows.length} languages cost more beyond their run-to-run spread and ${cheaper} cost less; per run, the median went ${fmt.usd(e.costUsd.base)} → ${fmt.usd(e.costUsd.arm)} (${pctOf(e.costUsd)}). Correctness did not move (${works('arm')}/${n('arm')} runs worked with it, ${works('base')}/${n('base')} without), nor did the speed of the code (median ${fmt.ratio(speedMedian(rows))}, measured paired).`),
     li('The skill is paid as context, not as work.', `Loading and applying it takes ${nf(0).format(e.turns.arm - e.turns.base)} more turns per run (${e.turns.base} → ${e.turns.arm}); ${fmt.pct(e.costShare.cacheWrite)} of the extra spend is context written to the prompt cache (the skill's text and those turns, at twice the input price), ${fmt.pct(e.costShare.cacheRead)} context re-read and only ${fmt.pct(e.costShare.output)} the agent's own output.`),
   ]
+  const c = e.code
+  if (c) {
+    out.push(li('The code was not better, only more tested.', `With the skill, ${c.solved.arm} of ${e.pairs} runs passed the hidden tests in round 3 (${c.solved.base} without), the examples passed on the first check in ${c.firstTry.arm} (${c.firstTry.base}), and the code ran as fast (median ${fmt.ratio(speedMedian(rows))}) at about the same size (${fmt.int(c.codeTokens.base)} → ${fmt.int(c.codeTokens.arm)} tokens, median run). What changed was the process: ${c.withTests.arm} runs left tests behind (${c.withTests.base} without), in more files (${c.files.base} → ${c.files.arm}), and met more compiler errors on the way (${c.compileErrors.base} → ${c.compileErrors.arm}). The model already knows these languages; the hidden tests, not the skill, kept the code correct.`))
+  }
   const len = arm.summary.length
   if (len) {
     const [short, long] = [len.bins[0], len.bins.at(-1)]
