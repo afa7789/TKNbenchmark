@@ -126,6 +126,11 @@ them running Rust + React in a server for chat bots, supplied the hypotheses:
         integrator) finishes sooner in wall-clock time than one agent (H8a) but costs more in total (H8b);
         and the team's disk and build time grow most where build output lives in each project, as Rust's
         \texttt{target/}, and least where it lives in a shared cache, as Go's (H8c).
+  \item[H9 (swarm at work)] On a service with dependencies (HTTP, JSON, SQLite) built with a normal
+        development loop (debug builds and tests while working, a release build at the end), a team still
+        finishes no sooner than one agent and costs more; and its peak disk grows with the number of
+        worktrees most where dependencies are compiled into each project (Rust) and least where they live in a
+        shared cache (Go).
 \end{description}
 
 \section{Related work}
