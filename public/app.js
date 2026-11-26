@@ -102,7 +102,7 @@ const LB_COLS = [
   { key: 'passRate', title: 'Solved', show: (s) => `${s.solved}/${s.n}` },
   { key: 'works', title: 'After repair', show: (s) => `${s.works}/${s.n}` },
   { key: 'firstTryRate', title: '1st try', show: (s) => fmt.pct(s.firstTryRate) },
-  { key: 'costUsd', title: 'Cost', show: (s) => fmt.usd(s.costUsd) },
+  { key: 'costUsd', title: 'Cost, 4 tasks', show: (s) => fmt.usd(s.costUsd) },
   { key: 'costPerSolvedUsd', title: '$ / solved', show: (s) => fmt.usd(s.costPerSolvedUsd) },
   { key: 'output', title: 'Output tokens', show: (s) => fmt.int(s.output) },
   { key: 'turns', title: 'Turns', show: (s) => fmt.int(s.turns) },
@@ -149,7 +149,7 @@ const TASK_COLS = [
   ['Solved', (c) => `${c.solved}/${c.n}`],
   ['After repair', (c) => `${c.works}/${c.n}`],
   ['1st try', (c) => `${c.firstTry}/${c.n}`],
-  ['Cost', (c) => ranged(c.costUsd, fmt.usd)],
+  ['Cost per run', (c) => ranged(c.costUsd, fmt.usd)],
   ['Output tokens', (c) => ranged(c.output, fmt.int)],
   ['Turns', (c) => ranged(c.turns, fmt.int)],
   ['Agent time', (c) => ranged(c.durationS, fmt.secs)],
@@ -325,7 +325,7 @@ const TRACK_COLS = [
   ['Solved', (s) => `${s.solved}/${s.n}`],
   ['After repair', (s) => `${s.works}/${s.n}`],
   ['1st try', (s) => fmt.pct(s.firstTryRate)],
-  ['Cost', (s) => fmt.usd(s.costUsd)],
+  ['Cost, 2 tasks', (s) => fmt.usd(s.costUsd)],
   ['Output tokens', (s) => fmt.int(s.output)],
   ['Turns', (s) => fmt.int(s.turns)],
   ['Agent time', (s) => fmt.secs(s.durationS)],
@@ -526,7 +526,7 @@ function slope(rows) {
 const SKILL_COLS = [
   ['Tasks', (r) => r.tasks.length],
   ['Works', (r) => `${r.base.works}/${r.base.n} → ${r.arm.works}/${r.arm.n}`],
-  ['Cost', (r) => arrow(r.base.costUsd, r.arm.costUsd, fmt.usd)],
+  ['Cost, all tasks', (r) => arrow(r.base.costUsd, r.arm.costUsd, fmt.usd)],
   ['Δ cost', (r) => `${signed(r.dCost)}${r.beyondNoise ? '' : ' ~'}`],
   ['Δ output tokens', (r) => signed(change(r.base.output, r.arm.output))],
   ['Δ turns', (r) => signed(change(r.base.turns, r.arm.turns))],
@@ -558,7 +558,7 @@ function renderSkills(arm) {
   $('skill-dumbbell').innerHTML = dumbbell(main)
   $('skill-slope').innerHTML = slope(main)
   const head = [{ title: 'Language' }, ...SKILL_COLS.map(([title]) => ({ title, num: true }))]
-  $('skill-table').innerHTML = table(head, rows.map((r) => `<tr><td><strong>${esc(r.label)}</strong></td>${SKILL_COLS.map(([, f]) => `<td class="num">${esc(f(r))}</td>`).join('')}</tr>`))
+  $('skill-table').innerHTML = table(head, rows.map((r) => `<tr class="${r.beyondNoise ? '' : 'noise'}"><td><strong>${esc(r.label)}</strong></td>${SKILL_COLS.map(([, f]) => `<td class="num">${esc(f(r))}</td>`).join('')}</tr>`))
 }
 
 // ---------- port arms: migrating the slowest languages ----------
@@ -566,11 +566,11 @@ function renderSkills(arm) {
 // A speed ratio in words: ×4.1 faster, or ×8.3 slower for a ratio below 1.
 const fasterOrSlower = guard((x) => (x >= 1 ? `×${nf(1).format(x)} faster` : `×${nf(1).format(1 / x)} slower`))
 
-function portCell(v) {
+function portCell(v, best) {
   if (!v) return '<td class="num">–</td>'
   const p = v.port
   const tip = `${fmt.usd(v.base.costUsd)} to write from scratch, ${fmt.usd(v.arm.costUsd)} to port (${signed(change(v.base.costUsd, v.arm.costUsd))}); agent time ${fmt.secs(v.base.durationS)} → ${fmt.secs(v.arm.durationS)}; works ${v.arm.works}/${v.arm.n}`
-  return `<td class="num" data-tip="${esc(tip)}"><strong>${fmt.usd(p.costPer1kSourceLines?.median)}</strong><span class="range">${fasterOrSlower(p.speedVsSource)} · ${v.arm.works}/${v.arm.n}</span></td>`
+  return `<td class="num${best ? ' best' : ''}" data-tip="${esc(tip)}"><strong>${fmt.usd(p.costPer1kSourceLines?.median)}</strong><span class="unit"> per 1k lines</span><span class="range">${fasterOrSlower(p.speedVsSource)} · ${v.arm.works}/${v.arm.n}</span></td>`
 }
 
 // The migration conclusion: port vs scratch cost, cost per 1,000 source lines, and speed gained per target.
@@ -600,7 +600,8 @@ function renderPorts(d, ports) {
   $('hyp-ports').hidden = false
   const targets = [...new Set(ports.flatMap((a) => Object.keys(a.summary.vsBase)))].sort((a, b) => label(d, a).localeCompare(label(d, b)))
   const head = [{ title: 'From → to' }, ...targets.map((t) => ({ title: label(d, t), num: true }))]
-  const rows = ports.map((a) => `<tr><td><strong>${esc(label(d, a.meta.arm.slice(5)))}</strong></td>${targets.map((t) => portCell(a.summary.vsBase[t])).join('')}</tr>`)
+  const fastest = (a) => Object.entries(a.summary.vsBase).sort((x, y) => y[1].port.speedVsSource - x[1].port.speedVsSource)[0]?.[0]
+  const rows = ports.map((a) => `<tr><td><strong>${esc(label(d, a.meta.arm.slice(5)))}</strong></td>${targets.map((t) => portCell(a.summary.vsBase[t], t === fastest(a))).join('')}</tr>`)
   $('port-table').innerHTML = table(head, rows)
 }
 
@@ -608,7 +609,7 @@ function renderPorts(d, ports) {
 // data/swarm/results.json; vsBase.<lang> pairs the team with the base arm's solo run of the suite task.
 const SWARM_COLS = [
   ['Works', (v) => `${v.base.works}/${v.base.n} → ${v.arm.works}/${v.arm.n}`],
-  ['Cost', (v) => arrow(v.base.costUsd, v.arm.costUsd, fmt.usd)],
+  ['Cost per run', (v) => arrow(v.base.costUsd, v.arm.costUsd, fmt.usd)],
   ['Δ cost', (v) => `${signed(change(v.base.costUsd, v.arm.costUsd))}${v.beyondNoise ? '' : ' ~'}`],
   ['Wall-clock (solo → team)', (v) => arrow(v.swarm.soloWallS, v.swarm.teamWallS, fmt.secs)],
   ['Team: lead + slowest worker + integrator', (v) => [v.swarm.leadS, v.swarm.slowestWorkerS, v.swarm.integrateS].map(fmt.secs).join(' + ')],
@@ -638,7 +639,7 @@ const SHARED_DEP_CACHE = new Set(['go'])
 // The dev-loop study (notes): a service with dependencies, peak disk sampled while the agents worked.
 const NOTES_COLS = [
   ['Works', (v) => `${v.base.works}/${v.base.n} → ${v.arm.works}/${v.arm.n}`],
-  ['Cost', (v) => arrow(v.base.costUsd, v.arm.costUsd, fmt.usd)],
+  ['Cost per run', (v) => arrow(v.base.costUsd, v.arm.costUsd, fmt.usd)],
   ['Wall-clock (solo → team)', (v) => arrow(v.swarm.soloWallS, v.swarm.teamWallS, fmt.secs)],
   ['Team: lead + slowest worker + integrator', (v) => [v.swarm.leadS, v.swarm.slowestWorkerS, v.swarm.integrateS].map(fmt.secs).join(' + ')],
   ['Peak disk (solo → team)', (v) => arrow(v.swarm.soloPeakBytes, v.swarm.teamPeakBytes, fmt.bytes)],

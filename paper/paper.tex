@@ -574,8 +574,8 @@ toolchain keeps dependencies. Rust compiles its crates into each worktree's \tex
 held \NotesPeakTeamRust\,MB against \NotesPeakSoloRust\,MB; Zig fetched SQLite into each worktree's
 \texttt{zig-pkg/} and compiled it there; Go keeps modules and build artefacts in caches shared by every
 worktree, so its copies stayed small while one cache held the dependencies once. This matches what people
-running parallel agents on large Rust projects report, and on a Tauri application with 629 crates the
-per-worktree cost would be far larger than here.
+running parallel agents on large Rust projects report; with hundreds of crates the per-worktree cost is far
+larger than here.
 
 \paragraph{Why C++ was slow.} C++ ranked below C, Rust and Go in speed (Table~\ref{tab:speed}), mostly
 because of \texttt{calc}: all three runs read standard input through \texttt{std::istreambuf\_iterator},
