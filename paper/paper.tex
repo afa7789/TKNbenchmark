@@ -508,7 +508,8 @@ Go, Kotlin and TypeScript. Against code written from scratch in the target, port
 \PortVsScratchMedian$\times$, so a port mostly carried over no slowness from its source.
 
 \paragraph{H8 (swarm): H8a rejected, H8b confirmed, H8c only for Zig here.} Parallel workers did not make
-the work finish sooner, because the phases are sequential: the lead must set up the skeleton before anyone
+the work finish sooner, and not because the agents talked: they never exchange messages. The time went to
+the handoffs (Table~\ref{tab:swarm}), because the phases are sequential: the lead must set up the skeleton before anyone
 can start, the slowest worker sets the pace, and the integrator merges and tests at the end; each of the five
 agents also starts by reading the specification and the code. One agent writing a few hundred lines in
 two or three minutes beat that critical path in every language, and paid for one context instead of five.

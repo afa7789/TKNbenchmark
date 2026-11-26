@@ -369,11 +369,11 @@ const SW = (d.meta.arms ?? []).includes('swarm') ? JSON.parse(readFileSync(join(
 const secs = (s) => nf(0)(s)
 
 function swarmTable() {
-  const rows = Object.entries(SW).map(([k, v]) => `${tex(label(k))} & ${v.base.works}/${v.base.n}\\,$\\to$\\,${v.arm.works}/${v.arm.n} & ${usd(v.base.costUsd)}\\,$\\to$\\,${usd(v.arm.costUsd)} & ${secs(v.swarm.soloWallS)}\\,$\\to$\\,${secs(v.swarm.teamWallS)} & ${nf(2)(v.swarm.wallSpeedup)} & ${mb(v.swarm.worktreeBytes?.median)} & ${int(v.swarm.conflictedFiles)} \\\\`)
+  const rows = Object.entries(SW).map(([k, v]) => `${tex(label(k))} & ${v.base.works}/${v.base.n}\\,$\\to$\\,${v.arm.works}/${v.arm.n} & ${usd(v.base.costUsd)}\\,$\\to$\\,${usd(v.arm.costUsd)} & ${secs(v.swarm.soloWallS)}\\,$\\to$\\,${secs(v.swarm.teamWallS)} & ${secs(v.swarm.leadS)} + ${secs(v.swarm.slowestWorkerS)} + ${secs(v.swarm.integrateS)} & ${nf(2)(v.swarm.wallSpeedup)} & ${mb(v.swarm.worktreeBytes?.median)} & ${int(v.swarm.conflictedFiles)} \\\\`)
   return `\\newcommand{\\SwarmTable}{%
-\\begin{tabular}{@{}lrrrrrr@{}}
+\\begin{tabular}{@{}lrrrrrrr@{}}
 \\toprule
-Language & Works & US\\$ solo $\\to$ team & s solo $\\to$ team & $\\times$sooner & MB 3 trees & Conflicts \\\\
+Language & Works & US\\$ solo $\\to$ team & s solo $\\to$ team & s lead + worker + integr. & $\\times$sooner & MB 3 trees & Conflicts \\\\
 \\midrule
 ${rows.join('\n')}
 \\bottomrule

@@ -354,10 +354,23 @@ function portFields(rs, base) {
 // Swarm arm: how much sooner the team finished than one agent (median solo wall-clock ÷ median team
 // wall-clock, both on the harness's clock), the disk its three worktrees held, and the files a trial merge
 // of the workers' branches left conflicted (merge.json, measured by the harness).
+// Where the team's wall-clock went (medians): the lead, the slowest of the parallel workers, the integrator.
+function phaseTimes(rs) {
+  const phases = rs.map((r) => r.swarm?.phases ?? [])
+  const at = (ps, name) => (ps.find((p) => p.name === name)?.ms ?? 0) / 1000
+  const middle = (ps) => ps.filter((p) => p.name !== 'lead' && p.name !== 'integrate').map((p) => p.ms / 1000)
+  return {
+    leadS: stats(phases.map((ps) => at(ps, 'lead')))?.median,
+    slowestWorkerS: stats(phases.map((ps) => Math.max(...middle(ps))))?.median,
+    integrateS: stats(phases.map((ps) => at(ps, 'integrate')))?.median,
+  }
+}
+
 function swarmFields(rs, soloRuns) {
   const wall = (xs) => stats(xs.map((r) => r.wallS))?.median
   return {
     swarm: {
+      ...phaseTimes(rs),
       soloWallS: wall(soloRuns),
       teamWallS: wall(rs),
       wallSpeedup: wall(soloRuns) / wall(rs),

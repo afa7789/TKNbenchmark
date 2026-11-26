@@ -610,6 +610,7 @@ const SWARM_COLS = [
   ['Cost', (v) => arrow(v.base.costUsd, v.arm.costUsd, fmt.usd)],
   ['Δ cost', (v) => `${signed(change(v.base.costUsd, v.arm.costUsd))}${v.beyondNoise ? '' : ' ~'}`],
   ['Wall-clock (solo → team)', (v) => arrow(v.swarm.soloWallS, v.swarm.teamWallS, fmt.secs)],
+  ['Team: lead + slowest worker + integrator', (v) => [v.swarm.leadS, v.swarm.slowestWorkerS, v.swarm.integrateS].map(fmt.secs).join(' + ')],
   ['Sooner', (v) => fmt.ratio(v.swarm.wallSpeedup)],
   ['Agent time, summed', (v) => fmt.secs(v.swarm.agentS?.median)],
   ['3 worktrees on disk', (v) => fmt.bytes(v.swarm.worktreeBytes?.median)],

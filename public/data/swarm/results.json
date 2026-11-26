@@ -1,9 +1,13 @@
 {
   "meta": {
-    "generatedAt": "2026-11-26T05:00:02.962Z",
+    "generatedAt": "2026-11-26T13:31:51.102Z",
     "arm": "swarm",
     "arms": [
+      "port-c",
       "port-clojure",
+      "port-cpp",
+      "port-java",
+      "port-js",
       "port-python",
       "port-ts",
       "skills",
@@ -417,6 +421,13 @@
         "title": "Three tools in one binary",
         "topic": "one build, three modules: solo vs a swarm of agents",
         "swarm": true
+      },
+      "notes": {
+        "kind": "http",
+        "title": "Notes service",
+        "topic": "HTTP, JSON and SQLite with dependencies: solo vs a swarm at work",
+        "swarm": true,
+        "devLoop": true
       }
     },
     "external": {
@@ -992,6 +1003,7 @@
     "shop": {},
     "combos": [],
     "costSpeedRho": null,
+    "growth": {},
     "vsBase": {
       "c": {
         "tasks": [
@@ -1032,6 +1044,9 @@
         "beyondNoise": true,
         "speedChange": null,
         "swarm": {
+          "leadS": 45.084,
+          "slowestWorkerS": 90.917,
+          "integrateS": 85.071,
           "soloWallS": 192.07,
           "teamWallS": 245.173,
           "wallSpeedup": 0.7834060031080095,
@@ -1089,6 +1104,9 @@
         "beyondNoise": true,
         "speedChange": null,
         "swarm": {
+          "leadS": 32,
+          "slowestWorkerS": 69.454,
+          "integrateS": 64.794,
           "soloWallS": 99.166,
           "teamWallS": 193.872,
           "wallSpeedup": 0.5115024345960221,
@@ -1146,6 +1164,9 @@
         "beyondNoise": true,
         "speedChange": null,
         "swarm": {
+          "leadS": 41.597,
+          "slowestWorkerS": 123.544,
+          "integrateS": 96.879,
           "soloWallS": 150.153,
           "teamWallS": 275.346,
           "wallSpeedup": 0.5453247913534244,
@@ -1203,6 +1224,9 @@
         "beyondNoise": true,
         "speedChange": null,
         "swarm": {
+          "leadS": 47.304,
+          "slowestWorkerS": 83.164,
+          "integrateS": 57.823,
           "soloWallS": 115.008,
           "teamWallS": 190.734,
           "wallSpeedup": 0.6029758721570354,
@@ -1260,6 +1284,9 @@
         "beyondNoise": true,
         "speedChange": null,
         "swarm": {
+          "leadS": 73.068,
+          "slowestWorkerS": 205.427,
+          "integrateS": 120.928,
           "soloWallS": 200.101,
           "teamWallS": 399.651,
           "wallSpeedup": 0.5006893514591481,
@@ -1312,6 +1339,32 @@
         "output": 0.3907906063543895,
         "cacheWrite": 0.49679807601341786,
         "cacheRead": 0.11207583610087343
+      },
+      "code": {
+        "solved": {
+          "base": 14,
+          "arm": 14
+        },
+        "firstTry": {
+          "base": 11,
+          "arm": 15
+        },
+        "withTests": {
+          "base": 2,
+          "arm": 3
+        },
+        "compileErrors": {
+          "base": 3,
+          "arm": 12
+        },
+        "codeTokens": {
+          "base": 7970,
+          "arm": 11372
+        },
+        "files": {
+          "base": 6,
+          "arm": 9
+        }
       }
     },
     "length": {
