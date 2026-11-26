@@ -396,7 +396,13 @@ agent, each language's working \texttt{kvhttp} server was rebuilt \GrowthCycles{
 \GrowthTopLang{} grew the most, \GrowthTopPerBuild\,MB per rebuild, to \GrowthTopFinal\,MB; Rust's
 \texttt{target/} stayed at \GrowthRustFinal\,MB, rewritten in place, and Go's project at
 \GrowthGoFinal\,MB while its shared build cache took the new builds. These are release builds of a small
-server; a day of debug builds and tests in a large project scales the same patterns up.
+server; a day of debug builds and tests in a large project scales the same patterns up. What a worktree
+repeats is its build output: Rust's \texttt{target/} after a debug, a release and a test build of the
+\texttt{kvhttp} server held \RustTargetDebug\,MB for the debug build, \RustTargetDepsShare{} of it compiled
+dependencies with their debug information and \RustTargetIncremental\,MB incremental data, plus
+\RustTargetRelease\,MB for the release build. With hundreds of crates that is gigabytes per worktree; turning
+off debug information for dependencies, or sharing one target directory or a compiler cache across
+worktrees, cuts it, and in Zig so does a cache directory shared by the worktrees (we did not measure these).
 
 \begin{table}[h]
 \centering\small

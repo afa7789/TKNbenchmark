@@ -3,22 +3,36 @@
     {
       "step": "cargo build",
       "ok": true,
-      "secs": 7.588384042,
+      "secs": 6.870945417000001,
       "targetBytes": 104677376
     },
     {
       "step": "cargo build --release",
       "ok": true,
-      "secs": 8.461603375,
+      "secs": 8.242699457999999,
       "targetBytes": 159412224
     },
     {
       "step": "cargo test --no-run",
       "ok": true,
-      "secs": 0.2544013749999995,
+      "secs": 0.23997158300000046,
       "targetBytes": 167383040
     }
   ],
   "targetBytes": 167383040,
-  "registryBytes": 28336128
+  "registryBytes": 28336128,
+  "parts": {
+    "debug": {
+      "total": 112640000,
+      "deps": 91668480,
+      "incremental": 23261184,
+      "build": 5029888
+    },
+    "release": {
+      "total": 54734848,
+      "deps": 48836608,
+      "incremental": 0,
+      "build": 4521984
+    }
+  }
 }

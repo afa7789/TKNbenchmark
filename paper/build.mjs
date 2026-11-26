@@ -465,6 +465,13 @@ ${rows.join('\n')}
 }
 
 function growthMacros(set) {
+  const t = d.summary.rustTarget
+  if (t) {
+    set('RustTargetDebug', mb(t.debug))
+    set('RustTargetDepsShare', `${nf(0)((t.debugDeps / t.debug) * 100)}\\%`)
+    set('RustTargetIncremental', mb(t.debugIncremental))
+    set('RustTargetRelease', mb(t.release))
+  }
   if (!byGrowth.length) return
   set('GrowthCycles', G[byGrowth[0]].cycles)
   set('GrowthTopLang', tex(label(byGrowth[0])))

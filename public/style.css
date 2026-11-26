@@ -137,6 +137,8 @@ blockquote { font-style: italic; }
 .findings { padding-left: 1.4em; max-width: 90ch; }
 .findings li { margin-bottom: 10px; }
 .findings-chart { max-width: 560px; margin: 8px 0 18px; }
+/* Line chart of disk over rebuilds: the width of one of the page's small charts, not the whole section. */
+#growth-chart { max-width: 560px; margin: 8px 0 18px; }
 
 /* Inline SVG charts (skills arm): ink marks, hollow = without, filled = with; themes via CSS vars. */
 .viz { width: 100%; height: auto; display: block; overflow: visible; }

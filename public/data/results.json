@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-26T16:52:04.752Z",
+    "generatedAt": "2026-11-26T17:23:16.532Z",
     "arm": "base",
     "arms": [
       "port-c",
@@ -16384,6 +16384,12 @@
           }
         ]
       }
+    },
+    "rustTarget": {
+      "debug": 131702784,
+      "debugDeps": 109727744,
+      "debugIncremental": 23261184,
+      "release": 74629120
     }
   },
   "runs": [

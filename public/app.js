@@ -694,7 +694,7 @@ const GROWTH_CAUSE = { zig: 'Zig adds each build to .zig-cache and never removes
 // Rust and Go in full ink and labelled (a label too close to the one below is left to the hover); the rest
 // muted, named on hover.
 function growthChart(d, G, langs) {
-  const [W, H, L, R, T, B] = [640, 300, 72, 96, 12, 30]
+  const [W, H, L, R, T, B] = [640, 260, 72, 96, 12, 30]
   const n = Math.max(...langs.map((l) => G[l].cycles))
   const max = Math.max(...langs.flatMap((l) => G[l].series.map((s) => s.projectBytes))) * 1.05
   const x = (c) => L + (c / n) * (W - L - R)
@@ -739,6 +739,8 @@ function renderGrowth(d) {
   const rust = G.rust && growthOf(G.rust) < 0.1e6 ? `; Rust's target/ stayed at ${fmt.bytes(G.rust.series.at(-1).projectBytes)}, rewritten in place` : ''
   $('growth-note').innerHTML = `<strong>${esc(label(d, top))}'s build output grew with every rebuild; ${flat.length} of ${langs.length} languages stayed flat.</strong> After ${G[top].cycles} edit-rebuild cycles ${esc(label(d, top))}'s project held ${fmt.bytes(G[top].series.at(-1).projectBytes)}, ${fmt.bytes(growthOf(G[top]))} more per build${GROWTH_CAUSE[top] ? `: ${GROWTH_CAUSE[top]}` : ''}${rust}. In parallel worktrees each copy grows on its own.`
   $('growth-chart').innerHTML = growthChart(d, G, langs)
+  const t = d.summary.rustTarget
+  $('worktrees-note').innerHTML = `<strong>What repeats in every worktree.</strong> A worktree is a second copy of the project, and each copy builds its own output.${t ? ` In Rust that is <code>target/</code>: after a debug, a release and a test build of the kvhttp server it held ${fmt.bytes(t.debug)} for the debug build alone, ${fmt.pct(t.debugDeps / t.debug)} of it compiled dependencies with their debug info (deps/) and ${fmt.bytes(t.debugIncremental)} incremental data, plus ${fmt.bytes(t.release)} for the release build; with hundreds of crates this reaches gigabytes per worktree.` : ''} Zig adds every build to its <code>.zig-cache</code> (above), and Go keeps modules and builds in caches all worktrees share. Ways to cut it, not measured here: in Rust, <code>[profile.dev.package."*"] debug = false</code> (no debug info in dependencies), or one <code>CARGO_TARGET_DIR</code> or <code>sccache</code> shared by the worktrees (builds then wait on each other's lock); in Zig, one <code>ZIG_LOCAL_CACHE_DIR</code> shared by the worktrees, or clearing <code>.zig-cache</code> now and then.`
   const head = [{ title: 'Language' }, ...GROWTH_COLS.map(([title]) => ({ title, num: true }))]
   $('growth-table').innerHTML = table(head, langs.map((l) => `<tr><td><strong>${esc(label(d, l))}</strong></td>${GROWTH_COLS.map(([, f]) => `<td class="num">${esc(f(G[l]))}</td>`).join('')}</tr>`))
 }
