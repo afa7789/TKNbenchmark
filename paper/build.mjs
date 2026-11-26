@@ -282,6 +282,51 @@ function skillMacros(set) {
   }
 }
 
+// ---------- port arms (public/data/port-<src>/results.json): migrating the slowest languages ----------
+const PORTS = (d.meta.arms ?? [])
+  .filter((a) => a.startsWith('port-'))
+  .map((a) => ({ src: a.slice(5), v: JSON.parse(readFileSync(join(ROOT, 'public', 'data', a, 'results.json'), 'utf8')).summary.vsBase }))
+const portPairs = PORTS.flatMap(({ src, v }) => Object.keys(v).sort((a, b) => label(a).localeCompare(label(b))).map((t) => ({ src, t, x: v[t] })))
+const per10k = (p) => p.x.port.costPer10kSourceLines?.median
+
+function portTable() {
+  const rows = portPairs.map(({ src, t, x }) => {
+    const d = change(x.base.costUsd, x.arm.costUsd)
+    return `${tex(label(src))} $\\to$ ${tex(label(t))} & ${x.arm.works}/${x.arm.n} & ${usd(x.base.costUsd)}\\,$\\to$\\,${usd(x.arm.costUsd)} & ${pct(d)}${x.beyondNoise ? '' : '$^{\\sim}$'} & ${usd(per10k({ x }))} & ${nf(1)(x.port.speedVsSource)} \\\\`
+  })
+  return `\\newcommand{\\PortTable}{%
+\\begin{tabular}{@{}lrrrrr@{}}
+\\toprule
+From $\\to$ to & Works & US\\$ scratch $\\to$ port & $\\Delta$US\\$ & US\\$ / 10k lines & $\\times$faster \\\\
+\\midrule
+${rows.join('\n')}
+\\bottomrule
+\\end{tabular}}`
+}
+
+function portMacros(set) {
+  const works = portPairs.reduce((a, p) => a + p.x.arm.works, 0)
+  const n = portPairs.reduce((a, p) => a + p.x.arm.n, 0)
+  set('NPortPairs', portPairs.length)
+  set('PortWorks', `${works}/${n}`)
+  const deltas = portPairs.map((p) => change(p.x.base.costUsd, p.x.arm.costUsd)).sort((a, b) => a - b)
+  set('PortDeltaMedian', pct(deltas[deltas.length >> 1]))
+  set('NPortCheaper', portPairs.filter((p) => p.x.arm.costUsd < p.x.base.costUsd && p.x.beyondNoise).length)
+  const byCost = [...portPairs].filter((p) => Number.isFinite(per10k(p))).sort((a, b) => per10k(a) - per10k(b))
+  const name = (p) => `${tex(label(p.src))}$\\to$${tex(label(p.t))}`
+  if (byCost.length) {
+    set('PortPerTenKMin', usd(per10k(byCost[0])))
+    set('PortPerTenKMinPair', name(byCost[0]))
+    set('PortPerTenKMax', usd(per10k(byCost.at(-1))))
+    set('PortPerTenKMaxPair', name(byCost.at(-1)))
+  }
+  for (const p of portPairs) {
+    const m = `${macroName(p.src)}${macroName(p.t)}`
+    set(`Port${m}PerTenK`, usd(per10k(p)))
+    set(`Port${m}Speed`, nf(1)(p.x.port.speedVsSource))
+  }
+}
+
 function macros() {
   const out = []
   const set = (name, v) => out.push(`\\newcommand{\\${name}}{${v}}`)
@@ -303,6 +348,7 @@ function macros() {
   tsJsMacros(set)
   trackMacros(set)
   skillMacros(set)
+  portMacros(set)
   set('CorrStdCost', nf(2)(pearson(keys.map((k) => L[k].stdlibReads), keys.map((k) => L[k].costUsd))))
   const dl = C['rust/kvhttp']?.devloopTargetBytes?.median
   set('DevloopRust', mb(dl))
@@ -330,6 +376,7 @@ const out = [
   trackTable(),
   skillTable(),
   skillSlope(),
+  portTable(),
 ].join('\n\n')
 writeFileSync(join(ROOT, 'paper', 'data.tex'), out + '\n')
 console.log('paper/data.tex written')

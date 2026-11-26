@@ -118,6 +118,17 @@ functional correctness of generated Python. MultiPL-E~\cite{multiple} translated
 languages and found that model performance depends on how common a language is and on its features,
 which matches our finding that the model's familiarity with a language version drives the cost.
 
+\paragraph{Rewrites.} Recent rewrites of large systems go mostly to Rust, Go and Zig, by hand or by
+agents, and the ones done by agents lean on an existing test suite as the oracle. TypeScript 7.0 is a port
+of the compiler to Go, with full builds typically 8--12$\times$ faster~\cite{ts7}. Bun went from 535,496
+lines of Zig to Rust with about 64 Claude agents at a time over 11 days, checked against Bun's unchanged
+test suite, for about US\$\,165,000 at API prices~\cite{bunrust}. Fish moved 57K lines of C++ to 75K lines
+of Rust one component at a time~\cite{fishrust}; Roc rewrote its 300,000-line compiler from Rust to Zig in
+487 days~\cite{roczig}; pgrust, an independent Postgres in Rust, measures itself against 164,000 cases from
+50 drivers, ORMs and applications~\cite{pgrust}. Our port arms measure the same move at small scale: what
+an agent spends to take a working program from one of our slowest languages to a common rewrite target,
+with the same hidden tests as the oracle.
+
 \paragraph{Coding agents.} SWE-bench~\cite{swebench} evaluates models on real GitHub issues from
 Python repositories; SWE-agent~\cite{sweagent} showed that the agent--computer interface changes the
 outcome; DeepSWE~\cite{deepswe} reports cost and steps alongside pass@1. These benchmarks hold the
@@ -470,6 +481,19 @@ Costs 38\% More Than Svelte}. HackerNoon, 2026.
 31\% More Than JavaScript}. HackerNoon, 2026.
 \bibitem{deepswe} Datacurve. \emph{DeepSWE: a long-horizon software engineering benchmark}.
 \url{https://deepswe.datacurve.ai/}, 2026.
+
+\bibitem{bunrust} J. Sumner. \emph{Bun in Rust}. \url{https://bun.com/blog/bun-in-rust}, July 2026.
+
+\bibitem{ts7} Microsoft. \emph{Announcing TypeScript 7.0}.
+\url{https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/}, July 2026.
+
+\bibitem{fishrust} fish-shell. \emph{Fish 4.0: The Fish Of Theseus}. \url{https://fishshell.com/blog/rustport/},
+December 2024.
+
+\bibitem{roczig} R. Feldman. \emph{Rewriting the Roc compiler from Rust to Zig}.
+\url{https://rtfeldman.com/rust-to-zig}, July 2026.
+
+\bibitem{pgrust} pgrust. \emph{pgrust v0.3}. \url{https://pgrust.com/blog/pgrust-v0-3/}, September 2026.
 \end{thebibliography}
 
 \end{document}
