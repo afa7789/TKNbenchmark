@@ -81,6 +81,7 @@
         <li><strong>"More concise code costs fewer tokens":</strong> confirmed for code, with caveats for cost. Python, TypeScript, JavaScript and Kotlin were the cheapest, and final code size tracks agent cost closely. But TypeScript's code was ~1.26× JavaScript's (the article says 1.31×) while the agent spent the same on both, and knowing the language version matters as much as conciseness.</li>
         <li><strong>"Svelte &lt; Vue &lt; React":</strong> confirmed, with ratios close to the article's, measured with a different tokenizer.</li>
         <li><strong>Cheap to write is not fast to run:</strong> the three cheapest languages for the agent (Python, TypeScript, JavaScript) produced some of the slowest code, about 5.8–6.4× the fastest on the speed index, behind only Clojure (JVM start-up on every run); Assembly, Zig and C were the fastest and among the most expensive to write. Rust, Go, Nim and OCaml were the compromise: all four in the cheaper half to write and the faster half to run, Rust and Go closest to the fastest.</li>
+        <li id="hyp-skills" hidden></li>
         <li><strong>"Rust + React":</strong> defensible. Rust was among the cheapest back ends for the agent; React was the most expensive front end.</li>
       </ul>
       <p>Details in the <a href="paper.pdf">paper (PDF)</a>.</p>

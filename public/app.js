@@ -445,7 +445,18 @@ function howTo(d, arm) {
   return tips
 }
 
+// The skills hypothesis in the summary's list, with this run's numbers.
+function skillHypothesis(arm) {
+  const rows = skillRows(arm)
+  const costlier = rows.filter((r) => r.dCost > 0 && r.beyondNoise).length
+  const cheaper = rows.filter((r) => r.dCost < 0 && r.beyondNoise).length
+  const zig = arm.summary.vsBase.zig
+  $('hyp-skills').innerHTML = `<strong>"With a SKILL.md for its language, every language gets cheaper":</strong> rejected here. With one researched skill per language, ${costlier} of ${rows.length} languages cost more beyond run-to-run noise and ${cheaper} cost less (median run ${signed(change(arm.summary.effect.costUsd.base, arm.summary.effect.costUsd.arm))}), with the same correctness. Loading the skill costs about two turns of context, which these short tasks cannot earn back; the increase shrinks as tasks get longer. Only for Zig, whose API changed after the model's training, did the skill replace work (standard-library reads ${nf(0).format(zig.base.stdlibReads)} → ${nf(0).format(zig.arm.stdlibReads)}), at the same cost. See <a href="#skills">With a language skill</a>.`
+  $('hyp-skills').hidden = false
+}
+
 function renderFindings(d, arm) {
+  if (arm) skillHypothesis(arm)
   const items = [...baseFindings(d), ...(arm ? skillFindings(d, arm) : [])]
   $('findings-list').innerHTML = items.join('')
   $('howto-list').innerHTML = howTo(d, arm).join('')
