@@ -562,11 +562,14 @@ function renderSkills(arm) {
 
 // ---------- port arms: migrating the slowest languages ----------
 // data/port-<src>/results.json per source; vsBase.<target>.port has cost per 1,000 source lines and speed.
+// A speed ratio in words: ×4.1 faster, or ×8.3 slower for a ratio below 1.
+const fasterOrSlower = guard((x) => (x >= 1 ? `×${nf(1).format(x)} faster` : `×${nf(1).format(1 / x)} slower`))
+
 function portCell(v) {
   if (!v) return '<td class="num">–</td>'
   const p = v.port
-  const tip = `${fmt.usd(v.base.costUsd)} to write from scratch, ${fmt.usd(v.arm.costUsd)} to port (${signed(change(v.base.costUsd, v.arm.costUsd))}); works ${v.arm.works}/${v.arm.n}`
-  return `<td class="num" data-tip="${esc(tip)}"><strong>${fmt.usd(p.costPer1kSourceLines?.median)}</strong><span class="range">${fmt.ratio(p.speedVsSource)} faster · ${v.arm.works}/${v.arm.n}</span></td>`
+  const tip = `${fmt.usd(v.base.costUsd)} to write from scratch, ${fmt.usd(v.arm.costUsd)} to port (${signed(change(v.base.costUsd, v.arm.costUsd))}); agent time ${fmt.secs(v.base.durationS)} → ${fmt.secs(v.arm.durationS)}; works ${v.arm.works}/${v.arm.n}`
+  return `<td class="num" data-tip="${esc(tip)}"><strong>${fmt.usd(p.costPer1kSourceLines?.median)}</strong><span class="range">${fasterOrSlower(p.speedVsSource)} · ${v.arm.works}/${v.arm.n}</span></td>`
 }
 
 // The migration conclusion: port vs scratch cost, cost per 1,000 source lines, and speed gained per target.
@@ -575,11 +578,16 @@ function portNote(d, ports) {
   const costlier = pairs.filter((p) => p.dc > 0 && p.v.beyondNoise).length
   const dcs = pairs.map((p) => p.dc)
   const perK = pairs.map((p) => p.v.port.costPer1kSourceLines?.median).filter(isNum)
-  const byTarget = Object.groupBy(pairs, (p) => p.t)
-  const speed = Object.entries(byTarget).map(([t, ps]) => [t, median(ps.map((p) => p.v.port.speedVsSource))]).sort((a, b) => b[1] - a[1])
+  // The gain depends on where you start: per source, its best and worst target.
+  const bySource = Object.entries(Object.groupBy(pairs, (p) => p.src)).map(([src, ps]) => {
+    const sorted = [...ps].sort((a, b) => b.v.port.speedVsSource - a.v.port.speedVsSource)
+    return { src, best: sorted[0], worst: sorted.at(-1) }
+  }).sort((a, b) => b.best.v.port.speedVsSource - a.best.v.port.speedVsSource)
+  const vsScratch = pairs.map((p) => p.v.speedChange).filter(isNum)
   const works = pairs.reduce((s, p) => s + p.v.arm.works, 0)
   const n = pairs.reduce((s, p) => s + p.v.arm.n, 0)
-  return `<strong>Porting cost more than writing from scratch.</strong> In ${costlier} of ${pairs.length} pairs the port cost more beyond run-to-run noise (${signed(Math.min(...dcs))} to ${signed(Math.max(...dcs))}), though ${works}/${n} ports worked: the agent read the source on top of the specification and tests it also had. Per 1,000 lines of source it cost ${fmt.usd(Math.min(...perK))}–${fmt.usd(Math.max(...perK))}. The target sets the price and the gain: ${speed.map(([t, x]) => `${esc(label(d, t))} ${fmt.ratio(x)}`).join(', ')} faster than the source (median over sources), and as fast as the same program written from scratch in the target.`
+  const name = (p) => esc(label(d, p.t))
+  return `<strong>Porting cost more than writing from scratch.</strong> In ${costlier} of ${pairs.length} pairs the port cost more beyond run-to-run noise (${signed(Math.min(...dcs))} to ${signed(Math.max(...dcs))}), though ${works}/${n} ports worked: the agent read the source on top of the specification and tests it also had. Per 1,000 lines of source it cost ${fmt.usd(Math.min(...perK))}–${fmt.usd(Math.max(...perK))}. The speed gained depends on the source: ${bySource.map((s) => `from ${esc(label(d, s.src))}, ${name(s.best)} ${fasterOrSlower(s.best.v.port.speedVsSource)} and ${name(s.worst)} ${fasterOrSlower(s.worst.v.port.speedVsSource)}`).join('; ')}. Against the same program written from scratch in the target, ports ran at a median ${fmt.ratio(median(vsScratch))} its speed (${fmt.ratio(Math.min(...vsScratch))}–${fmt.ratio(Math.max(...vsScratch))}).`
 }
 
 function renderPorts(d, ports) {

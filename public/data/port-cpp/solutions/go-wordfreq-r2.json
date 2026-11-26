@@ -1,0 +1,21 @@
+{
+  "id": "go-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ngo build -trimpath -ldflags='-s -w' -o app .\n"
+    },
+    {
+      "path": "go.mod",
+      "text": "module wordfreq\n\ngo 1.26\n"
+    },
+    {
+      "path": "main.go",
+      "text": "// Command wordfreq prints the 10 most frequent ASCII words read from standard input.\npackage main\n\nimport (\n\t\"bufio\"\n\t\"cmp\"\n\t\"fmt\"\n\t\"io\"\n\t\"os\"\n\t\"slices\"\n\t\"strconv\"\n)\n\nconst (\n\ttopN      = 10\n\tchunkSize = 1 << 16\n)\n\n// entry is a word together with its number of occurrences.\ntype entry struct {\n\tword  string\n\tcount uint64\n}\n\nfunc isASCIILetter(c byte) bool {\n\treturn (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')\n}\n\nfunc toLowerASCII(c byte) byte {\n\tif c >= 'A' && c <= 'Z' {\n\t\treturn c + ('a' - 'A')\n\t}\n\treturn c\n}\n\n// addWord increments the count for word. The lookup via string(word) does not\n// allocate; a new string is only created the first time a word is seen.\nfunc addWord(counts map[string]uint64, word []byte) {\n\tif n, ok := counts[string(word)]; ok {\n\t\tcounts[string(word)] = n + 1\n\t\treturn\n\t}\n\tcounts[string(word)] = 1\n}\n\n// countWords streams r, accumulating lowercase words. A word may straddle\n// chunk boundaries, so the in-progress word is carried across reads.\nfunc countWords(r io.Reader) (map[string]uint64, error) {\n\tcounts := make(map[string]uint64)\n\tbuf := make([]byte, chunkSize)\n\tcurrent := make([]byte, 0, 64)\n\n\tfor {\n\t\tn, err := r.Read(buf)\n\t\tfor _, c := range buf[:n] {\n\t\t\tif isASCIILetter(c) {\n\t\t\t\tcurrent = append(current, toLowerASCII(c))\n\t\t\t} else if len(current) > 0 {\n\t\t\t\taddWord(counts, current)\n\t\t\t\tcurrent = current[:0]\n\t\t\t}\n\t\t}\n\t\tif err == io.EOF {\n\t\t\tbreak\n\t\t}\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\tif len(current) > 0 {\n\t\taddWord(counts, current)\n\t}\n\treturn counts, nil\n}\n\n// topWords returns up to limit entries ordered by count descending, then by\n// word ascending.\nfunc topWords(counts map[string]uint64, limit int) []entry {\n\tentries := make([]entry, 0, len(counts))\n\tfor w, c := range counts {\n\t\tentries = append(entries, entry{word: w, count: c})\n\t}\n\tslices.SortFunc(entries, func(a, b entry) int {\n\t\tif a.count != b.count {\n\t\t\treturn cmp.Compare(b.count, a.count)\n\t\t}\n\t\treturn cmp.Compare(a.word, b.word)\n\t})\n\treturn entries[:min(limit, len(entries))]\n}\n\nfunc run(in io.Reader, out io.Writer) error {\n\tcounts, err := countWords(in)\n\tif err != nil {\n\t\treturn fmt.Errorf(\"reading input: %w\", err)\n\t}\n\tw := bufio.NewWriter(out)\n\tfor _, e := range topWords(counts, topN) {\n\t\tw.WriteString(strconv.FormatUint(e.count, 10))\n\t\tw.WriteByte(' ')\n\t\tw.WriteString(e.word)\n\t\tw.WriteByte('\\n')\n\t}\n\treturn w.Flush()\n}\n\nfunc main() {\n\tif err := run(os.Stdin, os.Stdout); err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t\tos.Exit(1)\n\t}\n}\n"
+    },
+    {
+      "path": "main_test.go",
+      "text": "package main\n\nimport (\n\t\"strings\"\n\t\"testing\"\n)\n\nfunc TestRun(t *testing.T) {\n\ttests := []struct {\n\t\tname, in, want string\n\t}{\n\t\t{\"simple\", \"The cat and the hat.\", \"2 the\\n1 and\\n1 cat\\n1 hat\\n\"},\n\t\t{\"case folding\", \"Hello, hello! HELLO? world.\\n\", \"3 hello\\n1 world\\n\"},\n\t\t{\"empty\", \"\", \"\"},\n\t\t{\"separators\", \"don't stop_me 4now, now-NOW\", \"3 now\\n1 don\\n1 me\\n1 stop\\n1 t\\n\"},\n\t\t{\"high bytes\", \"caf\\xc3\\xa9\\xffcaf\", \"2 caf\\n\"},\n\t\t{\n\t\t\t\"top ten and ties\",\n\t\t\t\"zeta eta theta iota kappa lambda mu nu xi omicron pi rho alpha beta alpha\",\n\t\t\t\"2 alpha\\n1 beta\\n1 eta\\n1 iota\\n1 kappa\\n1 lambda\\n1 mu\\n1 nu\\n1 omicron\\n1 pi\\n\",\n\t\t},\n\t}\n\tfor _, tc := range tests {\n\t\tt.Run(tc.name, func(t *testing.T) {\n\t\t\tvar out strings.Builder\n\t\t\tif err := run(strings.NewReader(tc.in), &out); err != nil {\n\t\t\t\tt.Fatal(err)\n\t\t\t}\n\t\t\tif got := out.String(); got != tc.want {\n\t\t\t\tt.Errorf(\"got %q, want %q\", got, tc.want)\n\t\t\t}\n\t\t})\n\t}\n}\n"
+    }
+  ]
+}

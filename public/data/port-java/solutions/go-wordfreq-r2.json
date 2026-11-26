@@ -1,0 +1,25 @@
+{
+  "id": "go-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds an optimized release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nCGO_ENABLED=0 go build -trimpath -ldflags='-s -w' -o app .\n"
+    },
+    {
+      "path": "go.mod",
+      "text": "module wordfreq\n\ngo 1.26\n"
+    },
+    {
+      "path": "main.go",
+      "text": "// Command wordfreq prints the ten most frequent ASCII-letter words read from\n// standard input, one \"<count> <word>\" line each.\npackage main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n)\n\nconst topN = 10\n\nfunc main() {\n\tcounts, err := CountWords(os.Stdin)\n\tif err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t\tos.Exit(1)\n\t}\n\n\tw := bufio.NewWriter(os.Stdout)\n\tfor _, e := range Top(counts, topN) {\n\t\tfmt.Fprintf(w, \"%d %s\\n\", e.Count, e.Word)\n\t}\n\tif err := w.Flush(); err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t\tos.Exit(1)\n\t}\n}\n"
+    },
+    {
+      "path": "wordfreq.go",
+      "text": "package main\n\nimport (\n\t\"cmp\"\n\t\"errors\"\n\t\"io\"\n\t\"slices\"\n\t\"strings\"\n)\n\nconst readBufferSize = 64 << 10\n\n// Entry is a word together with its number of occurrences.\ntype Entry struct {\n\tWord  string\n\tCount int\n}\n\n// CountWords reads r to EOF and returns the occurrence count of every word.\n// A word is a maximal run of ASCII letters, folded to lowercase; every other\n// byte is a separator.\nfunc CountWords(r io.Reader) (map[string]int, error) {\n\tcounts := make(map[string]int)\n\tbuf := make([]byte, readBufferSize)\n\tword := make([]byte, 0, 64)\n\n\tfor {\n\t\tn, err := r.Read(buf)\n\t\tfor _, b := range buf[:n] {\n\t\t\tif lower := b | 0x20; lower >= 'a' && lower <= 'z' {\n\t\t\t\tword = append(word, lower)\n\t\t\t} else if len(word) > 0 {\n\t\t\t\tcounts[string(word)]++\n\t\t\t\tword = word[:0]\n\t\t\t}\n\t\t}\n\t\tif errors.Is(err, io.EOF) {\n\t\t\tbreak\n\t\t}\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\tif len(word) > 0 {\n\t\tcounts[string(word)]++\n\t}\n\treturn counts, nil\n}\n\n// Top returns at most limit entries ordered by count descending, with ties\n// broken by word in ascending byte order.\nfunc Top(counts map[string]int, limit int) []Entry {\n\tentries := make([]Entry, 0, len(counts))\n\tfor w, c := range counts {\n\t\tentries = append(entries, Entry{Word: w, Count: c})\n\t}\n\tslices.SortFunc(entries, func(a, b Entry) int {\n\t\tif c := cmp.Compare(b.Count, a.Count); c != 0 {\n\t\t\treturn c\n\t\t}\n\t\treturn strings.Compare(a.Word, b.Word)\n\t})\n\treturn entries[:min(limit, len(entries))]\n}\n"
+    },
+    {
+      "path": "wordfreq_test.go",
+      "text": "package main\n\nimport (\n\t\"slices\"\n\t\"strings\"\n\t\"testing\"\n)\n\nfunc TestCountWords(t *testing.T) {\n\ttests := []struct {\n\t\tname  string\n\t\tinput string\n\t\twant  map[string]int\n\t}{\n\t\t{\"empty\", \"\", map[string]int{}},\n\t\t{\"case folding\", \"Hello, hello! HELLO? world.\\n\", map[string]int{\"hello\": 3, \"world\": 1}},\n\t\t{\"separators\", \"don't stop_me 4now, now-NOW\", map[string]int{\"don\": 1, \"t\": 1, \"stop\": 1, \"me\": 1, \"now\": 3}},\n\t\t{\"non-ascii bytes\", \"caf\\xc3\\xa9\\xff@[`{Z\", map[string]int{\"caf\": 1, \"z\": 1}},\n\t\t{\"trailing word\", \"abc\", map[string]int{\"abc\": 1}},\n\t}\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tgot, err := CountWords(strings.NewReader(tt.input))\n\t\t\tif err != nil {\n\t\t\t\tt.Fatal(err)\n\t\t\t}\n\t\t\tif len(got) != len(tt.want) {\n\t\t\t\tt.Fatalf(\"got %v, want %v\", got, tt.want)\n\t\t\t}\n\t\t\tfor w, c := range tt.want {\n\t\t\t\tif got[w] != c {\n\t\t\t\t\tt.Errorf(\"count[%q] = %d, want %d\", w, got[w], c)\n\t\t\t\t}\n\t\t\t}\n\t\t})\n\t}\n}\n\nfunc TestTop(t *testing.T) {\n\tcounts := map[string]int{\"the\": 2, \"cat\": 1, \"and\": 1, \"hat\": 1}\n\tgot := Top(counts, 10)\n\twant := []Entry{{\"the\", 2}, {\"and\", 1}, {\"cat\", 1}, {\"hat\", 1}}\n\tif !slices.Equal(got, want) {\n\t\tt.Errorf(\"got %v, want %v\", got, want)\n\t}\n\tif got := Top(counts, 2); len(got) != 2 {\n\t\tt.Errorf(\"limit not applied: %v\", got)\n\t}\n}\n"
+    }
+  ]
+}

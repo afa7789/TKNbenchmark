@@ -1,0 +1,21 @@
+{
+  "id": "ts-wordfreq-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Produces ./app: a launcher that runs the TypeScript sources with Node.js\n# (which executes .ts files natively via type stripping).\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec node --disable-warning=ExperimentalWarning \"$(dirname \"$0\")/src/main.ts\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "package.json",
+      "text": "{\n  \"name\": \"wordfreq\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"description\": \"Print the 10 most frequent ASCII words read from standard input\",\n  \"scripts\": {\n    \"build\": \"bash build.sh\",\n    \"test\": \"node check.mjs\"\n  },\n  \"engines\": {\n    \"node\": \">=23.6\"\n  }\n}\n"
+    },
+    {
+      "path": "src/main.ts",
+      "text": "import { WordCounter } from \"./wordfreq.ts\";\n\nconst TOP_N = 10;\n\nasync function main(): Promise<void> {\n  const counter = new WordCounter();\n  for await (const chunk of process.stdin) {\n    counter.feed(chunk as Buffer);\n  }\n  counter.finish();\n\n  const lines = counter.top(TOP_N).map(({ word, count }) => `${count} ${word}\\n`);\n  process.stdout.write(lines.join(\"\"));\n}\n\nmain().catch((err: unknown) => {\n  process.stderr.write(`wordfreq: ${err instanceof Error ? err.message : String(err)}\\n`);\n  process.exitCode = 1;\n});\n"
+    },
+    {
+      "path": "src/wordfreq.ts",
+      "text": "/**\n * Word frequency counting: a word is a maximal run of ASCII letters,\n * folded to lowercase. Every other byte is a separator.\n */\n\nexport interface WordCount {\n  readonly word: string;\n  readonly count: number;\n}\n\nconst LOWER_A = 0x61;\nconst CASE_BIT = 0x20;\n\nfunction isAsciiLetter(byte: number): boolean {\n  return ((byte | CASE_BIT) - LOWER_A) >>> 0 < 26;\n}\n\n/** Incrementally counts words across arbitrarily split byte chunks. */\nexport class WordCounter {\n  readonly #counts = new Map<string, number>();\n  /** Lowercased prefix of a word that ran up to the end of the previous chunk. */\n  #pending = \"\";\n\n  /** Feeds a chunk of input. The chunk's letters are lowercased in place. */\n  feed(chunk: Uint8Array): void {\n    const buf = Buffer.from(chunk.buffer, chunk.byteOffset, chunk.byteLength);\n    const end = buf.length;\n    let i = 0;\n    while (i < end) {\n      if (!isAsciiLetter(buf[i])) {\n        i++;\n        continue;\n      }\n      const start = i;\n      do {\n        buf[i] |= CASE_BIT;\n        i++;\n      } while (i < end && isAsciiLetter(buf[i]));\n\n      if (start === 0 && this.#pending !== \"\") {\n        this.#pending += buf.latin1Slice(start, i);\n      } else {\n        this.#flushPending();\n        this.#pending = buf.latin1Slice(start, i);\n      }\n      if (i < end) this.#flushPending();\n    }\n    // A chunk ending on a separator terminates any pending word.\n    if (end > 0 && !isAsciiLetter(buf[end - 1])) this.#flushPending();\n  }\n\n  /** Signals end of input, counting any word still in progress. */\n  finish(): void {\n    this.#flushPending();\n  }\n\n  /** Returns up to `n` words ordered by count descending, then word ascending. */\n  top(n: number): WordCount[] {\n    const best: WordCount[] = [];\n    for (const [word, count] of this.#counts) {\n      if (best.length === n && !ranksBefore(word, count, best[n - 1])) continue;\n      let j = best.length < n ? best.length : n - 1;\n      while (j > 0 && ranksBefore(word, count, best[j - 1])) {\n        best[j] = best[j - 1];\n        j--;\n      }\n      best[j] = { word, count };\n    }\n    return best;\n  }\n\n  #flushPending(): void {\n    const word = this.#pending;\n    if (word === \"\") return;\n    this.#counts.set(word, (this.#counts.get(word) ?? 0) + 1);\n    this.#pending = \"\";\n  }\n}\n\n/** True if (word, count) should be listed before `other`. */\nfunction ranksBefore(word: string, count: number, other: WordCount): boolean {\n  if (count !== other.count) return count > other.count;\n  // Words are lowercase ASCII, so UTF-16 comparison equals byte order.\n  return word < other.word;\n}\n"
+    }
+  ]
+}

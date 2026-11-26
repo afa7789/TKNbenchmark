@@ -54,8 +54,9 @@ training, did the skill replace work (standard-library reads \ZigStdBase{}$\to$\
 cost (\SkillDeltaZig). Porting a working program from seven languages (our three slowest, and C, C++, Java and JavaScript, the
 commonest sources of public rewrites) to five common rewrite
 targets also cost more than writing it from scratch, in \NPortCostlier{} of \NPortPairs{} pairs
-(\PortDeltaMin{} to \PortDeltaMax), with every port correct; Zig ports ran a median \PortSpeedZig$\times$
-faster than their source. Finally, a team of agents (a lead, three workers in parallel git worktrees and an
+(\PortDeltaMin{} to \PortDeltaMax), with every port correct; ports of the slow sources ran up to
+\PortSpeedMax$\times$ faster than the source (\PortSpeedMaxPair), while from C the best port was
+\PortBestC{} and the worst \PortWorstC{} (\PortWorstTargetC). Finally, a team of agents (a lead, three workers in parallel git worktrees and an
 integrator) built a three-part program slower than one agent alone in all \NSwarmLangs{} languages tried
 (\SwarmSpeedMin--\SwarmSpeedMax$\times$ the solo speed) and cost \SwarmCostMin{} to \SwarmCostMax{} more.
 \end{abstract}
@@ -85,8 +86,8 @@ integrator) built a three-part program slower than one agent alone in all \NSwar
         (\SkillDeltaZig).
   \item \textbf{Porting cost more than writing from scratch.} In \NPortCostlier{} of \NPortPairs{}
         source--target pairs (\PortDeltaMin{} to \PortDeltaMax), US\$\,\PortPerKMin--\PortPerKMax{} per
-        1,000 source lines; the target set both the price and the speed gained (Zig \PortSpeedZig$\times$,
-        Rust \PortSpeedRust$\times$, Go \PortSpeedGo$\times$ faster than the source).
+        1,000 source lines. The speed gained depended on the source: up to \PortSpeedMax$\times$
+        (\PortSpeedMaxPair), but from C at best \PortBestC{} and at worst \PortWorstC{} (\PortWorstTargetC).
   \item \textbf{One agent beat a team of agents.} On a three-part program, a lead + three parallel workers
         + an integrator finished at \SwarmSpeedMin--\SwarmSpeedMax$\times$ the solo agent's speed and cost
         \SwarmCostMin{} to \SwarmCostMax{} more, with no merge conflicts (\SwarmConflicts) in any run.
@@ -359,18 +360,16 @@ Table~\ref{tab:ports} gives the port arms: \PortWorks{} ports passed the hidden 
 than writing the same program from scratch in the target (\NPortCostlier{} of \NPortPairs{} beyond the
 baseline's spread, from \PortDeltaMin{} to \PortDeltaMax). Per 1,000 lines of the source program a port
 cost US\$\,\PortPerKMin{} (\PortPerKMinPair) to US\$\,\PortPerKMax{} (\PortPerKMaxPair). The speed
-gained depends on the target: median over the sources, Zig ran \PortSpeedZig$\times$ faster than the
-source, Rust \PortSpeedRust$\times$, Go \PortSpeedGo$\times$, Kotlin \PortSpeedKotlin$\times$ and
-TypeScript \PortSpeedTs$\times$, and each port ran as fast as the same program written from scratch in its
-target.
+gained depends on the source: \PortSpeedBySource. Against the same program written from scratch in the
+target, ports ran at a median \PortVsScratchMedian$\times$ its speed (\PortVsScratchMin--\PortVsScratchMax).
 
 \begin{table}[h]
 \centering\small
-\caption{Port arms: the agent ports the baseline's working solution. US\$: sum of per-task medians,
-writing from scratch in the target (the baseline) vs porting. $^{\sim}$: within the baseline's spread.
-US\$ / 1k lines: write + repair cost per 1,000 lines of the source program (median of runs).
-$\times$faster: the port's speed relative to the source, geometric mean over the four tasks, timed in one
-session.}
+\caption{Port arms: the agent ports the baseline's working solution in one language (rows) to a target
+(columns). Each cell: US\$ per 1,000 lines of the source program (write + repair, median of runs) \textbar{}
+the port's speed relative to the source (geometric mean over the four tasks, timed in one session; below 1
+the port is slower). Every pair cost more than writing the program from scratch in the target
+(\PortDeltaMin{} to \PortDeltaMax).}
 \label{tab:ports}
 \PortTable
 \end{table}
@@ -477,15 +476,17 @@ of loading a skill is roughly fixed, and on tasks of a few turns it outweighs wh
 longer work, where the agent would otherwise rediscover the same facts many times, it should pay. Our
 tasks never reach that point, so this arm tests skills on short tasks only.
 
-\paragraph{H7 (migration): rejected for cost, confirmed for speed.} Porting was more expensive than
+\paragraph{H7 (migration): rejected for cost; for speed, it depends on the source.} Porting was more expensive than
 writing from scratch in every pair, by \PortDeltaMin{} to \PortDeltaMax. The agent had the specification,
 the examples and the checker as in the baseline, plus the source to read and follow, so the source added
 reading and cross-checking rather than replacing work; a real migration rarely has a specification, and
 there the source is the only description of the behaviour, so this result applies to migrations with a
 specification and a test suite. The target, not the source, set the price: porting to Zig cost about the same
-from any source, and Zig ports were the dearest, as Zig was to write from scratch. The speed gained was large
-for the native targets and small for TypeScript, and every port ran as fast as code written from scratch in
-the target, so a port carried over no slowness from its source.
+from any source, and Zig ports were the dearest, as Zig was to write from scratch. The speed gained depended on
+where the program came from: ports of the four slowest sources (Clojure, Python, TypeScript and JavaScript)
+to Rust, Go or Zig ran several times faster, while a C program gained little in Rust or Zig and lost speed in
+Go, Kotlin and TypeScript. Against code written from scratch in the target, ports ran at a median
+\PortVsScratchMedian$\times$, so a port mostly carried over no slowness from its source.
 
 \paragraph{H8 (swarm): H8a rejected, H8b confirmed, H8c only for Zig here.} Parallel workers did not make
 the work finish sooner, because the phases are sequential: the lead must set up the skeleton before anyone

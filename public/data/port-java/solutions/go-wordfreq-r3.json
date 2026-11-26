@@ -1,0 +1,25 @@
+{
+  "id": "go-wordfreq-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds an optimized wordfreq release binary at ./app.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nCGO_ENABLED=0 go build -trimpath -ldflags='-s -w' -o app .\n"
+    },
+    {
+      "path": "counter.go",
+      "text": "package main\n\nimport (\n\t\"cmp\"\n\t\"errors\"\n\t\"io\"\n\t\"slices\"\n\t\"strings\"\n)\n\nconst readBufferSize = 1 << 16\n\n// WordCount is a word together with its number of occurrences.\ntype WordCount struct {\n\tWord  string\n\tCount int\n}\n\n// Counter tallies occurrences of lowercase words.\ntype Counter struct {\n\tindex map[string]int // word -> position in entries\n\twords []WordCount\n}\n\n// NewCounter returns an empty Counter.\nfunc NewCounter() *Counter {\n\treturn &Counter{index: make(map[string]int)}\n}\n\n// Add records one occurrence of word. The slice is not retained.\nfunc (c *Counter) Add(word []byte) {\n\t// The string(word) conversion in a map index expression does not allocate.\n\tif i, ok := c.index[string(word)]; ok {\n\t\tc.words[i].Count++\n\t\treturn\n\t}\n\tw := string(word)\n\tc.index[w] = len(c.words)\n\tc.words = append(c.words, WordCount{Word: w, Count: 1})\n}\n\n// Top returns up to limit words ordered by count descending, then word ascending.\nfunc (c *Counter) Top(limit int) []WordCount {\n\tif limit <= 0 {\n\t\treturn nil\n\t}\n\tbest := make([]WordCount, 0, limit+1)\n\tfor _, wc := range c.words {\n\t\tif len(best) == limit && compareRank(wc, best[len(best)-1]) >= 0 {\n\t\t\tcontinue\n\t\t}\n\t\tpos, _ := slices.BinarySearchFunc(best, wc, compareRank)\n\t\tbest = slices.Insert(best, pos, wc)\n\t\tif len(best) > limit {\n\t\t\tbest = best[:limit]\n\t\t}\n\t}\n\treturn best\n}\n\n// compareRank orders by count descending, then by word in ascending byte order.\nfunc compareRank(a, b WordCount) int {\n\tif c := cmp.Compare(b.Count, a.Count); c != 0 {\n\t\treturn c\n\t}\n\treturn strings.Compare(a.Word, b.Word)\n}\n\n// Count tokenizes r into maximal runs of ASCII letters, folds them to\n// lowercase, and tallies them. Every other byte is a separator.\nfunc Count(r io.Reader) (*Counter, error) {\n\tc := NewCounter()\n\tbuf := make([]byte, readBufferSize)\n\tword := make([]byte, 0, 64)\n\n\tfor {\n\t\tn, err := r.Read(buf)\n\t\tfor _, b := range buf[:n] {\n\t\t\tif lower := b | 0x20; lower >= 'a' && lower <= 'z' {\n\t\t\t\tword = append(word, lower)\n\t\t\t} else if len(word) > 0 {\n\t\t\t\tc.Add(word)\n\t\t\t\tword = word[:0]\n\t\t\t}\n\t\t}\n\t\tif errors.Is(err, io.EOF) {\n\t\t\tbreak\n\t\t}\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\tif len(word) > 0 {\n\t\tc.Add(word)\n\t}\n\treturn c, nil\n}\n"
+    },
+    {
+      "path": "counter_test.go",
+      "text": "package main\n\nimport (\n\t\"slices\"\n\t\"strings\"\n\t\"testing\"\n)\n\nfunc TestCountTop(t *testing.T) {\n\ttests := []struct {\n\t\tname  string\n\t\tinput string\n\t\twant  []WordCount\n\t}{\n\t\t{\"empty\", \"\", nil},\n\t\t{\"no words\", \"123 _' \\xff\\xc3(\", nil},\n\t\t{\"simple\", \"The cat and the hat.\", []WordCount{{\"the\", 2}, {\"and\", 1}, {\"cat\", 1}, {\"hat\", 1}}},\n\t\t{\"separators\", \"don't stop_me 4now, now-NOW\", []WordCount{{\"now\", 3}, {\"don\", 1}, {\"me\", 1}, {\"stop\", 1}, {\"t\", 1}}},\n\t\t{\"non-letters near letters\", \"a@b[c`d{e\\xc1f\\xe1g\", []WordCount{{\"a\", 1}, {\"b\", 1}, {\"c\", 1}, {\"d\", 1}, {\"e\", 1}, {\"f\", 1}, {\"g\", 1}}},\n\t\t{\"limit\", \"k j i h g f e d c b a a\", []WordCount{{\"a\", 2}, {\"b\", 1}, {\"c\", 1}, {\"d\", 1}, {\"e\", 1}, {\"f\", 1}, {\"g\", 1}, {\"h\", 1}, {\"i\", 1}, {\"j\", 1}}},\n\t}\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tc, err := Count(strings.NewReader(tt.input))\n\t\t\tif err != nil {\n\t\t\t\tt.Fatal(err)\n\t\t\t}\n\t\t\tif got := c.Top(topN); !slices.Equal(got, tt.want) {\n\t\t\t\tt.Errorf(\"Top = %v, want %v\", got, tt.want)\n\t\t\t}\n\t\t})\n\t}\n}\n\nfunc TestWordSpanningReads(t *testing.T) {\n\tlong := strings.Repeat(\"Ab\", readBufferSize)\n\tc, err := Count(strings.NewReader(long + \" \" + long))\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tgot := c.Top(topN)\n\tif len(got) != 1 || got[0].Count != 2 || got[0].Word != strings.ToLower(long) {\n\t\tt.Errorf(\"unexpected result: %d entries\", len(got))\n\t}\n}\n"
+    },
+    {
+      "path": "go.mod",
+      "text": "module wordfreq\n\ngo 1.26\n"
+    },
+    {
+      "path": "main.go",
+      "text": "// Command wordfreq prints the ten most frequent ASCII words read from standard input.\npackage main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n)\n\nconst topN = 10\n\nfunc main() {\n\tcounter, err := Count(os.Stdin)\n\tif err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t\tos.Exit(1)\n\t}\n\n\tout := bufio.NewWriter(os.Stdout)\n\tfor _, wc := range counter.Top(topN) {\n\t\tfmt.Fprintf(out, \"%d %s\\n\", wc.Count, wc.Word)\n\t}\n\tif err := out.Flush(); err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"wordfreq:\", err)\n\t\tos.Exit(1)\n\t}\n}\n"
+    }
+  ]
+}

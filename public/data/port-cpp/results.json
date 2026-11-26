@@ -1,0 +1,7974 @@
+{
+  "meta": {
+    "generatedAt": "2026-11-26T13:19:38.377Z",
+    "arm": "port-cpp",
+    "arms": [
+      "port-c",
+      "port-clojure",
+      "port-python",
+      "port-ts",
+      "skills",
+      "swarm"
+    ],
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "toolchains": {
+      "c": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+      "cpp": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+      "rust": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+      "go": "go version go1.26.4 darwin/arm64",
+      "nim": "Nim Compiler Version 2.4.2 [MacOSX: arm64]",
+      "zig": "0.16.0",
+      "swift": "swift-driver version: 1.120.5 Apple Swift version 6.1.2 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)",
+      "java": "openjdk version \"27.0.1.1\" 2026-11-17",
+      "kotlin": "info: kotlinc-jvm 2.4.21 (JRE 27.0.1.1)",
+      "clojure": "Clojure CLI version 1.12.7.1681",
+      "csharp": ".NET SDK 11.0.100",
+      "odin": "Odin dev-2026-11:9a6991685",
+      "ocaml": "The OCaml toplevel, version 5.5.2",
+      "haskell": "The Glorious Glasgow Haskell Compilation System, version 9.14.1",
+      "js": "Node.js v26.13.1",
+      "ts": "Node.js v26.13.1, which runs .ts files natively",
+      "python": "Python 3.15.2",
+      "asm": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+      "octave": "GNU Octave (aarch64-apple-darwin24.6.0) version 11.3.0",
+      "julia": "julia version 1.13.4",
+      "r": "R version 4.6.2 (2026-10-29) -- \"Diversified Portfolio\"",
+      "lean": "Lean (version 4.36.0, arm64-apple-darwin24.6.0, commit 611c117bfaf7b7ae1cfcf246ce6fba31e8f509e9, Release)",
+      "rocq": "The Rocq Prover, version 9.3.0",
+      "dafny": "Dafny 4.11.0",
+      "solidity": "forge Version: 1.7.1",
+      "vyper": "Vyper 0.4.3+commit.bff19ea2",
+      "circom": "circom compiler 2.2.3",
+      "noir": "nargo version = 1.0.0",
+      "claude": "2.1.331 (Claude Code)"
+    },
+    "langs": {
+      "c": {
+        "label": "C",
+        "name": "C (C17)",
+        "version": [
+          "clang",
+          "--version"
+        ]
+      },
+      "cpp": {
+        "label": "C++",
+        "name": "C++ (C++20)",
+        "version": [
+          "clang++",
+          "--version"
+        ]
+      },
+      "rust": {
+        "label": "Rust",
+        "name": "Rust (edition 2024)",
+        "version": [
+          "rustc",
+          "--version"
+        ]
+      },
+      "go": {
+        "label": "Go",
+        "name": "Go",
+        "version": [
+          "go",
+          "version"
+        ]
+      },
+      "nim": {
+        "label": "Nim",
+        "name": "Nim",
+        "version": [
+          "nim",
+          "--version"
+        ]
+      },
+      "zig": {
+        "label": "Zig",
+        "name": "Zig",
+        "version": [
+          "zig",
+          "version"
+        ]
+      },
+      "swift": {
+        "label": "Swift",
+        "name": "Swift",
+        "version": [
+          "sh",
+          "-c",
+          "swift --version 2>&1 | grep \"Swift version\""
+        ]
+      },
+      "java": {
+        "label": "Java",
+        "name": "Java",
+        "version": [
+          "java",
+          "-version"
+        ],
+        "note": "On the JVM, ./app may be a small launcher script that runs java."
+      },
+      "kotlin": {
+        "label": "Kotlin",
+        "name": "Kotlin (JVM)",
+        "version": [
+          "kotlinc",
+          "-version"
+        ],
+        "note": "On the JVM, ./app may be a small launcher script that runs java."
+      },
+      "clojure": {
+        "label": "Clojure",
+        "name": "Clojure (JVM)",
+        "version": [
+          "clojure",
+          "--version"
+        ],
+        "note": "On the JVM, ./app may be a small launcher script that runs java."
+      },
+      "csharp": {
+        "label": "C#",
+        "name": "C# (.NET)",
+        "version": [
+          "sh",
+          "-c",
+          "echo \".NET SDK $(dotnet --version)\""
+        ]
+      },
+      "odin": {
+        "label": "Odin",
+        "name": "Odin",
+        "version": [
+          "sh",
+          "-c",
+          "odin version | sed \"s|.*odin version|Odin|\""
+        ]
+      },
+      "ocaml": {
+        "label": "OCaml",
+        "name": "OCaml",
+        "version": [
+          "ocaml",
+          "-version"
+        ]
+      },
+      "haskell": {
+        "label": "Haskell",
+        "name": "Haskell (GHC)",
+        "version": [
+          "ghc",
+          "--version"
+        ]
+      },
+      "js": {
+        "label": "JavaScript",
+        "name": "JavaScript (Node.js)",
+        "version": [
+          "sh",
+          "-c",
+          "echo \"Node.js $(node --version)\""
+        ],
+        "note": "./app may be a small launcher script that runs node."
+      },
+      "ts": {
+        "label": "TypeScript",
+        "name": "TypeScript (Node.js)",
+        "version": [
+          "sh",
+          "-c",
+          "echo \"Node.js $(node --version), which runs .ts files natively\""
+        ],
+        "note": "./app may be a small launcher script that runs node."
+      },
+      "python": {
+        "label": "Python",
+        "name": "Python 3",
+        "version": [
+          "python3",
+          "--version"
+        ],
+        "note": "./app may be a small launcher script that runs python3."
+      },
+      "asm": {
+        "label": "Assembly",
+        "name": "AArch64 assembly for macOS",
+        "version": [
+          "as",
+          "--version"
+        ],
+        "note": "Write all program logic in AArch64 assembly (.s files) assembled with clang. You may call libc / libSystem functions (malloc, read, write, socket, pthread…), but no C, C++ or other high-level source files."
+      },
+      "octave": {
+        "label": "Octave",
+        "name": "GNU Octave (the MATLAB language)",
+        "version": [
+          "sh",
+          "-c",
+          "octave --version | head -1"
+        ],
+        "note": "./app may be a small launcher script that runs octave.",
+        "track": "numeric"
+      },
+      "julia": {
+        "label": "Julia",
+        "name": "Julia",
+        "version": [
+          "julia",
+          "--version"
+        ],
+        "note": "./app may be a small launcher script that runs julia.",
+        "track": "numeric"
+      },
+      "r": {
+        "label": "R",
+        "name": "R",
+        "version": [
+          "sh",
+          "-c",
+          "R --version | head -1"
+        ],
+        "note": "./app may be a small launcher script that runs Rscript.",
+        "track": "numeric"
+      },
+      "lean": {
+        "label": "Lean 4",
+        "name": "Lean 4",
+        "version": [
+          "lean",
+          "--version"
+        ],
+        "track": "proofs"
+      },
+      "rocq": {
+        "label": "Rocq",
+        "name": "Rocq (Coq)",
+        "version": [
+          "sh",
+          "-c",
+          "coqc --version | head -1"
+        ],
+        "track": "proofs"
+      },
+      "dafny": {
+        "label": "Dafny",
+        "name": "Dafny",
+        "version": [
+          "sh",
+          "-c",
+          "echo \"Dafny $(dafny --version)\""
+        ],
+        "track": "proofs"
+      },
+      "solidity": {
+        "label": "Solidity",
+        "name": "Solidity (Foundry is installed)",
+        "version": [
+          "sh",
+          "-c",
+          "forge --version | head -1"
+        ],
+        "track": "evm"
+      },
+      "vyper": {
+        "label": "Vyper",
+        "name": "Vyper",
+        "version": [
+          "sh",
+          "-c",
+          "echo \"Vyper $(vyper --version)\""
+        ],
+        "track": "evm"
+      },
+      "circom": {
+        "label": "Circom",
+        "name": "Circom 2",
+        "version": [
+          "circom",
+          "--version"
+        ],
+        "track": "zk"
+      },
+      "noir": {
+        "label": "Noir",
+        "name": "Noir (nargo)",
+        "version": [
+          "sh",
+          "-c",
+          "nargo --version | head -1"
+        ],
+        "track": "zk"
+      }
+    },
+    "frontends": {
+      "react": {
+        "label": "React",
+        "name": "React 19 (function components + hooks, .jsx files)",
+        "pins": {
+          "react": "19.3.1",
+          "react-dom": "19.3.1",
+          "vite": "8.3.8",
+          "@vitejs/plugin-react": "6.3.0"
+        }
+      },
+      "vue": {
+        "label": "Vue",
+        "name": "Vue 3 (single-file components with <script setup>, .vue files)",
+        "pins": {
+          "vue": "3.5.46",
+          "vite": "8.3.8",
+          "@vitejs/plugin-vue": "6.0.11",
+          "pinia": "4.1.0"
+        }
+      },
+      "svelte": {
+        "label": "Svelte",
+        "name": "Svelte 5 (components with runes, .svelte files)",
+        "pins": {
+          "svelte": "5.59.1",
+          "vite": "8.3.8",
+          "@sveltejs/vite-plugin-svelte": "7.3.2"
+        }
+      }
+    },
+    "tasks": {
+      "wordfreq": {
+        "kind": "stdio",
+        "title": "Word frequency",
+        "topic": "bytes, hash maps, sorting"
+      },
+      "lru": {
+        "kind": "stdio",
+        "title": "LRU cache",
+        "topic": "linked structures, O(1) ops"
+      },
+      "calc": {
+        "kind": "stdio",
+        "title": "Expression evaluator",
+        "topic": "parsing, recursion, overflow"
+      },
+      "kvhttp": {
+        "kind": "http",
+        "title": "HTTP key-value server",
+        "topic": "networking, concurrency, deps"
+      },
+      "ui": {
+        "kind": "static",
+        "title": "Six UI components",
+        "topic": "front end (React, Vue, Svelte)",
+        "frontend": true
+      },
+      "shop": {
+        "kind": "static",
+        "title": "Shopping mini-app",
+        "topic": "parent/child events, global store, derived state, forms, effects, context, slots",
+        "frontend": true
+      },
+      "linreg": {
+        "kind": "stdio",
+        "title": "Least-squares regression",
+        "topic": "numerics, matrices",
+        "track": "numeric"
+      },
+      "linalg": {
+        "kind": "stdio",
+        "title": "Linear algebra",
+        "topic": "log-determinant, solve, eigenvalues",
+        "track": "numeric"
+      },
+      "lists": {
+        "kind": "proof",
+        "title": "List lemmas",
+        "topic": "induction, rewriting",
+        "track": "proofs"
+      },
+      "isort": {
+        "kind": "proof",
+        "title": "Insertion sort is correct",
+        "topic": "sortedness, permutation",
+        "track": "proofs"
+      },
+      "token": {
+        "kind": "evm",
+        "title": "Token with allowances",
+        "topic": "storage, events, reverts",
+        "track": "evm"
+      },
+      "vesting": {
+        "kind": "evm",
+        "title": "Linear vesting",
+        "topic": "time, ether transfers",
+        "track": "evm"
+      },
+      "range": {
+        "kind": "zk",
+        "title": "Private range check",
+        "topic": "bit decomposition, comparisons",
+        "track": "zk"
+      },
+      "sudoku": {
+        "kind": "zk",
+        "title": "4x4 Sudoku",
+        "topic": "permutation constraints",
+        "track": "zk"
+      },
+      "suite": {
+        "kind": "stdio",
+        "title": "Three tools in one binary",
+        "topic": "one build, three modules: solo vs a swarm of agents",
+        "swarm": true
+      },
+      "notes": {
+        "kind": "http",
+        "title": "Notes service",
+        "topic": "HTTP, JSON and SQLite with dependencies: solo vs a swarm at work",
+        "swarm": true
+      }
+    },
+    "external": {
+      "title": "We Measured the LLM Token Cost of 5 Frontend Frameworks: Angular Costs 38% More Than Svelte",
+      "author": "Andrey Kucherenko (HackerNoon, \"The Tokenomics of Web Development\", part 1)",
+      "url": "https://hackernoon.com/we-measured-the-llm-token-cost-of-5-frontend-frameworks-angular-costs-38percent-more-than-svelte",
+      "tokenizer": "cl100k_base (tiktoken)",
+      "quote": "Svelte ×1.000 · Vue ×1.115 · SolidJS ×1.196 · React ×1.254 · Angular ×1.381.",
+      "svelteTokens": 598,
+      "multipliers": {
+        "Svelte": 1,
+        "Vue": 1.115,
+        "SolidJS": 1.196,
+        "React": 1.254,
+        "Angular": 1.381
+      }
+    }
+  },
+  "summary": {
+    "langs": {
+      "rust": {
+        "n": 12,
+        "solved": 12,
+        "works": 12,
+        "passRate": 1,
+        "repairCostUsd": 0,
+        "firstTryRate": 0.9166666666666666,
+        "costUsd": 1.5099341999999998,
+        "costPerSolvedUsd": 0.3794299666666667,
+        "output": 29791,
+        "turns": 29,
+        "durationS": 324.55600000000004,
+        "compileErrors": 0,
+        "stdlibReads": 1,
+        "codeTokens": 17051,
+        "codeTokensCl100k": 10469,
+        "buildSecs": 7.3100000000000005,
+        "footprintBytes": 5165056,
+        "perfPoints": {
+          "wordfreq": 76.51006711409396,
+          "lru": 75.34246575342466,
+          "calc": 90,
+          "kvhttp": 93.33060099109505
+        },
+        "perfTotal": 83.4173225266949,
+        "perfScore": 1.1987917733513729
+      },
+      "go": {
+        "n": 12,
+        "solved": 12,
+        "works": 12,
+        "passRate": 1,
+        "repairCostUsd": 0,
+        "firstTryRate": 1,
+        "costUsd": 1.2030855999999999,
+        "costPerSolvedUsd": 0.3034278666666666,
+        "output": 20845,
+        "turns": 24,
+        "durationS": 224.322,
+        "compileErrors": 0,
+        "stdlibReads": 0,
+        "codeTokens": 12593,
+        "codeTokensCl100k": 8001,
+        "buildSecs": 7.049999999999999,
+        "footprintBytes": 246218752,
+        "perfPoints": {
+          "wordfreq": 43.0188679245283,
+          "lru": 73.33333333333333,
+          "calc": 81.81818181818183,
+          "kvhttp": 90.02943477774879
+        },
+        "perfTotal": 69.43024341318893,
+        "perfScore": 1.440294532814558
+      },
+      "zig": {
+        "n": 12,
+        "solved": 12,
+        "works": 12,
+        "passRate": 1,
+        "repairCostUsd": 0,
+        "firstTryRate": 1,
+        "costUsd": 2.8772028,
+        "costPerSolvedUsd": 0.7143401333333333,
+        "output": 51029,
+        "turns": 67,
+        "durationS": 635.222,
+        "compileErrors": 1,
+        "stdlibReads": 28,
+        "codeTokens": 21389,
+        "codeTokensCl100k": 13616,
+        "buildSecs": 24.21,
+        "footprintBytes": 225525760,
+        "perfPoints": {
+          "wordfreq": 100,
+          "lru": 100,
+          "calc": 100,
+          "kvhttp": 91.84395841871903
+        },
+        "perfTotal": 97.89548184083765,
+        "perfScore": 1.0214976025408808
+      },
+      "kotlin": {
+        "n": 12,
+        "solved": 12,
+        "works": 12,
+        "passRate": 1,
+        "repairCostUsd": 0,
+        "firstTryRate": 0.8333333333333334,
+        "costUsd": 1.1900418,
+        "costPerSolvedUsd": 0.30477460000000006,
+        "output": 19710,
+        "turns": 25,
+        "durationS": 242.507,
+        "compileErrors": 0,
+        "stdlibReads": 0,
+        "codeTokens": 10221,
+        "codeTokensCl100k": 6229,
+        "buildSecs": 9.16,
+        "footprintBytes": 23019520,
+        "perfPoints": {
+          "wordfreq": 49.35064935064935,
+          "lru": 18.394648829431436,
+          "calc": 16.666666666666664,
+          "kvhttp": 89.3028801371139
+        },
+        "perfTotal": 34.09374016442319,
+        "perfScore": 2.933089755413517
+      },
+      "ts": {
+        "n": 12,
+        "solved": 12,
+        "works": 12,
+        "passRate": 1,
+        "repairCostUsd": 0,
+        "firstTryRate": 0.6666666666666666,
+        "costUsd": 1.3165332,
+        "costPerSolvedUsd": 0.33997125,
+        "output": 23157,
+        "turns": 26,
+        "durationS": 388.897,
+        "compileErrors": 0,
+        "stdlibReads": 0,
+        "codeTokens": 11409,
+        "codeTokensCl100k": 7160,
+        "buildSecs": 1.19,
+        "footprintBytes": 44703744,
+        "perfPoints": {
+          "wordfreq": 12.244897959183673,
+          "lru": 13.126491646778044,
+          "calc": 7.659574468085106,
+          "kvhttp": 100
+        },
+        "perfTotal": 18.731696819633814,
+        "perfScore": 5.338544658441408
+      }
+    },
+    "tracks": {
+      "numeric": {
+        "title": "Scientific computing",
+        "tasks": [
+          "linreg",
+          "linalg"
+        ],
+        "langs": {}
+      },
+      "proofs": {
+        "title": "Theorem proving",
+        "tasks": [
+          "lists",
+          "isort"
+        ],
+        "langs": {}
+      },
+      "evm": {
+        "title": "Smart contracts",
+        "tasks": [
+          "token",
+          "vesting"
+        ],
+        "langs": {}
+      },
+      "zk": {
+        "title": "Zero-knowledge circuits",
+        "tasks": [
+          "range",
+          "sudoku"
+        ],
+        "langs": {}
+      }
+    },
+    "cells": {
+      "go/calc": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.2982644,
+          "min": 0.27860379999999996,
+          "max": 0.305009,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.2982644,
+          "min": 0.27860379999999996,
+          "max": 0.305009,
+          "n": 3
+        },
+        "output": {
+          "median": 5388,
+          "min": 4747,
+          "max": 5536,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 5,
+          "max": 6,
+          "n": 3
+        },
+        "durationS": {
+          "median": 55.494,
+          "min": 48.514,
+          "max": 61.464,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 3634,
+          "min": 3532,
+          "max": 3828,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 2528,
+          "min": 2420,
+          "max": 2650,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 1.39,
+          "min": 1.38,
+          "max": 1.41,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 43819008,
+          "min": 43814912,
+          "max": 43839488,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 1658880,
+          "min": 1658880,
+          "max": 1658880,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 42160128,
+          "min": 42156032,
+          "max": 42180608,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 48795648,
+          "min": 48791552,
+          "max": 48816128,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 1658018,
+          "min": 1658018,
+          "max": 1658098,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 22,
+          "min": 21,
+          "max": 23,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 16433152,
+          "min": 16416768,
+          "max": 16449536,
+          "n": 3
+        }
+      },
+      "go/kvhttp": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.42439399999999994,
+          "min": 0.41721640000000004,
+          "max": 0.4531748,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.42439399999999994,
+          "min": 0.41721640000000004,
+          "max": 0.4531748,
+          "n": 3
+        },
+        "output": {
+          "median": 7903,
+          "min": 7565,
+          "max": 8370,
+          "n": 3
+        },
+        "turns": {
+          "median": 7,
+          "min": 6,
+          "max": 8,
+          "n": 3
+        },
+        "durationS": {
+          "median": 82.857,
+          "min": 77.376,
+          "max": 86.159,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 4466,
+          "min": 4241,
+          "max": 4847,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 2640,
+          "min": 2515,
+          "max": 2868,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 2.88,
+          "min": 2.86,
+          "max": 2.9,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 114569216,
+          "min": 114520064,
+          "max": 114782208,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 5599232,
+          "min": 5599232,
+          "max": 5615616,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 108969984,
+          "min": 108920832,
+          "max": 109166592,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 131366912,
+          "min": 131317760,
+          "max": 131629056,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 5597410,
+          "min": 5597394,
+          "max": 5615234,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": {
+          "median": 24163,
+          "min": 22487,
+          "max": 25635,
+          "n": 3
+        },
+        "perfRssBytes": {
+          "median": 17793024,
+          "min": 17481728,
+          "max": 17973248,
+          "n": 3
+        }
+      },
+      "go/lru": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.2649542,
+          "min": 0.25009319999999996,
+          "max": 0.2998482,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.2649542,
+          "min": 0.25009319999999996,
+          "max": 0.2998482,
+          "n": 3
+        },
+        "output": {
+          "median": 4537,
+          "min": 3899,
+          "max": 5352,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 5,
+          "max": 6,
+          "n": 3
+        },
+        "durationS": {
+          "median": 48.893,
+          "min": 47.648,
+          "max": 72.608,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 2830,
+          "min": 2443,
+          "max": 3356,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 1770,
+          "min": 1523,
+          "max": 2118,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 1.39,
+          "min": 1.38,
+          "max": 1.4,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 43892736,
+          "min": 43851776,
+          "max": 43913216,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 1675264,
+          "min": 1675264,
+          "max": 1695744,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 42217472,
+          "min": 42176512,
+          "max": 42217472,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 48918528,
+          "min": 48877568,
+          "max": 49000448,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 1674962,
+          "min": 1674674,
+          "max": 1691666,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 75,
+          "min": 72,
+          "max": 82,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 46366720,
+          "min": 45531136,
+          "max": 46432256,
+          "n": 3
+        }
+      },
+      "go/wordfreq": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.215473,
+          "min": 0.21366500000000002,
+          "max": 0.22043840000000003,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.215473,
+          "min": 0.21366500000000002,
+          "max": 0.22043840000000003,
+          "n": 3
+        },
+        "output": {
+          "median": 3017,
+          "min": 2957,
+          "max": 3091,
+          "n": 3
+        },
+        "turns": {
+          "median": 5,
+          "min": 5,
+          "max": 6,
+          "n": 3
+        },
+        "durationS": {
+          "median": 37.078,
+          "min": 36.754,
+          "max": 37.289,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1663,
+          "min": 1548,
+          "max": 1722,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 1063,
+          "min": 977,
+          "max": 1103,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 1.39,
+          "min": 1.39,
+          "max": 1.39,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 43937792,
+          "min": 43917312,
+          "max": 43941888,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 1695744,
+          "min": 1675264,
+          "max": 1695744,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 42242048,
+          "min": 42242048,
+          "max": 42246144,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 49025024,
+          "min": 48943104,
+          "max": 49029120,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 1691794,
+          "min": 1674978,
+          "max": 1691858,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 265,
+          "min": 157,
+          "max": 267,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 10944512,
+          "min": 10567680,
+          "max": 121585664,
+          "n": 3
+        }
+      },
+      "kotlin/calc": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.26564719999999997,
+          "min": 0.2595814,
+          "max": 0.26925099999999996,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.26564719999999997,
+          "min": 0.2595814,
+          "max": 0.26925099999999996,
+          "n": 3
+        },
+        "output": {
+          "median": 4026,
+          "min": 4003,
+          "max": 4097,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 6,
+          "max": 6,
+          "n": 3
+        },
+        "durationS": {
+          "median": 52.273,
+          "min": 50.119,
+          "max": 55.483,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 2269,
+          "min": 2150,
+          "max": 2363,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 1370,
+          "min": 1326,
+          "max": 1457,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 2.25,
+          "min": 2.19,
+          "max": 2.26,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 5750784,
+          "min": 5750784,
+          "max": 5750784,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 5750784,
+          "min": 5750784,
+          "max": 5750784,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 23003136,
+          "min": 23003136,
+          "max": 23003136,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 5750153,
+          "min": 5750111,
+          "max": 5750850,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 108,
+          "min": 107,
+          "max": 119,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 70516736,
+          "min": 70500352,
+          "max": 74629120,
+          "n": 3
+        }
+      },
+      "kotlin/kvhttp": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 2,
+        "costToGreenUsd": {
+          "median": 0.4403478,
+          "min": 0.4208176,
+          "max": 0.5555414,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.4403478,
+          "min": 0.4208176,
+          "max": 0.5555414,
+          "n": 3
+        },
+        "output": {
+          "median": 8314,
+          "min": 7817,
+          "max": 10534,
+          "n": 3
+        },
+        "turns": {
+          "median": 7,
+          "min": 7,
+          "max": 10,
+          "n": 3
+        },
+        "durationS": {
+          "median": 85.771,
+          "min": 84.227,
+          "max": 224.602,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 1,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 5316,
+          "min": 4908,
+          "max": 6696,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 3246,
+          "min": 2940,
+          "max": 4035,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 2.57,
+          "min": 2.57,
+          "max": 2.71,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 5767168,
+          "min": 5763072,
+          "max": 5775360,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 5767168,
+          "min": 5763072,
+          "max": 5775360,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 23068672,
+          "min": 23052288,
+          "max": 23101440,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 5764625,
+          "min": 5760840,
+          "max": 5774865,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": {
+          "median": 23968,
+          "min": 22695,
+          "max": 24980,
+          "n": 3
+        },
+        "perfRssBytes": {
+          "median": 85065728,
+          "min": 74629120,
+          "max": 94502912,
+          "n": 3
+        }
+      },
+      "kotlin/lru": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 2,
+        "costToGreenUsd": {
+          "median": 0.2550214,
+          "min": 0.2419836,
+          "max": 0.26791760000000003,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.2550214,
+          "min": 0.2419836,
+          "max": 0.26791760000000003,
+          "n": 3
+        },
+        "output": {
+          "median": 4136,
+          "min": 3551,
+          "max": 4385,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 6,
+          "max": 6,
+          "n": 3
+        },
+        "durationS": {
+          "median": 55.627,
+          "min": 46.404,
+          "max": 56.252,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 1,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1426,
+          "min": 1424,
+          "max": 1804,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 883,
+          "min": 879,
+          "max": 1102,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 2.25,
+          "min": 2.23,
+          "max": 2.28,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 5750784,
+          "min": 5750784,
+          "max": 5750784,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 5750784,
+          "min": 5750784,
+          "max": 5750784,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 23003136,
+          "min": 23003136,
+          "max": 23003136,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 5749310,
+          "min": 5748743,
+          "max": 5749974,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 299,
+          "min": 218,
+          "max": 338,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 170786816,
+          "min": 151240704,
+          "max": 172474368,
+          "n": 3
+        }
+      },
+      "kotlin/wordfreq": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.22902540000000005,
+          "min": 0.2093156,
+          "max": 0.2428452,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.22902540000000005,
+          "min": 0.2093156,
+          "max": 0.2428452,
+          "n": 3
+        },
+        "output": {
+          "median": 3234,
+          "min": 2734,
+          "max": 3778,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 5,
+          "max": 6,
+          "n": 3
+        },
+        "durationS": {
+          "median": 48.836,
+          "min": 45.266,
+          "max": 55.143,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1210,
+          "min": 999,
+          "max": 1710,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 730,
+          "min": 609,
+          "max": 1125,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 2.09,
+          "min": 2.03,
+          "max": 2.16,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 5750784,
+          "min": 5750784,
+          "max": 5750784,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 5750784,
+          "min": 5750784,
+          "max": 5750784,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 23003136,
+          "min": 23003136,
+          "max": 23003136,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 5747780,
+          "min": 5747228,
+          "max": 5748419,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 231,
+          "min": 227,
+          "max": 318,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 201031680,
+          "min": 52133888,
+          "max": 202194944,
+          "n": 3
+        }
+      },
+      "rust/calc": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.2729098,
+          "min": 0.248632,
+          "max": 0.3110852,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.2729098,
+          "min": 0.248632,
+          "max": 0.3110852,
+          "n": 3
+        },
+        "output": {
+          "median": 5555,
+          "min": 3743,
+          "max": 5791,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 5,
+          "max": 8,
+          "n": 3
+        },
+        "durationS": {
+          "median": 60.243,
+          "min": 46.546,
+          "max": 66.809,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 3130,
+          "min": 2390,
+          "max": 3583,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 1910,
+          "min": 1445,
+          "max": 2147,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 1.62,
+          "min": 1.62,
+          "max": 1.62,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 1220608,
+          "min": 1220608,
+          "max": 1220608,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 1163264,
+          "min": 1163264,
+          "max": 1163264,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 57344,
+          "min": 57344,
+          "max": 57344,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 4710400,
+          "min": 4710400,
+          "max": 4710400,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 374640,
+          "min": 374576,
+          "max": 375264,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 20,
+          "min": 19,
+          "max": 20,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 8126464,
+          "min": 6782976,
+          "max": 8126464,
+          "n": 3
+        }
+      },
+      "rust/kvhttp": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.7277971999999999,
+          "min": 0.604715,
+          "max": 0.8062858,
+          "n": 3
+        },
+        "deps": {
+          "": 2,
+          "libc": 1
+        },
+        "costUsd": {
+          "median": 0.7277971999999999,
+          "min": 0.604715,
+          "max": 0.8062858,
+          "n": 3
+        },
+        "output": {
+          "median": 15779,
+          "min": 13206,
+          "max": 19018,
+          "n": 3
+        },
+        "turns": {
+          "median": 12,
+          "min": 9,
+          "max": 15,
+          "n": 3
+        },
+        "durationS": {
+          "median": 156.557,
+          "min": 123.329,
+          "max": 177.152,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 2,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 1,
+          "min": 0,
+          "max": 2,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 9126,
+          "min": 8617,
+          "max": 10725,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 5517,
+          "min": 5108,
+          "max": 6540,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 2.21,
+          "min": 2.1,
+          "max": 3.35,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 1404928,
+          "min": 1392640,
+          "max": 15364096,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 1347584,
+          "min": 1335296,
+          "max": 8421376,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 57344,
+          "min": 57344,
+          "max": 6942720,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 5447680,
+          "min": 5398528,
+          "max": 40628224,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 433808,
+          "min": 433568,
+          "max": 434688,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": {
+          "median": 25049,
+          "min": 23681,
+          "max": 26588,
+          "n": 3
+        },
+        "perfRssBytes": {
+          "median": 6930432,
+          "min": 6471680,
+          "max": 25952256,
+          "n": 3
+        }
+      },
+      "rust/lru": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 2,
+        "costToGreenUsd": {
+          "median": 0.300837,
+          "min": 0.28566620000000004,
+          "max": 0.35482299999999994,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.300837,
+          "min": 0.28566620000000004,
+          "max": 0.35482299999999994,
+          "n": 3
+        },
+        "output": {
+          "median": 5704,
+          "min": 5181,
+          "max": 6952,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 6,
+          "max": 7,
+          "n": 3
+        },
+        "durationS": {
+          "median": 68.56,
+          "min": 62.047,
+          "max": 72.683,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 1,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 3308,
+          "min": 2888,
+          "max": 4056,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 2090,
+          "min": 1808,
+          "max": 2504,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 1.7,
+          "min": 1.7,
+          "max": 1.72,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 1269760,
+          "min": 1269760,
+          "max": 1269760,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 1212416,
+          "min": 1212416,
+          "max": 1212416,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 57344,
+          "min": 57344,
+          "max": 57344,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 4907008,
+          "min": 4907008,
+          "max": 4907008,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 392064,
+          "min": 391552,
+          "max": 392064,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 73,
+          "min": 73,
+          "max": 73,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 39583744,
+          "min": 37945344,
+          "max": 39583744,
+          "n": 3
+        }
+      },
+      "rust/wordfreq": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.20839020000000003,
+          "min": 0.204595,
+          "max": 0.22742320000000002,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.20839020000000003,
+          "min": 0.204595,
+          "max": 0.22742320000000002,
+          "n": 3
+        },
+        "output": {
+          "median": 2753,
+          "min": 2589,
+          "max": 3045,
+          "n": 3
+        },
+        "turns": {
+          "median": 5,
+          "min": 5,
+          "max": 7,
+          "n": 3
+        },
+        "durationS": {
+          "median": 39.196,
+          "min": 38.58,
+          "max": 52.203,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1487,
+          "min": 1232,
+          "max": 1595,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 952,
+          "min": 786,
+          "max": 995,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 1.78,
+          "min": 1.77,
+          "max": 1.79,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 1269760,
+          "min": 1269760,
+          "max": 1269760,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 1212416,
+          "min": 1212416,
+          "max": 1212416,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 57344,
+          "min": 57344,
+          "max": 57344,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 4907008,
+          "min": 4907008,
+          "max": 4907008,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 392640,
+          "min": 392016,
+          "max": 393024,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 149,
+          "min": 141,
+          "max": 155,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 60276736,
+          "min": 1949696,
+          "max": 85409792,
+          "n": 3
+        }
+      },
+      "ts/calc": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 2,
+        "costToGreenUsd": {
+          "median": 0.28285720000000003,
+          "min": 0.2610108,
+          "max": 0.341136,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.28285720000000003,
+          "min": 0.2610108,
+          "max": 0.341136,
+          "n": 3
+        },
+        "output": {
+          "median": 4711,
+          "min": 3959,
+          "max": 5828,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 6,
+          "max": 8,
+          "n": 3
+        },
+        "durationS": {
+          "median": 61.181,
+          "min": 43.309,
+          "max": 66.444,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 2020,
+          "min": 1998,
+          "max": 2083,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 1286,
+          "min": 1281,
+          "max": 1307,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.01,
+          "min": 0.01,
+          "max": 0.01,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 93,
+          "min": 93,
+          "max": 103,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 235,
+          "min": 179,
+          "max": 236,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 149241856,
+          "min": 146767872,
+          "max": 153026560,
+          "n": 3
+        }
+      },
+      "ts/kvhttp": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.5333834000000001,
+          "min": 0.45788300000000004,
+          "max": 0.6862388,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.5333834000000001,
+          "min": 0.45788300000000004,
+          "max": 0.6862388,
+          "n": 3
+        },
+        "output": {
+          "median": 10662,
+          "min": 7727,
+          "max": 15503,
+          "n": 3
+        },
+        "turns": {
+          "median": 9,
+          "min": 9,
+          "max": 10,
+          "n": 3
+        },
+        "durationS": {
+          "median": 234.944,
+          "min": 87.723,
+          "max": 280.745,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 5683,
+          "min": 3514,
+          "max": 6558,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 3477,
+          "min": 2163,
+          "max": 4027,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 1.16,
+          "min": 1.08,
+          "max": 1.16,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 44703744,
+          "min": 31879168,
+          "max": 44703744,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 34521088,
+          "min": 26976256,
+          "max": 34521088,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 10182656,
+          "min": 4902912,
+          "max": 10182656,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 148267008,
+          "min": 112807936,
+          "max": 148267008,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 144,
+          "min": 103,
+          "max": 144,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": {
+          "median": 26839,
+          "min": 26817,
+          "max": 28025,
+          "n": 3
+        },
+        "perfRssBytes": {
+          "median": 97533952,
+          "min": 92979200,
+          "max": 106348544,
+          "n": 3
+        }
+      },
+      "ts/lru": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 2,
+        "costToGreenUsd": {
+          "median": 0.27600420000000003,
+          "min": 0.22272860000000003,
+          "max": 0.31992760000000003,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.27600420000000003,
+          "min": 0.22272860000000003,
+          "max": 0.31992760000000003,
+          "n": 3
+        },
+        "output": {
+          "median": 4653,
+          "min": 3185,
+          "max": 6067,
+          "n": 3
+        },
+        "turns": {
+          "median": 5,
+          "min": 5,
+          "max": 7,
+          "n": 3
+        },
+        "durationS": {
+          "median": 49.688,
+          "min": 39.721,
+          "max": 74.117,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 1,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 2470,
+          "min": 1177,
+          "max": 2506,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 1579,
+          "min": 742,
+          "max": 1628,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.01,
+          "min": 0.01,
+          "max": 0.28,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 103,
+          "min": 103,
+          "max": 104,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 419,
+          "min": 325,
+          "max": 3840,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 238272512,
+          "min": 200474624,
+          "max": 291618816,
+          "n": 3
+        }
+      },
+      "ts/wordfreq": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 1,
+        "costToGreenUsd": {
+          "median": 0.22428839999999997,
+          "min": 0.22240719999999997,
+          "max": 0.2517898,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.22428839999999997,
+          "min": 0.22240719999999997,
+          "max": 0.2517898,
+          "n": 3
+        },
+        "output": {
+          "median": 3131,
+          "min": 2982,
+          "max": 3678,
+          "n": 3
+        },
+        "turns": {
+          "median": 6,
+          "min": 6,
+          "max": 8,
+          "n": 3
+        },
+        "durationS": {
+          "median": 43.084,
+          "min": 40.835,
+          "max": 59.672,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 1,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1236,
+          "min": 1180,
+          "max": 1351,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 818,
+          "min": 763,
+          "max": 870,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 0.01,
+          "min": 0.01,
+          "max": 0.01,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 103,
+          "min": 103,
+          "max": 103,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 931,
+          "min": 890,
+          "max": 963,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 83640320,
+          "min": 83460096,
+          "max": 172949504,
+          "n": 3
+        }
+      },
+      "zig/calc": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.3409844,
+          "min": 0.3300768,
+          "max": 0.35446279999999997,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.3409844,
+          "min": 0.3300768,
+          "max": 0.35446279999999997,
+          "n": 3
+        },
+        "output": {
+          "median": 5971,
+          "min": 5641,
+          "max": 6865,
+          "n": 3
+        },
+        "turns": {
+          "median": 10,
+          "min": 7,
+          "max": 11,
+          "n": 3
+        },
+        "durationS": {
+          "median": 72.588,
+          "min": 69.901,
+          "max": 89.911,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 1,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 2,
+          "min": 1,
+          "max": 3,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 3417,
+          "min": 3191,
+          "max": 3887,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 2184,
+          "min": 1962,
+          "max": 2474,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 4.79,
+          "min": 2.21,
+          "max": 8.11,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 47640576,
+          "min": 43614208,
+          "max": 66953216,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 47640576,
+          "min": 43614208,
+          "max": 66953216,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 190562304,
+          "min": 174456832,
+          "max": 267812864,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 359760,
+          "min": 206080,
+          "max": 396880,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 18,
+          "min": 17,
+          "max": 19,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 6881280,
+          "min": 6881280,
+          "max": 6914048,
+          "n": 3
+        }
+      },
+      "zig/kvhttp": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 1.4937474000000002,
+          "min": 1.4319018000000001,
+          "max": 1.5459200000000002,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 1.4937474000000002,
+          "min": 1.4319018000000001,
+          "max": 1.5459200000000002,
+          "n": 3
+        },
+        "output": {
+          "median": 27066,
+          "min": 26778,
+          "max": 30503,
+          "n": 3
+        },
+        "turns": {
+          "median": 29,
+          "min": 29,
+          "max": 33,
+          "n": 3
+        },
+        "durationS": {
+          "median": 320.664,
+          "min": 307.744,
+          "max": 330.272,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 1,
+          "min": 1,
+          "max": 2,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 17,
+          "min": 14,
+          "max": 18,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 11435,
+          "min": 11153,
+          "max": 11870,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 7285,
+          "min": 6982,
+          "max": 7455,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 8.75,
+          "min": 8.66,
+          "max": 8.77,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 67284992,
+          "min": 67284992,
+          "max": 68272128,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 21901312,
+          "min": 21901312,
+          "max": 22888448,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 45383680,
+          "min": 45383680,
+          "max": 45383680,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 132988928,
+          "min": 132988928,
+          "max": 136937472,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 437472,
+          "min": 435184,
+          "max": 498376,
+          "n": 3
+        },
+        "perfMs": null,
+        "perfRps": {
+          "median": 24650,
+          "min": 7312,
+          "max": 26798,
+          "n": 3
+        },
+        "perfRssBytes": {
+          "median": 45481984,
+          "min": 39337984,
+          "max": 260849664,
+          "n": 3
+        }
+      },
+      "zig/lru": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.7606204000000001,
+          "min": 0.46907439999999995,
+          "max": 0.9776151999999999,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.7606204000000001,
+          "min": 0.46907439999999995,
+          "max": 0.9776151999999999,
+          "n": 3
+        },
+        "output": {
+          "median": 13921,
+          "min": 9690,
+          "max": 18063,
+          "n": 3
+        },
+        "turns": {
+          "median": 19,
+          "min": 10,
+          "max": 23,
+          "n": 3
+        },
+        "durationS": {
+          "median": 177.412,
+          "min": 118.199,
+          "max": 243.161,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 6,
+          "min": 3,
+          "max": 6,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 4620,
+          "min": 3902,
+          "max": 4939,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 2935,
+          "min": 2478,
+          "max": 3118,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 8.5,
+          "min": 8.19,
+          "max": 8.54,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 66998272,
+          "min": 66592768,
+          "max": 67088384,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 21614592,
+          "min": 21209088,
+          "max": 21704704,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 45383680,
+          "min": 45383680,
+          "max": 45383680,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 131842048,
+          "min": 130220032,
+          "max": 132202496,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 397280,
+          "min": 397168,
+          "max": 414016,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 55,
+          "min": 47,
+          "max": 5595,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 28131328,
+          "min": 27049984,
+          "max": 28819456,
+          "n": 3
+        }
+      },
+      "zig/wordfreq": {
+        "n": 3,
+        "solved": 3,
+        "works": 3,
+        "firstTry": 3,
+        "costToGreenUsd": {
+          "median": 0.2818506,
+          "min": 0.26249100000000003,
+          "max": 0.3233368,
+          "n": 3
+        },
+        "deps": {
+          "": 3
+        },
+        "costUsd": {
+          "median": 0.2818506,
+          "min": 0.26249100000000003,
+          "max": 0.3233368,
+          "n": 3
+        },
+        "output": {
+          "median": 4071,
+          "min": 3978,
+          "max": 5070,
+          "n": 3
+        },
+        "turns": {
+          "median": 9,
+          "min": 7,
+          "max": 10,
+          "n": 3
+        },
+        "durationS": {
+          "median": 64.558,
+          "min": 56.918,
+          "max": 68.377,
+          "n": 3
+        },
+        "compileErrors": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "n": 3
+        },
+        "stdlibReads": {
+          "median": 3,
+          "min": 2,
+          "max": 5,
+          "n": 3
+        },
+        "codeTokens": {
+          "median": 1917,
+          "min": 1649,
+          "max": 1933,
+          "n": 3
+        },
+        "codeTokensCl100k": {
+          "median": 1212,
+          "min": 1049,
+          "max": 1241,
+          "n": 3
+        },
+        "buildSecs": {
+          "median": 2.17,
+          "min": 2.13,
+          "max": 2.19,
+          "n": 3
+        },
+        "footprintBytes": {
+          "median": 43601920,
+          "min": 43597824,
+          "max": 43601920,
+          "n": 3
+        },
+        "projectBytes": {
+          "median": 225280,
+          "min": 208896,
+          "max": 43601920,
+          "n": 3
+        },
+        "cacheBytes": {
+          "median": 43372544,
+          "min": 0,
+          "max": 43393024,
+          "n": 3
+        },
+        "worktrees4Bytes": {
+          "median": 44273664,
+          "min": 44228608,
+          "max": 174407680,
+          "n": 3
+        },
+        "devloopTargetBytes": null,
+        "binaryBytes": {
+          "median": 206080,
+          "min": 206080,
+          "max": 206080,
+          "n": 3
+        },
+        "perfMs": {
+          "median": 114,
+          "min": 112,
+          "max": 134,
+          "n": 3
+        },
+        "perfRps": null,
+        "perfRssBytes": {
+          "median": 58097664,
+          "min": 1785856,
+          "max": 58130432,
+          "n": 3
+        }
+      }
+    },
+    "frontends": {},
+    "shop": {},
+    "combos": [],
+    "costSpeedRho": 0.6999999999999998,
+    "growth": {},
+    "vsBase": {
+      "go": {
+        "tasks": [
+          "calc",
+          "kvhttp",
+          "lru",
+          "wordfreq"
+        ],
+        "base": {
+          "n": 12,
+          "works": 12,
+          "firstTry": 12,
+          "costPerWorkingUsd": 0.20695989999999997,
+          "costUsd": 0.8458454,
+          "output": 18221,
+          "turns": 17,
+          "durationS": 188.132,
+          "compileErrors": 0,
+          "stdlibReads": 0,
+          "codeTokens": 12141,
+          "costMin": 0.7490954000000001,
+          "costMax": 0.8885780000000001,
+          "perf": {
+            "wordfreq": 160,
+            "lru": 78,
+            "calc": 24,
+            "kvhttp": 25005
+          }
+        },
+        "arm": {
+          "n": 12,
+          "works": 12,
+          "firstTry": 12,
+          "costPerWorkingUsd": 0.3034278666666666,
+          "costUsd": 1.2030855999999999,
+          "output": 20845,
+          "turns": 24,
+          "durationS": 224.322,
+          "compileErrors": 0,
+          "stdlibReads": 0,
+          "codeTokens": 12593,
+          "costMin": 1.1595784,
+          "costMax": 1.2784703999999998,
+          "perf": {
+            "wordfreq": 265,
+            "lru": 75,
+            "calc": 22,
+            "kvhttp": 24163
+          }
+        },
+        "beyondNoise": true,
+        "speedChange": 0.8914051250197796,
+        "port": {
+          "from": "cpp",
+          "costPer1kSourceLines": {
+            "median": 1.3970712868117798,
+            "min": 0.5401368295589989,
+            "max": 2.322445652173913,
+            "n": 12
+          },
+          "speedVsSource": 2.401782483416153
+        }
+      },
+      "kotlin": {
+        "tasks": [
+          "calc",
+          "kvhttp",
+          "lru",
+          "wordfreq"
+        ],
+        "base": {
+          "n": 12,
+          "works": 12,
+          "firstTry": 12,
+          "costPerWorkingUsd": 0.18898766666666666,
+          "costUsd": 0.7547333999999999,
+          "output": 14080,
+          "turns": 20,
+          "durationS": 336.181,
+          "compileErrors": 0,
+          "stdlibReads": 0,
+          "codeTokens": 6795,
+          "costMin": 0.690073,
+          "costMax": 0.8230456,
+          "perf": {
+            "wordfreq": 194,
+            "lru": 281,
+            "calc": 138,
+            "kvhttp": 23801
+          }
+        },
+        "arm": {
+          "n": 12,
+          "works": 12,
+          "firstTry": 10,
+          "costPerWorkingUsd": 0.30477460000000006,
+          "costUsd": 1.1900418,
+          "output": 19710,
+          "turns": 25,
+          "durationS": 242.507,
+          "compileErrors": 0,
+          "stdlibReads": 0,
+          "codeTokens": 10221,
+          "costMin": 1.1316982,
+          "costMax": 1.3355552000000002,
+          "perf": {
+            "wordfreq": 231,
+            "lru": 299,
+            "calc": 108,
+            "kvhttp": 23968
+          }
+        },
+        "beyondNoise": true,
+        "speedChange": 1.0214444418603248,
+        "port": {
+          "from": "cpp",
+          "costPer1kSourceLines": {
+            "median": 1.2326581903542466,
+            "min": 0.6621470798569725,
+            "max": 2.6396217391304346,
+            "n": 12
+          },
+          "speedVsSource": 1.1478696291221575
+        }
+      },
+      "rust": {
+        "tasks": [
+          "calc",
+          "kvhttp",
+          "lru",
+          "wordfreq"
+        ],
+        "base": {
+          "n": 12,
+          "works": 12,
+          "firstTry": 12,
+          "costPerWorkingUsd": 0.21470068333333334,
+          "costUsd": 0.8252076,
+          "output": 17277,
+          "turns": 18,
+          "durationS": 306.547,
+          "compileErrors": 0,
+          "stdlibReads": 2,
+          "codeTokens": 11721,
+          "costMin": 0.7742205999999999,
+          "costMax": 0.9769800000000001,
+          "perf": {
+            "wordfreq": 161,
+            "lru": 76,
+            "calc": 24,
+            "kvhttp": 26403
+          }
+        },
+        "arm": {
+          "n": 12,
+          "works": 12,
+          "firstTry": 11,
+          "costPerWorkingUsd": 0.3794299666666667,
+          "costUsd": 1.5099341999999998,
+          "output": 29791,
+          "turns": 29,
+          "durationS": 324.55600000000004,
+          "compileErrors": 0,
+          "stdlibReads": 1,
+          "codeTokens": 17051,
+          "costMin": 1.3436082,
+          "costMax": 1.6996172,
+          "perf": {
+            "wordfreq": 149,
+            "lru": 73,
+            "calc": 20,
+            "kvhttp": 25049
+          }
+        },
+        "beyondNoise": true,
+        "speedChange": 1.078987398913081,
+        "port": {
+          "from": "cpp",
+          "costPer1kSourceLines": {
+            "median": 1.4948012446309058,
+            "min": 0.96100810488677,
+            "max": 2.471991304347826,
+            "n": 12
+          },
+          "speedVsSource": 2.8260585355075087
+        }
+      },
+      "ts": {
+        "tasks": [
+          "calc",
+          "kvhttp",
+          "lru",
+          "wordfreq"
+        ],
+        "base": {
+          "n": 12,
+          "works": 12,
+          "firstTry": 12,
+          "costPerWorkingUsd": 0.18374031666666665,
+          "costUsd": 0.7236412,
+          "output": 14127,
+          "turns": 16,
+          "durationS": 163.505,
+          "compileErrors": 0,
+          "stdlibReads": 0,
+          "codeTokens": 8437,
+          "costMin": 0.6985437999999999,
+          "costMax": 0.7826988000000001,
+          "perf": {
+            "wordfreq": 843,
+            "lru": 305,
+            "calc": 221,
+            "kvhttp": 27087
+          }
+        },
+        "arm": {
+          "n": 12,
+          "works": 12,
+          "firstTry": 8,
+          "costPerWorkingUsd": 0.33997125,
+          "costUsd": 1.3165332,
+          "output": 23157,
+          "turns": 26,
+          "durationS": 388.897,
+          "compileErrors": 0,
+          "stdlibReads": 0,
+          "codeTokens": 11409,
+          "costMin": 1.1640296,
+          "costMax": 1.5990922,
+          "perf": {
+            "wordfreq": 931,
+            "lru": 419,
+            "calc": 235,
+            "kvhttp": 26839
+          }
+        },
+        "beyondNoise": true,
+        "speedChange": 0.8994541469072701,
+        "port": {
+          "from": "cpp",
+          "costPer1kSourceLines": {
+            "median": 1.3737184596943364,
+            "min": 0.5457485101311086,
+            "max": 2.7368456521739133,
+            "n": 12
+          },
+          "speedVsSource": 0.64430635086492
+        }
+      },
+      "zig": {
+        "tasks": [
+          "calc",
+          "kvhttp",
+          "lru",
+          "wordfreq"
+        ],
+        "base": {
+          "n": 12,
+          "works": 12,
+          "firstTry": 12,
+          "costPerWorkingUsd": 0.5166519666666667,
+          "costUsd": 1.9630195999999998,
+          "output": 39457,
+          "turns": 48,
+          "durationS": 580.6320000000001,
+          "compileErrors": 3,
+          "stdlibReads": 21,
+          "codeTokens": 16568,
+          "costMin": 1.7122292000000001,
+          "costMax": 2.5245748000000003,
+          "perf": {
+            "wordfreq": 115,
+            "lru": 52,
+            "calc": 19,
+            "kvhttp": 27509
+          }
+        },
+        "arm": {
+          "n": 12,
+          "works": 12,
+          "firstTry": 12,
+          "costPerWorkingUsd": 0.7143401333333333,
+          "costUsd": 2.8772028,
+          "output": 51029,
+          "turns": 67,
+          "durationS": 635.222,
+          "compileErrors": 1,
+          "stdlibReads": 28,
+          "codeTokens": 21389,
+          "costMin": 2.493544,
+          "costMax": 3.2013347999999997,
+          "perf": {
+            "wordfreq": 114,
+            "lru": 55,
+            "calc": 18,
+            "kvhttp": 24650
+          }
+        },
+        "beyondNoise": true,
+        "speedChange": 1.02758038038774,
+        "port": {
+          "from": "cpp",
+          "costPer1kSourceLines": {
+            "median": 2.495662353004639,
+            "min": 1.4509974468085107,
+            "max": 6.933441134751773,
+            "n": 12
+          },
+          "speedVsSource": 3.3282835852060337
+        }
+      }
+    },
+    "effect": {
+      "pairs": 60,
+      "costUsd": {
+        "base": 0.2068449,
+        "arm": 0.2919653
+      },
+      "turns": {
+        "base": 5,
+        "arm": 6
+      },
+      "output": {
+        "base": 4171,
+        "arm": 5266.5
+      },
+      "cacheWrite": {
+        "base": 13776.5,
+        "arm": 21177.5
+      },
+      "cacheRead": {
+        "base": 52508,
+        "arm": 101685.5
+      },
+      "extraUsd": {
+        "input": 0.001064,
+        "output": 2.5071800000000004,
+        "cacheWrite": 4.969704,
+        "cacheRead": 1.2928914
+      },
+      "costShare": {
+        "input": 0.00012131107998625538,
+        "output": 0.2858540540600938,
+        "cacheWrite": 0.5666166912142981,
+        "cacheRead": 0.14740794364562188
+      },
+      "code": {
+        "solved": {
+          "base": 60,
+          "arm": 60
+        },
+        "firstTry": {
+          "base": 60,
+          "arm": 53
+        },
+        "withTests": {
+          "base": 8,
+          "arm": 10
+        },
+        "compileErrors": {
+          "base": 8,
+          "arm": 12
+        },
+        "codeTokens": {
+          "base": 2465.5,
+          "arm": 2859
+        },
+        "files": {
+          "base": 3,
+          "arm": 3.5
+        }
+      }
+    },
+    "length": {
+      "cases": 20,
+      "rho": 0.06466165413533835,
+      "bins": [
+        {
+          "lo": 0,
+          "hi": 5,
+          "n": 11,
+          "median": 0.4957062663130154
+        },
+        {
+          "lo": 5,
+          "hi": 8,
+          "n": 6,
+          "median": 0.3912483482017435
+        },
+        {
+          "lo": 8,
+          "hi": 12,
+          "n": 2,
+          "median": 0.5022351728480434
+        },
+        {
+          "lo": 12,
+          "hi": null,
+          "n": 1,
+          "median": 0.4513480095194997
+        }
+      ]
+    }
+  },
+  "runs": [
+    {
+      "id": "go-calc-r1",
+      "lang": "go",
+      "task": "calc",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2982644,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 5388,
+        "thinking": 384,
+        "cacheRead": 95042,
+        "cacheWrite": 21431
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 61.464,
+      "wallS": 62.053,
+      "apiS": 58.628,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 1.38,
+      "footprintBytes": 43839488,
+      "projectBytes": 1658880,
+      "cacheBytes": 42180608,
+      "binaryBytes": 1658098,
+      "failures": [],
+      "codeTokens": 3634,
+      "codeTokensCl100k": 2528,
+      "codeChars": 7171,
+      "codeLines": 361,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "calc/calc.go"
+        },
+        {
+          "path": "calc/calc_test.go"
+        },
+        {
+          "path": "go.mod"
+        },
+        {
+          "path": "main.go"
+        }
+      ],
+      "perfMs": 22,
+      "perfRps": null,
+      "perfRssBytes": 16433152,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2982644,
+      "worktrees4Bytes": 48816128,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 22,
+        "source": 402
+      },
+      "deps": []
+    },
+    {
+      "id": "go-calc-r2",
+      "lang": "go",
+      "task": "calc",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.27860379999999996,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 4747,
+        "thinking": 338,
+        "cacheRead": 71719,
+        "cacheWrite": 21160
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 48.514,
+      "wallS": 49.122,
+      "apiS": 45.959,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 1.41,
+      "footprintBytes": 43819008,
+      "projectBytes": 1658880,
+      "cacheBytes": 42160128,
+      "binaryBytes": 1658018,
+      "failures": [],
+      "codeTokens": 3532,
+      "codeTokensCl100k": 2420,
+      "codeChars": 7108,
+      "codeLines": 339,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "calc_test.go"
+        },
+        {
+          "path": "checked.go"
+        },
+        {
+          "path": "eval.go"
+        },
+        {
+          "path": "go.mod"
+        },
+        {
+          "path": "main.go"
+        }
+      ],
+      "perfMs": 21,
+      "perfRps": null,
+      "perfRssBytes": 16416768,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.27860379999999996,
+      "worktrees4Bytes": 48795648,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 25,
+        "source": 389
+      },
+      "deps": []
+    },
+    {
+      "id": "go-calc-r3",
+      "lang": "go",
+      "task": "calc",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.305009,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 5536,
+        "thinking": 335,
+        "cacheRead": 94645,
+        "cacheWrite": 21914
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 55.494,
+      "wallS": 56.131,
+      "apiS": 52.661,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 1.39,
+      "footprintBytes": 43814912,
+      "projectBytes": 1658880,
+      "cacheBytes": 42156032,
+      "binaryBytes": 1658018,
+      "failures": [],
+      "codeTokens": 3828,
+      "codeTokensCl100k": 2650,
+      "codeChars": 7643,
+      "codeLines": 388,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "eval.go"
+        },
+        {
+          "path": "eval_test.go"
+        },
+        {
+          "path": "go.mod"
+        },
+        {
+          "path": "main.go"
+        }
+      ],
+      "perfMs": 23,
+      "perfRps": null,
+      "perfRssBytes": 16449536,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.305009,
+      "worktrees4Bytes": 48791552,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 442,
+        "scratch": 24
+      },
+      "deps": []
+    },
+    {
+      "id": "go-kvhttp-r1",
+      "lang": "go",
+      "task": "kvhttp",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.42439399999999994,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 7903,
+        "thinking": 1240,
+        "cacheRead": 142750,
+        "cacheWrite": 29716
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 82.857,
+      "wallS": 83.642,
+      "apiS": 77.703,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 2.9,
+      "footprintBytes": 114782208,
+      "projectBytes": 5615616,
+      "cacheBytes": 109166592,
+      "binaryBytes": 5615234,
+      "failures": [],
+      "codeTokens": 4847,
+      "codeTokensCl100k": 2868,
+      "codeChars": 9383,
+      "codeLines": 412,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "go.mod"
+        },
+        {
+          "path": "handler.go"
+        },
+        {
+          "path": "handler_test.go"
+        },
+        {
+          "path": "internal/kv/store.go"
+        },
+        {
+          "path": "internal/kv/store_test.go"
+        },
+        {
+          "path": "main.go"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 22487,
+      "perfRssBytes": 17973248,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.42439399999999994,
+      "worktrees4Bytes": 131629056,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 24715,
+        "source": 24415
+      },
+      "deps": []
+    },
+    {
+      "id": "go-kvhttp-r2",
+      "lang": "go",
+      "task": "kvhttp",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.4531748,
+      "turns": 8,
+      "usage": {
+        "input": 14,
+        "output": 8370,
+        "thinking": 1726,
+        "cacheRead": 150354,
+        "cacheWrite": 31956
+      },
+      "tools": {
+        "Bash": 7
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 86.159,
+      "wallS": 86.766,
+      "apiS": 79.71,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 2.88,
+      "footprintBytes": 114520064,
+      "projectBytes": 5599232,
+      "cacheBytes": 108920832,
+      "binaryBytes": 5597394,
+      "failures": [],
+      "codeTokens": 4466,
+      "codeTokensCl100k": 2640,
+      "codeChars": 8677,
+      "codeLines": 366,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "go.mod"
+        },
+        {
+          "path": "handler.go"
+        },
+        {
+          "path": "handler_test.go"
+        },
+        {
+          "path": "main.go"
+        },
+        {
+          "path": "store.go"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 25635,
+      "perfRssBytes": 17481728,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.4531748,
+      "worktrees4Bytes": 131317760,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 23248,
+        "source": 24478
+      },
+      "deps": []
+    },
+    {
+      "id": "go-kvhttp-r3",
+      "lang": "go",
+      "task": "kvhttp",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.41721640000000004,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 7565,
+        "thinking": 1714,
+        "cacheRead": 117542,
+        "cacheWrite": 30295
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 77.376,
+      "wallS": 77.891,
+      "apiS": 73.7,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 2.86,
+      "footprintBytes": 114569216,
+      "projectBytes": 5599232,
+      "cacheBytes": 108969984,
+      "binaryBytes": 5597410,
+      "failures": [],
+      "codeTokens": 4241,
+      "codeTokensCl100k": 2515,
+      "codeChars": 8522,
+      "codeLines": 356,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "go.mod"
+        },
+        {
+          "path": "internal/server/server.go"
+        },
+        {
+          "path": "internal/server/server_test.go"
+        },
+        {
+          "path": "internal/store/store.go"
+        },
+        {
+          "path": "main.go"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 24163,
+      "perfRssBytes": 17793024,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.41721640000000004,
+      "worktrees4Bytes": 131366912,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 25132,
+        "scratch": 25491
+      },
+      "deps": []
+    },
+    {
+      "id": "go-lru-r1",
+      "lang": "go",
+      "task": "lru",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.25009319999999996,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 3899,
+        "thinking": 518,
+        "cacheRead": 89806,
+        "cacheWrite": 19263
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 48.893,
+      "wallS": 49.557,
+      "apiS": 46.966,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 1.4,
+      "footprintBytes": 43851776,
+      "projectBytes": 1675264,
+      "cacheBytes": 42176512,
+      "binaryBytes": 1674962,
+      "failures": [],
+      "codeTokens": 2443,
+      "codeTokensCl100k": 1523,
+      "codeChars": 4884,
+      "codeLines": 220,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "go.mod"
+        },
+        {
+          "path": "lru.go"
+        },
+        {
+          "path": "main.go"
+        },
+        {
+          "path": "main_test.go"
+        }
+      ],
+      "perfMs": 82,
+      "perfRps": null,
+      "perfRssBytes": 45531136,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.25009319999999996,
+      "worktrees4Bytes": 48877568,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 73,
+        "source": 190
+      },
+      "deps": []
+    },
+    {
+      "id": "go-lru-r2",
+      "lang": "go",
+      "task": "lru",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2998482,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 5352,
+        "thinking": 612,
+        "cacheRead": 94881,
+        "cacheWrite": 21723
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 72.608,
+      "wallS": 73.138,
+      "apiS": 68.715,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 1.38,
+      "footprintBytes": 43913216,
+      "projectBytes": 1695744,
+      "cacheBytes": 42217472,
+      "binaryBytes": 1691666,
+      "failures": [],
+      "codeTokens": 2830,
+      "codeTokensCl100k": 1770,
+      "codeChars": 6024,
+      "codeLines": 264,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "go.mod"
+        },
+        {
+          "path": "lru/lru.go"
+        },
+        {
+          "path": "main.go"
+        }
+      ],
+      "perfMs": 75,
+      "perfRps": null,
+      "perfRssBytes": 46432256,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2998482,
+      "worktrees4Bytes": 49000448,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 74,
+        "source": 194
+      },
+      "deps": []
+    },
+    {
+      "id": "go-lru-r3",
+      "lang": "go",
+      "task": "lru",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2649542,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 4537,
+        "thinking": 350,
+        "cacheRead": 69231,
+        "cacheWrite": 20041
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 47.648,
+      "wallS": 48.203,
+      "apiS": 45.109,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 1.39,
+      "footprintBytes": 43892736,
+      "projectBytes": 1675264,
+      "cacheBytes": 42217472,
+      "binaryBytes": 1674674,
+      "failures": [],
+      "codeTokens": 3356,
+      "codeTokensCl100k": 2118,
+      "codeChars": 6701,
+      "codeLines": 303,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "go.mod"
+        },
+        {
+          "path": "internal/lru/lru.go"
+        },
+        {
+          "path": "internal/lru/lru_test.go"
+        },
+        {
+          "path": "main.go"
+        }
+      ],
+      "perfMs": 72,
+      "perfRps": null,
+      "perfRssBytes": 46366720,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2649542,
+      "worktrees4Bytes": 48918528,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 194,
+        "scratch": 75
+      },
+      "deps": []
+    },
+    {
+      "id": "go-wordfreq-r1",
+      "lang": "go",
+      "task": "wordfreq",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.215473,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 3091,
+        "thinking": 375,
+        "cacheRead": 65825,
+        "cacheWrite": 17556
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 36.754,
+      "wallS": 37.417,
+      "apiS": 33.85,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 1.39,
+      "footprintBytes": 43917312,
+      "projectBytes": 1675264,
+      "cacheBytes": 42242048,
+      "binaryBytes": 1674978,
+      "failures": [],
+      "codeTokens": 1548,
+      "codeTokensCl100k": 977,
+      "codeChars": 3307,
+      "codeLines": 153,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "go.mod"
+        },
+        {
+          "path": "main.go"
+        }
+      ],
+      "perfMs": 267,
+      "perfRps": null,
+      "perfRssBytes": 10567680,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.215473,
+      "worktrees4Bytes": 48943104,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 159,
+        "source": 189
+      },
+      "deps": []
+    },
+    {
+      "id": "go-wordfreq-r2",
+      "lang": "go",
+      "task": "wordfreq",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.22043840000000003,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 3017,
+        "thinking": 298,
+        "cacheRead": 87252,
+        "cacheWrite": 17825
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 37.078,
+      "wallS": 37.721,
+      "apiS": 33.862,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 1.39,
+      "footprintBytes": 43941888,
+      "projectBytes": 1695744,
+      "cacheBytes": 42246144,
+      "binaryBytes": 1691858,
+      "failures": [],
+      "codeTokens": 1722,
+      "codeTokensCl100k": 1103,
+      "codeChars": 3538,
+      "codeLines": 157,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "go.mod"
+        },
+        {
+          "path": "main.go"
+        },
+        {
+          "path": "main_test.go"
+        }
+      ],
+      "perfMs": 265,
+      "perfRps": null,
+      "perfRssBytes": 10944512,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.22043840000000003,
+      "worktrees4Bytes": 49029120,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 150,
+        "source": 186
+      },
+      "deps": []
+    },
+    {
+      "id": "go-wordfreq-r3",
+      "lang": "go",
+      "task": "wordfreq",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.21366500000000002,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 2957,
+        "thinking": 305,
+        "cacheRead": 66225,
+        "cacheWrite": 17655
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 37.289,
+      "wallS": 37.904,
+      "apiS": 33.727,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 1.39,
+      "footprintBytes": 43937792,
+      "projectBytes": 1695744,
+      "cacheBytes": 42242048,
+      "binaryBytes": 1691794,
+      "failures": [],
+      "codeTokens": 1663,
+      "codeTokensCl100k": 1063,
+      "codeChars": 3333,
+      "codeLines": 144,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "go.mod"
+        },
+        {
+          "path": "main.go"
+        },
+        {
+          "path": "main_test.go"
+        }
+      ],
+      "perfMs": 157,
+      "perfRps": null,
+      "perfRssBytes": 121585664,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.21366500000000002,
+      "worktrees4Bytes": 49025024,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 197,
+        "scratch": 223
+      },
+      "deps": []
+    },
+    {
+      "id": "kotlin-calc-r1",
+      "lang": "kotlin",
+      "task": "calc",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2595814,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 4003,
+        "thinking": 560,
+        "cacheRead": 91167,
+        "cacheWrite": 20155
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 50.119,
+      "wallS": 50.8,
+      "apiS": 46.254,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 2.26,
+      "footprintBytes": 5750784,
+      "projectBytes": 5750784,
+      "cacheBytes": 0,
+      "binaryBytes": 5750153,
+      "failures": [],
+      "codeTokens": 2150,
+      "codeTokensCl100k": 1326,
+      "codeChars": 5513,
+      "codeLines": 184,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/Main.kt"
+        }
+      ],
+      "perfMs": 108,
+      "perfRps": null,
+      "perfRssBytes": 74629120,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2595814,
+      "worktrees4Bytes": 23003136,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 139,
+        "source": 383
+      },
+      "deps": []
+    },
+    {
+      "id": "kotlin-calc-r2",
+      "lang": "kotlin",
+      "task": "calc",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.26925099999999996,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 4097,
+        "thinking": 644,
+        "cacheRead": 95595,
+        "cacheWrite": 21018
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 52.273,
+      "wallS": 52.843,
+      "apiS": 45.184,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 2.19,
+      "footprintBytes": 5750784,
+      "projectBytes": 5750784,
+      "cacheBytes": 0,
+      "binaryBytes": 5750111,
+      "failures": [],
+      "codeTokens": 2269,
+      "codeTokensCl100k": 1370,
+      "codeChars": 5827,
+      "codeLines": 186,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/Main.kt"
+        }
+      ],
+      "perfMs": 107,
+      "perfRps": null,
+      "perfRssBytes": 70516736,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.26925099999999996,
+      "worktrees4Bytes": 23003136,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 213,
+        "source": 389
+      },
+      "deps": []
+    },
+    {
+      "id": "kotlin-calc-r3",
+      "lang": "kotlin",
+      "task": "calc",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.26564719999999997,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 4026,
+        "thinking": 315,
+        "cacheRead": 94196,
+        "cacheWrite": 20780
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 55.483,
+      "wallS": 56.104,
+      "apiS": 46.182,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 2.25,
+      "footprintBytes": 5750784,
+      "projectBytes": 5750784,
+      "cacheBytes": 0,
+      "binaryBytes": 5750850,
+      "failures": [],
+      "codeTokens": 2363,
+      "codeTokensCl100k": 1457,
+      "codeChars": 5910,
+      "codeLines": 197,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/Main.kt"
+        }
+      ],
+      "perfMs": 119,
+      "perfRps": null,
+      "perfRssBytes": 70500352,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.26564719999999997,
+      "worktrees4Bytes": 23003136,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 388,
+        "scratch": 89
+      },
+      "deps": []
+    },
+    {
+      "id": "kotlin-kvhttp-r1",
+      "lang": "kotlin",
+      "task": "kvhttp",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.4208176,
+      "turns": 7,
+      "usage": {
+        "input": 12,
+        "output": 7817,
+        "thinking": 813,
+        "cacheRead": 126988,
+        "cacheWrite": 29879
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 85.771,
+      "wallS": 86.348,
+      "apiS": 75.761,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 2.57,
+      "footprintBytes": 5767168,
+      "projectBytes": 5767168,
+      "cacheBytes": 0,
+      "binaryBytes": 5764625,
+      "failures": [],
+      "codeTokens": 4908,
+      "codeTokensCl100k": 2940,
+      "codeChars": 12042,
+      "codeLines": 335,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/Http.kt"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/KvStore.kt"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/Main.kt"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/Router.kt"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 24980,
+      "perfRssBytes": 74629120,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.4208176,
+      "worktrees4Bytes": 23068672,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 24490,
+        "source": 26388
+      },
+      "deps": []
+    },
+    {
+      "id": "kotlin-kvhttp-r2",
+      "lang": "kotlin",
+      "task": "kvhttp",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.5555414,
+      "turns": 10,
+      "usage": {
+        "input": 18,
+        "output": 10534,
+        "thinking": 1063,
+        "cacheRead": 232867,
+        "cacheWrite": 37277
+      },
+      "tools": {
+        "Bash": 9
+      },
+      "builds": 2,
+      "compileErrors": 1,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 224.602,
+      "wallS": 225.376,
+      "apiS": 96.588,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 2.71,
+      "footprintBytes": 5775360,
+      "projectBytes": 5775360,
+      "cacheBytes": 0,
+      "binaryBytes": 5774865,
+      "failures": [],
+      "codeTokens": 6696,
+      "codeTokensCl100k": 4035,
+      "codeChars": 16803,
+      "codeLines": 494,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/Http.kt"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/KvStore.kt"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/Main.kt"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/Routes.kt"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/Server.kt"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 22695,
+      "perfRssBytes": 94502912,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.5555414,
+      "worktrees4Bytes": 23101440,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 23770,
+        "source": 27807
+      },
+      "deps": []
+    },
+    {
+      "id": "kotlin-kvhttp-r3",
+      "lang": "kotlin",
+      "task": "kvhttp",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.4403478,
+      "turns": 7,
+      "usage": {
+        "input": 12,
+        "output": 8314,
+        "thinking": 1097,
+        "cacheRead": 122379,
+        "cacheWrite": 31193
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 84.227,
+      "wallS": 84.883,
+      "apiS": 73.785,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 2.57,
+      "footprintBytes": 5763072,
+      "projectBytes": 5763072,
+      "cacheBytes": 0,
+      "binaryBytes": 5760840,
+      "failures": [],
+      "codeTokens": 5316,
+      "codeTokensCl100k": 3246,
+      "codeChars": 13307,
+      "codeLines": 391,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/Http.kt"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/Main.kt"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/Router.kt"
+        },
+        {
+          "path": "src/main/kotlin/kvhttp/Store.kt"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 23968,
+      "perfRssBytes": 85065728,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.4403478,
+      "worktrees4Bytes": 23052288,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 26610,
+        "scratch": 23428
+      },
+      "deps": []
+    },
+    {
+      "id": "kotlin-lru-r1",
+      "lang": "kotlin",
+      "task": "lru",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2419836,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 3551,
+        "thinking": 938,
+        "cacheRead": 89898,
+        "cacheWrite": 19117
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 46.404,
+      "wallS": 46.965,
+      "apiS": 41.362,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 2.25,
+      "footprintBytes": 5750784,
+      "projectBytes": 5750784,
+      "cacheBytes": 0,
+      "binaryBytes": 5748743,
+      "failures": [],
+      "codeTokens": 1424,
+      "codeTokensCl100k": 883,
+      "codeChars": 3330,
+      "codeLines": 86,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/Main.kt"
+        }
+      ],
+      "perfMs": 299,
+      "perfRps": null,
+      "perfRssBytes": 170786816,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2419836,
+      "worktrees4Bytes": 23003136,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 233,
+        "source": 192
+      },
+      "deps": []
+    },
+    {
+      "id": "kotlin-lru-r2",
+      "lang": "kotlin",
+      "task": "lru",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.26791760000000003,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 4385,
+        "thinking": 750,
+        "cacheRead": 92488,
+        "cacheWrite": 20209
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 55.627,
+      "wallS": 56.223,
+      "apiS": 47.159,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 2.23,
+      "footprintBytes": 5750784,
+      "projectBytes": 5750784,
+      "cacheBytes": 0,
+      "binaryBytes": 5749974,
+      "failures": [],
+      "codeTokens": 1804,
+      "codeTokensCl100k": 1102,
+      "codeChars": 4265,
+      "codeLines": 118,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/LruCache.kt"
+        },
+        {
+          "path": "src/Main.kt"
+        }
+      ],
+      "perfMs": 218,
+      "perfRps": null,
+      "perfRssBytes": 151240704,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.26791760000000003,
+      "worktrees4Bytes": 23003136,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 284,
+        "source": 193
+      },
+      "deps": []
+    },
+    {
+      "id": "kotlin-lru-r3",
+      "lang": "kotlin",
+      "task": "lru",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2550214,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 4136,
+        "thinking": 710,
+        "cacheRead": 89827,
+        "cacheWrite": 19286
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 1,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 56.252,
+      "wallS": 56.844,
+      "apiS": 49.469,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 2.28,
+      "footprintBytes": 5750784,
+      "projectBytes": 5750784,
+      "cacheBytes": 0,
+      "binaryBytes": 5749310,
+      "failures": [],
+      "codeTokens": 1426,
+      "codeTokensCl100k": 879,
+      "codeChars": 3307,
+      "codeLines": 93,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/Main.kt"
+        }
+      ],
+      "perfMs": 338,
+      "perfRps": null,
+      "perfRssBytes": 172474368,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2550214,
+      "worktrees4Bytes": 23003136,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 193,
+        "scratch": 366
+      },
+      "deps": []
+    },
+    {
+      "id": "kotlin-wordfreq-r1",
+      "lang": "kotlin",
+      "task": "wordfreq",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2093156,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 2734,
+        "thinking": 714,
+        "cacheRead": 66258,
+        "cacheWrite": 17668
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 45.266,
+      "wallS": 45.914,
+      "apiS": 37.409,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 2.03,
+      "footprintBytes": 5750784,
+      "projectBytes": 5750784,
+      "cacheBytes": 0,
+      "binaryBytes": 5747228,
+      "failures": [],
+      "codeTokens": 999,
+      "codeTokensCl100k": 609,
+      "codeChars": 2272,
+      "codeLines": 64,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/Main.kt"
+        }
+      ],
+      "perfMs": 318,
+      "perfRps": null,
+      "perfRssBytes": 201031680,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2093156,
+      "worktrees4Bytes": 23003136,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 204,
+        "source": 192
+      },
+      "deps": []
+    },
+    {
+      "id": "kotlin-wordfreq-r2",
+      "lang": "kotlin",
+      "task": "wordfreq",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.22902540000000005,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 3234,
+        "thinking": 591,
+        "cacheRead": 87447,
+        "cacheWrite": 18351
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 3,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 48.836,
+      "wallS": 49.439,
+      "apiS": 38.431,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 2.09,
+      "footprintBytes": 5750784,
+      "projectBytes": 5750784,
+      "cacheBytes": 0,
+      "binaryBytes": 5747780,
+      "failures": [],
+      "codeTokens": 1210,
+      "codeTokensCl100k": 730,
+      "codeChars": 2776,
+      "codeLines": 97,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/Main.kt"
+        }
+      ],
+      "perfMs": 231,
+      "perfRps": null,
+      "perfRssBytes": 52133888,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.22902540000000005,
+      "worktrees4Bytes": 23003136,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 228,
+        "source": 188
+      },
+      "deps": []
+    },
+    {
+      "id": "kotlin-wordfreq-r3",
+      "lang": "kotlin",
+      "task": "wordfreq",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2428452,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 3778,
+        "thinking": 609,
+        "cacheRead": 87786,
+        "cacheWrite": 18710
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 55.143,
+      "wallS": 55.746,
+      "apiS": 45.747,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 2.16,
+      "footprintBytes": 5750784,
+      "projectBytes": 5750784,
+      "cacheBytes": 0,
+      "binaryBytes": 5748419,
+      "failures": [],
+      "codeTokens": 1710,
+      "codeTokensCl100k": 1125,
+      "codeChars": 4145,
+      "codeLines": 130,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/Main.kt"
+        }
+      ],
+      "perfMs": 227,
+      "perfRps": null,
+      "perfRssBytes": 202194944,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2428452,
+      "worktrees4Bytes": 23003136,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 198,
+        "scratch": 179
+      },
+      "deps": []
+    },
+    {
+      "id": "rust-calc-r1",
+      "lang": "rust",
+      "task": "calc",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2729098,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 5791,
+        "thinking": 723,
+        "cacheRead": 78689,
+        "cacheWrite": 17663
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 66.809,
+      "wallS": 67.427,
+      "apiS": 58.039,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 1.62,
+      "footprintBytes": 1220608,
+      "projectBytes": 1163264,
+      "cacheBytes": 57344,
+      "binaryBytes": 374576,
+      "failures": [],
+      "codeTokens": 3583,
+      "codeTokensCl100k": 2147,
+      "codeChars": 8571,
+      "codeLines": 286,
+      "fileTokens": [
+        {
+          "path": "Cargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/eval.rs"
+        },
+        {
+          "path": "src/main.rs"
+        }
+      ],
+      "perfMs": 19,
+      "perfRps": null,
+      "perfRssBytes": 8126464,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2729098,
+      "worktrees4Bytes": 4710400,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 19,
+        "source": 380
+      },
+      "deps": []
+    },
+    {
+      "id": "rust-calc-r2",
+      "lang": "rust",
+      "task": "calc",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.3110852,
+      "turns": 8,
+      "usage": {
+        "input": 14,
+        "output": 5555,
+        "thinking": 426,
+        "cacheRead": 117686,
+        "cacheWrite": 22049
+      },
+      "tools": {
+        "Bash": 5,
+        "Write": 1,
+        "Edit": 1
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 60.243,
+      "wallS": 60.873,
+      "apiS": 54.515,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 1.62,
+      "footprintBytes": 1220608,
+      "projectBytes": 1163264,
+      "cacheBytes": 57344,
+      "binaryBytes": 374640,
+      "failures": [],
+      "codeTokens": 3130,
+      "codeTokensCl100k": 1910,
+      "codeChars": 7400,
+      "codeLines": 257,
+      "fileTokens": [
+        {
+          "path": "Cargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.rs"
+        }
+      ],
+      "perfMs": 20,
+      "perfRps": null,
+      "perfRssBytes": 8126464,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.3110852,
+      "worktrees4Bytes": 4710400,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 25,
+        "source": 399
+      },
+      "deps": []
+    },
+    {
+      "id": "rust-calc-r3",
+      "lang": "rust",
+      "task": "calc",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.248632,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 3743,
+        "thinking": 245,
+        "cacheRead": 70380,
+        "cacheWrite": 19957
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 46.546,
+      "wallS": 47.223,
+      "apiS": 42.772,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 1.62,
+      "footprintBytes": 1220608,
+      "projectBytes": 1163264,
+      "cacheBytes": 57344,
+      "binaryBytes": 375264,
+      "failures": [],
+      "codeTokens": 2390,
+      "codeTokensCl100k": 1445,
+      "codeChars": 5819,
+      "codeLines": 204,
+      "fileTokens": [
+        {
+          "path": "Cargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.rs"
+        }
+      ],
+      "perfMs": 20,
+      "perfRps": null,
+      "perfRssBytes": 6782976,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.248632,
+      "worktrees4Bytes": 4710400,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 400,
+        "scratch": 24
+      },
+      "deps": []
+    },
+    {
+      "id": "rust-kvhttp-r1",
+      "lang": "rust",
+      "task": "kvhttp",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.604715,
+      "turns": 9,
+      "usage": {
+        "input": 18,
+        "output": 13206,
+        "thinking": 1260,
+        "cacheRead": 234815,
+        "cacheWrite": 36695
+      },
+      "tools": {
+        "Bash": 8
+      },
+      "builds": 4,
+      "compileErrors": 2,
+      "stdlibReads": 1,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 123.329,
+      "wallS": 123.929,
+      "apiS": 115.548,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 2.1,
+      "footprintBytes": 1392640,
+      "projectBytes": 1335296,
+      "cacheBytes": 57344,
+      "binaryBytes": 433808,
+      "failures": [],
+      "codeTokens": 8617,
+      "codeTokensCl100k": 5108,
+      "codeChars": 20586,
+      "codeLines": 687,
+      "fileTokens": [
+        {
+          "path": "Cargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/http.rs"
+        },
+        {
+          "path": "src/main.rs"
+        },
+        {
+          "path": "src/router.rs"
+        },
+        {
+          "path": "src/store.rs"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 26588,
+      "perfRssBytes": 6471680,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.604715,
+      "worktrees4Bytes": 5398528,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 25103,
+        "source": 25850
+      },
+      "deps": []
+    },
+    {
+      "id": "rust-kvhttp-r2",
+      "lang": "rust",
+      "task": "kvhttp",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.8062858,
+      "turns": 12,
+      "usage": {
+        "input": 22,
+        "output": 19018,
+        "thinking": 3332,
+        "cacheRead": 350869,
+        "cacheWrite": 44458
+      },
+      "tools": {
+        "Bash": 11
+      },
+      "builds": 4,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 177.152,
+      "wallS": 177.766,
+      "apiS": 169.687,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 2.21,
+      "footprintBytes": 1404928,
+      "projectBytes": 1347584,
+      "cacheBytes": 57344,
+      "binaryBytes": 434688,
+      "failures": [],
+      "codeTokens": 10725,
+      "codeTokensCl100k": 6540,
+      "codeChars": 25786,
+      "codeLines": 849,
+      "fileTokens": [
+        {
+          "path": "Cargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/http.rs"
+        },
+        {
+          "path": "src/main.rs"
+        },
+        {
+          "path": "src/routes.rs"
+        },
+        {
+          "path": "src/server.rs"
+        },
+        {
+          "path": "src/store.rs"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 25049,
+      "perfRssBytes": 25952256,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.8062858,
+      "worktrees4Bytes": 5447680,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 24300,
+        "source": 26002
+      },
+      "deps": []
+    },
+    {
+      "id": "rust-kvhttp-r3",
+      "lang": "rust",
+      "task": "kvhttp",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.7277971999999999,
+      "turns": 15,
+      "usage": {
+        "input": 26,
+        "output": 15779,
+        "thinking": 1795,
+        "cacheRead": 383606,
+        "cacheWrite": 41924
+      },
+      "tools": {
+        "Bash": 9,
+        "Write": 4,
+        "Edit": 1
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 2,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 156.557,
+      "wallS": 157.264,
+      "apiS": 149.75,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 3.35,
+      "footprintBytes": 15364096,
+      "projectBytes": 8421376,
+      "cacheBytes": 6942720,
+      "binaryBytes": 433568,
+      "failures": [],
+      "codeTokens": 9126,
+      "codeTokensCl100k": 5517,
+      "codeChars": 21664,
+      "codeLines": 740,
+      "fileTokens": [
+        {
+          "path": "Cargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/http.rs"
+        },
+        {
+          "path": "src/main.rs"
+        },
+        {
+          "path": "src/router.rs"
+        },
+        {
+          "path": "src/store.rs"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 23681,
+      "perfRssBytes": 6930432,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.7277971999999999,
+      "worktrees4Bytes": 40628224,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 26066,
+        "scratch": 25757
+      },
+      "deps": [
+        "libc"
+      ]
+    },
+    {
+      "id": "rust-lru-r1",
+      "lang": "rust",
+      "task": "lru",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.300837,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 5704,
+        "thinking": 561,
+        "cacheRead": 93465,
+        "cacheWrite": 21002
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 68.56,
+      "wallS": 69.149,
+      "apiS": 60.234,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 1.7,
+      "footprintBytes": 1269760,
+      "projectBytes": 1212416,
+      "cacheBytes": 57344,
+      "binaryBytes": 391552,
+      "failures": [],
+      "codeTokens": 3308,
+      "codeTokensCl100k": 2090,
+      "codeChars": 7978,
+      "codeLines": 310,
+      "fileTokens": [
+        {
+          "path": "Cargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/lru.rs"
+        },
+        {
+          "path": "src/main.rs"
+        }
+      ],
+      "perfMs": 73,
+      "perfRps": null,
+      "perfRssBytes": 37945344,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.300837,
+      "worktrees4Bytes": 4907008,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 75,
+        "source": 188
+      },
+      "deps": []
+    },
+    {
+      "id": "rust-lru-r2",
+      "lang": "rust",
+      "task": "lru",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.35482299999999994,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 6952,
+        "thinking": 1180,
+        "cacheRead": 124955,
+        "cacheWrite": 23842
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 3,
+      "compileErrors": 1,
+      "stdlibReads": 0,
+      "checkRuns": 3,
+      "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 72.683,
+      "wallS": 73.303,
+      "apiS": 66.682,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 1.72,
+      "footprintBytes": 1269760,
+      "projectBytes": 1212416,
+      "cacheBytes": 57344,
+      "binaryBytes": 392064,
+      "failures": [],
+      "codeTokens": 4056,
+      "codeTokensCl100k": 2504,
+      "codeChars": 9531,
+      "codeLines": 354,
+      "fileTokens": [
+        {
+          "path": "Cargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/lru_cache.rs"
+        },
+        {
+          "path": "src/main.rs"
+        }
+      ],
+      "perfMs": 73,
+      "perfRps": null,
+      "perfRssBytes": 39583744,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.35482299999999994,
+      "worktrees4Bytes": 4907008,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 76,
+        "source": 197
+      },
+      "deps": []
+    },
+    {
+      "id": "rust-lru-r3",
+      "lang": "rust",
+      "task": "lru",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.28566620000000004,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 5181,
+        "thinking": 689,
+        "cacheRead": 92511,
+        "cacheWrite": 20437
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 62.047,
+      "wallS": 62.638,
+      "apiS": 52.242,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 1.7,
+      "footprintBytes": 1269760,
+      "projectBytes": 1212416,
+      "cacheBytes": 57344,
+      "binaryBytes": 392064,
+      "failures": [],
+      "codeTokens": 2888,
+      "codeTokensCl100k": 1808,
+      "codeChars": 7093,
+      "codeLines": 271,
+      "fileTokens": [
+        {
+          "path": "Cargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/lru.rs"
+        },
+        {
+          "path": "src/main.rs"
+        }
+      ],
+      "perfMs": 73,
+      "perfRps": null,
+      "perfRssBytes": 39583744,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.28566620000000004,
+      "worktrees4Bytes": 4907008,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 190,
+        "scratch": 79
+      },
+      "deps": []
+    },
+    {
+      "id": "rust-wordfreq-r1",
+      "lang": "rust",
+      "task": "wordfreq",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.204595,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 2589,
+        "thinking": 228,
+        "cacheRead": 65995,
+        "cacheWrite": 17447
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 38.58,
+      "wallS": 39.235,
+      "apiS": 33.774,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 1.77,
+      "footprintBytes": 1269760,
+      "projectBytes": 1212416,
+      "cacheBytes": 57344,
+      "binaryBytes": 392640,
+      "failures": [],
+      "codeTokens": 1487,
+      "codeTokensCl100k": 952,
+      "codeChars": 3191,
+      "codeLines": 119,
+      "fileTokens": [
+        {
+          "path": "Cargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.rs"
+        }
+      ],
+      "perfMs": 149,
+      "perfRps": null,
+      "perfRssBytes": 85409792,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.204595,
+      "worktrees4Bytes": 4907008,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 221,
+        "source": 190
+      },
+      "deps": []
+    },
+    {
+      "id": "rust-wordfreq-r2",
+      "lang": "rust",
+      "task": "wordfreq",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.20839020000000003,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 2753,
+        "thinking": 249,
+        "cacheRead": 66131,
+        "cacheWrite": 17508
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 39.196,
+      "wallS": 39.844,
+      "apiS": 31.255,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 1.79,
+      "footprintBytes": 1269760,
+      "projectBytes": 1212416,
+      "cacheBytes": 57344,
+      "binaryBytes": 393024,
+      "failures": [],
+      "codeTokens": 1595,
+      "codeTokensCl100k": 995,
+      "codeChars": 3599,
+      "codeLines": 143,
+      "fileTokens": [
+        {
+          "path": "Cargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.rs"
+        }
+      ],
+      "perfMs": 155,
+      "perfRps": null,
+      "perfRssBytes": 1949696,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.20839020000000003,
+      "worktrees4Bytes": 4907008,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 153,
+        "source": 184
+      },
+      "deps": []
+    },
+    {
+      "id": "rust-wordfreq-r3",
+      "lang": "rust",
+      "task": "wordfreq",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.22742320000000002,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 3045,
+        "thinking": 314,
+        "cacheRead": 107776,
+        "cacheWrite": 18114
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 3,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 52.203,
+      "wallS": 52.906,
+      "apiS": 40.379,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 1.78,
+      "footprintBytes": 1269760,
+      "projectBytes": 1212416,
+      "cacheBytes": 57344,
+      "binaryBytes": 392016,
+      "failures": [],
+      "codeTokens": 1232,
+      "codeTokensCl100k": 786,
+      "codeChars": 2722,
+      "codeLines": 110,
+      "fileTokens": [
+        {
+          "path": "Cargo.toml"
+        },
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.rs"
+        }
+      ],
+      "perfMs": 141,
+      "perfRps": null,
+      "perfRssBytes": 60276736,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.22742320000000002,
+      "worktrees4Bytes": 4907008,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 195,
+        "scratch": 162
+      },
+      "deps": []
+    },
+    {
+      "id": "ts-calc-r1",
+      "lang": "ts",
+      "task": "calc",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.28285720000000003,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 4711,
+        "thinking": 722,
+        "cacheRead": 95146,
+        "cacheWrite": 21195
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 61.181,
+      "wallS": 61.825,
+      "apiS": 56.041,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 103,
+      "failures": [],
+      "codeTokens": 1998,
+      "codeTokensCl100k": 1281,
+      "codeChars": 4607,
+      "codeLines": 169,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.ts"
+        }
+      ],
+      "perfMs": 236,
+      "perfRps": null,
+      "perfRssBytes": 149241856,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.28285720000000003,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 191,
+        "source": 397
+      },
+      "deps": []
+    },
+    {
+      "id": "ts-calc-r2",
+      "lang": "ts",
+      "task": "calc",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.341136,
+      "turns": 8,
+      "usage": {
+        "input": 16,
+        "output": 5828,
+        "thinking": 1104,
+        "cacheRead": 152000,
+        "cacheWrite": 24264
+      },
+      "tools": {
+        "Bash": 7
+      },
+      "builds": 4,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 3,
+      "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 66.444,
+      "wallS": 67.048,
+      "apiS": 61.285,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 93,
+      "failures": [],
+      "codeTokens": 2083,
+      "codeTokensCl100k": 1307,
+      "codeChars": 4849,
+      "codeLines": 170,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.ts"
+        }
+      ],
+      "perfMs": 235,
+      "perfRps": null,
+      "perfRssBytes": 146767872,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.341136,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 224,
+        "source": 382
+      },
+      "deps": []
+    },
+    {
+      "id": "ts-calc-r3",
+      "lang": "ts",
+      "task": "calc",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2610108,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 3959,
+        "thinking": 658,
+        "cacheRead": 93594,
+        "cacheWrite": 20383
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 43.309,
+      "wallS": 43.863,
+      "apiS": 39.882,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 93,
+      "failures": [],
+      "codeTokens": 2020,
+      "codeTokensCl100k": 1286,
+      "codeChars": 4781,
+      "codeLines": 166,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/calc.ts"
+        }
+      ],
+      "perfMs": 179,
+      "perfRps": null,
+      "perfRssBytes": 153026560,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2610108,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 394,
+        "scratch": 222
+      },
+      "deps": []
+    },
+    {
+      "id": "ts-kvhttp-r1",
+      "lang": "ts",
+      "task": "kvhttp",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.5333834000000001,
+      "turns": 9,
+      "usage": {
+        "input": 18,
+        "output": 10662,
+        "thinking": 2589,
+        "cacheRead": 220157,
+        "cacheWrite": 34505
+      },
+      "tools": {
+        "Bash": 8
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 234.944,
+      "wallS": 235.558,
+      "apiS": 108.3,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 1.16,
+      "footprintBytes": 44703744,
+      "projectBytes": 34521088,
+      "cacheBytes": 10182656,
+      "binaryBytes": 103,
+      "failures": [],
+      "codeTokens": 5683,
+      "codeTokensCl100k": 3477,
+      "codeChars": 13335,
+      "codeLines": 424,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "package.json"
+        },
+        {
+          "path": "src/http.ts"
+        },
+        {
+          "path": "src/kvStore.ts"
+        },
+        {
+          "path": "src/main.ts"
+        },
+        {
+          "path": "src/router.ts"
+        },
+        {
+          "path": "tsconfig.json"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 28025,
+      "perfRssBytes": 97533952,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.5333834000000001,
+      "worktrees4Bytes": 148267008,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 27908,
+        "source": 25531
+      },
+      "deps": []
+    },
+    {
+      "id": "ts-kvhttp-r2",
+      "lang": "ts",
+      "task": "kvhttp",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.45788300000000004,
+      "turns": 9,
+      "usage": {
+        "input": 18,
+        "output": 7727,
+        "thinking": 2361,
+        "cacheRead": 214555,
+        "cacheWrite": 32545
+      },
+      "tools": {
+        "Bash": 8
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 87.723,
+      "wallS": 88.365,
+      "apiS": 81.923,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 1.16,
+      "footprintBytes": 44703744,
+      "projectBytes": 34521088,
+      "cacheBytes": 10182656,
+      "binaryBytes": 144,
+      "failures": [],
+      "codeTokens": 3514,
+      "codeTokensCl100k": 2163,
+      "codeChars": 8496,
+      "codeLines": 289,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "package.json"
+        },
+        {
+          "path": "src/http.ts"
+        },
+        {
+          "path": "src/kvStore.ts"
+        },
+        {
+          "path": "src/main.ts"
+        },
+        {
+          "path": "src/routes.ts"
+        },
+        {
+          "path": "src/server.ts"
+        },
+        {
+          "path": "tsconfig.json"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 26839,
+      "perfRssBytes": 106348544,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.45788300000000004,
+      "worktrees4Bytes": 148267008,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 27167,
+        "source": 25575
+      },
+      "deps": []
+    },
+    {
+      "id": "ts-kvhttp-r3",
+      "lang": "ts",
+      "task": "kvhttp",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.6862388,
+      "turns": 10,
+      "usage": {
+        "input": 20,
+        "output": 15503,
+        "thinking": 6358,
+        "cacheRead": 278094,
+        "cacheWrite": 40060
+      },
+      "tools": {
+        "Bash": 9
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 280.745,
+      "wallS": 281.38,
+      "apiS": 154.719,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 1.08,
+      "footprintBytes": 31879168,
+      "projectBytes": 26976256,
+      "cacheBytes": 4902912,
+      "binaryBytes": 144,
+      "failures": [],
+      "codeTokens": 6558,
+      "codeTokensCl100k": 4027,
+      "codeChars": 15378,
+      "codeLines": 504,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "package.json"
+        },
+        {
+          "path": "src/http.ts"
+        },
+        {
+          "path": "src/main.ts"
+        },
+        {
+          "path": "src/router.ts"
+        },
+        {
+          "path": "src/server.ts"
+        },
+        {
+          "path": "src/store.ts"
+        },
+        {
+          "path": "tsconfig.json"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 26817,
+      "perfRssBytes": 92979200,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.6862388,
+      "worktrees4Bytes": 112807936,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 26603,
+        "scratch": 26684
+      },
+      "deps": []
+    },
+    {
+      "id": "ts-lru-r1",
+      "lang": "ts",
+      "task": "lru",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.22272860000000003,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 3185,
+        "thinking": 630,
+        "cacheRead": 67543,
+        "cacheWrite": 18185
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 1,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 39.721,
+      "wallS": 40.429,
+      "apiS": 36.83,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 103,
+      "failures": [],
+      "codeTokens": 1177,
+      "codeTokensCl100k": 742,
+      "codeChars": 2861,
+      "codeLines": 103,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.ts"
+        }
+      ],
+      "perfMs": 3840,
+      "perfRps": null,
+      "perfRssBytes": 238272512,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.22272860000000003,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 3606,
+        "source": 197
+      },
+      "deps": []
+    },
+    {
+      "id": "ts-lru-r2",
+      "lang": "ts",
+      "task": "lru",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.27600420000000003,
+      "turns": 5,
+      "usage": {
+        "input": 10,
+        "output": 4653,
+        "thinking": 1180,
+        "cacheRead": 70561,
+        "cacheWrite": 21099
+      },
+      "tools": {
+        "Bash": 4
+      },
+      "builds": 2,
+      "compileErrors": 1,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 49.688,
+      "wallS": 50.263,
+      "apiS": 46.921,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 0.28,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 104,
+      "failures": [],
+      "codeTokens": 2470,
+      "codeTokensCl100k": 1579,
+      "codeChars": 5849,
+      "codeLines": 205,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/lru-cache.ts"
+        },
+        {
+          "path": "src/main.ts"
+        }
+      ],
+      "perfMs": 419,
+      "perfRps": null,
+      "perfRssBytes": 291618816,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.27600420000000003,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 317,
+        "source": 202
+      },
+      "deps": []
+    },
+    {
+      "id": "ts-lru-r3",
+      "lang": "ts",
+      "task": "lru",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.31992760000000003,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 6067,
+        "thinking": 1289,
+        "cacheRead": 115898,
+        "cacheWrite": 21919
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 74.117,
+      "wallS": 74.735,
+      "apiS": 64.331,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 103,
+      "failures": [],
+      "codeTokens": 2506,
+      "codeTokensCl100k": 1628,
+      "codeChars": 6000,
+      "codeLines": 203,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/lru-cache.ts"
+        },
+        {
+          "path": "src/main.ts"
+        }
+      ],
+      "perfMs": 325,
+      "perfRps": null,
+      "perfRssBytes": 200474624,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.31992760000000003,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 199,
+        "scratch": 317
+      },
+      "deps": []
+    },
+    {
+      "id": "ts-wordfreq-r1",
+      "lang": "ts",
+      "task": "wordfreq",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.22240719999999997,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 2982,
+        "thinking": 550,
+        "cacheRead": 86996,
+        "cacheWrite": 18165
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 2,
+      "compileErrors": 1,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 43.084,
+      "wallS": 43.66,
+      "apiS": 37.697,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 103,
+      "failures": [],
+      "codeTokens": 1236,
+      "codeTokensCl100k": 818,
+      "codeChars": 2756,
+      "codeLines": 91,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "package.json"
+        },
+        {
+          "path": "src/main.ts"
+        }
+      ],
+      "perfMs": 963,
+      "perfRps": null,
+      "perfRssBytes": 83460096,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.22240719999999997,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 863,
+        "source": 192
+      },
+      "deps": []
+    },
+    {
+      "id": "ts-wordfreq-r2",
+      "lang": "ts",
+      "task": "wordfreq",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.22428839999999997,
+      "turns": 6,
+      "usage": {
+        "input": 12,
+        "output": 3131,
+        "thinking": 605,
+        "cacheRead": 87502,
+        "cacheWrite": 18015
+      },
+      "tools": {
+        "Bash": 5
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 40.835,
+      "wallS": 41.589,
+      "apiS": 36.014,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 103,
+      "failures": [],
+      "codeTokens": 1351,
+      "codeTokensCl100k": 870,
+      "codeChars": 2934,
+      "codeLines": 108,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "package.json"
+        },
+        {
+          "path": "src/main.ts"
+        },
+        {
+          "path": "tsconfig.json"
+        }
+      ],
+      "perfMs": 931,
+      "perfRps": null,
+      "perfRssBytes": 83640320,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.22428839999999997,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 882,
+        "source": 191
+      },
+      "deps": []
+    },
+    {
+      "id": "ts-wordfreq-r3",
+      "lang": "ts",
+      "task": "wordfreq",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2517898,
+      "turns": 8,
+      "usage": {
+        "input": 16,
+        "output": 3678,
+        "thinking": 533,
+        "cacheRead": 131389,
+        "cacheWrite": 18986
+      },
+      "tools": {
+        "Bash": 7
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 0,
+      "checkRuns": 2,
+      "firstCheckPass": false,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 59.672,
+      "wallS": 60.218,
+      "apiS": 52.208,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 0.01,
+      "footprintBytes": 0,
+      "projectBytes": 0,
+      "cacheBytes": 0,
+      "binaryBytes": 103,
+      "failures": [],
+      "codeTokens": 1180,
+      "codeTokensCl100k": 763,
+      "codeChars": 2522,
+      "codeLines": 91,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.ts"
+        }
+      ],
+      "perfMs": 890,
+      "perfRps": null,
+      "perfRssBytes": 172949504,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2517898,
+      "worktrees4Bytes": 0,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 200,
+        "scratch": 739
+      },
+      "deps": []
+    },
+    {
+      "id": "zig-calc-r1",
+      "lang": "zig",
+      "task": "calc",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.3300768,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 5641,
+        "thinking": 720,
+        "cacheRead": 118404,
+        "cacheWrite": 24190
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 1,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 69.901,
+      "wallS": 70.477,
+      "apiS": 59.353,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 4.79,
+      "footprintBytes": 47640576,
+      "projectBytes": 47640576,
+      "cacheBytes": 0,
+      "binaryBytes": 359760,
+      "failures": [],
+      "codeTokens": 3191,
+      "codeTokensCl100k": 1962,
+      "codeChars": 7823,
+      "codeLines": 219,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.zig"
+        }
+      ],
+      "perfMs": 17,
+      "perfRps": null,
+      "perfRssBytes": 6881280,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.3300768,
+      "worktrees4Bytes": 190562304,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 22,
+        "source": 386
+      },
+      "deps": []
+    },
+    {
+      "id": "zig-calc-r2",
+      "lang": "zig",
+      "task": "calc",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.3409844,
+      "turns": 11,
+      "usage": {
+        "input": 20,
+        "output": 6865,
+        "thinking": 825,
+        "cacheRead": 162382,
+        "cacheWrite": 21391
+      },
+      "tools": {
+        "Bash": 9,
+        "Write": 1
+      },
+      "builds": 3,
+      "compileErrors": 1,
+      "stdlibReads": 2,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 89.911,
+      "wallS": 90.506,
+      "apiS": 68.297,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 8.11,
+      "footprintBytes": 66953216,
+      "projectBytes": 66953216,
+      "cacheBytes": 0,
+      "binaryBytes": 396880,
+      "failures": [],
+      "codeTokens": 3887,
+      "codeTokensCl100k": 2474,
+      "codeChars": 9323,
+      "codeLines": 301,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "build.zig"
+        },
+        {
+          "path": "src/main.zig"
+        }
+      ],
+      "perfMs": 18,
+      "perfRps": null,
+      "perfRssBytes": 6914048,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.3409844,
+      "worktrees4Bytes": 267812864,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 20,
+        "source": 404
+      },
+      "deps": []
+    },
+    {
+      "id": "zig-calc-r3",
+      "lang": "zig",
+      "task": "calc",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.35446279999999997,
+      "turns": 10,
+      "usage": {
+        "input": 18,
+        "output": 5971,
+        "thinking": 624,
+        "cacheRead": 169814,
+        "cacheWrite": 25126
+      },
+      "tools": {
+        "Bash": 8,
+        "Write": 1
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 3,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 72.588,
+      "wallS": 73.58,
+      "apiS": 66.39,
+      "solved": true,
+      "pass": 15,
+      "total": 15,
+      "buildOk": true,
+      "buildSecs": 2.21,
+      "footprintBytes": 43614208,
+      "projectBytes": 43614208,
+      "cacheBytes": 0,
+      "binaryBytes": 206080,
+      "failures": [],
+      "codeTokens": 3417,
+      "codeTokensCl100k": 2184,
+      "codeChars": 8281,
+      "codeLines": 260,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.zig"
+        }
+      ],
+      "perfMs": 19,
+      "perfRps": null,
+      "perfRssBytes": 6881280,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.35446279999999997,
+      "worktrees4Bytes": 174456832,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 383,
+        "scratch": 20
+      },
+      "deps": []
+    },
+    {
+      "id": "zig-kvhttp-r1",
+      "lang": "zig",
+      "task": "kvhttp",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 1.4937474000000002,
+      "turns": 29,
+      "usage": {
+        "input": 54,
+        "output": 30503,
+        "thinking": 10735,
+        "cacheRead": 1314157,
+        "cacheWrite": 77580
+      },
+      "tools": {
+        "Bash": 24,
+        "Write": 4
+      },
+      "builds": 4,
+      "compileErrors": 2,
+      "stdlibReads": 14,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 330.272,
+      "wallS": 330.866,
+      "apiS": 308.037,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 8.77,
+      "footprintBytes": 68272128,
+      "projectBytes": 22888448,
+      "cacheBytes": 45383680,
+      "binaryBytes": 498376,
+      "failures": [],
+      "codeTokens": 11870,
+      "codeTokensCl100k": 7455,
+      "codeChars": 27735,
+      "codeLines": 760,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "build.zig"
+        },
+        {
+          "path": "build.zig.zon"
+        },
+        {
+          "path": "src/KvStore.zig"
+        },
+        {
+          "path": "src/Router.zig"
+        },
+        {
+          "path": "src/http.zig"
+        },
+        {
+          "path": "src/main.zig"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 24650,
+      "perfRssBytes": 39337984,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 1.4937474000000002,
+      "worktrees4Bytes": 136937472,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 23417,
+        "source": 24404
+      },
+      "deps": []
+    },
+    {
+      "id": "zig-kvhttp-r2",
+      "lang": "zig",
+      "task": "kvhttp",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 1.4319018000000001,
+      "turns": 29,
+      "usage": {
+        "input": 56,
+        "output": 26778,
+        "thinking": 8597,
+        "cacheRead": 1413309,
+        "cacheWrite": 76682
+      },
+      "tools": {
+        "Bash": 28
+      },
+      "builds": 5,
+      "compileErrors": 1,
+      "stdlibReads": 17,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 307.744,
+      "wallS": 308.36,
+      "apiS": 276.706,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 8.75,
+      "footprintBytes": 67284992,
+      "projectBytes": 21901312,
+      "cacheBytes": 45383680,
+      "binaryBytes": 435184,
+      "failures": [],
+      "codeTokens": 11435,
+      "codeTokensCl100k": 7285,
+      "codeChars": 27658,
+      "codeLines": 787,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "build.zig"
+        },
+        {
+          "path": "build.zig.zon"
+        },
+        {
+          "path": "src/KvStore.zig"
+        },
+        {
+          "path": "src/Server.zig"
+        },
+        {
+          "path": "src/http.zig"
+        },
+        {
+          "path": "src/main.zig"
+        },
+        {
+          "path": "src/routes.zig"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 7312,
+      "perfRssBytes": 260849664,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 1.4319018000000001,
+      "worktrees4Bytes": 132988928,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 26761,
+        "source": 26383
+      },
+      "deps": []
+    },
+    {
+      "id": "zig-kvhttp-r3",
+      "lang": "zig",
+      "task": "kvhttp",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 1.5459200000000002,
+      "turns": 33,
+      "usage": {
+        "input": 62,
+        "output": 27066,
+        "thinking": 8324,
+        "cacheRead": 1729600,
+        "cacheWrite": 82304
+      },
+      "tools": {
+        "Bash": 28,
+        "Write": 4
+      },
+      "builds": 5,
+      "compileErrors": 1,
+      "stdlibReads": 18,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 320.664,
+      "wallS": 321.465,
+      "apiS": 297.009,
+      "solved": true,
+      "pass": 11,
+      "total": 11,
+      "buildOk": true,
+      "buildSecs": 8.66,
+      "footprintBytes": 67284992,
+      "projectBytes": 21901312,
+      "cacheBytes": 45383680,
+      "binaryBytes": 437472,
+      "failures": [],
+      "codeTokens": 11153,
+      "codeTokensCl100k": 6982,
+      "codeChars": 26154,
+      "codeLines": 706,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "build.zig"
+        },
+        {
+          "path": "build.zig.zon"
+        },
+        {
+          "path": "src/Store.zig"
+        },
+        {
+          "path": "src/http.zig"
+        },
+        {
+          "path": "src/main.zig"
+        },
+        {
+          "path": "src/router.zig"
+        }
+      ],
+      "perfMs": null,
+      "perfRps": 26798,
+      "perfRssBytes": 45481984,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 1.5459200000000002,
+      "worktrees4Bytes": 132988928,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 26122,
+        "scratch": 24502
+      },
+      "deps": []
+    },
+    {
+      "id": "zig-lru-r1",
+      "lang": "zig",
+      "task": "lru",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.9776151999999999,
+      "turns": 23,
+      "usage": {
+        "input": 46,
+        "output": 18063,
+        "thinking": 4106,
+        "cacheRead": 894176,
+        "cacheWrite": 54667
+      },
+      "tools": {
+        "Bash": 21,
+        "Write": 1
+      },
+      "builds": 8,
+      "compileErrors": 0,
+      "stdlibReads": 6,
+      "checkRuns": 4,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 243.161,
+      "wallS": 243.736,
+      "apiS": 206.483,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 8.54,
+      "footprintBytes": 66998272,
+      "projectBytes": 21614592,
+      "cacheBytes": 45383680,
+      "binaryBytes": 397168,
+      "failures": [],
+      "codeTokens": 3902,
+      "codeTokensCl100k": 2478,
+      "codeChars": 9130,
+      "codeLines": 246,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "build.zig"
+        },
+        {
+          "path": "src/main.zig"
+        }
+      ],
+      "perfMs": 47,
+      "perfRps": null,
+      "perfRssBytes": 28819456,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.9776151999999999,
+      "worktrees4Bytes": 131842048,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 47,
+        "source": 191
+      },
+      "deps": []
+    },
+    {
+      "id": "zig-lru-r2",
+      "lang": "zig",
+      "task": "lru",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.46907439999999995,
+      "turns": 10,
+      "usage": {
+        "input": 20,
+        "output": 9690,
+        "thinking": 2354,
+        "cacheRead": 211452,
+        "cacheWrite": 29113
+      },
+      "tools": {
+        "Bash": 9
+      },
+      "builds": 3,
+      "compileErrors": 0,
+      "stdlibReads": 3,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 118.199,
+      "wallS": 118.826,
+      "apiS": 99.992,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 8.19,
+      "footprintBytes": 66592768,
+      "projectBytes": 21209088,
+      "cacheBytes": 45383680,
+      "binaryBytes": 397280,
+      "failures": [],
+      "codeTokens": 4620,
+      "codeTokensCl100k": 2935,
+      "codeChars": 10739,
+      "codeLines": 317,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "build.zig"
+        },
+        {
+          "path": "src/LruCache.zig"
+        },
+        {
+          "path": "src/main.zig"
+        }
+      ],
+      "perfMs": 5595,
+      "perfRps": null,
+      "perfRssBytes": 28131328,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.46907439999999995,
+      "worktrees4Bytes": 130220032,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 53,
+        "source": 193
+      },
+      "deps": []
+    },
+    {
+      "id": "zig-lru-r3",
+      "lang": "zig",
+      "task": "lru",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.7606204000000001,
+      "turns": 19,
+      "usage": {
+        "input": 32,
+        "output": 13921,
+        "thinking": 5284,
+        "cacheRead": 550522,
+        "cacheWrite": 46496
+      },
+      "tools": {
+        "Bash": 15,
+        "Write": 3
+      },
+      "builds": 4,
+      "compileErrors": 0,
+      "stdlibReads": 6,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 177.412,
+      "wallS": 178.043,
+      "apiS": 158.464,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 8.5,
+      "footprintBytes": 67088384,
+      "projectBytes": 21704704,
+      "cacheBytes": 45383680,
+      "binaryBytes": 414016,
+      "failures": [],
+      "codeTokens": 4939,
+      "codeTokensCl100k": 3118,
+      "codeChars": 11731,
+      "codeLines": 349,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "build.zig"
+        },
+        {
+          "path": "src/LruCache.zig"
+        },
+        {
+          "path": "src/main.zig"
+        }
+      ],
+      "perfMs": 55,
+      "perfRps": null,
+      "perfRssBytes": 27049984,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.7606204000000001,
+      "worktrees4Bytes": 132202496,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 195,
+        "scratch": 5598
+      },
+      "deps": []
+    },
+    {
+      "id": "zig-wordfreq-r1",
+      "lang": "zig",
+      "task": "wordfreq",
+      "rep": 1,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.2818506,
+      "turns": 9,
+      "usage": {
+        "input": 18,
+        "output": 4071,
+        "thinking": 646,
+        "cacheRead": 161313,
+        "cacheWrite": 21012
+      },
+      "tools": {
+        "Bash": 8
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 2,
+      "checkRuns": 2,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 68.377,
+      "wallS": 69.026,
+      "apiS": 59.725,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 2.19,
+      "footprintBytes": 43597824,
+      "projectBytes": 225280,
+      "cacheBytes": 43372544,
+      "binaryBytes": 206080,
+      "failures": [],
+      "codeTokens": 1649,
+      "codeTokensCl100k": 1049,
+      "codeChars": 3701,
+      "codeLines": 111,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.zig"
+        }
+      ],
+      "perfMs": 112,
+      "perfRps": null,
+      "perfRssBytes": 58130432,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.2818506,
+      "worktrees4Bytes": 44273664,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 118,
+        "source": 197
+      },
+      "deps": []
+    },
+    {
+      "id": "zig-wordfreq-r2",
+      "lang": "zig",
+      "task": "wordfreq",
+      "rep": 2,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.3233368,
+      "turns": 10,
+      "usage": {
+        "input": 20,
+        "output": 5070,
+        "thinking": 1036,
+        "cacheRead": 185484,
+        "cacheWrite": 23095
+      },
+      "tools": {
+        "Bash": 9
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 5,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 64.558,
+      "wallS": 65.189,
+      "apiS": 60.751,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 2.13,
+      "footprintBytes": 43601920,
+      "projectBytes": 208896,
+      "cacheBytes": 43393024,
+      "binaryBytes": 206080,
+      "failures": [],
+      "codeTokens": 1933,
+      "codeTokensCl100k": 1212,
+      "codeChars": 4862,
+      "codeLines": 137,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.zig"
+        }
+      ],
+      "perfMs": 134,
+      "perfRps": null,
+      "perfRssBytes": 1785856,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.3233368,
+      "worktrees4Bytes": 44228608,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "scratch": 146,
+        "source": 193
+      },
+      "deps": []
+    },
+    {
+      "id": "zig-wordfreq-r3",
+      "lang": "zig",
+      "task": "wordfreq",
+      "rep": 3,
+      "finished": true,
+      "terminalReason": "completed",
+      "costUsd": 0.26249100000000003,
+      "turns": 7,
+      "usage": {
+        "input": 14,
+        "output": 3978,
+        "thinking": 641,
+        "cacheRead": 108015,
+        "cacheWrite": 20159
+      },
+      "tools": {
+        "Bash": 6
+      },
+      "builds": 2,
+      "compileErrors": 0,
+      "stdlibReads": 3,
+      "checkRuns": 1,
+      "firstCheckPass": true,
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "durationS": 56.918,
+      "wallS": 57.503,
+      "apiS": 50.613,
+      "solved": true,
+      "pass": 14,
+      "total": 14,
+      "buildOk": true,
+      "buildSecs": 2.17,
+      "footprintBytes": 43601920,
+      "projectBytes": 43601920,
+      "cacheBytes": 0,
+      "binaryBytes": 206080,
+      "failures": [],
+      "codeTokens": 1917,
+      "codeTokensCl100k": 1241,
+      "codeChars": 4343,
+      "codeLines": 130,
+      "fileTokens": [
+        {
+          "path": "build.sh"
+        },
+        {
+          "path": "src/main.zig"
+        }
+      ],
+      "perfMs": 114,
+      "perfRps": null,
+      "perfRssBytes": 58097664,
+      "fixed": null,
+      "repairCostUsd": null,
+      "repairDurationS": null,
+      "repairOutput": null,
+      "repairAttempts": 0,
+      "repairLog": [],
+      "works": true,
+      "costToGreenUsd": 0.26249100000000003,
+      "worktrees4Bytes": 174407680,
+      "devloopTargetBytes": null,
+      "swarm": null,
+      "twinPerf": {
+        "source": 201,
+        "scratch": 116
+      },
+      "deps": []
+    }
+  ]
+}

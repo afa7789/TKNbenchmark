@@ -1,0 +1,25 @@
+{
+  "id": "ts-lru-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Produces ./app: a launcher that runs the LRU simulator with Node.js,\n# which executes the TypeScript sources natively (type stripping).\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec node --disable-warning=ExperimentalWarning \"$(dirname \"$0\")/src/main.ts\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "package.json",
+      "text": "{\n  \"name\": \"lru\",\n  \"private\": true,\n  \"type\": \"module\"\n}\n"
+    },
+    {
+      "path": "src/lru.ts",
+      "text": "const NIL = -1;\n\n/**\n * Fixed-capacity LRU cache backed by a hash map and an intrusive doubly\n * linked list stored in typed arrays. All operations are O(1) expected.\n */\nexport class LRUCache<K, V> {\n  readonly capacity: number;\n  readonly #index = new Map<K, number>(); // key -> slot\n  readonly #keys: (K | undefined)[];\n  readonly #values: (V | undefined)[];\n  readonly #prev: Int32Array;\n  readonly #next: Int32Array;\n  readonly #freeList: number[] = [];\n  #head = NIL; // most recently used\n  #tail = NIL; // least recently used\n  #nextUnused = 0;\n\n  constructor(capacity: number) {\n    if (!Number.isInteger(capacity) || capacity < 1) {\n      throw new RangeError(`capacity must be a positive integer, got ${capacity}`);\n    }\n    this.capacity = capacity;\n    this.#keys = new Array<K | undefined>(capacity);\n    this.#values = new Array<V | undefined>(capacity);\n    this.#prev = new Int32Array(capacity);\n    this.#next = new Int32Array(capacity);\n  }\n\n  get size(): number {\n    return this.#index.size;\n  }\n\n  get(key: K): V | undefined {\n    const slot = this.#index.get(key);\n    if (slot === undefined) return undefined;\n    this.#moveToFront(slot);\n    return this.#values[slot];\n  }\n\n  set(key: K, value: V): void {\n    const existing = this.#index.get(key);\n    if (existing !== undefined) {\n      this.#values[existing] = value;\n      this.#moveToFront(existing);\n      return;\n    }\n    if (this.#index.size >= this.capacity) this.#release(this.#tail);\n    const slot = this.#freeList.pop() ?? this.#nextUnused++;\n    this.#keys[slot] = key;\n    this.#values[slot] = value;\n    this.#index.set(key, slot);\n    this.#pushFront(slot);\n  }\n\n  delete(key: K): boolean {\n    const slot = this.#index.get(key);\n    if (slot === undefined) return false;\n    this.#release(slot);\n    return true;\n  }\n\n  #release(slot: number): void {\n    this.#unlink(slot);\n    this.#index.delete(this.#keys[slot] as K);\n    this.#keys[slot] = undefined;\n    this.#values[slot] = undefined;\n    this.#freeList.push(slot);\n  }\n\n  #unlink(slot: number): void {\n    const p = this.#prev[slot];\n    const n = this.#next[slot];\n    if (p === NIL) this.#head = n;\n    else this.#next[p] = n;\n    if (n === NIL) this.#tail = p;\n    else this.#prev[n] = p;\n  }\n\n  #pushFront(slot: number): void {\n    this.#prev[slot] = NIL;\n    this.#next[slot] = this.#head;\n    if (this.#head === NIL) this.#tail = slot;\n    else this.#prev[this.#head] = slot;\n    this.#head = slot;\n  }\n\n  #moveToFront(slot: number): void {\n    if (slot === this.#head) return;\n    this.#unlink(slot);\n    this.#pushFront(slot);\n  }\n}\n"
+    },
+    {
+      "path": "src/main.ts",
+      "text": "import { readFileSync } from 'node:fs';\nimport { LRUCache } from './lru.ts';\n\n/** Executes the command script and returns everything it prints. */\nexport function run(input: string): string {\n  const lines = input.split('\\n');\n  const capacity = Number.parseInt(lines[0], 10);\n  const cache = new LRUCache<string, string>(capacity);\n  const out: string[] = [];\n\n  for (let i = 1; i < lines.length; i++) {\n    let line = lines[i];\n    if (line.endsWith('\\r')) line = line.slice(0, -1);\n    if (line === '') continue;\n\n    const [command, key, value] = line.split(' ');\n    switch (command) {\n      case 'SET':\n        cache.set(key, value);\n        break;\n      case 'GET':\n        out.push(cache.get(key) ?? 'NULL');\n        break;\n      case 'DEL':\n        out.push(cache.delete(key) ? '1' : '0');\n        break;\n      case 'SIZE':\n        out.push(String(cache.size));\n        break;\n      default:\n        break; // ignore unknown commands\n    }\n  }\n\n  return out.length > 0 ? out.join('\\n') + '\\n' : '';\n}\n\nfunction main(): void {\n  const output = run(readFileSync(0, 'latin1'));\n  if (output) process.stdout.write(output, 'latin1');\n}\n\nmain();\n"
+    },
+    {
+      "path": "tsconfig.json",
+      "text": "{\n  \"compilerOptions\": {\n    \"target\": \"esnext\",\n    \"module\": \"nodenext\",\n    \"strict\": true,\n    \"noEmit\": true,\n    \"allowImportingTsExtensions\": true,\n    \"erasableSyntaxOnly\": true,\n    \"verbatimModuleSyntax\": true,\n    \"noUncheckedIndexedAccess\": false,\n    \"types\": [\"node\"]\n  },\n  \"include\": [\"src\"]\n}\n"
+    }
+  ]
+}

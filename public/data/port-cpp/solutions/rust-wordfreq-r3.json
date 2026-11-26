@@ -1,0 +1,17 @@
+{
+  "id": "rust-wordfreq-r3",
+  "files": [
+    {
+      "path": "Cargo.toml",
+      "text": "[package]\nname = \"wordfreq\"\nversion = \"0.1.0\"\nedition = \"2024\"\n\n[dependencies]\n\n[profile.release]\nopt-level = 3\nlto = true\ncodegen-units = 1\npanic = \"abort\"\n"
+    },
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\ncargo build --release --quiet\ncp target/release/wordfreq app\n"
+    },
+    {
+      "path": "src/main.rs",
+      "text": "//! wordfreq: print the 10 most frequent ASCII-letter words read from stdin.\n\nuse std::cmp::Ordering;\nuse std::collections::HashMap;\nuse std::io::{self, Read, Write};\n\nconst TOP_N: usize = 10;\n\n/// Lowercases `text` in place and counts each word (maximal run of ASCII\n/// letters). Keys borrow from `text`.\nfn count_words(text: &mut [u8]) -> HashMap<&[u8], u64> {\n    text.make_ascii_lowercase();\n    let text: &[u8] = text;\n\n    let mut counts: HashMap<&[u8], u64> = HashMap::with_capacity(1 << 12);\n    for word in text\n        .split(|b| !b.is_ascii_lowercase())\n        .filter(|w| !w.is_empty())\n    {\n        *counts.entry(word).or_insert(0) += 1;\n    }\n    counts\n}\n\n/// Orders by count descending, then word ascending (byte order).\nfn by_rank(a: &(&[u8], u64), b: &(&[u8], u64)) -> Ordering {\n    b.1.cmp(&a.1).then_with(|| a.0.cmp(b.0))\n}\n\n/// Returns the `n` highest-ranked entries, sorted by rank.\nfn top_words(counts: HashMap<&[u8], u64>, n: usize) -> Vec<(&[u8], u64)> {\n    let mut entries: Vec<_> = counts.into_iter().collect();\n    if entries.len() > n {\n        if n == 0 {\n            return Vec::new();\n        }\n        entries.select_nth_unstable_by(n - 1, by_rank);\n        entries.truncate(n);\n    }\n    entries.sort_unstable_by(by_rank);\n    entries\n}\n\nfn main() -> io::Result<()> {\n    let mut text = Vec::new();\n    io::stdin().lock().read_to_end(&mut text)?;\n\n    let top = top_words(count_words(&mut text), TOP_N);\n\n    let mut out = Vec::new();\n    for (word, count) in top {\n        write!(out, \"{count} \")?;\n        out.extend_from_slice(word);\n        out.push(b'\\n');\n    }\n    io::stdout().lock().write_all(&out)\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    fn run(input: &str) -> Vec<(String, u64)> {\n        let mut text = input.as_bytes().to_vec();\n        top_words(count_words(&mut text), TOP_N)\n            .into_iter()\n            .map(|(w, c)| (String::from_utf8(w.to_vec()).unwrap(), c))\n            .collect()\n    }\n\n    #[test]\n    fn example() {\n        assert_eq!(\n            run(\"The cat and the hat.\"),\n            vec![\n                (\"the\".into(), 2),\n                (\"and\".into(), 1),\n                (\"cat\".into(), 1),\n                (\"hat\".into(), 1)\n            ]\n        );\n    }\n\n    #[test]\n    fn separators_and_empty() {\n        assert!(run(\"\").is_empty());\n        assert!(run(\"123 _' \\u{e9}\").is_empty());\n        assert_eq!(run(\"don't\")[0], (\"don\".into(), 1));\n    }\n}\n"
+    }
+  ]
+}

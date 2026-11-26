@@ -300,15 +300,20 @@ const PORTS = (d.meta.arms ?? [])
 const portPairs = PORTS.flatMap(({ src, v }) => Object.keys(v).sort((a, b) => label(a).localeCompare(label(b))).map((t) => ({ src, t, x: v[t] })))
 const perK = (p) => p.x.port.costPer1kSourceLines?.median
 
+// Sources × targets: per cell, US$ per 1,000 source lines and the port's speed relative to the source.
+const portSources = [...new Set(portPairs.map((p) => p.src))]
+const portTargets = [...new Set(portPairs.map((p) => p.t))].sort((a, b) => label(a).localeCompare(label(b)))
+
 function portTable() {
-  const rows = portPairs.map(({ src, t, x }) => {
-    const d = change(x.base.costUsd, x.arm.costUsd)
-    return `${tex(label(src))} $\\to$ ${tex(label(t))} & ${x.arm.works}/${x.arm.n} & ${usd(x.base.costUsd)}\\,$\\to$\\,${usd(x.arm.costUsd)} & ${pct(d)}${x.beyondNoise ? '' : '$^{\\sim}$'} & ${usd(perK({ x }))} & ${nf(1)(x.port.speedVsSource)} \\\\`
-  })
+  const cell = (src, t) => {
+    const p = portPairs.find((q) => q.src === src && q.t === t)
+    return p ? `${usd(perK(p))} \\textbar{} ${nf(1)(p.x.port.speedVsSource)}` : '--'
+  }
+  const rows = portSources.map((src) => `${tex(label(src))} & ${portTargets.map((t) => cell(src, t)).join(' & ')} \\\\`)
   return `\\newcommand{\\PortTable}{%
-\\begin{tabular}{@{}lrrrrr@{}}
+\\begin{tabular}{@{}l${'r'.repeat(portTargets.length)}@{}}
 \\toprule
-From $\\to$ to & Works & US\\$ scratch $\\to$ port & $\\Delta$US\\$ & US\\$ / 1k lines & $\\times$faster \\\\
+From $\\downarrow$ to $\\rightarrow$ & ${portTargets.map((t) => tex(label(t))).join(' & ')} \\\\
 \\midrule
 ${rows.join('\n')}
 \\bottomrule
@@ -326,11 +331,24 @@ function portMacros(set) {
   set('NPortCostlier', portPairs.filter((p) => p.x.arm.costUsd > p.x.base.costUsd && p.x.beyondNoise).length)
   set('PortDeltaMin', pct(deltas[0]))
   set('PortDeltaMax', pct(deltas.at(-1)))
-  // Speed gained per target: median over the sources of the port's speed relative to the source.
-  for (const [t, ps] of Object.entries(Object.groupBy(portPairs, (p) => p.t))) {
-    const xs = ps.map((p) => p.x.port.speedVsSource).sort((a, b) => a - b)
-    set(`PortSpeed${macroName(t)}`, nf(1)(xs[xs.length >> 1]))
+  // Speed gained depends on the source: per source, its best and worst target; and ports vs the same program
+  // written from scratch in the target.
+  const speedOf = (p) => p.x.port.speedVsSource
+  const words = (x) => (x >= 1 ? `${nf(1)(x)}$\\times$ faster` : `${nf(1)(1 / x)}$\\times$ slower`)
+  const bySource = portSources.map((src) => [...portPairs.filter((p) => p.src === src)].sort((a, b) => speedOf(b) - speedOf(a)))
+  set('PortSpeedBySource', bySource.map((ps) => `from ${tex(label(ps[0].src))}, ${tex(label(ps[0].t))} ${words(speedOf(ps[0]))} and ${tex(label(ps.at(-1).t))} ${words(speedOf(ps.at(-1)))}`).join('; '))
+  const best = [...portPairs].sort((a, b) => speedOf(b) - speedOf(a))[0]
+  set('PortSpeedMax', nf(1)(speedOf(best)))
+  set('PortSpeedMaxPair', `${tex(label(best.src))}$\\to$${tex(label(best.t))}`)
+  for (const ps of bySource) {
+    set(`PortBest${macroName(ps[0].src)}`, words(speedOf(ps[0])))
+    set(`PortWorst${macroName(ps[0].src)}`, words(speedOf(ps.at(-1))))
+    set(`PortWorstTarget${macroName(ps[0].src)}`, tex(label(ps.at(-1).t)))
   }
+  const vs = portPairs.map((p) => p.x.speedChange).filter(Number.isFinite).sort((a, b) => a - b)
+  set('PortVsScratchMedian', nf(2)(vs[vs.length >> 1]))
+  set('PortVsScratchMin', nf(2)(vs[0]))
+  set('PortVsScratchMax', nf(2)(vs.at(-1)))
   const byCost = [...portPairs].filter((p) => Number.isFinite(perK(p))).sort((a, b) => perK(a) - perK(b))
   const name = (p) => `${tex(label(p.src))}$\\to$${tex(label(p.t))}`
   if (byCost.length) {
@@ -456,8 +474,8 @@ function arxivAbstract() {
   const ports = sorted(portPairs.map((p) => change(p.x.base.costUsd, p.x.arm.costUsd)))
   const teams = sorted(Object.values(SW).map((v) => change(v.base.costUsd, v.arm.costUsd)))
   const speed = sorted(Object.values(SW).map((v) => v.swarm.wallSpeedup))
-  const zig = sorted(portPairs.filter((p) => p.t === 'zig').map((p) => p.x.port.speedVsSource))
-  return `We measure what a coding agent spends to solve the same tasks in ${Object.keys(L).length} programming languages and three front-end frameworks, with one isolated Claude Opus 5.5 agent per case and hidden tests checked live. Across ${study.length} runs the language barely changed correctness but changed the cost: ${label(byCost[0])} was the cheapest and Assembly cost ${nf(1)(L.asm.costUsd / L[byCost[0]].costUsd)}x as much, and cost to write and speed of the code rank against each other (Spearman rho = ${nf(2)(d.summary.costSpeedRho)}). Repeating every round with one researched SKILL.md per language, ${skillKeys.filter((k) => dCost(k) > 0 && V[k].beyondNoise).length} of ${skillKeys.length} languages cost more beyond run-to-run noise and ${skillKeys.filter((k) => dCost(k) < 0 && V[k].beyondNoise).length} cost less (median run ${plain(pct(change(e.costUsd.base, e.costUsd.arm)))}), mostly context written to the prompt cache; the overhead shrinks on longer tasks, and only for Zig, whose API changed after the model's training, did the skill replace work. Porting working programs from seven languages (our three slowest, plus C, C++, Java and JavaScript) to five common rewrite targets cost more than writing them from scratch in ${portPairs.filter((p) => p.x.arm.costUsd > p.x.base.costUsd && p.x.beyondNoise).length} of ${portPairs.length} pairs (${plain(pct(ports[0]))} to ${plain(pct(ports.at(-1)))}), with every port correct and Zig ports a median ${nf(1)(zig[zig.length >> 1])}x faster than their source. A team of agents (a lead, three workers in parallel git worktrees and an integrator) built a three-part program slower than one agent in ${speed.filter((x) => x < 1).length} of ${speed.length} languages tried (${nf(2)(speed[0])}-${nf(2)(speed.at(-1))}x the solo speed) and cost ${plain(pct(teams[0]))} to ${plain(pct(teams.at(-1)))} more. Data, code and every solution are public.`
+  const speeds = (src) => sorted(portPairs.filter((p) => !src || p.src === src).map((p) => p.x.port.speedVsSource))
+  return `We measure what a coding agent spends to solve the same tasks in ${Object.keys(L).length} programming languages and three front-end frameworks, with one isolated Claude Opus 5.5 agent per case and hidden tests checked live. Across ${study.length} runs the language barely changed correctness but changed the cost: ${label(byCost[0])} was the cheapest and Assembly cost ${nf(1)(L.asm.costUsd / L[byCost[0]].costUsd)}x as much, and cost to write and speed of the code rank against each other (Spearman rho = ${nf(2)(d.summary.costSpeedRho)}). Repeating every round with one researched SKILL.md per language, ${skillKeys.filter((k) => dCost(k) > 0 && V[k].beyondNoise).length} of ${skillKeys.length} languages cost more beyond run-to-run noise and ${skillKeys.filter((k) => dCost(k) < 0 && V[k].beyondNoise).length} cost less (median run ${plain(pct(change(e.costUsd.base, e.costUsd.arm)))}), mostly context written to the prompt cache; the overhead shrinks on longer tasks, and only for Zig, whose API changed after the model's training, did the skill replace work. Porting working programs from seven languages (our three slowest, plus C, C++, Java and JavaScript) to five common rewrite targets cost more than writing them from scratch in ${portPairs.filter((p) => p.x.arm.costUsd > p.x.base.costUsd && p.x.beyondNoise).length} of ${portPairs.length} pairs (${plain(pct(ports[0]))} to ${plain(pct(ports.at(-1)))}), with every port correct; ports of the slow sources ran up to ${nf(1)(speeds().at(-1))}x faster than the source, while from C the best port gained ${nf(1)(speeds('c').at(-1))}x. A team of agents (a lead, three workers in parallel git worktrees and an integrator) built a three-part program slower than one agent in ${speed.filter((x) => x < 1).length} of ${speed.length} languages tried (${nf(2)(speed[0])}-${nf(2)(speed.at(-1))}x the solo speed) and cost ${plain(pct(teams[0]))} to ${plain(pct(teams.at(-1)))} more. Data, code and every solution are public.`
 }
 
 const out = [

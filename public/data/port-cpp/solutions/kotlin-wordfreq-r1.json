@@ -1,0 +1,13 @@
+{
+  "id": "kotlin-wordfreq-r1",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds a self-contained jar (Kotlin runtime included) and a ./app launcher that runs it.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\nmkdir -p build\nkotlinc src/*.kt -include-runtime -nowarn -d build/wordfreq.jar\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec java -XX:+UseSerialGC -cp \"$(dirname \"$0\")/build/wordfreq.jar\" wordfreq.MainKt \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "src/Main.kt",
+      "text": "// wordfreq: print the 10 most frequent ASCII-letter words read from stdin.\npackage wordfreq\n\nimport java.io.BufferedOutputStream\n\nprivate const val TOP_N = 10\n\n/** Mutable occurrence counter, kept boxed once per distinct word to avoid re-boxing on every hit. */\nprivate class Count(var value: Long = 0)\n\nprivate fun isAsciiLetter(b: Int): Boolean = (b in 'A'.code..'Z'.code) || (b in 'a'.code..'z'.code)\n\n/**\n * Counts maximal runs of ASCII letters in [bytes], case-folded to lowercase.\n * The buffer is lowercased in place, so callers must not rely on its contents afterwards.\n */\ninternal fun countWords(bytes: ByteArray): Map<String, Long> {\n    val counts = HashMap<String, Count>()\n    var start = -1\n    for (i in 0..bytes.size) {\n        val b = if (i < bytes.size) bytes[i].toInt() else -1\n        if (b >= 0 && isAsciiLetter(b)) {\n            bytes[i] = (b or 0x20).toByte() // ASCII letters only: set the lowercase bit\n            if (start < 0) start = i\n        } else if (start >= 0) {\n            val word = String(bytes, start, i - start, Charsets.ISO_8859_1)\n            counts.getOrPut(word) { Count() }.value++\n            start = -1\n        }\n    }\n    return counts.mapValues { it.value.value }\n}\n\n/** Returns up to [n] entries ordered by count descending, then word ascending. */\ninternal fun topWords(counts: Map<String, Long>, n: Int): List<Pair<String, Long>> =\n    counts.entries\n        .sortedWith(compareByDescending<Map.Entry<String, Long>> { it.value }.thenBy { it.key })\n        .take(n)\n        .map { it.key to it.value }\n\nfun main() {\n    val input = System.`in`.readBytes()\n    val report = buildString {\n        for ((word, count) in topWords(countWords(input), TOP_N)) {\n            append(count).append(' ').append(word).append('\\n')\n        }\n    }\n    BufferedOutputStream(System.out).use { it.write(report.toByteArray(Charsets.ISO_8859_1)) }\n}\n"
+    }
+  ]
+}

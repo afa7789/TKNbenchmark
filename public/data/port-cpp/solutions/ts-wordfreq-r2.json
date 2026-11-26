@@ -1,0 +1,21 @@
+{
+  "id": "ts-wordfreq-r2",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Produces ./app: a launcher that runs src/main.ts with Node's native TypeScript support.\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec node --disable-warning=ExperimentalWarning \"$(dirname \"$0\")/src/main.ts\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "package.json",
+      "text": "{\n  \"name\": \"wordfreq\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"engines\": { \"node\": \">=23.6\" }\n}\n"
+    },
+    {
+      "path": "src/main.ts",
+      "text": "// wordfreq: print the 10 most frequent ASCII words read from standard input.\n\nconst TOP_N = 10;\n\nconst UPPER_A = 0x41;\nconst UPPER_Z = 0x5a;\nconst LOWER_A = 0x61;\nconst LOWER_Z = 0x7a;\nconst CASE_OFFSET = LOWER_A - UPPER_A;\n\ntype WordCounts = Map<string, number>;\ntype Entry = readonly [word: string, count: number];\n\nfunction addWord(counts: WordCounts, word: string): void {\n  counts.set(word, (counts.get(word) ?? 0) + 1);\n}\n\n/**\n * Streams input chunks, accumulating lowercase words. Chunks are lowercased in\n * place; a word may straddle chunk boundaries, so the in-progress prefix is\n * carried across reads.\n */\nasync function countWords(input: AsyncIterable<Buffer>): Promise<WordCounts> {\n  const counts: WordCounts = new Map();\n  let carry = '';\n\n  for await (const chunk of input) {\n    let start = -1;\n    for (let i = 0; i < chunk.length; i++) {\n      const c = chunk[i];\n      if (c >= LOWER_A && c <= LOWER_Z) {\n        if (start < 0) start = i;\n      } else if (c >= UPPER_A && c <= UPPER_Z) {\n        chunk[i] = c + CASE_OFFSET;\n        if (start < 0) start = i;\n      } else if (start >= 0 || carry !== '') {\n        const word = start >= 0 ? carry + chunk.toString('latin1', start, i) : carry;\n        addWord(counts, word);\n        carry = '';\n        start = -1;\n      }\n    }\n    if (start >= 0) carry += chunk.toString('latin1', start);\n  }\n\n  if (carry !== '') addWord(counts, carry);\n  return counts;\n}\n\nfunction byRank(a: Entry, b: Entry): number {\n  if (a[1] !== b[1]) return b[1] - a[1];\n  if (a[0] === b[0]) return 0;\n  return a[0] < b[0] ? -1 : 1;\n}\n\n/** Returns the `limit` highest-ranked entries using a bounded insertion pass. */\nfunction topWords(counts: WordCounts, limit: number): Entry[] {\n  const top: Entry[] = [];\n  for (const entry of counts) {\n    if (top.length === limit && byRank(entry, top[top.length - 1]) >= 0) continue;\n    let pos = top.length;\n    while (pos > 0 && byRank(entry, top[pos - 1]) < 0) pos--;\n    top.splice(pos, 0, entry);\n    if (top.length > limit) top.pop();\n  }\n  return top;\n}\n\nasync function main(): Promise<void> {\n  const counts = await countWords(process.stdin);\n  const lines = topWords(counts, TOP_N).map(([word, count]) => `${count} ${word}\\n`);\n  process.stdout.write(lines.join(''));\n}\n\nawait main();\n"
+    },
+    {
+      "path": "tsconfig.json",
+      "text": "{\n  \"compilerOptions\": {\n    \"target\": \"esnext\",\n    \"module\": \"nodenext\",\n    \"types\": [\"node\"],\n    \"strict\": true,\n    \"noEmit\": true,\n    \"erasableSyntaxOnly\": true,\n    \"verbatimModuleSyntax\": true\n  },\n  \"include\": [\"src\"]\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "ts-wordfreq-r3",
+  "files": [
+    {
+      "path": "build.sh",
+      "text": "#!/usr/bin/env bash\n# Builds ./app: a launcher that runs the wordfreq TypeScript program with Node.js\n# (Node runs .ts files natively via type stripping; no compile step is needed).\nset -euo pipefail\ncd \"$(dirname \"$0\")\"\n\ncat > app <<'LAUNCHER'\n#!/usr/bin/env bash\nexec node --disable-warning=ExperimentalWarning \"$(dirname \"$0\")/src/wordfreq.ts\" \"$@\"\nLAUNCHER\nchmod +x app\n"
+    },
+    {
+      "path": "package.json",
+      "text": "{\n  \"name\": \"wordfreq\",\n  \"private\": true,\n  \"type\": \"module\"\n}\n"
+    },
+    {
+      "path": "src/wordfreq.ts",
+      "text": "// wordfreq: read stdin, print the 10 most frequent ASCII-letter words.\n\nconst TOP_N = 10;\n\n/** Lookup table: 0 for separators, otherwise the lowercase ASCII byte. */\nconst LOWER: Uint8Array = (() => {\n  const table = new Uint8Array(256);\n  for (let c = 0x41; c <= 0x5a; c++) table[c] = c | 0x20;\n  for (let c = 0x61; c <= 0x7a; c++) table[c] = c;\n  return table;\n})();\n\ntype Entry = readonly [word: string, count: number];\n\n/** Incrementally counts words across arbitrarily split chunks of bytes. */\nexport class WordCounter {\n  readonly #counts = new Map<string, number>();\n  /** Word fragment carried over from the previous chunk. */\n  #pending = '';\n\n  /** Consumes a chunk of input. The chunk is lowercased in place. */\n  feed(chunk: Uint8Array): void {\n    const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk.buffer, chunk.byteOffset, chunk.byteLength);\n    const len = buf.length;\n    let start = -1;\n    for (let i = 0; i < len; i++) {\n      const lower = LOWER[buf[i]];\n      if (lower !== 0) {\n        buf[i] = lower;\n        if (start < 0) start = i;\n      } else if (start >= 0) {\n        this.#flush(buf, start, i);\n        start = -1;\n      } else if (this.#pending !== '') {\n        this.#add(this.#pending);\n        this.#pending = '';\n      }\n    }\n    if (start >= 0) this.#pending += buf.toString('latin1', start, len);\n  }\n\n  /** Flushes any trailing word and returns the word counts. */\n  finish(): ReadonlyMap<string, number> {\n    if (this.#pending !== '') {\n      this.#add(this.#pending);\n      this.#pending = '';\n    }\n    return this.#counts;\n  }\n\n  #add(word: string): void {\n    this.#counts.set(word, (this.#counts.get(word) ?? 0) + 1);\n  }\n\n  #flush(buf: Buffer, start: number, end: number): void {\n    let word = buf.toString('latin1', start, end);\n    if (start === 0 && this.#pending !== '') {\n      word = this.#pending + word;\n      this.#pending = '';\n    }\n    this.#add(word);\n  }\n}\n\n/** True if entry a ranks before entry b (count desc, then word asc in byte order). */\nfunction ranksBefore(aWord: string, aCount: number, bWord: string, bCount: number): boolean {\n  return aCount !== bCount ? aCount > bCount : aWord < bWord;\n}\n\n/** Returns the top `n` entries without sorting the whole map. */\nexport function topEntries(counts: ReadonlyMap<string, number>, n: number): Entry[] {\n  const top: Entry[] = [];\n  if (n <= 0) return top;\n  for (const [word, count] of counts) {\n    if (top.length === n) {\n      const [lastWord, lastCount] = top[n - 1];\n      if (!ranksBefore(word, count, lastWord, lastCount)) continue;\n      top.pop();\n    }\n    let i = top.length;\n    while (i > 0 && ranksBefore(word, count, top[i - 1][0], top[i - 1][1])) i--;\n    top.splice(i, 0, [word, count]);\n  }\n  return top;\n}\n\nasync function main(): Promise<void> {\n  const counter = new WordCounter();\n  for await (const chunk of process.stdin) counter.feed(chunk as Buffer);\n  const top = topEntries(counter.finish(), TOP_N);\n  if (top.length > 0) {\n    process.stdout.write(top.map(([word, count]) => `${count} ${word}\\n`).join(''));\n  }\n}\n\nawait main();\n"
+    },
+    {
+      "path": "tsconfig.json",
+      "text": "{\n  \"compilerOptions\": {\n    \"target\": \"ES2024\",\n    \"module\": \"NodeNext\",\n    \"moduleResolution\": \"NodeNext\",\n    \"strict\": true,\n    \"noEmit\": true,\n    \"erasableSyntaxOnly\": true,\n    \"verbatimModuleSyntax\": true,\n    \"allowImportingTsExtensions\": true,\n    \"types\": [\"node\"]\n  },\n  \"include\": [\"src\"]\n}\n"
+    }
+  ]
+}
