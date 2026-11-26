@@ -3,28 +3,13 @@
 // TKN_ARM=skills runs the skills arm into runs-skills/ (see config.mjs).
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { LANGS, FRONTENDS, TASKS, MODEL, EFFORT, RUNS, WORK, MAIN_LANGS, ARM, BASE_RUNS, CLAUDE_BIN, SKILLS, PORT_FROM, prompt, runDir, runId, trackLangs } from './config.mjs'
-import { prepareWorkdir, runAgent } from './agent.mjs'
-import { copyFiles, firstLine, list, parseArgs, pool, readJson, shortSha, solutionFiles, writeJson } from './lib.mjs'
+import { FRONTENDS, TASKS, MODEL, EFFORT, RUNS, WORK, MAIN_LANGS, ARM, SKILLS, PORT_FROM, prompt, runDir, runId, trackLangs } from './config.mjs'
+import { baselineToolchains, prepareWorkdir, runAgent } from './agent.mjs'
+import { copyFiles, list, parseArgs, pool, readJson, shortSha, solutionFiles, writeJson } from './lib.mjs'
 import { parseTranscript } from './transcript.mjs'
 
 const args = parseArgs(process.argv.slice(2), { reps: '3', jobs: '4' })
-const versions = Object.fromEntries(Object.entries(LANGS).map(([k, l]) => [k, firstLine(l.version)]))
-versions.claude = firstLine([CLAUDE_BIN, '--version'])
-
-// New runs (a new language, or another arm) join the published ones only on the same toolchains and
-// Claude Code; a language the baseline lacks is added. A fresh baseline starts from an empty runs/.
-function requireBaselineToolchains(now) {
-  const file = join(BASE_RUNS, 'toolchains.json')
-  const base = existsSync(file) ? readJson(file) : {}
-  const drift = Object.keys(base).filter((k) => base[k] !== now[k]).map((k) => `  ${k}: ${base[k]} → ${now[k]}`)
-  if (!drift.length) return
-  console.error(`✖ arm "${ARM}" must use the baseline's toolchains (TKN_CLAUDE pins Claude Code):\n${drift.join('\n')}`)
-  process.exit(1)
-}
-
-requireBaselineToolchains(versions)
-writeJson(join(RUNS, 'toolchains.json'), versions)
+const versions = baselineToolchains()
 
 // The skills arm needs every language's skill before any agent starts (a missing one would abort mid-run).
 function requireSkills(langs) {
@@ -94,7 +79,7 @@ function languagesFor(task) {
 
 // Diagonal order: runs in flight at the same time differ in both language and task.
 const reps = Number(args.reps)
-const tasks = list(args.tasks, TASKS)
+const tasks = list(args.tasks, Object.fromEntries(Object.entries(TASKS).filter(([, t]) => !t.swarm)))
 const cells = []
 for (let rep = 1; rep <= reps; rep++) {
   const batch = []

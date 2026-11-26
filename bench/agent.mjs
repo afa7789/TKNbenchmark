@@ -2,8 +2,8 @@
 import { spawn } from 'node:child_process'
 import { createWriteStream, existsSync, mkdirSync, readFileSync, rmSync, copyFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { TASKS, MODEL, EFFORT, RUN_TIMEOUT_MS, ROOT, ARM, AGENT_CLI, BASE_RUNS, CLAUDE_BIN, SKILLS, PORT_FROM } from './config.mjs'
-import { claudeEnv, copyFiles, firstLine, killStragglers, readJson, solutionFiles } from './lib.mjs'
+import { TASKS, LANGS, MODEL, EFFORT, RUN_TIMEOUT_MS, ROOT, RUNS, ARM, AGENT_CLI, BASE_RUNS, CLAUDE_BIN, SKILLS, PORT_FROM } from './config.mjs'
+import { claudeEnv, copyFiles, firstLine, killStragglers, readJson, solutionFiles, writeJson } from './lib.mjs'
 
 // Every round that starts agents (write, repair, skill writing) runs the published run's Claude Code.
 const BASE_TOOLCHAINS = join(BASE_RUNS, 'toolchains.json')
@@ -13,6 +13,22 @@ if (existsSync(BASE_TOOLCHAINS)) {
     console.error(`✖ Claude Code ${have} ≠ baseline ${want}: set TKN_CLAUDE to the baseline's binary`)
     process.exit(1)
   }
+}
+
+// The installed toolchains and Claude Code, which must match the published run's: new runs (a new language,
+// another arm) join it only on the same ones; a language the baseline lacks is added. Writes this run's
+// toolchains.json and returns the versions (the prompt names them).
+export function baselineToolchains() {
+  const now = Object.fromEntries(Object.entries(LANGS).map(([k, l]) => [k, firstLine(l.version)]))
+  now.claude = firstLine([CLAUDE_BIN, '--version'])
+  const base = existsSync(BASE_TOOLCHAINS) ? readJson(BASE_TOOLCHAINS) : {}
+  const drift = Object.keys(base).filter((k) => base[k] !== now[k]).map((k) => `  ${k}: ${base[k]} → ${now[k]}`)
+  if (drift.length) {
+    console.error(`✖ arm "${ARM}" must use the baseline's toolchains (TKN_CLAUDE pins Claude Code):\n${drift.join('\n')}`)
+    process.exit(1)
+  }
+  writeJson(join(RUNS, 'toolchains.json'), now)
+  return now
 }
 
 // Claude Code keeps auto-memory per working directory; a rerun of the same case must not inherit it.

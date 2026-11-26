@@ -4,7 +4,7 @@ import { join, dirname, basename, extname } from 'node:path'
 import { spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 
-const SKIP_DIRS = new Set(['target', 'zig-out', '.zig-cache', 'zig-cache', 'nimcache', 'build', 'node_modules', '.git', 'obj', 'out', '.cache', '.sandbox-home', '_build', 'dist-newstyle', '_opam'])
+export const SKIP_DIRS = new Set(['target', 'zig-out', '.zig-cache', 'zig-cache', 'nimcache', 'build', 'node_modules', '.git', 'obj', 'out', '.cache', '.sandbox-home', '_build', 'dist-newstyle', '_opam'])
 // ./app is kept only when it is text: a launcher script the agent may have written by hand
 // (binaries are dropped by isBinary). It never counts as code.
 const HARNESS = new Set(['check.mjs', 'cases.json', 'SPEC.md', '.DS_Store'])

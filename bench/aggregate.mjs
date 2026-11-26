@@ -365,7 +365,7 @@ function build() {
   const by = (f) => Object.groupBy(runs, f)
   const cellRuns = by((r) => `${r.lang}/${r.task}`)
   const cells = Object.fromEntries(Object.entries(cellRuns).map(([k, rs]) => [k, cellSummary(rs)]))
-  const langs = groupSummary(runs.filter((r) => !TASKS[r.task].frontend && !TASKS[r.task].track), cells)
+  const langs = groupSummary(runs.filter((r) => !TASKS[r.task].frontend && !TASKS[r.task].track && !TASKS[r.task].swarm), cells)
   addSpeedScores(langs, cells)
   const tracks = Object.fromEntries(
     Object.entries(TRACKS).map(([id, t]) => [id, { ...t, langs: groupSummary(runs.filter((r) => TASKS[r.task].track === id), cells) }]),

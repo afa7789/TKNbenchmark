@@ -9,8 +9,9 @@ export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 // Experimental arm. base: the published run, no rules of any kind. skills: the same run plus one
 // project Skill per language (bench/skills/<lang>/SKILL.md), offered through the Skill tool.
 // port-<lang>: the agent ports the baseline's working <lang> solution (in ./.source/) to the target.
+// swarm: the suite task built by a lead, three parallel workers in git worktrees and an integrator.
 export const ARM = process.env.TKN_ARM ?? 'base'
-if (!/^(base|skills|port-[a-z]+)$/.test(ARM)) throw new Error(`unknown TKN_ARM "${ARM}" (base, skills, port-<lang>)`)
+if (!/^(base|skills|swarm|port-[a-z]+)$/.test(ARM)) throw new Error(`unknown TKN_ARM "${ARM}" (base, skills, swarm, port-<lang>)`)
 export const PORT_FROM = ARM.startsWith('port-') ? ARM.slice(5) : null
 const armSuffix = ARM === 'base' ? '' : `-${ARM}`
 export const BASE_RUNS = join(ROOT, 'runs')
@@ -126,6 +127,9 @@ export const TASKS = {
   vesting: { kind: 'evm', title: 'Linear vesting', topic: 'time, ether transfers', track: 'evm' },
   range: { kind: 'zk', title: 'Private range check', topic: 'bit decomposition, comparisons', track: 'zk' },
   sudoku: { kind: 'zk', title: '4x4 Sudoku', topic: 'permutation constraints', track: 'zk' },
+  // Swarm study only (bench/swarm.mjs): wordfreq + lru + calc as subcommands of one program. Runs only
+  // when named (--tasks suite) and stays out of the language rankings.
+  suite: { kind: 'stdio', title: 'Three tools in one binary', topic: 'one build, three modules: solo vs a swarm of agents', swarm: true },
 }
 
 const TRACK_CONTRACT = {
@@ -251,4 +255,38 @@ Rules:
 - Delete scratch files when done; leave only SKILL.md and SOURCES.md.
 
 When finished, reply with the single word DONE.`
+}
+
+// Swarm study: the suite task built by a team. Same environment and quality bar as prompt(); each phase
+// says who else is working and which files are its own.
+export const SWARM_SUBS = ['wordfreq', 'lru', 'calc']
+
+function swarmBase(lang, versionText) {
+  const { label } = LANGS[lang]
+  return `Environment: macOS arm64, toolchain: ${versionText}. Work only inside the current directory.
+
+Requirements:
+- Write idiomatic, production-quality ${label}: what an experienced ${label} engineer would write and maintain.
+- ${STDLIB_ONLY}
+- build.sh, run from a clean copy of this directory, must build an optimized release binary at ./app.
+- Do not modify SPEC.md, check.mjs or the cases files.`
+}
+
+export function swarmPrompt(phase, lang, versionText) {
+  const { name } = LANGS[lang]
+  const env = swarmBase(lang, versionText)
+  const done = '\n\nWhen finished, reply with the single word DONE.'
+  if (phase === 'lead') {
+    return `You lead three engineers who will implement, in parallel, the three subcommands of the program specified in SPEC.md, in ${name}. Each will work in a separate git worktree of this repository (branches wordfreq, lru and calc) and edit only the files of their own subcommand. Set up the project so that they can: create the build and build.sh, make ./app dispatch its first argument to one entry point per subcommand, and give each subcommand its own module (a file or a directory) with a stub entry point for its engineer to replace. Do not implement the subcommands. Make sure build.sh builds.
+
+${env}${done}`
+  }
+  if (phase === 'integrate') {
+    return `Three engineers implemented the subcommands of the program specified in SPEC.md, in ${name}, on the git branches wordfreq, lru and calc of this repository; main holds the shared skeleton. Merge the three branches into main, resolve any conflicts and make the whole program work: \`node check.mjs\` runs the examples of all three subcommands. Hidden tests check every rule in SPEC.md with more edge cases and larger inputs. Commit the result on main.
+
+${env}${done}`
+  }
+  return `You are one of three engineers implementing the program specified in SPEC.md, in ${name}. The project skeleton is already set up in this directory, a git worktree on branch ${phase}. Implement the \`${phase}\` subcommand, and only it: the other two are being implemented right now by other engineers in their own worktrees, so edit only the files of the ${phase} module, and shared files such as the build only if you must, minimally. Test with \`node check.mjs --cases cases-${phase}.json\` (the examples of your subcommand). Hidden tests check every rule of the ${phase} section of SPEC.md with more edge cases and larger inputs.
+
+${env}${done}`
 }
