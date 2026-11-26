@@ -347,16 +347,27 @@ function renderTracks(d) {
 
 const ASKED = new Set(['rust/react', 'rust/vue', 'zig/react', 'zig/vue'])
 
+// Collapsed by default: the smallest stacks plus the ones from the original conversation; a button shows all.
+const COMBOS_SHOWN = 8
+
 function renderCombos(d) {
   const best = d.summary.combos[0]?.totalTokens
-  const rows = d.summary.combos.map((c) => {
-    const cls = ASKED.has(`${c.lang}/${c.fw}`) ? 'highlight' : ''
+  const rows = d.summary.combos.map((c, i) => {
+    const asked = ASKED.has(`${c.lang}/${c.fw}`)
+    const cls = [asked ? 'highlight' : '', asked || i < COMBOS_SHOWN ? '' : 'extra'].join(' ').trim()
     return `<tr class="${cls}"><td>${esc(d.meta.langs[c.lang].label)} + ${esc(d.meta.frontends[c.fw].label)}</td><td class="num">${fmt.int(c.backendTokens)}</td><td class="num">${fmt.int(c.frontendTokens)}</td><td class="num">${fmt.int(c.totalTokens)}</td><td class="num">${fmt.ratio(c.totalTokens / best)}</td><td class="num">${fmt.usd(c.backendCostUsd)}</td></tr>`
   })
   $('combo-table').innerHTML = table(
     [{ title: 'Stack' }, { title: 'kvhttp back end', num: true }, { title: 'KvBrowser', num: true }, { title: 'Total (tokens)', num: true }, { title: 'vs. smallest', num: true }, { title: 'Back-end agent cost', num: true }],
     rows,
   )
+  const all = `Show all ${rows.length} stacks`
+  $('combo-toggle').textContent = all
+  $('combo-toggle').onclick = () => {
+    const open = $('combo-table').classList.toggle('expanded')
+    $('combo-toggle').textContent = open ? 'Show fewer' : all
+    $('combo-toggle').setAttribute('aria-expanded', String(open))
+  }
 }
 
 // ---------- key findings (generated from both runs' data) ----------

@@ -129,6 +129,10 @@ pre { font-size: 0.8125rem; background: var(--tint); padding: 12px 16px; margin-
 .callout p { margin-bottom: 6px; }
 blockquote { font-style: italic; }
 
+/* Full-stack table: extra rows hidden until expanded. */
+#combo-table:not(.expanded) tr.extra { display: none; }
+#combo-toggle { margin-top: 10px; }
+
 /* Key findings: numbered one-liners, the claim in bold, its number right after. */
 .findings { padding-left: 1.4em; max-width: 90ch; }
 .findings li { margin-bottom: 10px; }

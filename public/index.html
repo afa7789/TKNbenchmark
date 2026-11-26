@@ -71,14 +71,6 @@
   </section>
 
   <main>
-    <fieldset id="findings" class="prose">
-      <legend>Key findings</legend>
-      <ol id="findings-list" class="findings"></ol>
-      <div class="findings-chart" id="findings-chart"></div>
-      <h3>How to use this</h3>
-      <ul id="howto-list"></ul>
-    </fieldset>
-
     <fieldset id="summary" class="prose">
       <legend>Summary</legend>
       <div id="kpis" class="kpis"></div>
@@ -92,6 +84,14 @@
         <li><strong>"Rust + React":</strong> defensible. Rust was among the cheapest back ends for the agent; React was the most expensive front end.</li>
       </ul>
       <p>Details in the <a href="paper.pdf">paper (PDF)</a>.</p>
+    </fieldset>
+
+    <fieldset id="findings" class="prose">
+      <legend>Key findings</legend>
+      <ol id="findings-list" class="findings"></ol>
+      <div class="findings-chart" id="findings-chart"></div>
+      <h3>How to use this</h3>
+      <ul id="howto-list"></ul>
     </fieldset>
 
     <fieldset id="ranking">
@@ -173,6 +173,7 @@
       <legend>Full-stack combinations</legend>
       <p>One complete feature: the kvhttp server in the back-end language plus the <code>KvBrowser</code> component in the framework, both in Opus 5.5 tokens (median of the repetitions). In bold, the four stacks from the original conversation: Rust/Zig × React/Vue.</p>
       <div class="scroll" id="combo-table"></div>
+      <button class="secondary" id="combo-toggle" aria-expanded="false" aria-controls="combo-table">Show all stacks</button>
     </fieldset>
 
     <fieldset id="repair">
